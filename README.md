@@ -1,10 +1,9 @@
 # nodejs 学习的地方
 
----
 
     javascript 运行有两个阶段：解析、执行。
 
-#### JavaScript基础类型
+#### **JavaScript基础类型**
 
 > 原始类型: Undefined、Null、Boolean、Number、String、Symbol
 
@@ -48,8 +47,9 @@ console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
 
 
 
-#### node.js
+#### **node.js**
 
+---
 > `Buffer` 是 Node.js 中用于处理二进制数据的类, 与 IO 相关的操作 (网络/文件等) 均基于 Buffer,Buffer类是Node中的一个全局变量,这就意味着你不需要用额外的`require`将模块引入就可以使用它.
 
 ````javascript
@@ -87,13 +87,67 @@ const TransformStream=require('stream').Transform;
 
 ````
 
+#### **查看进程**
+
+![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/38089481.jpg)
+
+IPC进程间通信,常见的通信技术如下: 
+![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/46822480.jpg)
+
+    管道实际是用于进程间通信的一段**共享内存**，创建管道的进程称为管道服务器，连接到一个管道的进程为管道客户机。
+    *一个进程在向管道写入数据后，另一进程就可以从管道的另一端将其读取出来*。
 
 
+```javascript
+//spawn方法可以启动一个子进程执行命令
+const { spawn } = require('child_process');
+const ls = spawn('ls', ['-l', '/usr']);
 
+ls.stdout.on('data', (data) => {
+  console.log(`stdout: ${data}`);
+});
 
+ls.stderr.on('data', (data) => {
+  console.log(`stderr: ${data}`);
+});
 
+ls.on('close', (code) => {
+  console.log(`child process exited with code ${code}`);
+});
 
+//exec方法可以启动一个子进程执行命令,并缓冲产生的数据，当子进程完成后回调函数可以将其调用.
+const { exec } = require('child_process');
 
+const ls = exec('ls -l', (error, stdout, stderr) => {
+  if (error) {
+    console.error(error.stack);
+    console.log('Error code: ' + error.code);
+  }
+  console.log('Child Process STDOUT: ' + stdout);
+});
 
+//execFile方法可以执行一个外部应用，与`exec`类似，除了不衍生一个 shell。 而是，指定的可执行的 file 被直接衍生为一个新进程，这使得它比 `child_process.exec()` 更高效。
+const { execFile } = require('child_process');
+const child = execFile('node', ['--version'], (error, stdout, stderr) => {
+  if (error) {
+    throw error;
+  }
+  console.log(stdout);
+});
+
+//fork方法直接创建一个子进程，执行Node脚本，fork('./child.js') 相当于 spawn('node', ['./child.js']) 。与spawn方法不同的是，fork会在父进程与子进程之间，建立一个通信管道，用于进程之间的通信。
+const n = child_process.fork('./worker.js');
+n.on('message', function(m) {
+  console.log('PARENT got message:', m);
+});
+n.send({ hello: 'world' });
+```
+
+**node进程间通信原理**
+`fork`创建进程之后，会在父子进程之间建立IPC通信,并过message与send()等方法进行通信,这通信方法基于由node的管道技术实现,而这个管道技术不同于上文提到的操作系统的*管道*,node的管道技术由libuv提供,而在不同操作系统下具体实现不同:Windows下由命名管道实现,*nix下由UNIX域套接字实现.
+
+----
+
+# Node中Events
 
 
