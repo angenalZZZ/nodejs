@@ -41,6 +41,23 @@ if(Object.getPrototypeOf(p1)===Person.prototype)
 console.log(p1.name);console.log(p2.sex);
 console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
 ````
+
+`扩展String`
+````javascript
+String.prototype.format = function(...args) {
+    return this.replace(/\{(\d+)(:\w+)?\}/g, function (m, n) {
+        let s = m.split(':');
+        if (s.length == 2) {
+            let f = s[1].substring(0, s[1].length - 1);
+            if (f.match(/^f\d+$/)) {
+                return args[n].toFixed(parseInt(f.substring(1)));
+            }
+        }
+        return args[n];
+    });
+};
+````
+
 5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外)，优先级是:`箭头`函数>`new`绑定>`显式`绑定[`bind`>`call`|`apply`]>`隐式`绑定>`默认`绑定。
 
 6.作用域链`scope chain`,在ES2015中引入了let,通过let可以创建块级作用域.阻止了变量提升.
@@ -50,6 +67,26 @@ console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
 #### **node.js**
 
 ---
+
+`全局变量`
+
+````javascript
+console.info(__filename) //当前文件
+
+console.time(__filename);//计时开始
+console.warn('我们的{0},GDP超:{1:f2}万亿.'.format('祖国',1738094.329));
+console.log('<a href="http://www.es6fiddle.net">ES6 Fiddle</a>');
+process.stdin.setEncoding('utf-8');
+process.on('exit', () => console.timeEnd(__filename));
+process.on('uncaughtException', exception => console.error(exception));
+process.on('SIGINT', () => {
+    console.warn('  processes receives a signal');
+    process.exit(0);
+});
+//process.stdin.on('data', (s) => process.stdout.write(s));
+
+````
+
 > `Buffer` 是 Node.js 中用于处理二进制数据的类, 与 IO 相关的操作 (网络/文件等) 均基于 Buffer,Buffer类是Node中的一个全局变量,这就意味着你不需要用额外的`require`将模块引入就可以使用它.
 
 ````javascript
@@ -95,8 +132,8 @@ IPC进程间通信,常见的通信技术如下:
 
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/46822480.jpg)
 
-    管道实际是用于进程间通信的一段**共享内存**，创建管道的进程称为管道服务器，连接到一个管道的进程为管道客户机。
-    *一个进程在向管道写入数据后，另一进程就可以从管道的另一端将其读取出来*。
+    管道实际是用于进程间通信的一段`共享内存`，创建管道的进程称为管道服务器，连接到一个管道的进程为管道客户机。
+    一个进程在向管道写入数据后，另一进程就可以从管道的另一端将其读取出来。
 
 
 ```javascript
@@ -145,10 +182,215 @@ n.send({ hello: 'world' });
 ```
 
 **node进程间通信原理**
-`fork`创建进程之后，会在父子进程之间建立IPC通信,并过message与send()等方法进行通信,这通信方法基于由node的管道技术实现,而这个管道技术不同于上文提到的操作系统的*管道*,node的管道技术由libuv提供,而在不同操作系统下具体实现不同:Windows下由命名管道实现,*nix下由UNIX域套接字实现.
+`fork`创建进程之后，会在父子进程之间建立IPC通信,并过message与send()等方法进行通信,这通信方法基于由node的管道技术实现,而这个管道技术不同于上文提到的操作系统的*管道*,node的管道技术由libuv提供,而在不同操作系统下具体实现不同:Windows下由命名管道实现,linux下由UNIX域套接字实现.
 
 ----
 
 # Node中Events
+
+`Events` 是 `Node.js` 中一个非常重要的 `core` 模块, 在 `node` 中有许多重要的 `core API` 都是依赖其建立的. 比如 `Stream` 是基于 `Events` 实现的, 而 `fs, net, http` 等模块都依赖 `Stream`, 所以 `Events` 模块的重要性可见一斑.
+
+
+```javascript
+//1.继承
+const util = require('util');
+const EventEmitter = require('events').EventEmitter;
+
+function Music() {
+    EventEmitter.call(this);
+}
+
+util.inherits(Music, EventEmitter);
+
+//2.监听与触发
+// 除了常用on方法以外,还有一个同样效果的方法emitter.addListener(eventName, listener)
+const myEmitter = new EventEmitter();
+const connection = (id) => {
+  console.log('client id: ' + id); //client id: 6
+};
+myEmitter.on('connection', connection); //监听名为`connection`的事件,并执行connection方法
+myEmitter.emit('connection', 6); //触发名为`connection`的事件
+myEmitter.once('connection', connection);//还有`once`,其作用与`on`类似,只是只触发一次回调.
+
+//3.移除监听器
+myEmitter.removeListener('connection', connection);
+
+//4.监听新监听器 EventEmitter 实例会在一个监听器被添加到其内部监听器数组之前触发自身的 newListener 事件。我们可以通过监听这个newListener事件来追踪新的监听器.
+// 只处理一次，所以不会无限循环
+myEmitter.once('newListener', (event, listener) => {
+  if (event === 'event') {
+    // 在开头插入一个新的监听器
+    myEmitter.on('event', () => {
+      console.log('A');
+    });
+  }
+});
+myEmitter.on('event', () => {
+  console.log('B');
+});
+myEmitter.emit('event');//输出A,B
+
+
+//5.事件中的异常处理
+myEmitter.on('error', (err) => {
+  console.log('有错误');
+});
+myEmitter.emit('error', new Error('whoops!'));
+
+//5.监听器数量限制
+// 每个事件默认可以注册最多 10 个监听器。 单个 EventEmitter 实例的限制可以使用 emitter.setMaxListeners(n) 方法改变。 所有 EventEmitter 实例的默认值可以使用 EventEmitter.defaultMaxListeners 属性改变。
+
+//在监听器中再次*触发*同一个事件会造成死循环,而且Events内部只是用克隆副本的方法避免了*监听*同一事件的死循环,无法避免*触发*事件的循环,因此在使用中要避免这种情况.
+```
+
+---
+
+# Node中的Http
+
+`静态资源访问服务`
+
+````javascript
+/* code start */
+const fs = require("fs");
+const path = require("path");
+const http = require("http");
+const url = require("url");
+const util = require("util");
+/**
+ * Http 静态资源访问服务
+ */
+class HttpServ_UseStaticFiles {
+    /**
+     * Http 静态资源访问服务 constructor
+     * @param {any} httpHostname 主机名 localhost
+     * @param {any} httpPort 端口 3000
+     */
+    constructor(httpHostname, httpPort, rootPath, defaultEncoding) {
+        var self = this, fsstat = util.promisify(fs.stat);// check file
+        this.encoding = defaultEncoding||'utf8';
+        this.cwd = rootPath||process.cwd();// path.dirname(process.argv[1]);
+        this.httpHostname = httpHostname||'localhost'; this.httpPort = httpPort||3000;
+        this.httpServ = http.createServer((request, response) => {
+            var urlObj = url.parse(request.url), reqFilePath = path.join(self.cwd, urlObj.pathname);
+            console.log(`${urlObj.href} < ${reqFilePath}`);
+            fsstat(reqFilePath).then(stats => {
+                var headers = {};// {'Content-Type': 'text/html; charset=utf-8', 'X-UA-Compatible': 'IE=EDGE'};
+                response.writeHead(200, headers);
+                if (stats.isFile()) return fs.createReadStream(reqFilePath,self.encoding).pipe(response,{end:true});
+                else if (stats.isDirectory()) response.write('deny access, because it is directory.');
+                else response.write('deny access.');
+                response.end();
+            }).catch(err => {
+                response.writeHead(404);
+                response.end();
+            });
+        });
+    }
+    /**
+     * 开始 HttpServe
+     */
+    start() {
+        var self = this;
+        console.log(`HttpServe Use Static Files - Hosting environment: ${process.argv0}`);
+        console.log(`HttpServe Content root path: ${self.cwd}`);
+        self.httpServ.listen(self.httpPort, self.httpHostname, () => {
+            var addr = self.httpServ.address();
+            console.log(`HttpServe Now listening on: http://${addr.address}:${addr.port}`);
+            //console.log(`Application started. Press Ctrl+C to shut down.`);
+        });
+    }
+    /**
+     * 停止 HttpServe
+     */
+    stop() {
+        if (this.httpServ.listening) this.httpServ.close(() => {
+            console.log(`Http Serve Is Stopped.`);
+        });
+    }
+}
+// go
+new HttpServ_UseStaticFiles().start();
+/* code end */
+````
+
+####安全
+`加密`
+
+````javascript
+const crypto = require('crypto');
+/* 1.哈希算法 > md5、sha1、sha256、sha512 */
+const md5 = crypto.createHash("md5");
+const sha1 = crypto.createHash("sha1");
+/* 2.随机哈希算法 > Hmac算法也是一种哈希算法，它可以利用MD5或SHA1等哈希算法。不同的是，Hmac还需要一个密钥
+   只要密钥发生了变化，那么同样的输入数据也会得到不同的签名，因此，可以把Hmac理解为用随机数“增强”的哈希算法*/
+const sha256 = crypto.createHmac("sha256", "1234567890");
+const sha512 = crypto.createHmac("sha512", "1234567890");
+/* 3.对称加密算法 > AES是一种常用的对称加密算法，加解密都用同一个密钥
+   AES有很多不同的算法，如aes192，aes-128-ecb，aes-256-cbc等，
+   AES除了密钥外还可以指定IV（Initial Vector），不同的系统只要IV不同，
+   用相同的密钥加密相同的数据得到的加密结果也是不同的。
+   加密结果通常有两种表示方法：hex和base64，这些功能Nodejs全部都支持，
+   但是在应用中要注意，如果加解密双方一方用Nodejs，另一方用Java、PHP等其它语言，需要仔细测试。
+   如果无法正确解密，要确认双方是否遵循同样的AES算法，字符串密钥和IV是否相同，
+   加密后的数据是否统一为hex或base64格式。 */
+function Aes(algorithm, password) {
+    return { encrypt : (textUtf8) => {
+            var _ = crypto.createCipher(algorithm, password);
+            var s = _.update(textUtf8, "utf8", "hex"); s += _.final("hex");
+            return s;
+        }, decrypt : (decryptedHex) => {
+            var _ = crypto.createDecipher(algorithm, password);
+            var s = _.update(decryptedHex, "hex", "utf8"); s = _.final("utf8");
+            return s;
+        }
+    }
+}
+/* 4.密钥交换协议 > DH算法是一种密钥交换协议，它可以让双方在不泄漏密钥的情况下协商出一个密钥来。
+   DH算法基于数学原理每次输出都不一样，因为是随机的。*/
+function DH_A(prime_length, prime_encoding, generator_encoding, keys_encoding) {
+    var _ = crypto.createDiffieHellman(prime_length);
+    if (!prime_encoding) prime_encoding = "hex";
+    if (!generator_encoding) generator_encoding = prime_encoding;
+    if (!keys_encoding) keys_encoding = prime_encoding;
+    return {
+        keys : _.generateKeys(keys_encoding), keys_encoding : keys_encoding,
+        prime : _.getPrime(prime_encoding), prime_encoding : prime_encoding,
+        generator : _.getGenerator(generator_encoding), generator_encoding : generator_encoding,
+        computeSecret: (b) => { return _.computeSecret(b.keys, b.keys_encoding, b.keys_encoding) }
+    }
+}
+function DH_B(a) {
+    var _ = crypto.createDiffieHellman(a.prime, a.prime_encoding, a.generator, a.generator_encoding);
+    return {
+        keys : _.generateKeys(a.keys_encoding), keys_encoding: a.keys_encoding,
+        computeSecret: () => { return _.computeSecret(a.keys, a.keys_encoding, a.keys_encoding) }
+    }
+}
+
+/* 被加密 明文 */
+const str = `12345678`;
+
+/* 加密： 哈希算法 */
+// md5.update(str, "utf8"); console.log(`md5: ${str} | ${md5.digest('hex')}`);
+// sha1.update(str); console.log(`sha1: ${str} | ${sha1.digest("hex")}`);
+// sha256.update(str); console.log(`sha256: ${str} | ${sha256.digest("hex")}`);
+// sha512.update(str); console.log(`sha512: ${str} | ${sha512.digest("hex")}`);
+
+/* 加密： 对称加密算法 */
+// const aes = new Aes('aes192','123456abc');
+// var aes1 = aes.encrypt(str), aes2 = aes.decrypt(aes1);
+// console.log(`aes: ${str} | ${aes1} | ${aes2}`);
+
+/* 加密： 密钥交换协议 */
+// const dh_a = new DH_A(512), dh_b = new DH_B(dh_a);
+// console.log(dh_a.computeSecret(dh_b), dh_b.computeSecret());
+
+````
+
+
+
+
+
+
 
 
