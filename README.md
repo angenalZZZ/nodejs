@@ -45,7 +45,7 @@ console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
 
 6.作用域链`scope chain`,在ES2015中引入了let,通过let可以创建块级作用域.阻止了变量提升.
 
-
+---
 
 #### **node.js**
 
@@ -92,6 +92,7 @@ const TransformStream=require('stream').Transform;
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/38089481.jpg)
 
 IPC进程间通信,常见的通信技术如下: 
+
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/46822480.jpg)
 
     管道实际是用于进程间通信的一段**共享内存**，创建管道的进程称为管道服务器，连接到一个管道的进程为管道客户机。
