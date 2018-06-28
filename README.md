@@ -1,9 +1,9 @@
-# nodejs 学习的地方
+# Nodejs 基础
 
 
     javascript 运行有两个阶段：解析、执行。
 
-#### **JavaScript基础类型**
+#### **JavaScript**
 
 > 原始类型: Undefined、Null、Boolean、Number、String、Symbol
 
@@ -82,7 +82,7 @@ String.prototype.format = function(...args) {
 ````
 ---
 
-#### **node.js**
+#### **Node.js**
 
 ---
 
@@ -142,7 +142,7 @@ const TransformStream=require('stream').Transform;
 
 ````
 
-#### **查看进程**
+#### **进程-管道-通信**
 
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/38089481.jpg)
 
@@ -204,7 +204,201 @@ n.send({ hello: 'world' });
 
 ----
 
-# Node中Events
+# TypeScript 基础
+
+```javascript
+// 申明变量：var全局变量, let局部变量, const常量
+// Basic Types...
+let isDone: boolean = false;
+// ECMAScript 2015 即 es6
+let decimal: number = 6;
+let hex: number = 0xf00d;
+let binary: number = 0b1010;
+let octal: number = 0o744;
+// 字符串
+let color: string = "blue"; color = 'red'; color = `Hello, my color is ${ color }`;
+// 数组Array
+let list: number[] = [1, 2, 3];
+// 元组Tuple
+let t2: [string, number]; t2 = ["hello", 10];
+// 枚举Enum
+enum Color {Red, Green, Blue}
+let e1: Color = Color.Green;
+let e1ColorName: string = Color[2]; // Blue
+// any 不同于 Object; any 不要作为function的返回类型
+let obj1: any = 1; obj1.toFixed();
+// as-syntax 语法
+let n1: number = obj1 as number;
+let n2: number = <number>obj1 + n1; // 强转
+// void 一般作为function的返回类型
+let unusable: void = undefined; // or null
+// undefined and null actually have their own types and subtypes of all other types.
+// union type, note: ts config --strictNullChecks turned off.严格检查,像'use strict';
+type strings = string | null | undefined; let strs1: strings;
+// Never 无返回｜异常...
+function error(message: string): never {
+    throw new Error(message); // 异常
+}
+function infiniteLoop(loop: () => boolean): never {
+    while (loop()) { } // 死循环
+}
+// Object 对象
+function createObject(o: object | null): any { return Object.create(o); }
+let obj2 = createObject(null); // {}
+
+// Scoping rules 作用域
+function fScoping(shouldInitialize: boolean) {
+    if (shouldInitialize) { var f = 10; }
+    return f;
+}
+fScoping(true);  // 10
+fScoping(false); // undefined
+// 0,...9 in ts or es6 with let
+for (let i = 0; i < 10; i++) { setTimeout(function () { console.log(i); }, 100 * i); }
+// 0,...9 in js or es5 with var
+for (var i = 0; i < 10; i++) { (function (i) { setTimeout(function () { console.log(i); }, 100 * i); })(i); }
+
+// Array destructuring 解构数组
+let arr1 = [1, 2]; let [first, second] = arr1;
+[first, second] = [second, first]; // 互换
+let [first, ...rest] = [1, 2, 3, 4]; // rest [ 2, 3, 4 ]
+let [, second, , fourth] = [1, 2, 3, 4];
+
+// Object destructuring 解构对象
+let o = { a: "foo", b: 12, c: "bar" };
+// 初始化与赋值,并且重命名a为变量name,此时变量a不存在
+let { a: name, b } = o; ({ name, b } = { name: "baz", b: 101 });
+let { a: myname, b: myage}: {a: string, b: number} = o; // declare types
+let { a, ...passthrough } = o; // using the syntax ...
+let total = passthrough.b + passthrough.c.length;
+
+// Default values 默认值
+type C = { a: string, b?: number }
+function f({ a, b = 0 }: C = { a: '' }): void { }
+
+// Spread 快速赋值语法
+let first = [1, 2], second = [3, 4];
+let bothPlus = [0, ...first, ...second, 5];
+let defaults = { food: "spicy", price: "$100", ambiance: "noisy" };
+let searchs = { ...defaults, food: "rich" }; // { food: "rich", ..}
+class C {
+  p = 12;
+  m() { }
+}
+let c1 = new C();
+let c2 = { ...c1 };
+c2.p; // ok = 12 // c2.m(); // error!
+
+// Interface 接口 (只读：变量用const，属性用readonly)
+interface World {
+  name: string;
+  ages: Readonly<number[]>; // Variables use const whereas properties use readonly
+  readonly point: ReadonlyArray<number>;
+  [prop: string]: any; // 可通过['属性']访问
+}
+let w1: World = { name: 'hello', ages: [1, 2, 3], point: [329.2832, 8673.335] };
+w1['name'] = 'other'; // prop~读取name
+w1.ages = [4, 5, 6]; w1.ages.push(7); // ok.写入成功
+// w1.ages[0] = 1; w1.point[0] = 1; // error!索引签名仅允许读取
+
+// Indexable Types 索引访问
+interface StringArray extends Array<string> {
+  readonly [index: number]: string; // 只读索引
+}
+let sa1: StringArray = ['a', 'b', 'c'];
+sa1.findIndex(s => s.endsWith('a'));
+// sa1[0] = '1'; // error!
+
+// Interface 接口-扩展
+interface Shape { color: string; }
+interface Square extends Shape { sideLength: number; }
+let square = <Square>{};
+square.color = "blue"; square.sideLength = 10;
+
+// Class implements Interface 接口类型的实现
+interface IClock { tick(); }
+interface Clock { new(hour: number, minute: number): IClock; }
+function newClock(ctor: Clock, hour: number, minute: number): IClock {
+  return new ctor(hour, minute);
+}
+class DigitalClock implements IClock {
+  constructor(h: number, m: number) { }
+  tick() { console.log("beep beep"); }
+}
+class AnalogClock implements IClock {
+  constructor(h: number, m: number) { }
+  tick() { console.log("tick tock"); }
+}
+let digital = newClock(DigitalClock, 12, 17);
+let analog = newClock(AnalogClock, 7, 32);
+
+// Hybrid Types 复杂类型
+interface Counter {
+  (start: number): string;
+  interval: number;
+  reset(): void;
+}
+function getCounter(): Counter {
+  let counter = <Counter>function (start: number) { };
+  counter.interval = 123;
+  counter.reset = function () { };
+  return counter;
+}
+let c = getCounter();
+c(10);
+c.reset();
+c.interval = 5.0;
+
+// Protected Types 保护类型: [public:默认], protected, private and readonly, get-set, static
+abstract class Person {
+  static Where: string = '地球';
+  protected constructor(protected readonly name: string) { }
+}
+class Employee extends Person {
+  constructor(readonly name: string, private department: string) { super(name); }
+  get elevatorPitch() { return `Hello, my name is ${this.name} and I work in ${this.department}.`; }
+}
+let howard = new Employee("Howard", "Sales");
+let SunPer: typeof Person = Person; // 类别名
+SunPer.Where = '太阳';
+// new Person("John"); new SunPer(''); // Error: constructor is protected or abstract
+class Point { x: number; y: number; }
+interface Point3d extends Point { z: number; } // Using a class as an interface
+let point3d: Point3d = { x: 1, y: 2, z: 3 };
+
+interface UIElement {
+  addClickListener(onclick: (this: void, e: Event) => void): void;
+}
+class Handler {
+  info: string;
+  static new(): Handler { return new Handler(); }
+  onClickGood = (e: Event) => { this.info = `${e.type} event!`; }
+}
+const uiElement = <UIElement>{};
+uiElement.addClickListener(Handler.new().onClickGood);
+
+
+function pickCard(x: { suit: string; card: number; }[]): number; // 申明
+function pickCard(x: number): { suit: string; card: number; };   // 申明
+function pickCard(x): any {                                      // 实现
+  if (typeof x == "object") return Math.floor(Math.random() * x.length);
+  if (typeof x == "number") {
+    let pickedSuit = Math.floor(x / 13);
+    const suits = ["hearts", "spades", "clubs", "diamonds"];
+    return { suit: suits[pickedSuit], card: x % 13 };
+  }
+}
+let myDeck = [{ suit: "diamonds", card: 2 }, { suit: "spades", card: 10 }, { suit: "hearts", card: 4 }];
+let pickedCard1 = myDeck[pickCard(myDeck)];
+alert("card: " + pickedCard1.card + " of " + pickedCard1.suit);
+let pickedCard2 = pickCard(15);
+alert("card: " + pickedCard2.card + " of " + pickedCard2.suit);
+
+```
+
+
+
+# Nodejs Events机制
 
 `Events` 是 `Node.js` 中一个非常重要的 `core` 模块, 在 `node` 中有许多重要的 `core API` 都是依赖其建立的. 比如 `Stream` 是基于 `Events` 实现的, 而 `fs, net, http` 等模块都依赖 `Stream`, 所以 `Events` 模块的重要性可见一斑.
 
@@ -263,7 +457,9 @@ myEmitter.emit('error', new Error('whoops!'));
 
 ---
 
-# Node中的Http
+# Nodejs Http服务
+
+####Http访问
 
 `静态资源访问服务`
 
@@ -331,7 +527,7 @@ new HttpServ_UseStaticFiles().start();
 /* code end */
 ````
 
-####安全
+####安全加密
 `加密`
 
 ````javascript
@@ -404,11 +600,5 @@ const str = `12345678`;
 // console.log(dh_a.computeSecret(dh_b), dh_b.computeSecret());
 
 ````
-
-
-
-
-
-
 
 
