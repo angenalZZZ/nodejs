@@ -1,9 +1,8 @@
-# Nodejs 基础
-
+---
 
     javascript 运行有两个阶段：解析、执行。
 
-#### **JavaScript**
+# **JavaScript 基础**
 
 > 原始类型: Undefined、Null、Boolean、Number、String、Symbol
 
@@ -278,11 +277,11 @@ alert("card: " + pickedCard2.card + " of " + pickedCard2.suit);
 ---
 ---
 
-#### **Node.js**
+# **Node.js 基础**
 
 ---
 
-`全局变量`
+## 全局变量
 
 ````javascript
 console.info(__filename) //当前文件
@@ -338,7 +337,7 @@ const TransformStream=require('stream').Transform;
 
 ````
 
-#### **进程-管道-通信**
+## **进程-管道-通信**
 
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/38089481.jpg)
 
@@ -400,7 +399,7 @@ n.send({ hello: 'world' });
 
 
 
-# Nodejs Events机制
+## Events机制
 
 `Events` 是 `Node.js` 中一个非常重要的 `core` 模块, 在 `node` 中有许多重要的 `core API` 都是依赖其建立的. 比如 `Stream` 是基于 `Events` 实现的, 而 `fs, net, http` 等模块都依赖 `Stream`, 所以 `Events` 模块的重要性可见一斑.
 
@@ -459,9 +458,9 @@ myEmitter.emit('error', new Error('whoops!'));
 
 ---
 
-# Nodejs Http服务
+## Http服务
 
-####Http访问
+###Http访问
 
 `静态资源访问服务`
 
@@ -529,8 +528,9 @@ new HttpServ_UseStaticFiles().start();
 /* code end */
 ````
 
-####安全加密
-`加密`
+###安全加密
+
+`md5,sha,aes,DH...`
 
 ````javascript
 const crypto = require('crypto');
