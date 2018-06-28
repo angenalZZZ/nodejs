@@ -26,10 +26,9 @@
 
 3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制.
 ````javascript
-var p1 = {name:`hello`},
-   p2 = {...p1}, p3 = ({...p1,age:1}),
-   p4 = Object.assign({sex:0},p1);
+var p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
 ````
+
 4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象
 `__proto__`是大部分主流浏览器(IE除外)引擎提供的,还被Node.js支持.
 获取原型`Object.getPrototypeOf`、修改原型`Object.setPrototypeOf`
@@ -59,9 +58,28 @@ String.prototype.format = function(...args) {
 ````
 
 5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外)，优先级是:`箭头`函数>`new`绑定>`显式`绑定[`bind`>`call`|`apply`]>`隐式`绑定>`默认`绑定。
-
+````javascript
+    apply、call、bind方法的共同点和区别：
+    apply、call、bind 三者都是用来改变函数的this对象的指向的；
+    apply、call、bind 三者第一个参数都是this要指向的对象，也就是想指定的上下文；
+    语法：apply([thisObj[,argArray]])
+    语法：call([thisObj[,arg1[,arg2[,arg3[,.argN]]]]])
+        thisObj的取值有以下4种情况：
+            （1） 不传，或者传null,undefined，this指向window对象
+            （2） 传递另一个函数的函数名，this指向这个函数的引用
+            （3） 传递字符串、数值、布尔值等基础类型，this指向其对应的包装对象，如 String、Number、Boolean
+            （4） 传递一个对象，this指向这个对象
+    语法：bind([thisObj[,arg1[,arg2[,arg3[,.argN]]]]]): function([,arg1[,arg2[,arg3[,.argN]]]])
+        !!不兼容IE6,7,8
+````
 6.作用域链`scope chain`,在ES2015中引入了let,通过let可以创建块级作用域.阻止了变量提升.
 
+7.Web模块加载框架: 模块化编程、可维护、动态加载、性能优化等。
+````javascript
+    RequireJS 和 SeaJS 都是模块化框架的代表，AMD和CMD，是他们各自定义模块化的方式，大同小异，主要是代码风格和API不同。
+    异步模块定义（AMD）是Asynchronous Module Definition的缩写，是 RequireJS 对模块定义的规范化产出。
+    通用模块定义（CMD）是Common Module Definition的缩写，是SeaJS 对模块定义的规范化产出。
+````
 ---
 
 #### **node.js**
