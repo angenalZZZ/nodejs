@@ -273,12 +273,12 @@ let pickedCard2 = pickCard(15);
 alert("card: " + pickedCard2.card + " of " + pickedCard2.suit);
 
 ```
+
 ---
----
+
 
 # **Node.js 基础**
 
----
 
 ## 全局变量
 
@@ -455,11 +455,10 @@ myEmitter.emit('error', new Error('whoops!'));
 //在监听器中再次*触发*同一个事件会造成死循环,而且Events内部只是用克隆副本的方法避免了*监听*同一事件的死循环,无法避免*触发*事件的循环,因此在使用中要避免这种情况.
 ```
 
----
 
 ## Http服务
 
-###Http访问
+####Http访问
 
 `静态资源访问服务`
 
@@ -527,7 +526,7 @@ new HttpServ_UseStaticFiles().start();
 /* code end */
 ````
 
-###安全加密
+####安全加密
 
 `md5,sha,aes,DH...`
 
