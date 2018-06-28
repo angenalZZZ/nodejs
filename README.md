@@ -244,6 +244,7 @@ class Point { x: number; y: number; }
 interface Point3d extends Point { z: number; } // Using a class as an interface
 let point3d: Point3d = { x: 1, y: 2, z: 3 };
 
+// this 对象关联
 interface UIElement {
   addClickListener(onclick: (this: void, e: Event) => void): void;
 }
@@ -255,7 +256,7 @@ class Handler {
 const uiElement = <UIElement>{};
 uiElement.addClickListener(Handler.new().onClickGood);
 
-
+// function 复用
 function pickCard(x: { suit: string; card: number; }[]): number; // 申明
 function pickCard(x: number): { suit: string; card: number; };   // 申明
 function pickCard(x): any {                                      // 实现
@@ -271,6 +272,30 @@ let pickedCard1 = myDeck[pickCard(myDeck)];
 alert("card: " + pickedCard1.card + " of " + pickedCard1.suit);
 let pickedCard2 = pickCard(15);
 alert("card: " + pickedCard2.card + " of " + pickedCard2.suit);
+
+// function <T> 复用, 如：T[] <=> Array<T>
+function loggingIdentity1<T>(arg: T[]): T[] {
+  console.log(arg.length);  // Array has a .length, so no more error
+  return arg;
+}
+function loggingIdentity2<T>(arg: Array<T>): Array<T> {
+  console.log(arg.length);  // Array has a .length, so no more error
+  return arg;
+}
+
+// function 类型|范型<T>
+function identity<T>(arg: T): T { return arg; } // js实现,可为CDN外部js
+let myIdentity1: <T>(arg: T) => T = identity;
+let myIdentity2: <U>(arg: U) => U = identity; // T -> U...
+let myIdentity3: { <T>(arg: T): T } = identity; // interface定义都用{}
+// interface & type 申明类型: 当要使用的功能为CDN外部js时,就可使用以下方式申明
+type GenericIdentityFn = { <T>(arg: T): T; };
+let myIdentity4: GenericIdentityFn = identity;
+interface GenericIdentityFn1 { <T>(arg: T): T; }
+let myIdentity5: GenericIdentityFn1 = identity;
+interface GenericIdentityFn2<T> { (arg: T): T; }
+let myIdentity6: GenericIdentityFn2<number> = identity;
+
 
 ```
 
