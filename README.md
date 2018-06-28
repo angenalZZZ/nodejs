@@ -1,8 +1,7 @@
----
-
-    javascript 运行有两个阶段：解析、执行。
 
 # **JavaScript 基础**
+
+    javascript 运行有两个阶段：解析、执行。
 
 > 原始类型: Undefined、Null、Boolean、Number、String、Symbol
 
@@ -79,9 +78,9 @@ String.prototype.format = function(...args) {
     异步模块定义（AMD）是Asynchronous Module Definition的缩写，是 RequireJS 对模块定义的规范化产出。
     通用模块定义（CMD）是Common Module Definition的缩写，是SeaJS 对模块定义的规范化产出。
 ````
+
 ---
 
-----
 
 # TypeScript 基础
 
