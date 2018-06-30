@@ -90,6 +90,7 @@ String.prototype.format = function(...args) {
 let isDone: boolean = false;
 // ECMAScript 2015 即 es6
 let decimal: number = 6;
+//@ts-ignore  使用JSDoc注释下一行,@ts-ignore用来忽略错误
 let hex: number = 0xf00d;
 let binary: number = 0b1010;
 let octal: number = 0o744;
@@ -234,7 +235,9 @@ abstract class Person {
 }
 class Employee extends Person {
   constructor(readonly name: string, private department: string) { super(name); }
-  get elevatorPitch() { return `Hello, my name is ${this.name} and I work in ${this.department}.`; }
+  get elevatorPitch() {
+      return `Hello, my name is ${this.name} and I work in ${this.department}.`;
+  }
 }
 let howard = new Employee("Howard", "Sales");
 let SunPer: typeof Person = Person; // 类别名
@@ -289,6 +292,10 @@ let myIdentity1: <T>(arg: T) => T = identity;
 let myIdentity2: <U>(arg: U) => U = identity; // T -> U...
 let myIdentity3: { <T>(arg: T): T } = identity; // interface定义都用{}
 // interface & type 申明类型: 当要使用的功能为CDN外部js时,就可使用以下方式申明
+// 类型别名 declare [const|var..] Alias: T
+// declare const $: any;
+// declare function aliased(arg: string): string;
+// 类型别名 type Alias = T
 type GenericIdentityFn = { <T>(arg: T): T; };
 let myIdentity4: GenericIdentityFn = identity;
 interface GenericIdentityFn1 { <T>(arg: T): T; }
@@ -296,6 +303,155 @@ let myIdentity5: GenericIdentityFn1 = identity;
 interface GenericIdentityFn2<T> { (arg: T): T; }
 let myIdentity6: GenericIdentityFn2<number> = identity;
 
+// factories 工厂方法: 一般用class类型构造器接口 C:{new():T;} => new C()
+interface IShape { color: string; }
+class Square implements IShape {
+  sideLength: number;
+  constructor(public readonly color: string) { } // 实现接口 { new(color: string): T; } 的类型
+}
+function createShape<T extends IShape>(obj: { new(color: string): T; }, color: string): T {
+  return new obj(color);
+}
+let redSquare: Square = createShape(Square, 'red');
+redSquare.sideLength = 1; // redSquare.color = 'green'; // Error!只读属性
+
+// enum 枚举类型
+enum FileAccess {
+  None,		// 默认为0，值为常量
+  Read    	= 1 << 1,
+  Write   	= 1 << 2,
+  ReadWrite	= Read | Write
+}
+
+// class <=> interface 类型兼容性
+interface Named { name: string; }
+class Person { name: string; }
+let p: Named = new Person(); // ok 兼容
+let s = { name: '', age: 1 };
+p = s; // ok 兼容
+
+// function <=> function 函数兼容性(输入|输出)
+let x = (a: number) => 0;
+let y = (b: number, s: string) => 0;
+y = x; // OK 兼容输入
+// x = y; // Error
+let items = [1, 2, 3];
+items.forEach((item, index, array) => console.log(item));
+items.forEach(item => console.log(item)); // OK 兼容输入
+let a = () => ({ name: "Alice" });
+let b = () => ({ name: "Alice", location: "Seattle" });
+a = b; // OK 兼容输出
+// b = a; // Error 缺少属性location
+
+// 扩展
+function extend<T, U>(first: T, second: U): T & U {
+  let result = <T & U>{};
+  for (let id in first) { (<any>result)[id] = (<any>first)[id]; }
+  for (let id in second) {
+    if (!result.hasOwnProperty(id)) { (<any>result)[id] = (<any>second)[id]; }
+  }
+  return result;
+}
+
+// Union Types 连合类型
+type N4 = 1 | 2 | 3 | 4;
+type Easing = "ease-in" | "ease-out" | "ease-in-out";
+interface Bird { fly(); layEggs(ea: Easing); }
+interface Fish { swim(); layEggs(e: Easing); }
+function getPet(): Fish | Bird {
+  return <Bird>{ fly: () => { console.log('Bird fly'); } };
+}
+function isFish(pet: Fish | Bird): pet is Fish {
+  return (<Fish>pet).swim !== undefined;
+}
+let pet = getPet();
+if (isFish(pet)) { pet.swim(); }
+else if (pet.fly) { pet.fly(); } // ok
+// typeof type guards 判断类型
+function isNumber(x: any): x is number {
+  return typeof x === "number";
+}
+console.log(isNumber(0)); // true
+
+// T & Tree & LinkedList 复杂结构
+type Container<T> = { value: T };
+type Tree<T> = { value: T; left: Tree<T>; right: Tree<T>; }
+type LinkedList<T> = T & { next: LinkedList<T> };
+interface Person { name: string; }
+let people: LinkedList<Person>;
+let s = people.name;
+s = people.next.name;
+s = people.next.next.name;
+
+// keyof 访问属性 { [k: T1]: T2 } 一般T1为string, T2为any; keyof obj1,即keyof作为运算符返回类型T1
+function prop<T, K extends keyof T>(t: T, k: K) { return t[k]; }
+function props<T, K extends keyof T>(t: T, ks: K[]): T[K][] { return ks.map(k => t[k]);}
+let x = { a: 1, b: 2, c: 3, d: 4 };
+prop(x, "a"); // ok
+console.log(props(new HTMLDivElement(), ["dir", "lang", "onclick"]));
+// keyof 获取只读属性
+type propReadonly<T> = { readonly [P in keyof T]: T[P]; }
+// keyof 获取可选属性
+type propPartial<T> = { [P in keyof T]?: T[P]; }
+// in keyof 筛选属性
+type Keys = 'option1' | 'option2';
+type Flags = { [K in Keys]: boolean }; // 判断
+type NullablePerson = { [P in keyof Person]: Person[P] | null } // Person
+type PartialPerson = { [P in keyof Person]?: Person[P] } // Person
+type Nullable<T> = { [P in keyof T]: T[P] | null } // global
+type Partial<T> = { [P in keyof T]?: T[P] } // global
+// 例子：T[P] is wrapped in a Proxy<T>
+type Proxy<T> = { get(): T; set(value: T): void; }
+type Proxify<T> = { [P in keyof T]: Proxy<T[P]>; }
+function proxify<T>(o: T): Proxify<T> { /* ... wrap proxies ... */}
+let proxyProps = proxify(props);
+// instanceof type guards 判断类型
+console.log(new HTMLElement() instanceof HTMLDivElement); // false, 反过来true
+
+// Symbols 原始数据类型(不可变，不能比较，唯一...) Starting with ECMAScript 2015, es6
+let prop1 = Symbol(1), prop2 = Symbol(1);
+console.log(prop1 == prop2); // false 不能比较
+let obj = { [prop1]: true, [prop2]() { return 'ok'; } }; // 当作对象的属性、方法
+console.log(obj.prop1, obj.prop2); // true, 'ok'
+
+// for 枚举与迭代
+let list = [4, 5, 6];
+for (let i in list) console.log(i); // for in(keys): "0", "1", "2",
+for (let i of list) console.log(i); // for of(values): "4", "5", "6"
+
+// modules 模块的导出与导入 (一般定义于*.ts, *.tsx, *.d.ts等文件, es6开始引入)
+// tsc default is Classic for --module AMD | System | ES2015 or Node otherwise.
+// e.g. import x from "..."; import x = require("..."); tsconfig: compilerOptions.baseUrl
+/// node.d.ts
+declare module "url" {
+  export interface Url {}
+  export function parse(urlStr: string): Url;
+}
+export as namespace UrlLib; // global variable 当变量用,出现在不需要用import,export的代码中
+/// <reference path="node.d.ts"/> // import reference file 用来导入*.d.ts, Triple-Slash Directives
+import * as URL from "url"; // module "url" in node.d.ts
+URL.parse("http://www.typescriptlang.org");
+
+// modules 特殊tsc: such as SystemJS and AMD allow non-JavaScript content to be imported.
+declare module "*!text" {
+  const content: string;
+  export default content;
+}
+declare module "json!*" {
+  const value: any;
+  export default value;
+}
+// modules 特殊tsc: import text file or json
+import fileContent from "./xyz.txt!text";
+import data from "json!http://example.com/data.json";
+console.log(data, fileContent);
+
+//~修饰器的实现,非ts稳定功能!
+function version_100<T extends { new(...args: any[]): {} }>(ctor: T) {
+  return class extends ctor {
+    version: '1.0.0'
+  };
+}
 
 ```
 
