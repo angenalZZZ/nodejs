@@ -256,15 +256,16 @@ let point3d: Point3d = { x: 1, y: 2, z: 3 };
 
 // this 对象关联
 interface UIElement {
+  element: Element;
   addClickListener(onclick: (this: void, e: Event) => void): void;
 }
-class Handler {
-  info: string;
-  static new(): Handler { return new Handler(); }
-  onClickGood = (e: Event) => { this.info = `${e.type} event!`; }
+abstract class UIElement {
+  static of: { (element: Element): UIElement } = element => {
+    return <UIElement>{ element: element };
+  };
 }
-const uiElement = <UIElement>{};
-uiElement.addClickListener(Handler.new().onClickGood);
+const ui = UIElement.of(new HTMLElement());
+ui.addClickListener(e => { console.log(`${ui.element.id} on ${e.type} event!`); });
 
 // function 复用
 function pickCard(x: { suit: string; card: number; }[]): number; // 申明
