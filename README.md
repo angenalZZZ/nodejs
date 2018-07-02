@@ -9,7 +9,7 @@
 
     javascript 运行有两个阶段：解析、执行。
 
-> 原始类型: Undefined、Null、Boolean、Number、String、Symbol
+> 原始类型: Undefined、Null、Boolean、Number、String、Symbol `es6`
 
 1.**原始类型**又被称为**基本类型**，原始类型保存的变量和值直接保存在**栈内存**(Stack)中,且空间相互独立,通过值来访问.
 
