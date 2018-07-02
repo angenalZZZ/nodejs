@@ -420,7 +420,7 @@ console.log(new HTMLElement() instanceof HTMLDivElement); // false, 反过来tru
 let prop1 = Symbol(1), prop2 = Symbol(1);
 console.log(prop1 == prop2); // false 不能比较
 let obj = { [prop1]: true, [prop2]() { return 'ok'; } }; // 当作对象的属性、方法
-console.log(obj.prop1, obj.prop2); // true, 'ok'
+// console.log(obj[prop1], obj[prop2]()); // true, 'ok'
 
 // for 枚举与迭代
 let list = [4, 5, 6];
@@ -717,7 +717,7 @@ new HttpServ_UseStaticFiles().start();
 
 #### 安全加密
 
-`md5,sha,aes,DH...`
+`常用md5,sha...; 对称加密[一个密钥(加密解密)]aes,des,IDEA...; 非对称加密[公钥(加密)+私钥(解密)]rsa,dsa,DH...`
 
 ````javascript
 const crypto = require('crypto');
@@ -748,7 +748,7 @@ function Aes(algorithm, password) {
         }
     }
 }
-/* 4.密钥交换协议 > DH算法是一种密钥交换协议，它可以让双方在不泄漏密钥的情况下协商出一个密钥来。
+/* 4.非对称加密算法 > 密钥交换协议: DH算法是一种密钥交换协议，它可以让双方在不泄漏密钥的情况下协商出一个密钥来。
    DH算法基于数学原理每次输出都不一样，因为是随机的。*/
 function DH_A(prime_length, prime_encoding, generator_encoding, keys_encoding) {
     var _ = crypto.createDiffieHellman(prime_length);
