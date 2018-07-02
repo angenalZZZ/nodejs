@@ -28,7 +28,7 @@
 
 2.数组`Array`不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.
 
-3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制.
+3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制`一层` `...还有解构功能: 解构数组、对象等`.
 ````javascript
 var p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
 ````
@@ -41,12 +41,13 @@ function Person(name) { this.name = name }
 var p1 = new Person(`p1`), p2 = new Person(`p2`);
 if(Object.getPrototypeOf(p1)===Person.prototype)
     Object.setPrototypeOf(Person.prototype,{sex:1});
-console.log(p1.name);console.log(p2.sex);
+console.log(p1.name);console.log(p2.sex); // 此时p1,p2都有sex属性
 console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
 ````
 
 `扩展String`
 ````javascript
+// format格式：'{0:f2}'.format(12.456) // 12.46
 String.prototype.format = function(...args) {
     return this.replace(/\{(\d+)(:\w+)?\}/g, function (m, n) {
         let s = m.split(':');
@@ -63,20 +64,19 @@ String.prototype.format = function(...args) {
 
 5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外)，优先级是:`箭头`函数>`new`绑定>`显式`绑定[`bind`>`call`|`apply`]>`隐式`绑定>`默认`绑定。
 ````javascript
-    apply、call、bind方法的共同点和区别：
-    apply、call、bind 三者都是用来改变函数的this对象的指向的；
-    apply、call、bind 三者第一个参数都是this要指向的对象，也就是想指定的上下文；
-    语法：apply([thisObj[,argArray]])
-    语法：call([thisObj[,arg1[,arg2[,arg3[,.argN]]]]])
+    apply、call、bind方法的共同点和语法区别：
+      三者都是用来改变函数的this对象的指向的；第一个参数都是this要指向的对象，也就是想指定的上下文；
+      语法a：apply([thisObj[,argArray]])
+      语法c：call([thisObj[,arg1[,arg2[,arg3[,.argN]]]]])
         thisObj的取值有以下4种情况：
             （1） 不传，或者传null,undefined，this指向window对象
             （2） 传递另一个函数的函数名，this指向这个函数的引用
             （3） 传递字符串、数值、布尔值等基础类型，this指向其对应的包装对象，如 String、Number、Boolean
             （4） 传递一个对象，this指向这个对象
-    语法：bind([thisObj[,arg1[,arg2[,arg3[,.argN]]]]]): function([,arg1[,arg2[,arg3[,.argN]]]])
-        !!不兼容IE6,7,8
+      语法b：bind([thisObj[,arg1[,arg2[,arg3[,.argN]]]]]): function([,arg1[,arg2[,arg3[,.argN]]]])
+        bind不兼容IE6,7,8
 ````
-6.作用域链`scope chain`,在ES2015中引入了let,通过let可以创建块级作用域.阻止了变量提升.
+6.作用域链`scope chain`,在ES2015`es6`中引入了let, 通过let可以创建块级作用域, 阻止了变量提升.
 
 7.Web模块加载框架: 模块化编程、可维护、动态加载、性能优化等。
 ````javascript
@@ -92,15 +92,15 @@ String.prototype.format = function(...args) {
 
 ```javascript
 // 申明变量：var全局变量, let局部变量, const常量
-// Basic Types...
+// 基本类型...
 let isDone: boolean = false;
 // ECMAScript 2015 即 es6
 let decimal: number = 6;
-//@ts-ignore  使用JSDoc注释下一行,@ts-ignore用来忽略错误
+//@ts-ignore  使用JSDoc注释(修饰)下一行, @ts-ignore用来忽略错误(ts语法)
 let hex: number = 0xf00d;
 let binary: number = 0b1010;
 let octal: number = 0o744;
-// 字符串
+// 字符串&模板
 let color: string = "blue"; color = 'red'; color = `Hello, my color is ${ color }`;
 // 数组Array
 let list: number[] = [1, 2, 3];
@@ -115,10 +115,11 @@ let obj1: any = 1; obj1.toFixed();
 // as-syntax 语法
 let n1: number = obj1 as number;
 let n2: number = <number>obj1 + n1; // 强转
-// void 一般作为function的返回类型
+// void 默认作为function的返回类型(function没有return时)
 let unusable: void = undefined; // or null
 // undefined and null actually have their own types and subtypes of all other types.
-// union type, note: ts config --strictNullChecks turned off.严格检查,像'use strict';
+
+// union type 联合类型, 下面tsc配置: --strictNullChecks 关闭null检查. 返之,严格检查'use strict';
 type strings = string | null | undefined; let strs1: strings;
 // Never 无返回｜异常...
 function error(message: string): never {
@@ -131,35 +132,35 @@ function infiniteLoop(loop: () => boolean): never {
 function createObject(o: object | null): any { return Object.create(o); }
 let obj2 = createObject(null); // {}
 
-// Scoping rules 作用域
+// Scoping rules 作用域规则: 块级作用域、全局作用域等.
 function fScoping(shouldInitialize: boolean) {
-    if (shouldInitialize) { var f = 10; }
+    if (shouldInitialize) { var f = 10; } // var 会提升Context范围`提升作用域`
     return f;
 }
 fScoping(true);  // 10
 fScoping(false); // undefined
-// 0,...9 in ts or es6 with let
+// 0,...9 in ts or es6 with let 此时用到scoping rule 范围变量let
 for (let i = 0; i < 10; i++) { setTimeout(function () { console.log(i); }, 100 * i); }
-// 0,...9 in js or es5 with var
+// 0,...9 in js or es5 with var 此时用到scoping function 范围构造函数(function(){})
 for (var i = 0; i < 10; i++) { (function (i) { setTimeout(function () { console.log(i); }, 100 * i); })(i); }
 
-// Array destructuring 解构数组
+// Array destructuring 解构数组 (必须初始化-赋值)
 let arr1 = [1, 2]; let [first, second] = arr1;
 [first, second] = [second, first]; // 互换
 let [first, ...rest] = [1, 2, 3, 4]; // rest [ 2, 3, 4 ]
-let [, second, , fourth] = [1, 2, 3, 4];
+let [, second, , fourth] = [1, 2, 3, 4]; // 按顺序解构
 
-// Object destructuring 解构对象
+// Object destructuring 解构对象 (必须初始化-赋值)
 let o = { a: "foo", b: 12, c: "bar" };
 // 初始化与赋值,并且重命名a为变量name,此时变量a不存在
 let { a: name, b } = o; ({ name, b } = { name: "baz", b: 101 });
-let { a: myname, b: myage}: {a: string, b: number} = o; // declare types
-let { a, ...passthrough } = o; // using the syntax ...
-let total = passthrough.b + passthrough.c.length;
+let { a: myname, b: myage}: {a: string, b: number} = o; // 解构并申明变量类型
+let { a, ...passthrough } = o; // 使用语法... 按顺序解构与合并
+let total = a.length + passthrough.b + passthrough.c.length;
 
 // Default values 默认值
 type C = { a: string, b?: number }
-function f({ a, b = 0 }: C = { a: '' }): void { }
+function f({ a, b = 0 }: C = { a: '' }): void { } // 双重默认值 f()==f({a:'',b:0})
 
 // Spread 快速赋值语法
 let first = [1, 2], second = [3, 4];
