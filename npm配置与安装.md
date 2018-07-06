@@ -12,12 +12,12 @@
  # npm 升级 & 加速器
 
 ~~~
-npm config ls -l   [检查代理等配置]
-npm i npm@latest -g			 [建议]
-npm i --proxy=http://localhost:23547		 [建议]
-npm i --registry=https://registry.npm.taobao.org 	 [建议]
-npm config set registry https://registry.npm.taobao.org [不建议]
-yarn config set registry https://registry.npm.taobao.org [不建议]
+ npm config ls -l                                         [检查代理等配置]
+ npm i npm@latest -g			                                   [建议]
+ npm i --proxy=http://localhost:23547		                   [建议]
+ npm i --registry=https://registry.npm.taobao.org 	       [建议]
+ npm config set registry https://registry.npm.taobao.org  [不建议]
+ yarn config set registry https://registry.npm.taobao.org [不建议]
 ~~~
 
  # npm 全局安装包 npm i -g
