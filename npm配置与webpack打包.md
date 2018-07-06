@@ -1,4 +1,6 @@
- # npm打包 package.json
+ # npm配置 package.json
+
+   运行：npm run dev, npm run prod...
 
 ~~~
  {
@@ -34,7 +36,7 @@
 }
 ~~~
  
- # webpack配置 webpack.config.js
+ # webpack打包 webpack.config.js
  
 ~~~javascript
 // 打包工具: https://github.com/webpack
