@@ -34,6 +34,7 @@ express	[web框架]
 jspm
 serve
 sqlpad
+http-server
 json-server
 grunt-cli   >grunt
 vue-cli      >vue
