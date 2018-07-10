@@ -6,7 +6,7 @@ Git for Windows: https://github.com/git-for-windows/git/releases/
 ~~~
 
 
-# [新建git项目与git发布](http://wangchujiang.com/linux-command/c/git.html)
+# [新建git项目与git发布`点击看其他教程`](http://wangchujiang.com/linux-command/c/git.html)
 
 
 ####  1.新建项目-目录-初始化本地git仓库(1个隐藏的目录.git)
