@@ -137,14 +137,22 @@ git branch clean_up
 ####  19.切换分支(签出新的分支)
 
 ~~~
-git checkout clean_up
+git checkout clean_up  # 切换到分支clean_up
+git checkout v1.10.1   # 切换到标签v1.10.1
+git checkout --orphan branch1 & git rm -rf .  # 新建一个空分支branch1 (--orphan表示没有commit记录的)
+git checkout -b branch1 0c304c9 # 从当前分支commit哈希值为0c304c9的节点，分一个新的分支branch1出来，并切换到branch1
 ~~~
 
-####  20.删除不要的文件
+####  20.删除不要的文件或取消修改
 
 ~~~
-git rm '*.txt'
-git rm -f *  # 强制移除
+git rm '*.txt' # 删除*.txt
+git rm -f *    # 强制移除所有
+git clean -xdf # 删除新增的文件
+git stash && git stash drop # 通过存储暂存区stash，在删除暂存区的方法放弃本地修改; 另外, git stash apply stash@{0} 可还原暂存区到工作区
+git checkout . # 还原所有修改，不会删除新增的文件
+git checkout -- [file]                  # 取消对文件file的修改
+git checkout branch|tag|commit -- [file]  # 从仓库取出file覆盖当前分支文件file
 ~~~
 
 ####  21.提交到本地git仓库的当前分支
@@ -179,13 +187,13 @@ git remote rm [远程仓库名origin]/[分支clean_up]
 ~~~
 git tag -a v0.1.3 -m "Release Version 0.1.3" # -a 添加, -d 删除
 git push --tags origin                 # 推送本地仓库的标签到远程仓库origin
-git push origin :refs/tags/[tag-name]  # 删除远程标签
+git push origin :refs/tags/[tag-name]  # 删除远程标签tag-name
 ~~~
 
 ####  26.最后发布
 
 ~~~
-git push --all         # 推送本地仓库的所有分支
+git push --all         # 推送本地仓库的所有分支和标签
 git push origin master # 推送本地仓库的主分支master到远程仓库origin
 ~~~
 
