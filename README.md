@@ -5,6 +5,11 @@
     4. 系统设计的架构受限于生产设计，反映出公司组织的沟通架构。(Conway定律!)
     5. 组织成员投入大量精力到琐碎的事情上。(车棚效应!!!)
 
+    “编程基础”：
+    [1.JavaScript 基础](./nodejs#javascript-基础)
+    [2.TypeScript 基础](./nodejs#typescript-基础)
+    [3.Node.js 基础](./nodejs#nodejs-基础)
+
 # **JavaScript 基础**
 
     javascript 运行有两个阶段：解析、执行。
