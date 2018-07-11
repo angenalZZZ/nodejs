@@ -36,7 +36,8 @@ serve
 sqlpad
 http-server
 json-server
-grunt-cli   >grunt
+think-cli    > https://github.com/thinkjs/thinkjs/  https://thinkjs.org/
+grunt-cli    >grunt
 vue-cli      >vue
 uglify-js    >uglifyjs
 weex-toolkit >weex
