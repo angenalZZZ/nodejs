@@ -132,7 +132,7 @@ let n2: number = <number>obj1 + n1; // 强转
 let unusable: void = undefined; // or null
 // undefined and null actually have their own types and subtypes of all other types.
 
-// union type 联合类型, 下面tsc配置: --strictNullChecks 关闭null检查. 返之,严格检查'use strict';
+// union type 联合类型, 可开启tsc配置: --strictNullChecks 检查null. 还有,严格检查'use strict';
 type strings = string | null | undefined; let strs1: strings;
 // Never 无返回｜异常...
 function error(message: string): never {
