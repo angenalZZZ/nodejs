@@ -1,14 +1,17 @@
-“编程定律”：
+
+`编程定律：`
+
     1. 凡事可能出错，就一定出错。(墨菲定律!!!)
     2. 过早优化是万恶之源。(Knuth定律!!)
     3. 每一个决定都是一次权衡。(North定律!)
     4. 系统设计的架构受限于生产设计，反映出公司组织的沟通架构。(Conway定律!)
     5. 组织成员投入大量精力到琐碎的事情上。(车棚效应!!!)
 
-“编程基础”：
-    [1.JavaScript 基础](#javascript-基础)
-    [2.TypeScript 基础](#typescript-基础)
-    [3.Node.js 基础](#nodejs-基础)
+`编程基础：`
+
+  [1.JavaScript 基础](#javascript-基础)
+  [2.TypeScript 基础](#typescript-基础)
+  [3.Node.js 基础](#nodejs-基础)
 
 # **JavaScript 基础**
 
