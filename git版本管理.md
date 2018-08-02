@@ -147,7 +147,7 @@ git checkout -b branch1 0c304c9 # 从当前分支commit哈希值为0c304c9的节
 
 ~~~
 git rm '*.txt' # 删除*.txt
-git rm -f *    # 强制移除所有
+git rm -f *    # 强制移除所有  (CMD: rd /q/s [删除目录], BASH: rm -rf [删除目录])
 git clean -xdf # 删除新增的文件
 git stash && git stash drop # 通过存储暂存区stash，在删除暂存区的方法放弃本地修改; 另外, git stash apply stash@{0} 可还原暂存区到工作区
 git checkout . # 还原所有修改，不会删除新增的文件
