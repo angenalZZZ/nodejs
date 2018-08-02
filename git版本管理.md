@@ -48,7 +48,7 @@ git status 或 git stash & git checkout [现有分支] ... 或 git checkout mast
 git commit -m "Add cute octocat story"
 ~~~
 
-####  7.提交所有更改到本地git仓库(-a可处理冲突)
+####  7.提交所有更改到本地git仓库(-a添加并处理冲突)
 
 ~~~
 git commit -am '功能#01完成'
