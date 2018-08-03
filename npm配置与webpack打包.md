@@ -1,6 +1,6 @@
  # npm配置 package.json
 
-   `运行：npm run dev, npm run prod...`
+   `运行：npm run dev, npm run prod...` [npm模块管理器](http://javascript.ruanyifeng.com/nodejs/npm.html)
 
 ~~~
  {
