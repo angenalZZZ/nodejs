@@ -3,15 +3,19 @@
 ~~~
   [git] git config --global user.name "yangzhou"
         git config --global user.email "angenal@hotmail.com"
+        npm set init-author-name yangzhou
+        npm set init-author-email angenal@hotmail.com
+        npm set init-license MIT        
   [系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
   [用户变量 Path] += D:\Program\nodejs\node_global
-  npm config set cache "D:\Program\nodejs\node_cache"
-  npm config set prefix "D:\Program\nodejs\node_global"
+  npm config set cache "D:\Program\nodejs\node_cache"   [写权限]
+  npm config set prefix "D:\Program\nodejs\node_global" [写权限]
 ~~~
 
  # npm 升级 & 加速器
 
 ~~~
+ npm info [package-name]
  npm config ls -l                                         [检查代理等配置]
  npm i npm@latest -g                                      [建议]
  npm i --proxy=http://localhost:23547                     [建议]
