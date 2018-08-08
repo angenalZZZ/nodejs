@@ -51,7 +51,8 @@ git commit -m "Add cute octocat story"
 ####  7.提交所有更改到本地git仓库(-a添加并处理冲突)
 
 ~~~
-git commit -am '功能#01完成'
+git commit -am '功能#01完成'  # 新增commit
+git reset --soft HEAD^       # 回退一次commit
 ~~~
 
 ####  8.查看本地git仓库当前分支的提交记录
