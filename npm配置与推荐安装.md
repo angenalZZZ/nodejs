@@ -20,7 +20,10 @@
  npm i npm@latest -g                                      [建议]
  npm i --proxy=http://localhost:23547                     [建议]
  npm i --registry=https://registry.npm.taobao.org         [建议]
+ # install cnpm
+ npm install -g cnpm --registry=https://registry.npm.taobao.org
  npm config set registry https://registry.npm.taobao.org  [不建议]
+ # install yarn from https://yarn.bootcss.com/docs/install/
  yarn config set registry https://registry.npm.taobao.org [不建议]
 ~~~
 
@@ -30,16 +33,17 @@ npm i -g webpack webpack-cli webpack-dev-server | cnpm install node-sass -g
 typescript  >tsc >tsserver /* 非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js */
 @angular/cli  >ng           /*  ng set --global warnings.packageDeprecation=false */
 @compodoc/compodoc >compodoc
-yarn         >yarn >yarnpkg
-node-gyp [结合VS编译]
-nrm	[代理切换]
+nrm	 [代理切换]
 cnpm	[代理taobao]
+cnpm install node-sass@4.7.2 [sass>css编译]
+node-gyp [结合VS编译]
 express	[web框架]
 jspm
 serve
 sqlpad
 http-server
 json-server
+yarn         >yarn >yarnpkg
 think-cli    > https://github.com/thinkjs/thinkjs/  https://thinkjs.org/
 grunt-cli    >grunt
 vue-cli      >vue
