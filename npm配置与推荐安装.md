@@ -42,20 +42,20 @@ serve
 sqlpad
 http-server
 json-server
-yarn         >yarn >yarnpkg
+yarn         > yarn | yarnpkg
+grunt-cli    > grunt
+vue-cli      > vue
+uglify-js    > uglifyjs
+weex-toolkit > weex
 think-cli    > https://github.com/thinkjs/thinkjs/  https://thinkjs.org/
-grunt-cli    >grunt
-vue-cli      >vue
-uglify-js    >uglifyjs
-weex-toolkit >weex
-lite-server >lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
+lite-server  > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
 ~~~
 
  # npm 一般安装包 (npm|yarn) install
 
 ~~~
 npm init -f     [初始化项目package.json]
-npm i -S [name] [添加项目程序依赖包到dependencies]
-npm i -D [name] [添加项目工具依赖包到devDependencies]
+npm i -S [package name] [添加项目程序依赖包到dependencies]
+npm i -D [package name] [添加项目工具依赖包到devDependencies]
 ~~~
 
