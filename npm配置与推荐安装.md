@@ -44,15 +44,14 @@ npm i -D [package name] [添加项目工具依赖包到devDependencies]
 npm i -g webpack webpack-cli webpack-dev-server | cnpm i -g node-sass [sass>css编译]
 npm i -g typescript    >tsc >tsserver /* 非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js */
 npm i -g @angular/cli  >ng           /*  ng set --global warnings.packageDeprecation=false */
+npm i -g vue-cli       >vue
+npm i -g weex-toolkit  >weex
 npm i -g @compodoc/compodoc
+npm i -g yo jspm sqlpad
 npm i -g serve http-server json-server
-npm i -g jspm sqlpad
+lite-server  > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
 grunt-cli    > grunt
 uglify-js    > uglifyjs
-vue-cli      > vue
-weex-toolkit > weex
-think-cli    > https://github.com/thinkjs/thinkjs/  https://thinkjs.org/
-lite-server  > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
 ~~~
 
  # npm 后端安装包 (npm|yarn) install
@@ -61,9 +60,12 @@ lite-server  > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./sr
 # typescript | ts-node | io-ts
 
 # web框架-serve
-npm i -g express
+npm i -g yo generator-k  # Koa项目构建 https://github.com/minghe/generator-k
+npm i -g think-cli       # 基于Koa2构建 https://github.com/thinkjs/thinkjs  https://thinkjs.org
+npm i -g express         # Express项目构建 https://github.com/expressjs/express http://www.expressjs.com.cn/resources/frameworks.html
+npm i -S hapi            # 基于Express构建 https://github.com/hapijs/hapi  https://hapijs.com
 
-# 数据库访问
+# 数据库访问-ORM
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
 npm i -S mongoose  # MongoDB https://mongoosejs.com/docs/index.html
 
