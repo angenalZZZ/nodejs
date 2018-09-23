@@ -24,28 +24,30 @@
  npm i --registry=https://registry.npm.taobao.org         [建议]
  # install cnpm
  npm i -g cnpm --registry=https://registry.npm.taobao.org [代理taobao]
- npm i -g nrm	 [代理切换]
+ npm i -g nrm	                                            [代理切换]
  # install yarn from https://yarn.bootcss.com/docs/install/
- npm i -g yarn > yarn | yarnpkg
- npm i -g node-gyp [结合VS编译]
+ npm i -g yarn > yarn | yarnpkg                           [包管理器]
+ npm i -g node-gyp                                        [结合VS编译]
+ cnpm i -g node-sass                                      [sass>css编译]
 ~~~
 
  # npm 如何安装 (npm|yarn) install
 
 ~~~
-npm init -f     [初始化项目package.json]
-npm i -S [package name] [添加项目程序依赖包到dependencies]
-npm i -D [package name] [添加项目工具依赖包到devDependencies]
+npm init -f                                               [初始化项目package.json]
+npm i -S [--save --no-save]                               [添加项目程序依赖包到dependencies]
+npm i -D [--save-dev]                                     [添加项目工具依赖包到devDependencies]
 ~~~
 
- # npm 全局安装包 npm i -g
+ # npm 全局安装包 npm install -g
  
 ~~~
-npm i -g webpack webpack-cli webpack-dev-server | cnpm i -g node-sass [sass>css编译]
-npm i -g typescript    >tsc >tsserver /* 非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js */
-npm i -g @angular/cli  >ng           /*  ng set --global warnings.packageDeprecation=false */
-npm i -g vue-cli       >vue
-npm i -g weex-toolkit  >weex
+npm i -g webpack webpack-cli webpack-dev-server
+npm i -g typescript    >tsc >tsserver # ts-node | io-ts    非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js
+npm i -g vue-cli       >vue           # 构建工具Vue
+npm i -g @angular/cli  >ng            # 跨平台构建工具Angular2，ng set --global warnings.packageDeprecation=false
+npm i -g weex-toolkit  >weex          # 跨平台构建工具weex https://github.com/apache/incubator-weex https://alibaba.github.io
+npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
 npm i -g @compodoc/compodoc
 npm i -g yo jspm sqlpad
 npm i -g serve http-server json-server
@@ -57,17 +59,17 @@ uglify-js    > uglifyjs
  # npm 后端安装包 (npm|yarn) install
 
 ~~~
-# typescript | ts-node | io-ts
-
 # web框架-serve
 npm i -g yo generator-k  # Koa项目构建 https://github.com/minghe/generator-k
-npm i -g think-cli       # 基于Koa2构建 https://github.com/thinkjs/thinkjs  https://thinkjs.org
-npm i -g express         # Express项目构建 https://github.com/expressjs/express http://www.expressjs.com.cn/resources/frameworks.html
-npm i -S hapi            # 基于Express构建 https://github.com/hapijs/hapi  https://hapijs.com
+npm i -g think-cli       # think基于Koa2构建 https://github.com/thinkjs/thinkjs  https://thinkjs.org
+npm i -g express         # Express项目构建 https://github.com/expressjs/express  http://www.expressjs.com.cn/resources/frameworks.html
+npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hapi  https://hapijs.com
+npm i -S inert           # hapi插件-静态资源 https://github.com/hapijs/inert
+npm i -S hapi-sequelize  # hapi插件-Sequelize ORM https://github.com/danecando/hapi-sequelize
 
 # 数据库访问-ORM
-npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
 npm i -S mongoose  # MongoDB https://mongoosejs.com/docs/index.html
+npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
 
 ~~~
 
