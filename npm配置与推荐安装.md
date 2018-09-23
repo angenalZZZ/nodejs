@@ -29,7 +29,7 @@
 
  # npm 全局安装包 npm i -g
 ~~~
-npm i -g webpack webpack-cli webpack-dev-server | cnpm i -g node-sass@4.7.2 [sass>css编译]
+npm i -g webpack webpack-cli webpack-dev-server | cnpm i -g node-sass [sass>css编译]
 typescript  >tsc >tsserver /* 非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js */
 @angular/cli  >ng           /*  ng set --global warnings.packageDeprecation=false */
 @compodoc/compodoc >compodoc
