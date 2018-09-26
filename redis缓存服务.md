@@ -34,7 +34,7 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
  > incrby age 2                   # 计数: += 2
  
 2. list   # 列表 LinkedList 链表[内存: 元素少时ziplist压缩列表, 元素多时quicklist快速列表 ]: 插入删除快Time=O(1),索引定位慢Time=O(n)
- > rpush books python java swift golang # 插入: 成功返回3,失败返回0.
+ > rpush books python java swift golang # 插入: 成功返回4,失败返回0.
  > llen books                     # 列表长度: 成功返回4
  > lpop books                     # 取值快: 成功返回python
  > rpop books                     # 取值快: 成功返回golang
