@@ -21,8 +21,8 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 
 ~~~
 1. string # 字符串
- > set key value
- > get key
+ > set key value                  # 添加/修改
+ > get key                        # 获取value
  > exists key                     # if key is exists: 成功返回1,失败返回0.
  > del key                        # 删除: 成功返回1,失败返回0.
  > mset name1 value1 name2 value2 # 批量设置
@@ -42,10 +42,24 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
  > lrange books 0 -1              # 取全部: 成功返回java swift, O(n) 慎用
  > ltrim books 1 -1               # 从第二个开始截取全部: 成功返回OK, O(n) 慎用
  > ltrim books 1 0                # 清空: llen books = 0 可用
- 
-3. set    # 集合
-4. zset   # 有序集合
-5. hash   # 哈希
+
+3. hash   # 哈希 HashMap 无序字典[内存: 数组+链表二维结构，采用渐进式rehash策略，存储消耗高于单个字符串]
+ > hset books java "think in java" # 添加/修改: 字符串如果有空格要用引用
+ > hgetall books
+ > hget books java
+ > hmset books golang "c in go" python "python cookbook"  # 批量添加/修改
+ > hmget bokks java golang python
+ > hlen books                      # 列表长度: 成功返回1
+ > hset books count 3
+ > hincrby books count 1           # 计数: += 1
+4. set    # 集合
+5. zset   # 有序集合
+
+~~~
+
+~~~
+1. 压力测试工具
+ > redis-benchmark -t set -P 2 -q # 管道提升性能: 成功返回SET:51975.05 requests per second, 慎用 参数-P越大QPS越高,但可能CPU已100%了.
 ~~~
 
 
