@@ -15,6 +15,7 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 ~~~
 redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 > info                          # redis服务信息
+> info memory                   # redis内存使用概况与分配mem_allocator:libc、tcmalloc(google)、jemalloc(facebook)[默认-性能最佳]
 ~~~
 
 ####  2.基础数据结构
