@@ -15,6 +15,24 @@
   
   [3. Node.js 基础](#nodejs-基础) 
 
+`[实用程序库]`
+
+  [30 seconds of code 代码片段集合](https://github.com/30-seconds/30-seconds-of-code) [中文翻译](http://www.css88.com/30-seconds-of-code/)
+  [Licia 实用代码片段](https://github.com/liriliri/licia) 
+  [Lodash 中文文档](http://www.css88.com/doc/lodash) 
+  [Underscore 中文文档](http://www.css88.com/doc/underscore) 
+  [Ramda 函数式编程](https://github.com/ramda/ramda) [js函数式编程术语大全](http://www.css88.com/archives/7833)
+  [Mathjs 数学扩展库](https://github.com/josdejong/mathjs) 
+  [Moment 日期时间操作库](https://github.com/moment/moment) [date-fns日期时间函数库](https://github.com/date-fns/date-fns) 
+  [Sugar 对象库](https://github.com/andrewplummer/Sugar) 
+  [Lazy 懒加载Like-Underscore](https://github.com/dtao/lazy.js) 
+  [CollectJS 数组对象](https://github.com/ecrmnn/collect.js) 
+  [ChanceJS 随机字符串-数字](https://github.com/chancejs/chancejs) 
+  [ChartJS 数据可视化<canvas>](https://github.com/chartjs/Chart.js) 
+  [Polished 样式工具集](https://github.com/styled-components/polished) 
+  [mojs 动画-图形库](https://github.com/legomushroom/mojs) 
+  [Voca 字符串操作库](https://github.com/panzerdp/voca) 
+
 ---
 
 
