@@ -71,6 +71,8 @@ npm i -S hapi-sequelize  # hapi插件-Sequelize ORM https://github.com/danecando
 npm i -S mongoose  # MongoDB https://mongoosejs.com/docs/index.html
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
 
+# web IRC客户端(Internet Relay Chat)
+yarn global add thelounge
 ~~~
 
 
