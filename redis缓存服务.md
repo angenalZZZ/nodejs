@@ -15,6 +15,7 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 ~~~
 redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 > info                          # redis服务信息
+> info clients                  # redis connected_clients
 > info memory                   # redis内存使用概况与分配mem_allocator:libc、tcmalloc(google)、jemalloc(facebook)[默认-性能最佳]
 ~~~
 
@@ -78,6 +79,11 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
  # 以上的list/hash/set/zset是容器型数据结构,它们有通用规则:
  # 1. create if not exists 容器不存在就创建一个再操作 2. drop if no elements 容器中元素没有了释放内存,列表消失
 ---------------------------------------------------------------
+6. stream   # 频道[发送/接收/历史]消息
+ > xadd channel1 * create-channel null              # 创建频道channel1,发送空消息create-channel
+ > xadd channel1 * message1 "hello world" message2 "my name is stream"  # 创建频道channel1,发送消息message1...
+ > xread block 10 streams channel1 1538804450788-0  # 接收消息
+ > xrange channel1 1538804450789-0 +                # 历史消息
 ~~~
 
 ~~~
