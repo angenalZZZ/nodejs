@@ -8,8 +8,8 @@
         npm set init-license MIT        
   [系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
   [用户变量 Path] += D:\Program\nodejs\node_global
-  npm config set cache "D:\Program\nodejs\node_cache"   [写权限]
-  npm config set prefix "D:\Program\nodejs\node_global" [写权限]
+  npm config set cache "D:\Program\nodejs\node_cache"      [写权限]
+  npm config set prefix "D:\Program\nodejs\node_global"    [写权限]
   npm config set registry https://registry.npm.taobao.org  [不建议]
   yarn config set registry https://registry.npm.taobao.org [不建议]
 ~~~
@@ -24,7 +24,7 @@
  npm i --registry=https://registry.npm.taobao.org         [建议]
  # install cnpm
  npm i -g cnpm --registry=https://registry.npm.taobao.org [代理taobao]
- npm i -g nrm	                                            [代理切换]
+ npm i -g nrm	                                           [代理切换]
  # install yarn from https://yarn.bootcss.com/docs/install/
  npm i -g yarn > yarn | yarnpkg                           [包管理器]
  npm i -g node-gyp                                        [结合VS编译]
@@ -51,6 +51,7 @@ npm i -g react-native-cli             # 跨平台构建工具RN https://reactnat
 npm i -g @compodoc/compodoc
 npm i -g yo jspm sqlpad
 npm i -g serve http-server json-server
+npm i -g supervisor                   # 监视代码的改动然后自动重启 Node.js 服务: Supervisor / nodemon / PM2 > supervisor app.js
 lite-server  > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
 grunt-cli    > grunt
 uglify-js    > uglifyjs
@@ -64,8 +65,19 @@ npm i -g yo generator-k  # Koa项目构建 https://github.com/minghe/generator-k
 npm i -g think-cli       # think基于Koa2构建 https://github.com/thinkjs/thinkjs  https://thinkjs.org
 npm i -g express         # Express项目构建 https://github.com/expressjs/express  http://www.expressjs.com.cn/resources/frameworks.html
 npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hapi  https://hapijs.com
-npm i -S inert           # hapi插件-静态资源 https://github.com/hapijs/inert
-npm i -S hapi-sequelize  # hapi插件-Sequelize ORM https://github.com/danecando/hapi-sequelize
+    # Lab & Code 测试插件
+    # Joi 面向 Object Schema 的验证器插件
+    # Bell 第三方登录插件
+    # Good 监控日志相关插件
+    # Boom 友好的 HTTP 错误返回插件
+    # h2o2 代理转发插件
+    # Catbox 缓存策略插件
+    # hapi-auth-cookie 基于 Cookie 的用户认证插件
+    # Inert 静态文件资源管理插件 https://github.com/hapijs/inert
+    # tv 可交互式的 debug 控制台
+    # Vision 网页模板渲染插件
+    # Sequelize 数据库访问-ORM  https://github.com/danecando/hapi-sequelize
+    # and so on ...
 
 # 数据库访问-ORM
 npm i -S mongoose  # MongoDB https://mongoosejs.com/docs/index.html
