@@ -14,9 +14,47 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 
 ~~~
 redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
-> info                          # redis服务信息
-> info clients                  # redis connected_clients
-> info memory                   # redis内存使用概况与分配mem_allocator:libc、tcmalloc(google)、jemalloc(facebook)[默认-性能最佳]
+> info                          # 获取所有信息
+  # 1. Server 服务器运行的环境参数
+  # 2. Clients 客户端相关信息
+  # 3. Memory 服务器运行内存统计数据
+  # 4. Persistence 持久化信息
+  # 5. Stats 通用统计数据
+  # 6. Replication 主从复制相关信息
+  # 7. CPU CPU 使用情况
+  # 8. Cluster 集群信息
+  # 9. KeySpace 键值对统计数量信息
+  
+> info memory                   # 获取内存相关信息,内存分配mem_allocator:libc、tcmalloc(google)、jemalloc(facebook:默认:性能最佳)
+> redis-cli info memory | grep used | grep human
+  used_memory_human:827.46K     # 内存分配器 (jemalloc) 从操作系统分配的内存总量
+  used_memory_rss_human:3.61M   # 操作系统看到的内存占用 ,top 命令看到的内存
+  used_memory_peak_human:29.41K # Redis 内存消耗的峰值
+  used_memory_lua_human:37.00K  # lua 脚本引擎占用的内存大小
+  # 如果单个 Redis 内存占用过大，并且在业务上没有太多压缩的空间的话，可以考虑集群化了。
+  
+> info replication              # 获取主从复制相关信息
+> info replication | grep backlog
+  repl_backlog_active:0
+  repl_backlog_size:1048576     # 这个就是积压缓冲区大小
+  # 复制积压缓冲区大小非常重要，它严重影响到主从复制的效率。当从库因为网络原因临时断开了主库的复制，然后网络恢复了，又重新连上的时候，
+  # 这段断开的时间内发生在 master 上的修改操作指令都会放在积压缓冲区中，这样从库可以通过积压缓冲区恢复中断的主从同步过程。
+  # 积压缓冲区是环形的，后来的指令会覆盖掉前面的内容。如果从库断开的时间过长，或者缓冲区的大小设置的太小，都会导致从库无法快速恢复中断的主从同步过程，因为中间的修改指令被覆盖掉了。这时候从库就会进行全量同步模式，非常耗费 CPU 和网络资源。
+  
+> redis-cli info stats | grep sync
+  sync_full:0
+  sync_partial_ok:0
+  sync_partial_err:0            # 半同步失败次数
+  # 通过查看sync_partial_err变量来决定是否需要扩大积压缓冲区，它表示主从半同步复制失败的次数。
+
+> info clients                  # 客户端相关信息, 如:connected_clients(正在连接的客户端数量);
+> info client list              # 列出所有的客户端链接地址
+> info stats | grep reject
+  rejected_connections(超出最大连接数限制而被拒绝的客户端连接次数)数字很大，意味着服务器的最大连接数设置过低，需要调整 maxclients 参数。
+  
+> info stats | grep ops         # 每秒操作数:instantaneous_ops_per_sec:***
+> monitor                       # 如果 qps 过高，快速观察究竟是哪些 key 访问比较频繁，从而在业务上进行优化，减少 IO 次数(执行后立即ctrl+c中断)
+
 ~~~
 
 ####  2.基础数据结构 [Redis 深度历险：核心原理与应用实践 - 老錢 - 掘金小册](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
