@@ -19,7 +19,7 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 > info memory                   # redis内存使用概况与分配mem_allocator:libc、tcmalloc(google)、jemalloc(facebook)[默认-性能最佳]
 ~~~
 
-####  2.基础数据结构
+####  2.基础数据结构 [Redis 深度历险：核心原理与应用实践 - 老錢 - 掘金小册](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
 
 ~~~
 1. string # 字符串
