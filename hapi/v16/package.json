@@ -1,0 +1,25 @@
+{
+  "name": "hapi-tutorial",
+  "version": "1.0.0",
+  "description": "基于 hapi 接口服务教程",
+  "main": "app.js",
+  "scripts": {
+    "test": "supervisor app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/angenalZZZ/nodejs.git"
+  },
+  "keywords": [
+    "hapi"
+  ],
+  "author": "yangzhou <angenal@hotmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/angenalZZZ/nodejs/issues"
+  },
+  "homepage": "https://github.com/angenalZZZ/nodejs#readme",
+  "dependencies": {
+    "hapi": "^16.6.3"
+  }
+}
