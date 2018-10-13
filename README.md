@@ -644,11 +644,10 @@ n.send({ hello: 'world' });
 const util = require('util');
 const EventEmitter = require('events').EventEmitter;
 
-function Music() {
-    EventEmitter.call(this);
-}
-
-util.inherits(Music, EventEmitter);
+function Music() { EventEmitter.call(this); }
+util.inherits(Music, EventEmitter);  // var a = new Music(); a.on('play', playHandle); a.emit('play', '国歌');
+var Person = function (name) { this.name = name; }
+util.inherits(Person, EventEmitter); // var a = new Person('nodejs'); a.on('speak', speakHandle); a.emit('speak', '您好');
 
 //2.监听与触发
 // 除了常用on方法以外,还有一个同样效果的方法emitter.addListener(eventName, listener)
