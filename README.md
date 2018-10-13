@@ -517,7 +517,9 @@ function version_100<T extends { new(...args: any[]): {} }>(ctor: T) {
 ## 全局变量
 
 ````javascript
-console.info(__filename) //当前文件
+console.info(__filename); //当前文件
+console.info(__dirname);  //当前目录
+console.info(process.env); //系统环境变量
 
 console.time(__filename);//计时开始
 console.warn('我们的{0},GDP超:{1:f2}万亿.'.format('祖国',1738094.329));
@@ -529,7 +531,7 @@ process.on('SIGINT', () => {
     console.warn('  processes receives a signal');
     process.exit(0);
 });
-//process.stdin.on('data', (s) => process.stdout.write(s));
+process.stdin.on('data', (s) => process.stdout.write(s));
 
 ````
 
