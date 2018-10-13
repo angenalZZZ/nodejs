@@ -817,7 +817,7 @@ function DH_B(a) {
 }
 
 /* 被加密 明文 */
-const str = `12345678`;
+// const str = `12345678`;
 
 /* 加密： 哈希算法 */
 // md5.update(str, "utf8"); console.log(`md5: ${str} | ${md5.digest('hex')}`);
@@ -833,6 +833,30 @@ const str = `12345678`;
 /* 加密： 密钥交换协议 */
 // const dh_a = new DH_A(512), dh_b = new DH_B(dh_a);
 // console.log(dh_a.computeSecret(dh_b), dh_b.computeSecret());
+
+// ### 加密压缩文件 ###
+// var crypto = require('crypto');
+var fs = require('fs');
+var zlib = require('zlib');
+
+var algorithm = 'aes-256-cbc';
+var password = Buffer.from(process.env.password || 'my-password', 'utf8');
+var encryptoStream = crypto.createCipher(algorithm, password);
+
+var gzip = zlib.createGzip();
+var writeStream = fs.createWriteStream(__dirname + '/output.gz');
+var readStream = fs.createReadStream(__dirname + '/input.txt');
+
+readStream.pipe(encryptoStream).pipe(gzip).pipe(writeStream)
+.on('finish', function () { console.log('加密完成'); });
+
+// ### 解密压缩文件 ###
+var decryptStream2 = crypto.createDecipher(algorithm, password);
+var gzip2 = zlib.createGunzip();
+var readStream2 = fs.createReadStream(__dirname + '/output.gz');
+
+readStream2.pipe(gzip2).pipe(decryptStream2)
+.on('finish', function () { console.log('解密完成'); }).pipe(process.stdout);
 
 ````
 ---
