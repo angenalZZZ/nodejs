@@ -133,7 +133,8 @@ String.prototype.format = function(...args) {
 ---
 
 
-# TypeScript 基础 ( [es6]ES2015, ES2016,ES2017,ES2018... )
+# TypeScript 基础
+ `[ (es6)ES2015, ES2016,ES2017,ES2018... ]`
 
 ```javascript
 // # 申明变量：var全局变量, let局部变量, const常量
