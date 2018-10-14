@@ -155,6 +155,57 @@ let t2: [string, number]; t2 = ["hello", 10];
 enum Color {Red, Green, Blue}
 let e1: Color = Color.Green;
 let e1ColorName: string = Color[2]; // Blue
+// # 枚举类型 分为 数字类型 与 字符串类型，其中数字类型的枚举可以当标志使用：
+export const enum ObjectFlags {
+  Class            = 1 << 0,  // Class
+  Interface        = 1 << 1,  // Interface
+  Reference        = 1 << 2,  // Generic type reference
+  Tuple            = 1 << 3,  // Synthesized generic tuple type
+  Anonymous        = 1 << 4,  // Anonymous
+  Mapped           = 1 << 5,  // Mapped
+  Instantiated     = 1 << 6,  // Instantiated anonymous or mapped type
+  ObjectLiteral    = 1 << 7,  // Originates in an object literal
+  EvolvingArray    = 1 << 8,  // Evolving array type
+  ObjectLiteralPatternWithComputedProperties = 1 << 9,  // Object literal pattern with computed properties
+  ContainsSpread   = 1 << 10, // Object literal contains spread operation
+  ReverseMapped    = 1 << 11, // Object contains a property from a reverse-mapped type
+  JsxAttributes    = 1 << 12, // Jsx attributes type
+  MarkerType       = 1 << 13, // Marker type used for variance probing
+  JSLiteral        = 1 << 14, // Object type declared in JS - disables errors on read/write of nonexisting members
+  ClassOrInterface = Class | Interface
+}
+enum AnimalFlags {
+  None        = 0,
+  HasClaws    = 1 << 0,
+  CanFly      = 1 << 1,
+  HasClawsOrCanFly = HasClaws | CanFly
+}
+interface Animal {
+  flags: AnimalFlags;
+  [key: string]: any;
+}
+function printAnimalAbilities(animal: Animal) {
+  var animalFlags = animal.flags;
+  if (animalFlags & AnimalFlags.HasClaws) {
+    console.log('animal has claws');
+  }
+  if (animalFlags & AnimalFlags.CanFly) {
+    console.log('animal can fly');
+  }
+  if (animalFlags == AnimalFlags.None) {
+    console.log('nothing');
+  }
+}
+var animal = { flags: AnimalFlags.None };
+printAnimalAbilities(animal); // nothing
+animal.flags |= AnimalFlags.HasClaws;
+printAnimalAbilities(animal); // animal has claws
+animal.flags &= ~AnimalFlags.HasClaws;
+printAnimalAbilities(animal); // nothing
+animal.flags |= AnimalFlags.HasClaws | AnimalFlags.CanFly;
+printAnimalAbilities(animal); // animal has claws, animal can fly
+// ## 代码中 |= 用来添加一个标志，&= 和 ~ 用来删除标志，| 用来合并标志。
+
 // # any 不同于 Object; any 不要作为function的返回类型
 let obj1: any = 1; obj1.toFixed();
 // # as-syntax 语法
@@ -455,13 +506,43 @@ type NullablePerson = { [P in keyof Person]: Person[P] | null } // Person
 type PartialPerson = { [P in keyof Person]?: Person[P] } // Person
 type Nullable<T> = { [P in keyof T]: T[P] | null } // global
 type Partial<T> = { [P in keyof T]?: T[P] } // global
-// 例子：T[P] is wrapped in a Proxy<T>
+//  例子：T[P] is wrapped in a Proxy<T>
 type Proxy<T> = { get(): T; set(value: T): void; }
 type Proxify<T> = { [P in keyof T]: Proxy<T[P]>; }
 function proxify<T>(o: T): Proxify<T> { /* ... wrap proxies ... */}
 let proxyProps = proxify(props);
 // instanceof type guards 判断类型
 console.log(new HTMLElement() instanceof HTMLDivElement); // false, 反过来true
+
+// # in keyof 获取类型中的函数定义
+type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T];
+type FunctionProperties<T> = Pick<T, FunctionPropertyNames<T>>;
+interface Part { name: string; updatePart(newName: string): void; }               // 类型Part
+type Tf0 = FunctionPropertyNames<Part>;  // "updatePart"                          // 类型Part的函数名
+type Tf1 = FunctionProperties<Part>;     // { updatePart(newName: string): void } // 类型Part的函数定义
+
+// # in 映射类型 扩展 interface + class 的声明方式
+type ArrayMethodName = 'filter' | 'forEach' | 'find';
+type SelectArrayMethod<T> = {
+ [K in ArrayMethodName]: Array<T>[K]
+}
+interface SomeClass extends SelectArrayMethod<number> {}
+class SomeClass {
+ value = [1, 2, 3];               // 映射类型
+ someMethod() {
+   this.forEach(/* ... */)        // ok
+   this.find(/* ... */)           // ok
+   this.filter(/* ... */)         // ok
+   this.value                     // ok
+   this.someMethod()              // ok
+ }
+}
+const someClass = new SomeClass();
+someClass.forEach(/* ... */)        // ok
+someClass.find(/* ... */)           // ok
+someClass.filter(/* ... */)         // ok
+someClass.value                     // ok
+someClass.someMethod()              // ok
 
 // # ThisType 用来在对象中键入this
 type ObjectDescriptor<D, M> = {
@@ -490,6 +571,13 @@ let prop1 = Symbol(1), prop2 = Symbol(1);
 console.log(prop1 == prop2); // false 不能比较
 let obj = { [prop1]: true, [prop2]() { return 'ok'; } }; // 当作对象的属性、方法
 // console.log(obj[prop1], obj[prop2]()); // true, 'ok'
+
+// # 类型断言 用来明确的告诉 TypeScript 值的详细类型，合理使用能减少我们的工作量。比如一个变量并没有初始值:
+interface User { name: string; age: number; }
+export default class Room extends Vue {
+  private user = {} as User; // 类型断言
+}
+
 
 // # for 枚举与迭代
 let list = [4, 5, 6];
