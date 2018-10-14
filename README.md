@@ -133,11 +133,11 @@ String.prototype.format = function(...args) {
 ---
 
 
-# TypeScript 基础
+# TypeScript 基础 ( [es6]ES2015, ES2016,ES2017,ES2018... )
 
 ```javascript
-// 申明变量：var全局变量, let局部变量, const常量
-// 基本类型...
+// # 申明变量：var全局变量, let局部变量, const常量
+// # 基本类型...
 let isDone: boolean = false;
 // ECMAScript 2015 即 es6
 let decimal: number = 6;
@@ -145,39 +145,39 @@ let decimal: number = 6;
 let hex: number = 0xf00d;
 let binary: number = 0b1010;
 let octal: number = 0o744;
-// 字符串&模板
+// # 字符串&模板 ECMAScript >= ES2015
 let color: string = "blue"; color = 'red'; color = `Hello, my color is ${ color }`;
-// 数组Array
+// # 数组Array
 let list: number[] = [1, 2, 3];
-// 元组Tuple
+// # 元组Tuple
 let t2: [string, number]; t2 = ["hello", 10];
-// 枚举Enum
+// # 枚举Enum
 enum Color {Red, Green, Blue}
 let e1: Color = Color.Green;
 let e1ColorName: string = Color[2]; // Blue
-// any 不同于 Object; any 不要作为function的返回类型
+// # any 不同于 Object; any 不要作为function的返回类型
 let obj1: any = 1; obj1.toFixed();
-// as-syntax 语法
+// # as-syntax 语法
 let n1: number = obj1 as number;
 let n2: number = <number>obj1 + n1; // 强转
-// void 默认作为function的返回类型(function没有return时)
+// # void 默认作为function的返回类型(function没有return时)
 let unusable: void = undefined; // or null
 // undefined and null actually have their own types and subtypes of all other types.
 
-// union type 联合类型, 可开启tsc配置: --strictNullChecks 检查null. 还有,严格检查'use strict';
+// # union type 联合类型, 可开启tsc配置: --strictNullChecks 检查null. 还有,严格检查'use strict';
 type strings = string | null | undefined; let strs1: strings;
-// Never 无返回｜异常...
+// # Never 无返回｜异常...
 function error(message: string): never {
     throw new Error(message); // 异常
 }
 function infiniteLoop(loop: () => boolean): never {
     while (loop()) { } // 死循环
 }
-// Object 对象
+// # Object 对象
 function createObject(o: object | null): any { return Object.create(o); }
 let obj2 = createObject(null); // {}
 
-// Scoping rules 作用域规则: 块级作用域、全局作用域等.
+// # Scoping rules 作用域规则: 块级作用域、全局作用域等.
 function fScoping(shouldInitialize: boolean) {
     if (shouldInitialize) { var f = 10; } // var 会提升Context范围`提升作用域`
     return f;
@@ -189,25 +189,25 @@ for (let i = 0; i < 10; i++) { setTimeout(function () { console.log(i); }, 100 *
 // 0,...9 in js or es5 with var 此时用到scoping function 范围构造函数(function(){})
 for (var i = 0; i < 10; i++) { (function (i) { setTimeout(function () { console.log(i); }, 100 * i); })(i); }
 
-// Array destructuring 解构数组 (必须初始化-赋值)
+// # Array destructuring 解构数组 (必须初始化-赋值)
 let arr1 = [1, 2]; let [first, second] = arr1;
 [first, second] = [second, first]; // 互换
 let [first, ...rest] = [1, 2, 3, 4]; // rest [ 2, 3, 4 ]
 let [, second, , fourth] = [1, 2, 3, 4]; // 按顺序解构
 
-// Object destructuring 解构对象 (必须初始化-赋值)
+// # Object destructuring 解构对象 (必须初始化-赋值)
 let o = { a: "foo", b: 12, c: "bar" };
-// 初始化与赋值,并且重命名a为变量name,此时变量a不存在
+// # 初始化与赋值,并且重命名a为变量name,此时变量a不存在
 let { a: name, b } = o; ({ name, b } = { name: "baz", b: 101 });
 let { a: myname, b: myage}: {a: string, b: number} = o; // 解构并申明变量类型
 let { a, ...passthrough } = o; // 使用语法... 按顺序解构与合并
 let total = a.length + passthrough.b + passthrough.c.length;
 
-// Default values 默认值
+// # Default values 默认值
 type C = { a: string, b?: number }
 function f({ a, b = 0 }: C = { a: '' }): void { } // 双重默认值 f()==f({a:'',b:0})
 
-// Spread 快速赋值语法
+// # Spread 快速赋值语法
 let first = [1, 2], second = [3, 4];
 let bothPlus = [0, ...first, ...second, 5];
 let defaults = { food: "spicy", price: "$100", ambiance: "noisy" };
@@ -220,7 +220,7 @@ let c1 = new C();
 let c2 = { ...c1 };
 c2.p; // ok = 12 // c2.m(); // error!
 
-// Interface 接口 (只读：变量用const，属性用readonly)
+// # Interface 接口 (只读：变量用const，属性用readonly)
 interface World {
   name: string;
   ages: Readonly<number[]>; // Variables use const whereas properties use readonly
@@ -232,7 +232,7 @@ w1['name'] = 'other'; // prop~读取name
 w1.ages = [4, 5, 6]; w1.ages.push(7); // ok.写入成功
 // w1.ages[0] = 1; w1.point[0] = 1; // error!索引签名仅允许读取
 
-// Indexable Types 索引访问
+// # Indexable Types 索引访问
 interface StringArray extends Array<string> {
   readonly [index: number]: string; // 只读索引
 }
@@ -240,13 +240,13 @@ let sa1: StringArray = ['a', 'b', 'c'];
 sa1.findIndex(s => s.endsWith('a'));
 // sa1[0] = '1'; // error!
 
-// Interface 接口-扩展
+// # Interface 接口-扩展
 interface Shape { color: string; }
 interface Square extends Shape { sideLength: number; }
 let square = <Square>{};
 square.color = "blue"; square.sideLength = 10;
 
-// Class implements Interface 接口类型的实现
+// # Class implements Interface 接口类型的实现
 interface IClock { tick(); }
 interface Clock { new(hour: number, minute: number): IClock; }
 function newClock(ctor: Clock, hour: number, minute: number): IClock {
@@ -263,7 +263,7 @@ class AnalogClock implements IClock {
 let digital = newClock(DigitalClock, 12, 17);
 let analog = newClock(AnalogClock, 7, 32);
 
-// Hybrid Types 复杂类型
+// # Hybrid Types 复杂类型
 interface Counter {
   (start: number): string;
   interval: number;
@@ -280,7 +280,7 @@ c(10);
 c.reset();
 c.interval = 5.0;
 
-// Protected Types 保护类型: [public:默认], protected, private and readonly, get-set, static
+// # Protected Types 保护类型: [public:默认], protected, private and readonly, get-set, static
 abstract class Person {
   static Where: string = '地球';
   protected constructor(protected readonly name: string) { }
@@ -299,7 +299,7 @@ class Point { x: number; y: number; }
 interface Point3d extends Point { z: number; } // Using a class as an interface
 let point3d: Point3d = { x: 1, y: 2, z: 3 };
 
-// this 对象关联
+// # this 对象关联
 interface UIElement {
   element: Element;
   addClickListener(onclick: (this: void, e: Event) => void): void;
@@ -312,7 +312,7 @@ abstract class UIElement {
 const ui = UIElement.of(new HTMLElement());
 ui.addClickListener(e => { console.log(`${ui.element.id} on ${e.type} event!`); });
 
-// function 复用
+// # function 复用[函数重载]
 function pickCard(x: { suit: string; card: number; }[]): number; // 申明
 function pickCard(x: number): { suit: string; card: number; };   // 申明
 function pickCard(x): any {                                      // 实现
@@ -329,7 +329,7 @@ alert("card: " + pickedCard1.card + " of " + pickedCard1.suit);
 let pickedCard2 = pickCard(15);
 alert("card: " + pickedCard2.card + " of " + pickedCard2.suit);
 
-// function <T> 复用, 如：T[] <=> Array<T>
+// # function <T> 复用, 如：T[] <=> Array<T>
 function loggingIdentity1<T>(arg: T[]): T[] {
   console.log(arg.length);  // Array has a .length, so no more error
   return arg;
@@ -339,16 +339,16 @@ function loggingIdentity2<T>(arg: Array<T>): Array<T> {
   return arg;
 }
 
-// function 类型|范型<T>
+// # function 类型|范型<T>
 function identity<T>(arg: T): T { return arg; } // js实现,可为CDN外部js
 let myIdentity1: <T>(arg: T) => T = identity;
 let myIdentity2: <U>(arg: U) => U = identity; // T -> U...
 let myIdentity3: { <T>(arg: T): T } = identity; // interface定义都用{}
-// interface & type 申明类型: 当要使用的功能为CDN外部js时,就可使用以下方式申明
-// 类型别名 declare [const|var..] Alias: T
+// # interface & type 申明类型: 当要使用的功能为CDN外部js时,就可使用以下方式申明
+// # 类型别名 declare [const|var..] Alias: T
 // declare const $: any;
 // declare function aliased(arg: string): string;
-// 类型别名 type Alias = T
+// # 类型别名 type Alias = T
 type GenericIdentityFn = { <T>(arg: T): T; };
 let myIdentity4: GenericIdentityFn = identity;
 interface GenericIdentityFn1 { <T>(arg: T): T; }
@@ -356,7 +356,7 @@ let myIdentity5: GenericIdentityFn1 = identity;
 interface GenericIdentityFn2<T> { (arg: T): T; }
 let myIdentity6: GenericIdentityFn2<number> = identity;
 
-// factories 工厂方法: 一般用class类型构造器接口 C:{new():T;} => new C()
+// # factories 工厂方法: 一般用class类型构造器接口 C:{new():T;} => new C()
 interface IShape { color: string; }
 class Square implements IShape {
   sideLength: number;
@@ -368,7 +368,7 @@ function createShape<T extends IShape>(obj: { new(color: string): T; }, color: s
 let redSquare: Square = createShape(Square, 'red');
 redSquare.sideLength = 1; // redSquare.color = 'green'; // Error!只读属性
 
-// enum 枚举类型
+// # enum 枚举类型
 enum FileAccess {
   None,		// 默认为0，值为常量
   Read    	= 1 << 1,
@@ -376,14 +376,14 @@ enum FileAccess {
   ReadWrite	= Read | Write
 }
 
-// class <=> interface 类型兼容性
+// # class <=> interface 类型兼容性
 interface Named { name: string; }
 class Person { name: string; }
 let p: Named = new Person(); // ok 兼容
 let s = { name: '', age: 1 };
 p = s; // ok 兼容
 
-// function <=> function 函数兼容性(输入|输出)
+// # function <=> function 函数兼容性(输入|输出)
 let x = (a: number) => 0;
 let y = (b: number, s: string) => 0;
 y = x; // OK 兼容输入
@@ -396,7 +396,7 @@ let b = () => ({ name: "Alice", location: "Seattle" });
 a = b; // OK 兼容输出
 // b = a; // Error 缺少属性location
 
-// 扩展
+// # 扩展
 function extend<T, U>(first: T, second: U): T & U {
   let result = <T & U>{};
   for (let id in first) { (<any>result)[id] = (<any>first)[id]; }
@@ -406,7 +406,7 @@ function extend<T, U>(first: T, second: U): T & U {
   return result;
 }
 
-// Union Types 连合类型
+// # Union Types 连合类型
 type N4 = 1 | 2 | 3 | 4;
 type Easing = "ease-in" | "ease-out" | "ease-in-out";
 interface Bird { fly(); layEggs(ea: Easing); }
@@ -420,13 +420,13 @@ function isFish(pet: Fish | Bird): pet is Fish {
 let pet = getPet();
 if (isFish(pet)) { pet.swim(); }
 else if (pet.fly) { pet.fly(); } // ok
-// typeof type guards 判断类型
+// # typeof type guards 判断类型
 function isNumber(x: any): x is number {
   return typeof x === "number";
 }
 console.log(isNumber(0)); // true
 
-// T & Tree & LinkedList 复杂结构
+// # T & Tree & LinkedList 复杂结构
 type Container<T> = { value: T };
 type Tree<T> = { value: T; left: Tree<T>; right: Tree<T>; }
 type LinkedList<T> = T & { next: LinkedList<T> };
@@ -436,17 +436,19 @@ let s = people.name;
 s = people.next.name;
 s = people.next.next.name;
 
-// keyof 访问属性 { [k: T1]: T2 } 一般T1为string, T2为any; keyof obj1,即keyof作为运算符返回类型T1
+// 映射类型
+// ## 内置keyof、Partial、Readonly、Record、Pick；ThisType；Exclude、Extract、NonNullable、ReturnType、InstanceType,3.1版本支持对元组与数组的映射
+// # keyof 访问属性 { [k: T1]: T2 } 一般T1为string, T2为any; keyof obj1,即keyof作为运算符返回类型T1
 function prop<T, K extends keyof T>(t: T, k: K) { return t[k]; }
 function props<T, K extends keyof T>(t: T, ks: K[]): T[K][] { return ks.map(k => t[k]);}
 let x = { a: 1, b: 2, c: 3, d: 4 };
 prop(x, "a"); // ok
 console.log(props(new HTMLDivElement(), ["dir", "lang", "onclick"]));
-// keyof 获取只读属性
+// # keyof 获取只读属性
 type propReadonly<T> = { readonly [P in keyof T]: T[P]; }
-// keyof 获取可选属性
+// # keyof 获取可选属性
 type propPartial<T> = { [P in keyof T]?: T[P]; }
-// in keyof 筛选属性
+// # in keyof 筛选属性
 type Keys = 'option1' | 'option2';
 type Flags = { [K in Keys]: boolean }; // 判断
 type NullablePerson = { [P in keyof Person]: Person[P] | null } // Person
@@ -461,18 +463,40 @@ let proxyProps = proxify(props);
 // instanceof type guards 判断类型
 console.log(new HTMLElement() instanceof HTMLDivElement); // false, 反过来true
 
-// Symbols 原始数据类型(不可变，不能比较，唯一...) Starting with ECMAScript 2015, es6
+// # ThisType 用来在对象中键入this
+type ObjectDescriptor<D, M> = {
+  data?: D;
+  methods?: M & ThisType<D & M>;  // Type of 'this' in methods is D & M
+}
+function makeObject<D, M>(desc: ObjectDescriptor<D, M>): D & M {
+  let data: object = desc.data || {};
+  let methods: object = desc.methods || {};
+  return { ...data, ...methods } as D & M;
+}
+let obj = makeObject({
+  data: { x: 0, y: 0 },
+  methods: {
+    moveBy(dx: number, dy: number) {
+      this.x += dx;  // Strongly typed this
+      this.y += dy;  // Strongly typed this
+    }
+  }
+});
+obj.x = 10; obj.y = 20; obj.moveBy(5, 5);
+
+
+// # Symbols 原始数据类型(不可变，不能比较，唯一...) Starting with ECMAScript 2015, es6
 let prop1 = Symbol(1), prop2 = Symbol(1);
 console.log(prop1 == prop2); // false 不能比较
 let obj = { [prop1]: true, [prop2]() { return 'ok'; } }; // 当作对象的属性、方法
 // console.log(obj[prop1], obj[prop2]()); // true, 'ok'
 
-// for 枚举与迭代
+// # for 枚举与迭代
 let list = [4, 5, 6];
 for (let i in list) console.log(i); // for in(keys): "0", "1", "2",
 for (let i of list) console.log(i); // for of(values): "4", "5", "6"
 
-// modules 模块的导出与导入 (一般定义于*.ts, *.tsx, *.d.ts等文件, es6开始引入)
+// # modules 模块的导出与导入 (一般定义于*.ts, *.tsx, *.d.ts等文件, es6开始引入)
 // tsc default is Classic for --module AMD | System | ES2015 or Node otherwise.
 // e.g. import x from "..."; import x = require("..."); tsconfig: compilerOptions.baseUrl
 /// node.d.ts
@@ -485,7 +509,7 @@ export as namespace UrlLib; // global variable 当变量用,出现在不需要�
 import * as URL from "url"; // module "url" in node.d.ts
 URL.parse("http://www.typescriptlang.org");
 
-// modules 特殊tsc: such as SystemJS and AMD allow non-JavaScript content to be imported.
+// # modules 特殊tsc: such as SystemJS and AMD allow non-JavaScript content to be imported.
 declare module "*!text" {
   const content: string;
   export default content;
@@ -494,12 +518,12 @@ declare module "json!*" {
   const value: any;
   export default value;
 }
-// modules 特殊tsc: import text file or json
+// # modules 特殊tsc: import text file or json
 import fileContent from "./xyz.txt!text";
 import data from "json!http://example.com/data.json";
 console.log(data, fileContent);
 
-//~修饰器的实现,非ts稳定功能!
+// # ~修饰器的实现,非ts稳定功能!
 function version_100<T extends { new(...args: any[]): {} }>(ctor: T) {
   return class extends ctor {
     version: '1.0.0'
