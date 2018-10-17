@@ -1,25 +1,33 @@
 {
   "name": "hapi-tutorial",
   "version": "1.0.0",
-  "description": "基于 hapi 接口服务教程",
+  "description": "基于hapi接口的Demo",
+  "email": "angenal@hotmail.com",
   "main": "app.js",
   "scripts": {
-    "test": "supervisor app.js"
+    "dev": "supervisor app.js"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/angenalZZZ/nodejs.git"
+    "url": "https://github.com/angenalZZZ/nodejs/tree/master/hapi/v16"
   },
   "keywords": [
     "hapi"
   ],
-  "author": "yangzhou <angenal@hotmail.com>",
-  "license": "MIT",
+  "author": "yangzhou",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/angenalZZZ/nodejs/issues"
   },
   "homepage": "https://github.com/angenalZZZ/nodejs#readme",
   "dependencies": {
-    "hapi": "^16.6.3"
-  }
+    "env2": "^2.2.2",
+    "hapi": "^16.6.3",
+    "hapi-swagger": "^7.10.0",
+    "inert": "^4.2.1",
+    "joi": "^13.6.0",
+    "package": "^1.0.1",
+    "vision": "^4.1.1"
+  },
+  "devDependencies": {}
 }
