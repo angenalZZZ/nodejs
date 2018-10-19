@@ -31,9 +31,10 @@
  cnpm i -g node-sass                                      [sass>css编译]
 ~~~
 
- # npm 如何安装 (npm|yarn) Unix参数风格:-S -单个字母, GNU风格:--save --英文字符，node-cli参考:commander.js,chalk.js,Lnquirer.js,Yargs...
+ # npm 如何安装 (npm|yarn)
 
 ~~~
+ # Unix参数风格: -S -单个字母, GNU风格: --save --英文字符，node-cli参考: commander.js,chalk.js,Lnquirer.js,Yargs...
 npm init -f                                               [初始化项目package.json]
 npm i -S [--save --no-save]                               [添加项目程序依赖包到dependencies]
 npm i -D [--save-dev]                                     [添加项目工具依赖包到devDependencies]
@@ -74,7 +75,7 @@ npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hap
     # tv 可交互式的 debug 控制台
     # Vision 网页模板渲染插件
     # Sequelize 数据库访问-ORM  https://github.com/danecando/hapi-sequelize
-    # and so on ...
+    # and so on ... 案例教程 https://github.com/yeshengfei/hapi-tutorial
 
 # 数据库访问-ORM
 npm i -S mongoose  # MongoDB https://mongoosejs.com/docs/index.html
