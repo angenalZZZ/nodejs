@@ -24,14 +24,14 @@
  npm i --registry=https://registry.npm.taobao.org         [建议]
  # install cnpm
  npm i -g cnpm --registry=https://registry.npm.taobao.org [代理taobao]
- npm i -g nrm	                                           [代理切换]
+ npm i -g nrm	                                          [代理切换]
  # install yarn from https://yarn.bootcss.com/docs/install/
  npm i -g yarn > yarn | yarnpkg                           [包管理器]
  npm i -g node-gyp                                        [结合VS编译]
  cnpm i -g node-sass                                      [sass>css编译]
 ~~~
 
- # npm 如何安装 (npm|yarn) install
+ # npm 如何安装 (npm|yarn) Unix参数风格:-S -单个字母, GNU风格:--save --英文字符，node-cli参考:commander.js,chalk.js,Lnquirer.js,Yargs...
 
 ~~~
 npm init -f                                               [初始化项目package.json]
@@ -42,19 +42,16 @@ npm i -D [--save-dev]                                     [添加项目工具依
  # npm 全局安装包 npm install -g
  
 ~~~
-npm i -g webpack webpack-cli webpack-dev-server
+npm i -g webpack webpack-cli webpack-dev-server # 配置例子 https://github.com/teabyii/webpack-examples
 npm i -g typescript    >tsc >tsserver # ts-node | io-ts    非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js
 npm i -g vue-cli       >vue           # 构建工具Vue
 npm i -g @angular/cli  >ng            # 跨平台构建工具Angular2，ng set --global warnings.packageDeprecation=false
 npm i -g weex-toolkit  >weex          # 跨平台构建工具weex https://github.com/apache/incubator-weex https://alibaba.github.io
+npm i -g supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
 npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
-npm i -g @compodoc/compodoc
-npm i -g yo jspm sqlpad
-npm i -g serve http-server json-server
-npm i -g supervisor                   # 监视代码的改动然后自动重启 Node.js 服务: Supervisor / nodemon / PM2 > supervisor app.js
-lite-server  > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
-grunt-cli    > grunt
-uglify-js    > uglifyjs
+npm i -g serve http-server json-server lite-server
+ # > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
+npm i -g yo jspm sqlpad @compodoc/compodoc # 其他工具
 ~~~
 
  # npm 后端安装包 (npm|yarn) install
