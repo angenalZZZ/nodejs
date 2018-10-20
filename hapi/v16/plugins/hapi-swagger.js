@@ -3,8 +3,9 @@
  */
 const inert = require('inert');
 const vision = require('vision');
-const packageModule = require('package');
+
 const hapiSwagger = require('hapi-swagger');
+const { swagger } = require('../config');
 
 module.exports = [
   inert,
@@ -13,16 +14,11 @@ module.exports = [
     register: hapiSwagger,
     options: {
       info: {
-        title: 'hapi-tutorial 接口文档',
-        version: packageModule.version,
+        title: PKG.description,
+        version: PKG.version,
       },
       grouping: 'tags', // 定义接口以tags属性为分组
-      tags: [
-        /**
-         * 此处为接口申明
-         */
-        { name: 'index', description: '首页' },
-      ],
+      tags: [...swagger.options.tags], // 接口分组
     },
   },
 ];
