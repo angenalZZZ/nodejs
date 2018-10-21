@@ -1,4 +1,5 @@
 // 首页
+const Boom = require('boom');
 const { API, methods } = require('../config');
 const DIR = 'default', TAGS = [API, DIR];
 
@@ -11,7 +12,8 @@ const routes = [
     },
     config: {
       tags: TAGS,
-      description: 'index'
+      description: 'index',
+      auth: false,
     },
   },
 ];

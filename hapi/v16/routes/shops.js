@@ -1,5 +1,6 @@
 // 店铺
 const Joi = require('joi');
+const Boom = require('boom');
 const { API, methods, validate } = require('../config');
 const DIR = 'shops', TAGS = [API, DIR];
 const models = require('../models');

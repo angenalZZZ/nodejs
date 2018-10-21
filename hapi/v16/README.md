@@ -134,7 +134,7 @@ node_modules/.bin/sequelize db:seed:undo --seed XXXXXXXXXXXXXX-demo-user.js
 npm i jsonwebtoken
 ```
 
-**jwt.sign 签发**
+## jwt.sign 签发
 
 JWT 的签发语法是 jwt.sign(payload, secretOrPrivateKey, [options, callback])。默认的签发算法基于 HS256 (HMAC SHA256)，可以在 options 参数的 algorithm 另行修改。JWT 签发规范中的一些标准保留字段比如 exp，nbf，aud，sub，iss 等都没有默认值，可以一并在 payload 参数中按需声明使用，亦可以在第三个参数 options 中，通过 expiresIn，notBefore，audience，subject，issuer 来分别赋值，但是不允许在两处同时声明。
 
@@ -143,11 +143,14 @@ const jwt = require('jsonwebtoken');
 const token = jwt.sign(
   {
     foo: 'bar',
-    exp: Math.floor(Date.now() / 1000) + (60 * 60), // 1 小时后失效
+    exp: Date.now() + 60 * 60 * 1000, // 1 小时后失效
   },
   'your-secret'
 );
+# 生成 your-secret
+node -e "console.log(require('crypto').randomBytes(32).toString('base64'));"
 ```
+
 
 通过 [jwt.io](https://link.juejin.im/?target=https%3A%2F%2Fjwt.io) 来 decode JWT 中的 payload 信息
 

@@ -14,29 +14,38 @@ const server = new Hapi.Server(config.hapiConfig.serverOptions);
 // 接口网址
 config.hapiConfig.connections.forEach(o => server.connection(o));
 // 接口插件
-const pluginHapiSwagger = require('./plugins/hapi-swagger');
-const pluginHapiPagination = require('./plugins/hapi-pagination');
-const hapiAuthJWT2 = require('hapi-auth-jwt2');
-const pluginHapiAuthJWT2 = require('./plugins/hapi-auth-jwt2');
+const plugHapiError = require('hapi-error');
+// const redis = require('redis'); // https://github.com/docdis/learn-redis
+const plugHapiRedisConnection = require('hapi-redis-connection');
+const plugHapiSwagger = require('./plugins/hapi-swagger');
+const plugHapiPagination = require('./plugins/hapi-pagination');
+const hapiAuthJWT = require('hapi-auth-jwt2'); // https://github.com/dwyl/hapi-auth-jwt2
+const pluginAuthJWT = require('./plugins/hapi-auth-jwt2');
 // 接口服务
 const startHapi = async () => {
   // 配置插件
   await server.register([
-    ...pluginHapiSwagger, // 接口文档
-    pluginHapiPagination, // 分页
-    hapiAuthJWT2,         // JWT-token
-  ]);
-  pluginHapiAuthJWT2(server);
-  // 配置路由
-  server.route([
-    ...routes,
-  ]);
-  // 启动服务
-  await server.start();
-  config.hapiConfig.connections.forEach(o => {
-    const s = server.select(o.labels);
-    console.log(` [pid]  [uri]                                [connections]`);
-    console.log(`  ${s.info.id.split(':')[1]}   ${s.info.uri}/documentation    ${s.connections.length}`);
+    plugHapiError,
+    plugHapiRedisConnection, // redis connection > request.redis.get
+    ...plugHapiSwagger, // 接口文档
+    plugHapiPagination, // 分页
+    hapiAuthJWT, pluginAuthJWT, // JWT认证授权(先调用/token获取认证)
+  ], err => {
+    if (err) throw err;
+    // 配置路由
+    server.route([
+      ...routes,
+    ]);
+    // 启动服务
+    server.start(err => {
+      if (err) throw err;
+      // 启动成功
+      config.hapiConfig.connections.forEach(o => {
+        const s = server.select(o.labels);
+        console.log(` [pid]  [uri]                                [connections]`);
+        console.log(`  ${s.info.id.split(':')[1]}   ${s.info.uri}/documentation    ${s.connections.length}`);
+      });
+    });
   });
 };
 startHapi();

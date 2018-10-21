@@ -1,5 +1,6 @@
 // 订单
 const Joi = require('joi');
+const Boom = require('boom');
 const { API, methods, validate } = require('../config');
 const DIR = 'orders', TAGS = [API, DIR];
 
@@ -8,8 +9,8 @@ const routes = [
     method: methods.post,
     path: `/${DIR}`,
     handler: async (req, res) => {
-      let { userId } = req.auth.credentials;
-      res(userId);
+      // let { userId } = req.auth.credentials;
+      res(req.auth);
     },
     config: {
       tags: TAGS,

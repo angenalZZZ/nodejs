@@ -21,8 +21,13 @@ exports.hapiConfig = {
     { labels: PKG.name, host: ENV.HOST, port: ENV.POST },
   ],
   serverOptions: {
-    app: { name: PKG.name }, // 全局静态变量 request.server.app.name
-    cache: require('catbox-memory'), // require('catbox-redis'), // 缓存
+    app: { name: PKG.name }, // 全局静态变量 > request.server.app.name
+    cache: [// 缓存 > request.server.cache.get
+      {
+        engine: require('catbox-memory'), // require('catbox-redis'),
+        name: 'default-cache', partition: 'hapi-cache', shared: false
+      }
+    ],
     connections: {
       compression: true, // gzip
       load: {
@@ -49,14 +54,17 @@ exports.hapiConfig = {
   }
 };
 
-// hapi 请求限制
+/** hapi 请求限制 */
 exports.API = 'api';
+/** 过期限制(输入秒/输出毫秒) */
+exports.exp = (s) => (Date.now() + s * 1000);
 exports.methods = {
   get: 'GET',
   post: 'POST',
   patch: 'PATCH',
   delete: 'DELETE',
 };
+/** 请求参数验证 */
 exports.validate = {
   /**
    * 分页查询: page=1&limit=10
