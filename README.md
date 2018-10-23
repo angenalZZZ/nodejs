@@ -135,6 +135,7 @@ String.prototype.format = function(...args) {
       入口文件: package.json > main = index.js(默认)
       模块缓存: 第一次加载某个模块时，Node会缓存该模块。以后再加载该模块，就直接从缓存取出该模块的module.exports属性。
       加载机制: 输入的是被输出的值的拷贝。也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。
+      
     `AMD` 为浏览器环境设计的异步模块加载，通过回调完成。RequireJS的思想是通过define方法，将代码定义为模块；通过require方法，实现代码的加载。
       定义模块: define(...) 用于定义模块，每个模块放一个文件里，如果想兼容CommonJS规范define(function(require,exports,module){... exports.*})
       独立模块: define(function(require){ require('module1') ... return { //返回任何值 } }) 可以返回任何值，不限于对象。
@@ -145,6 +146,7 @@ String.prototype.format = function(...args) {
                 shim: { "backbone": { deps: [ "underscore" ], exports: "Backbone" }, "underscore": { exports: "_" }} //加载非AMD规范的库
             })
       使用: 页面index.html中先通过引入require.min.js，再引入main.js（用于配置（require.config），以及引入其他模块）
+      
     `ES6` 内置的模块化语法，我们在浏览器端无需额外引入requirejs来进行模块化。
       特点: 1.模块自动运行在严格模式下；
             2.在模块的顶级作用域创建的变量，不会被自动添加到共享的全局作用域，它们只会在模块顶级作用域的内部存在；
@@ -160,7 +162,8 @@ String.prototype.format = function(...args) {
         重命名导入: import { sum as a } from './example.js'
         导入默认值: import sum from "./example.js"; import sum,{color} from "./example.js" 其中sum为括号外的：export default function sum
         导入的再导出: import {sum} from './example.js' ... export {sum} ; 或 export * from "./example.js"; //完全导出
-      限制: export 与 import 都有一个重要的限制，那就是它们必须被用在其他语句或表达式的外部，而不能使用在if等代码块内部。原因之一是模块语法需要让 JS 能静态判断需要导出什么，正因为此，你只能在模块的顶级作用域使用 export与import。
+      限制: export 与 import 都有一个重要的限制，那就是它们必须被用在其他语句或表达式的外部，而不能使用在if等代码块内部。
+            原因之一是模块语法需要让 JS 能静态判断需要导出什么，正因为此，你只能在模块的顶级作用域使用 export与import。
 ````
 
 ---
