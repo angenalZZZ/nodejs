@@ -129,14 +129,14 @@ String.prototype.format = function(...args) {
     异步模块定义（AMD）是Asynchronous Module Definition的缩写，是 RequireJS 对模块定义的规范化产出。
     通用模块定义（CMD）是Common Module Definition的缩写，是SeaJS 对模块定义的规范化产出。
     
-    `CommonJS` 每个文件就是一个模块的同步模块加载。nodejs就是服务器端广泛使用的模块化机制[global对象-多个文件分享变量]；通过module.exports 导出对外的变量或接口，通过 require() 来导入其他模块的输出到当前模块作用域中。
+    `CommonJS` 每个文件就是一个模块的同步模块（后端）加载。nodejs就是服务器端广泛使用的模块化机制[global对象-多个文件分享变量]；通过module.exports 导出对外的变量或接口，通过 require() 来导入其他模块的输出到当前模块作用域中。
       定义模块: module.exports
       加载模块: var app = require('./app.js')
       入口文件: package.json > main = index.js(默认)
       模块缓存: 第一次加载某个模块时，Node会缓存该模块。以后再加载该模块，就直接从缓存取出该模块的module.exports属性。
       加载机制: 输入的是被输出的值的拷贝。也就是说，一旦输出一个值，模块内部的变化就影响不到这个值。
       
-    `AMD` 为浏览器环境设计的异步模块加载，通过回调完成。RequireJS的思想是通过define方法，将代码定义为模块；通过require方法，实现代码的加载。
+    `AMD` 为浏览器环境设计的异步模块（前端）加载，通过回调完成。RequireJS的思想是通过define方法，将代码定义为模块；通过require方法，实现代码的加载。
       定义模块: define(...) 用于定义模块，每个模块放一个文件里，如果想兼容CommonJS规范define(function(require,exports,module){... exports.*})
       独立模块: define(function(require){ require('module1') ... return { //返回任何值 } }) 可以返回任何值，不限于对象。
       非独立模块: define(['module1','module2'],function(m1,m2){ ... return { //返回对象 } }) 必须返回一个对象，供其他模块调用。
