@@ -6,7 +6,7 @@
 
 [3. 身份验证实现 —— 使用 hapi-auth-jwt2](#身份验证——hapi-auth-jwt2) 
 
-`[实用程序库]`
+`[参考资源]`
 
   [hapi源代码](https://github.com/hapijs/hapi) [hapi官网](https://hapijs.com)
 
