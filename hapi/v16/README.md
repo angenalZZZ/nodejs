@@ -8,7 +8,7 @@
 
 `[实用程序库]`
 
-  [30 seconds of code 代码片段集合](https://github.com/30-seconds/30-seconds-of-code) [中文翻译](http://www.css88.com/30-seconds-of-code/)
+  [hapi源代码](https://github.com/hapijs/hapi) [hapi官网](https://hapijs.com)
 
 ---
 
@@ -24,7 +24,7 @@ npm init
 **安装 hapi 模块**
 
 ````javascript
-npm i hapi@16  # hapi基于Express构建 https://github.com/hapijs/hapi  https://hapijs.com
+npm i hapi@16  # hapi是基于Express构建的服务器端框架 https://github.com/hapijs/hapi  https://hapijs.com
 ````
 
 介绍 hapi 功能
