@@ -144,15 +144,16 @@ const token = jwt.sign(
   {
     foo: 'bar',
     exp: Date.now() + 60 * 60 * 1000, // 1 小时后失效
-  },
-  'your-secret'
+  }, // payload 信息
+  'your-secret',
+  {} // options: expiresIn 过期时间大于签发时间iat(issuedAt)，notBefore 什么时间以前不可用，audience 接收方，subject 面向的用户，issuer 签发者
 );
 # 生成 your-secret
 node -e "console.log(require('crypto').randomBytes(32).toString('base64'));"
 ```
 
 
-通过 [jwt.io](https://link.juejin.im/?target=https%3A%2F%2Fjwt.io) 来 decode JWT 中的 payload 信息
+通过 [jwt.io](https://jwt.io) 来 decode 解码 JWT 中的 payload 信息
 
 ## hapi-auth-jwt2 接口用户验证
 
