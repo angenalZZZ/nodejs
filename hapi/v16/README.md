@@ -146,7 +146,14 @@ const token = jwt.sign(
     exp: Date.now() + 60 * 60 * 1000, // 1 小时后失效
   }, // payload 信息
   'your-secret',
-  {} // options: expiresIn 过期时间大于签发时间iat(issuedAt)，notBefore 什么时间以前不可用，audience 接收方，subject 面向的用户，issuer 签发者
+  {// options 
+    expiresIn 过期时间大于签发时间iat(issuedAt)
+    notBefore 什么时间以前不可用nbf
+    audience 接收方aud
+    subject 面向的用户sub
+    issuer 签发者iss
+    jwtid 唯一标识，作为一次性token，避免重放攻击jti(默认)
+  }
 );
 # 生成 your-secret
 node -e "console.log(require('crypto').randomBytes(32).toString('base64'));"
