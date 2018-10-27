@@ -15,7 +15,7 @@ const server = new Hapi.Server(config.hapiConfig.serverOptions);
 config.hapiConfig.connections.forEach(o => server.connection(o));
 // 接口插件
 const plugHapiError = require('hapi-error');
-// const redis = require('redis'); // https://github.com/docdis/learn-redis
+// const redis = require('redis'); // https://github.com/docdis/learn-redis https://github.com/dwyl/learn-redis
 const plugHapiRedisConnection = require('hapi-redis-connection');
 const plugHapiSwagger = require('./plugins/hapi-swagger');
 const plugHapiPagination = require('./plugins/hapi-pagination');

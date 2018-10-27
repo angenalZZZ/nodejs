@@ -3,18 +3,24 @@ const auth = ENV.AUTH_JWT;
 const validate = (decoded, request, callback) => {
   // decoded 为 JWT payload 被解码后的数据
   // console.log('decoded:', decoded);
-  const { id } = decoded;
+  if (!decoded) return callback(null, false, null);
   // 验证
+  const { id } = decoded;
   if (!id) return callback(null, false, null);
   // 通过认证 credentials session
-  const chk = request.redis.get(id, function (err, data) {
+  const redisChecked = request.redis.get(id, function (err, data) {
     if (err) return callback(err, false, data);
     // console.log(`redis.get:${id}`, data);
-    // 在路由接口的 handler 通过 request.auth.credentials 获取缓存的 data
-    const credentials = JSON.parse(data) || data;
-    return callback(null, true, credentials);
+    // 在路由接口的 handler 可以通过 request.auth.credentials 获取缓存的 session data
+    try {
+      const credentials = JSON.parse(data) || data;
+      const isValid = (credentials.valid == undefined || credentials.valid == true);
+      return callback(null, isValid, credentials);
+    } catch (e) {
+      return callback(null, false, null);
+    }
   });
-  if (!chk) return callback(null, false, null);
+  if (!redisChecked) return callback(null, false, null);
 };
 
 exports.register = (server, options, next) => {

@@ -1,12 +1,12 @@
 // JWT认证(调用/token获取认证)：用 jsonwebtoken 签发 JWT token
 const Joi = require('joi');
 const Boom = require('boom');
-const { API, exp, methods } = require('../config');
+const { API, exp, methods, validate } = require('../config');
 const DIR = 'token', TAGS = [API, DIR];
 const JWT = require('jsonwebtoken');
 const aguid = require('aguid'); // https://github.com/ideaq/aguid
 
-// 认证用户
+/** 认证用户 */
 const authFunc = (req) => {
   // 客户端 请求参数需 base64解码: btoa("Hello") > "SGVsbG8=" , atob("SGVsbG8=") > "Hello"
   let user = req.payload.user || req.headers.authorization;
@@ -17,12 +17,14 @@ const authFunc = (req) => {
   if (encoded.substr(encoded.length - 1) == '=') decoded = Buffer.from(encoded, 'base64').toString();
   // 客户端 Authorization : Basic ***  =>  btoa(Username:Password) => decoded
   let username = decoded.split(':')[0], password = decoded.split(':')[1];
+  // 检查账号
   if (username != password) {
     return Boom.badRequest('用户信息不正确');
   }
   // 通过认证 credentials session 这里存储用户的基本信息
   const session = {
     id: aguid(), // a random session id
+    valid: true,
     username: username,
     exp: ENV.JWT_LIFETIME,
   };
@@ -31,7 +33,7 @@ const authFunc = (req) => {
   return session;
 };
 
-// 实现 签发 JWT token
+/** 实现 签发 JWT token */
 const generateJWT = (session) => {
   const payload = {
     id: session.id,
@@ -39,6 +41,15 @@ const generateJWT = (session) => {
   };
   // JWT_SECRET 要在版本库外管理: node -e "console.log(require('crypto').randomBytes(32).toString('base64'));"
   return JWT.sign(payload, ENV.JWT_SECRET, { algorithm: ENV.JWT_algorithms });
+};
+/** default cookie options */
+const default_cookie_options = {
+  encoding: 'none',    // we already used JWT to encode
+  isSecure: false,     // warm & fuzzy feelings
+  isHttpOnly: true,    // prevent client alteration
+  clearInvalid: false, // remove invalid cookies
+  strictHeader: true,  // don't allow violations of RFC 6265
+  path: '/'            // set the cookie for all routes
 };
 
 module.exports = [
@@ -50,8 +61,19 @@ module.exports = [
       if (session instanceof Error) {
         res(session);
       } else {
+        // 输出 token
         const token = generateJWT(session);
-        res(token);
+        // 输出 auth cookie https://github.com/dwyl/hapi-auth-jwt2-cookie-example
+        if (req.payload.cookie) {
+          const cookie_options = {
+            ttl: session.exp * 1000, // 过期毫秒
+            ...default_cookie_options
+          };
+          res(0).header('Authorization', `Bearer ${token}`)
+            .state(req.payload.cookie, token, cookie_options);
+        } else {
+          res(0).header('Authorization', `Bearer ${token}`);
+        }
       }
     },
     config: {
@@ -64,6 +86,43 @@ module.exports = [
         }).unknown(),
         payload: {
           user: Joi.string().description('用户信息base64'),
+          cookie: Joi.string().default('token').description('auth-jwt2-cookie')
+        },
+      },
+    },
+  },
+  {
+    method: methods.delete,
+    path: `/${DIR}`,
+    handler: async (req, res) => {
+      const { id } = req.auth.credentials;
+      const redisChecked = req.redis.get(id, function (err, session) {
+        if (err) return res(Boom.boomify(err));
+        // 设置 session 过期
+        session = JSON.parse(session);
+        session.valid = false;
+        // 缓存 session data
+        req.redis.set(session.id, JSON.stringify(session), 'EX', session.exp);
+        // 删除 auth cookie
+        if (req.payload.cookie) {
+          const cookie_options = {
+            ttl: 1, ...default_cookie_options
+          };
+          res(0).state(req.payload.cookie, '', cookie_options);
+        } else {
+          res(0);
+        }
+      });
+      if (!redisChecked) res(Boom.unauthorized('unchecked'));
+    },
+    config: {
+      tags: TAGS,
+      description: '删除token',
+      // auth: true,
+      validate: {
+        ...validate.jwt,
+        payload: {
+          cookie: Joi.string().default('token').description('auth-cookie')
         },
       },
     },
