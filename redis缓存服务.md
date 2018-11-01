@@ -56,10 +56,16 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 
 ~~~
 
-####  2.基础数据结构 [Redis 深度历险：核心原理与应用实践 - 老錢 - 掘金小册](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
+####  2.基础数据结构 [Redis核心原理与应用实践](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
 
 ~~~
-1. string # 字符串
+1. string # 字符串（SDS带长度信息的字节数组Simple Dynamic String）
+struct SDS<T> {
+  T capacity;                     # 数组容量
+  T len;                          # 数组长度
+  byte flags;                     # 特殊标识
+  byte[] content;                 # 数组内容
+}
  > set key value                  # 添加/修改 (value包含空格时添加“”)
  > get key                        # 获取value
  > exists key                     # if key is exists: 成功返回1,失败返回0.
