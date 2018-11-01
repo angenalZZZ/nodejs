@@ -59,13 +59,23 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 ####  2.基础数据结构 [Redis核心原理与应用实践](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
 
 ~~~
+Redis-Object对象头结构体:          # 存储空间为16字节
+struct RedisObject {
+  int4 type;                      # 对象的不同类型4bits
+  int4 encoding;                  # 存储编码形式4bits
+  int24 lru;                      # LRU信息24bits
+  int32 refcount;                 # 对象的引用计数(为零时对象就会被销毁)4bytes
+  void *ptr;                      # 指针(引用SDS...指向对象内容存储位置)8bytes,64-bit-system
+}
+
 1. string # 字符串（SDS带长度信息的字节数组Simple Dynamic String）
-struct SDS<T> {
-  T capacity;                     # 数组容量
-  T len;                          # 数组长度
+struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-int8-int
+  T capacity;                     # 数组容量<=512M(当<1M时扩容加倍;超过1M时扩容+1M)
+  T len;                          # 数组长度<=512M
   byte flags;                     # 特殊标识
   byte[] content;                 # 数组内容
 }
+
  > set key value                  # 添加/修改 (value包含空格时添加“”)
  > get key                        # 获取value
  > exists key                     # if key is exists: 成功返回1,失败返回0.
