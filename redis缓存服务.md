@@ -36,7 +36,7 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 > info replication              # 获取主从复制相关信息
 > info replication | grep backlog
   repl_backlog_active:0
-  repl_backlog_size:1048576     # 这个就是积压缓冲区大小
+  repl_backlog_size:1048576     # 积压缓冲区大小
   # 复制积压缓冲区大小非常重要，它严重影响到主从复制的效率。当从库因为网络原因临时断开了主库的复制，然后网络恢复了，又重新连上的时候，这段断开的时间内发生在 master 上的修改操作指令都会放在积压缓冲区中，这样从库可以通过积压缓冲区恢复中断的主从同步过程。
   # 积压缓冲区是环形的，后来的指令会覆盖掉前面的内容。如果从库断开的时间过长，或者缓冲区的大小设置的太小，都会导致从库无法快速恢复中断的主从同步过程，因为中间的修改指令被覆盖掉了。这时候从库就会进行全量同步模式，非常耗费 CPU 和网络资源。
   
@@ -65,6 +65,10 @@ struct RedisDb {
   dict* dicts;                    # 所有key集合 key=>value(快查hash函数,siphash算法,避免hash攻击...)
   dict* expires;                  # 过期key集合 key=>long (timestamp)
 }
+struct zset {
+  dict* dicts;                    # 所有value集合 value=>score，每个value赋予一个score的排序权重
+  zskiplist* zsl;                 # 跳跃列表
+}
 #Redis-dict字典是Redis应用最为频繁的复合型数据结构:所有key集合,过期key集合,hash哈希,zset集合
 struct dict {
   dictht ht[2];                   # ht[0](old-hashtable) <渐进式rehash搬迁> ht[1](new-hashtable)
@@ -81,7 +85,7 @@ struct dictEntry {
   dictEntry* next;                # 链接下一个entry
 }
 #--------------------------------------------------------------------
-#Redis-Object对象头结构体:         # 存储空间为16字节
+#Redis-Object对象头结构体:         # 存储空间为16字节,公共实体类
 struct RedisObject {
   int4 type;                      # 对象的不同类型4bits
   int4 encoding;                  # 存储编码形式4bits
