@@ -27,7 +27,7 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
   
 > info memory                   # 获取内存相关信息,内存分配mem_allocator:libc、tcmalloc(google)、jemalloc(facebook:默认:性能最佳)
 > redis-cli info memory | grep used | grep human
-  used_memory_human:827.46K     # 内存分配器 (jemalloc) 从操作系统分配的内存总量
+  used_memory_human:827.46K     # 内存分配器 (jemalloc...) 从操作系统分配的内存总量
   used_memory_rss_human:3.61M   # 操作系统看到的内存占用 ,top 命令看到的内存
   used_memory_peak_human:29.41K # Redis 内存消耗的峰值
   used_memory_lua_human:37.00K  # lua 脚本引擎占用的内存大小
@@ -59,7 +59,29 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 ####  2.基础数据结构 [Redis核心原理与应用实践](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
 
 ~~~
-Redis-Object对象头结构体:          # 存储空间为16字节
+#--------------------------------------------------------------------
+#Redis-Db数据库结构体:             # 内存分配器 (jemalloc...) 从操作系统分配的内存总量
+struct RedisDb {
+  dict* dicts;                    # 所有key集合 key=>value(快查hash函数,siphash算法,避免hash攻击...)
+  dict* expires;                  # 过期key集合 key=>long (timestamp)
+}
+#Redis-dict字典是Redis应用最为频繁的复合型数据结构:所有key集合,过期key集合,hash哈希,zset集合
+struct dict {
+  dictht ht[2];                   # ht[0](old-hashtable) <渐进式rehash搬迁> ht[1](new-hashtable)
+}
+struct dictht {
+  ...
+  long size;                      # 第一维是数组,长度
+  long used;                      # table表中的元素个数
+  dictEntry** table;              # 第二维是链表,dictEntry链表的第一个元素的指针
+}
+struct dictEntry {
+  void* key;
+  void* val;
+  dictEntry* next;                # 链接下一个entry
+}
+#--------------------------------------------------------------------
+#Redis-Object对象头结构体:         # 存储空间为16字节
 struct RedisObject {
   int4 type;                      # 对象的不同类型4bits
   int4 encoding;                  # 存储编码形式4bits
@@ -67,7 +89,7 @@ struct RedisObject {
   int32 refcount;                 # 对象的引用计数(为零时对象就会被销毁)4bytes
   void *ptr;                      # 指针(引用SDS...指向对象内容存储位置)8bytes,64-bit-system
 }
-
+#--------------------------------------------------------------------
 1. string # 字符串（SDS带长度信息的字节数组Simple Dynamic String）
 struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-int8-int
   T capacity;                     # 数组容量<=512M(当<1M时扩容加倍;超过1M时扩容+1M)
