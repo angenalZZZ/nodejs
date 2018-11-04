@@ -113,8 +113,10 @@ module.exports = [
         // 设置 session 过期
         session = JSON.parse(session);
         session.valid = false;
-        // 缓存 修改 session data
-        req.redis.set(session.id, JSON.stringify(session), 'EX', session.exp);
+        // 删除缓存 session data
+        // req.redis.del(`session-key-${session.id}`);
+        // 修改缓存 session data
+        req.redis.set(`session-key-${session.id}`, JSON.stringify(session));
         // 删除 auth cookie
         if (req.payload.cookie) {
           const cookie_options = {
