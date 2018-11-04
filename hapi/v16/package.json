@@ -38,6 +38,7 @@
     "package": "^1.0.1",
     "redis": "^2.8.0",
     "sequelize": "^4.40.0",
+    "timezone": "^1.0.20",
     "vision": "^4.1.1"
   },
   "devDependencies": {

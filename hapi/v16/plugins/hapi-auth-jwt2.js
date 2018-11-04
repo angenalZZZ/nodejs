@@ -1,4 +1,5 @@
 // JWT认证授权(先调用/token获取认证)
+const { exp } = require('../config');
 const auth = ENV.AUTH_JWT;
 /** 授权网关 */
 const validate = (decoded, request, callback) => {
@@ -6,15 +7,19 @@ const validate = (decoded, request, callback) => {
   // console.log('decoded:', decoded);
   if (!decoded || !decoded.id) return callback(null, false, null);
   // 通过认证 credentials session data
-  const redisChecked = request.redis.get(decoded.id, function (err, data) {
-    // console.log(`redis.get:${decoded.id}`, data);
+  const redisChecked = request.redis.get(`session-key-${decoded.id}`, function (err, data) {
+    console.log(`redis.get:session-key-${decoded.id}`, data);
     if (err || !data) return callback(err, false, null);
     // 在路由接口的 handler 可以通过 request.auth.credentials 获取缓存的 session data
     try {
       const session = JSON.parse(data);
       // 验证通过 => 授权访问
-      const valid = (session.valid == undefined || session.valid == true);
-      return callback(null, valid, session);
+      let valid = (session.valid == undefined || session.valid == true);
+      if (valid) {
+        const n = exp(); // time: now
+        valid = session.nbf <= n && n <= exp(session.exp, session.nbf);
+      }
+      return callback(null, valid, valid ? session : null);
     } catch (e) {
       return callback(e, false, null);
     }

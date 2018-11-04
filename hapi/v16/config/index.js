@@ -60,8 +60,8 @@ exports.hapiConfig = {
 
 /** hapi 请求限制 */
 exports.API = 'api';
-/** 过期限制(输入秒/输出毫秒) */
-exports.exp = (s) => s * 1000 + Date.now();
+/** 过期限制(输入s秒n时/输出毫秒) */
+exports.exp = (s = 0, n = 0) => s * 1000 + (n == 0 ? Date.now() : n);
 exports.methods = {
   get: 'GET',
   post: 'POST',
