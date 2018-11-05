@@ -83,6 +83,10 @@ npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.
 
 # web IRC客户端(Internet Relay Chat)
 yarn global add thelounge
+
+# hash算法
+npm i siphash      # 随机性好、输出均匀-性能突出（用于字典的高效查找）、偏向性小（防hash攻击） https://github.com/jedisct1/siphash-js
+
 ~~~
 
 
