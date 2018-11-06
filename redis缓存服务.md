@@ -53,7 +53,7 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
   
 > info stats | grep ops         # 每秒操作数:instantaneous_ops_per_sec:***
 > monitor                       # 如果 qps 过高，快速观察究竟是哪些 key 访问比较频繁，从而在业务上进行优化，减少 IO 次数(执行后立即ctrl+c中断)
-
+> debug object [key]            # 调试输出 key of object: { Value at: 指针地址, refcount: 引用计数, encoding: 数据类型, serializedlength.. }
 ~~~
 
 ####  2.基础数据结构 [Redis核心原理与应用实践](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
@@ -65,9 +65,28 @@ struct RedisDb {
   dict* dicts;                    # 所有key集合 key=>value(快查hash函数,siphash算法,避免hash攻击...)
   dict* expires;                  # 过期key集合 key=>long (timestamp)
 }
+#zset有序集合
 struct zset {
   dict* dicts;                    # 所有value集合 value=>score，每个value赋予一个score的排序权重
   zskiplist* zsl;                 # 跳跃列表
+}
+#set无序集合 intset<T>、ziplist<T>、HashSet(存储空间大)
+struct intset<T> {                # 整数集合: 元素个数较少，紧凑的数组结构
+  int32 encoding;                 # 决定整数位<T>: 16位、32位、64位
+  int32 length;                   # 元素个数
+  int<T> contents;                # 整数数组
+}
+struct ziplist<T> {               # 压缩列表: 元素个数较少，紧凑的数组结构
+  int32 zlbytes;                  # 占用字节数
+  int32 zltail_offset;            # 最后一个元素距离起始位置的偏移量，用于快速定位
+  int16 zllength;                 # 元素个数
+  T[] entries;                    # 元素内容列表，紧凑存储结构
+  int8 zlend;                     # 标志，压缩列表的结束，值恒定 0xFF
+}
+struct entry {                    # 压缩列表/元素内容列表/元素内容entry
+  int<var> prelen;                # 前一个entry的字节长度
+  int<var> encoding;              # 元素类型编码
+  optional byte[] content;        # 元素内容
 }
 #Redis-dict字典是Redis应用最为频繁的复合型数据结构:所有key集合,过期key集合,hash哈希,zset集合
 struct dict {
