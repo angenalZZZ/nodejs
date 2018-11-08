@@ -61,12 +61,14 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 ~~~
 --------------------------------------------------------------------
 #Redis-Db数据库结构体:             # 内存分配器 (jemalloc...) 从操作系统分配的内存总量
+--------------------------------------------------------------------
 struct RedisDb {
   dict* dicts;                    # 所有key集合 key=>value(快查hash函数,siphash算法,避免hash攻击...)
   dict* expires;                  # 过期key集合 key=>long (timestamp)
 }
 --------------------------------------------------------------------
-#Redis-Object对象头结构体:         # 存储空间为16字节,公共实体类
+#Redis-Object对象头结构体:         # 存储空间为16字节,公共基类
+--------------------------------------------------------------------
 struct RedisObject {
   int4 type;                      # 对象的不同类型4bits
   int4 encoding;                  # 存储编码形式4bits
@@ -76,6 +78,7 @@ struct RedisObject {
 }
 --------------------------------------------------------------------
 #Redis-dict字典是Redis应用最为频繁的复合型数据结构:所有key集合,过期key集合,hash哈希,zset集合
+--------------------------------------------------------------------
 struct dict {
   dictht ht[2];                   # ht[0](old-hashtable) <渐进式rehash搬迁> ht[1](new-hashtable)
 }
@@ -91,30 +94,34 @@ struct dictEntry {
   dictEntry* next;                # 链接下一个entry
 }
 --------------------------------------------------------------------
-#zset有序集合 (复合结构 = SkipList跳跃列表 + HashMap字典)
-struct zset {
-  dict* dicts;                    # 所有value集合 value=>score，每个value赋予一个score的排序权重
-  zskiplist* zsl;                 # 跳跃列表zskiplist
-}
-struct zsl {                      # 跳跃列表zskiplist
-  zslnode* head;                  # SkipList跳跃列表头指针
-  int maxLevel;                   # 跳跃列表当前的最高层
-  map<string, zslnode*> ht;       # HashMap字典-所有键值对
-}
-struct zslnode {
-  string value;
-  double score;
-  zslnode*[] forwards;            # 多层连接指针
-  zslnode* backward;              # 回溯指针
-}
-#set无序集合 intset<T>(整数集合-存储空间小)、HashSet(哈希集合-存储空间大)
-struct intset<T> {                # 整数集合: 元素个数较少，紧凑的数组结构
-  int32 encoding;                 # 决定整数位<T>: 16位、32位、64位
-  int32 length;                   # 元素个数
-  int<T> contents;                # 整数数组
+
+--------------------------------------------------------------------
+1. string # 字符串（SDS带长度信息的字节数组Simple Dynamic String）
+--------------------------------------------------------------------
+struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-int8-int
+  T capacity;                     # 数组容量<=512M(当<1M时扩容加倍;超过1M时扩容+1M)
+  T len;                          # 数组长度<=512M
+  byte flags;                     # 特殊标识
+  byte[] content;                 # 数组内容
 }
 --------------------------------------------------------------------
-#list列表 ziplist<T>(压缩列表)、quicklist(快速列表)、linkedlist(链表)
+ > set key value                  # 添加/修改 (value包含空格时添加“”)
+ > get key                        # 获取value
+ > exists key                     # if key is exists: 成功返回1,失败返回0.
+ > del key                        # 删除: 成功返回1,失败返回0.
+ > mset name1 value1 name2 value2 # 批量设置
+ > mget name1 name2               # 批量获取
+ > expire key 60                  # 过期: 60s
+ > setex key 60 value             # 添加/过期: 60s
+ > ttl key                        # 返回: 过期时间(秒)
+ > setnx age 1                    # if age is not exists, set age = 1: 成功返回1,失败返回0.
+ > incr age                       # 计数: += 1
+ > incrby age 2                   # 计数: += 2
+ 
+--------------------------------------------------------------------
+2. list  # 列表 ziplist<T>(压缩列表)、quicklist(快速列表)、linkedlist(链表)
+         # [内存: 元素少时ziplist压缩列表, 元素多时quicklist快速列表]: 插入删除快Time=O(1),索引定位慢Time=O(n)
+--------------------------------------------------------------------
 struct ziplist<T> {               # 压缩列表: 元素个数较少，紧凑的数组结构，存储空间小；删除中间节点会导致级联更新，耗费计算资源。
   int32 zlbytes;                  # 占用字节数
   int32 zltail_offset;            # 最后一个元素距离起始位置的偏移量，用于快速定位
@@ -144,30 +151,7 @@ struct quicklistNode {            # 快速列表quicklist的一个节点
   int2 encoding;                  # 原生字节数组还是LZF压缩存储2bits
   ...
 }
-
 --------------------------------------------------------------------
-1. string # 字符串（SDS带长度信息的字节数组Simple Dynamic String）
-struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-int8-int
-  T capacity;                     # 数组容量<=512M(当<1M时扩容加倍;超过1M时扩容+1M)
-  T len;                          # 数组长度<=512M
-  byte flags;                     # 特殊标识
-  byte[] content;                 # 数组内容
-}
-
- > set key value                  # 添加/修改 (value包含空格时添加“”)
- > get key                        # 获取value
- > exists key                     # if key is exists: 成功返回1,失败返回0.
- > del key                        # 删除: 成功返回1,失败返回0.
- > mset name1 value1 name2 value2 # 批量设置
- > mget name1 name2               # 批量获取
- > expire key 60                  # 过期: 60s
- > setex key 60 value             # 添加/过期: 60s
- > ttl key                        # 返回: 过期时间(秒)
- > setnx age 1                    # if age is not exists, set age = 1: 成功返回1,失败返回0.
- > incr age                       # 计数: += 1
- > incrby age 2                   # 计数: += 2
- 
-2. list   # 列表 LinkedList 链表[内存: 元素少时ziplist压缩列表, 元素多时quicklist快速列表]: 插入删除快Time=O(1),索引定位慢Time=O(n)
  > rpush books python java swift golang # 插入[右进左出/队列,右进右出/栈]: 成功返回4,失败返回0.
  > llen books                     # 列表长度: 成功返回4
  > lpop books                     # 取值快/队列: 成功返回python
@@ -177,7 +161,9 @@ struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-
  > ltrim books 1 -1               # 从第二个开始截取全部: 成功返回OK, O(n) 慎用
  > ltrim books 1 0                # 清空列表: llen books = 0 内存自动回收
 
+--------------------------------------------------------------------
 3. hash   # 哈希 HashMap 无序字典[内存: 数组+链表二维结构，采用渐进式rehash策略，存储消耗高于单个字符串]
+--------------------------------------------------------------------
  > hset books java "think in java" # 添加/修改: 字符串如果有空格要用引用
  > hgetall books
  > hget books java
@@ -186,7 +172,16 @@ struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-
  > hlen books                      # 集合长度: 成功返回1
  > hset books count 3              # 添加: count 计数
  > hincrby books count 1           # 计数: += 1 , hget books count = 4
-4. set    # 无序集合 HashSet 无序唯一键值对
+
+--------------------------------------------------------------------
+4. set    # 无序集合 intset<T>(整数集合-存储空间小)、HashSet(哈希集合-存储空间大), 集合: 唯一键-值-对
+--------------------------------------------------------------------
+struct intset<T> {                # 整数集合: 元素个数较少，紧凑的数组结构
+  int32 encoding;                 # 决定整数位<T>: 16位、32位、64位
+  int32 length;                   # 元素个数
+  int<T> contents;                # 整数数组
+}
+--------------------------------------------------------------------
  > sadd books java                 # 添加: 返回1
  > sadd books java                 # 重复: 返回0
  > sadd books golang python        # 批量: 返回2
@@ -194,7 +189,27 @@ struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-
  > sismember books jaja            # 判断: 存在与否
  > scard books                     # 集合长度: 成功返回3
  > spop books                      # 取值/删除: 弹出一个
-5. zset   # 有序集合 SortedSet[SkipList]+HashMap结合 [内存: SkipList跳跃列表+HashMap字典，每个value赋予一个score的排序权重]
+
+--------------------------------------------------------------------
+5. zset   # 有序集合 (复合结构 = SkipList跳跃列表[SortedSet] + HashMap字典), 集合: 唯一键-值-对
+          # [内存: SkipList跳跃列表+HashMap字典，每个value赋予一个score的排序权重]
+--------------------------------------------------------------------
+struct zset {
+  dict* dicts;                    # 所有value集合 value=>score，每个value赋予一个score的排序权重
+  zskiplist* zsl;                 # 跳跃列表zskiplist
+}
+struct zsl {                      # 跳跃列表zskiplist
+  zslnode* head;                  # SkipList跳跃列表头指针
+  int maxLevel;                   # 跳跃列表当前的最高层
+  map<string, zslnode*> ht;       # HashMap字典-所有键值对
+}
+struct zslnode {
+  string value;
+  double score;
+  zslnode*[] forwards;            # 多层连接指针
+  zslnode* backward;              # 回溯指针
+}
+--------------------------------------------------------------------
  > zadd books 9.0 "java"           # 添加: 返回1
  > zadd books 8.8 python           # 添加: 返回1
  > zadd books 8.6 golang           # 添加: 返回1
@@ -206,11 +221,13 @@ struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-
  > zscore books "java"             # 查询score: 成功返回9.0
  > zrank books "java"              # 排名: 成功返回0 / 第一名
  > zrem books "java"               # 删除: 成功返回1
+
 --------------------------------------------------------------------
  # 以上的list/hash/set/zset是容器型数据结构,它们有通用规则:
  # 1. create if not exists 容器不存在就创建一个再操作 2. drop if no elements 容器中元素没有了释放内存,列表消失
 --------------------------------------------------------------------
 6. stream   # 频道[发送/接收/历史]消息
+--------------------------------------------------------------------
  > xadd channel1 * create-channel null              # 创建频道channel1,发送空消息create-channel
  > xadd channel1 * message1 "hello world" message2 "my name is stream"  # 创建频道channel1,发送消息message1...
  > xread block 10 streams channel1 1538804450788-0  # 接收消息
