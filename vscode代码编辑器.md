@@ -8,7 +8,7 @@ windows> https://code.visualstudio.com/docs/setup/windows
 network> https://code.visualstudio.com/docs/setup/network
 ~~~
 
-####  安装.NET[Install .NET Core SDK](https://www.microsoft.com/net/learn/dotnet/hello-world-tutorial)
+####   安装.NET  [Install .NET Core SDK](https://www.microsoft.com/net/learn/dotnet/hello-world-tutorial)
 
 ####  1.插件扩展 [Extensions for the Visual Studio family of products](https://marketplace.visualstudio.com/vscode)
 
