@@ -46,13 +46,26 @@ const authFunc = (req) => {
 
 /** 实现 签发 JWT = 生成给客户端调用的 token */
 const generateJWT = (session) => {
-  const payload = {
-    id: session.id,
-    iat: session.iat, // time: now
-    exp: exp(session.exp), // time: exp
+  const payload = { // 不要在 payload 中存放诸如密码密秘类的安全敏感数据
+    id: session.id, // 会话标识session.id
+    iat: session.iat, // (issuedAt) now 签发时间
+    exp: exp(session.exp), // (expiresIn)
+    nbf: session.nbf, // (notBefore)
+  };
+  const options = {
+    algorithm: ENV.JWT_algorithms,
+    expiresIn: payload.exp, // 过期时间ms-毫秒, 或字符标识-秒: 60, "2 days", "10h", "7d"
+    notBefore: payload.nbf, // 什么时间之前，该 JWT 都是不可用的
+    // audience: '', // 接收 JWT 的一方
+    // subject: '', // 面向的用户
+    // issuer: '', // 签发者
+    // jwtid: aguid(), // JWT 的唯一身份标识，主要用来作为一次性 token，从而避免重放攻击
+    // noTimestamp: true,
+    // header: {},
+    // encoding: ''
   };
   // JWT_SECRET 要在版本库外管理: node -e "console.log(require('crypto').randomBytes(32).toString('base64'))"
-  return JWT.sign(payload, ENV.JWT_SECRET, { algorithm: ENV.JWT_algorithms });
+  return JWT.sign(payload, ENV.JWT_SECRET, options);
 };
 /** default cookie options */
 const default_cookie_options = {
