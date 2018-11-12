@@ -82,10 +82,10 @@ struct RedisObject {
 struct dict {
   dictht ht[2];                   # ht[0](old-hashtable) <渐进式rehash搬迁> ht[1](new-hashtable)
 }
-struct dictht {
+struct dictht {                   # hashtable结构(类似于Java的HashMap)，性能取决于hash函数siphash算法(hash偏向性小,生成key均匀,避免hash攻击)
   ...
-  long size;                      # 第一维是数组,长度
-  long used;                      # table表中的元素个数
+  long size;                      # 第一维是数组,数组长度
+  long used;                      # table链表中的元素个数
   dictEntry** table;              # 第二维是链表,dictEntry链表的第一个元素的指针
 }
 struct dictEntry {
@@ -119,8 +119,8 @@ struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-
  > incrby age 2                   # 计数: += 2
  
 --------------------------------------------------------------------
-2. list  # 列表 ziplist<T>(压缩列表)、quicklist(快速列表)、linkedlist(链表)
-         # [内存: 元素少时ziplist压缩列表, 元素多时quicklist快速列表]: 插入删除快Time=O(1),索引定位慢Time=O(n)
+2. list  # 列表 ziplist<T>(压缩列表)、linkedlist(链表-节点间指针关联多会加剧内存碎片化-影响效率)、quicklist(快速列表-改进结构用于代替前两者)
+         # [内存: 元素少时ziplist压缩列表, 元素多时quicklist快速列表, 少用linkedlist]: 插入删除快Time=O(1),索引定位慢Time=O(n)
 --------------------------------------------------------------------
 struct ziplist<T> {               # 压缩列表: 元素个数较少，紧凑的数组结构，存储空间小；删除中间节点会导致级联更新，耗费计算资源。
   int32 zlbytes;                  # 占用字节数
@@ -134,23 +134,37 @@ struct entry {                    # 压缩列表/元素内容列表/元素内容
   int<var> encoding;              # 元素类型编码
   optional byte[] content;        # 元素内容
 }
-struct quicklist {                # 快速列表: 单个ziplist长度默认为8k字节(由配置list-max-ziplist-size决定)，超出就会新增一个ziplist
-  quicklistNode* head;
-  quicklistNode* tail;
+
+struct quicklist {                # 快速列表: 使用多个ziplist紧凑存储，ziplist之间用双向指针连起来；单个ziplist长度默认为8k字节(由配置list-max-ziplist-size决定)，超出就会新增一个ziplist。
+  quicklistNode* head;            # 首个元素
+  quicklistNode* tail;            # 结尾元素
   long count;                     # 元素个数
   int nodes;                      # ziplist节点个数
   int compressDepth;              # LZF算法压缩深度，默认为0(不压缩,由配置list-compress-depth决定)
   ...
 }
 struct quicklistNode {            # 快速列表quicklist的一个节点
-  quicklistNode* prev;
+  quicklistNode* prev;            # prev+next占16字节(64bit系统的指针是8个字节)
   quicklistNode* next;
   ziplist*       zl;              # 引用压缩列表ziplist
   int32 size;                     # ziplist占用字节数zlbytes
   int16 count;                    # ziplist元素个数zllength
-  int2 encoding;                  # 原生字节数组还是LZF压缩存储2bits
+  int2 encoding;                  # 判断是原生字节数组,还是LZF压缩存储,2bits
   ...
 }
+
+struct listpack<T> {              # 紧凑列表: Redis 5.0 对ziplist结构的改进，存储空间更小；不存在级联更新行为(元素独立)，性能更好；已使用在Stream中。
+  int32 total_bytes;              # 占用字节数
+  int16 size;                     # 元素个数
+  T[] entries;                    # 紧凑排列的元素列表
+  int8 end;                       # 标志，紧凑列表的结束，值恒定 0xFF
+}
+struct lpentry {
+  int<var> encoding;              # 编码是1、2、3、4、5个字节，同UTF8编码一样，通过字节最高位为1确定编码长度。
+  optional byte[] content;
+  int<var> length;                # 用于计算长度（支持类型多，设计复杂）
+}
+
 --------------------------------------------------------------------
  > rpush books python java swift golang # 插入[右进左出/队列,右进右出/栈]: 成功返回4,失败返回0.
  > llen books                     # 列表长度: 成功返回4
@@ -200,8 +214,8 @@ struct zset {
 }
 struct zsl {                      # 跳跃列表zskiplist
   zslnode* head;                  # SkipList跳跃列表头指针
-  int maxLevel;                   # 跳跃列表当前的最高层
-  map<string, zslnode*> ht;       # HashMap字典-所有键值对
+  int maxLevel;                   # 跳跃列表当前的最高层；随机层数：调用随机算法分配一个合理的层数；最顶层是2^-63，遍历时从maxLevel层往下遍历。
+  map<string, zslnode*> ht;       # HashMap字典-所有的键值对
 }
 struct zslnode {
   string value;
