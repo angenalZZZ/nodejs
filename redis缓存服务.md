@@ -37,8 +37,10 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 > info replication | grep backlog
   repl_backlog_active:0
   repl_backlog_size:1048576     # 积压缓冲区大小
-  # 复制积压缓冲区大小非常重要，它严重影响到主从复制的效率。当从库因为网络原因临时断开了主库的复制，然后网络恢复了，又重新连上的时候，这段断开的时间内发生在 master 上的修改操作指令都会放在积压缓冲区中，这样从库可以通过积压缓冲区恢复中断的主从同步过程。
-  # 积压缓冲区是环形的，后来的指令会覆盖掉前面的内容。如果从库断开的时间过长，或者缓冲区的大小设置的太小，都会导致从库无法快速恢复中断的主从同步过程，因为中间的修改指令被覆盖掉了。这时候从库就会进行全量同步模式，非常耗费 CPU 和网络资源。
+  # 复制积压缓冲区大小非常重要，它严重影响到主从复制的效率。当从库因为网络原因临时断开了主库的复制，然后网络恢复了，又重新连上的时候，
+  # 这段断开的时间内发生在 master 上的修改操作指令都会放在积压缓冲区中，这样从库可以通过积压缓冲区恢复中断的主从同步过程。
+  # 积压缓冲区是环形的，后来的指令会覆盖掉前面的内容。如果从库断开的时间过长，或者缓冲区的大小设置的太小，
+  # 都会导致从库无法快速恢复中断的主从同步过程，因为中间的修改指令被覆盖掉了。这时候从库就会进行全量同步模式，非常耗费 CPU 和网络资源。
   
 > redis-cli info stats | grep sync
   sync_full:0
@@ -119,8 +121,10 @@ struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-
  > incrby age 2                   # 计数: += 2
  
 --------------------------------------------------------------------
-2. list  # 列表 ziplist<T>(压缩列表)、linkedlist(链表-节点间指针关联多会加剧内存碎片化-影响效率)、quicklist(快速列表-改进结构用于代替前两者)
-         # [内存: 元素少时ziplist压缩列表, 元素多时quicklist快速列表, 少用linkedlist]: 插入删除快Time=O(1),索引定位慢Time=O(n)
+2. list  # 列表 ziplist<T>(压缩列表)、
+         # linkedlist(链表-节点间指针关联多会加剧内存碎片化-影响效率)、
+         # quicklist(快速列表-改进结构用于代替前两者,是前两者的混合体,将linkedlist按段切分,每一段ziplist紧凑存储并用双向指针串接起来)
+         # [内存: 元素少时ziplist压缩列表,元素多时quicklist快速列表,少用linkedlist]: 插入删除快Time=O(1),索引定位慢Time=O(n)
 --------------------------------------------------------------------
 struct ziplist<T> {               # 压缩列表: 元素个数较少，紧凑的数组结构，存储空间小；删除中间节点会导致级联更新，耗费计算资源。
   int32 zlbytes;                  # 占用字节数
@@ -134,26 +138,30 @@ struct entry {                    # 压缩列表/元素内容列表/元素内容
   int<var> encoding;              # 元素类型编码
   optional byte[] content;        # 元素内容
 }
+struct ziplist_compressed {       # 压缩列表,LZF压缩存储
+  int32 size;
+  byte[] compressed_data;         # 元素内容
+}
 
-struct quicklist {                # 快速列表: 使用多个ziplist紧凑存储，ziplist之间用双向指针连起来；单个ziplist长度默认为8k字节(由配置list-max-ziplist-size决定)，超出就会新增一个ziplist。
+struct quicklist {                # 快速列表: 使用多个ziplist紧凑存储，ziplist之间用双向指针连起来；
+  ...                             # 单个ziplist长度默认为8k字节(由配置list-max-ziplist-size决定)，超出就会新增一个ziplist。
   quicklistNode* head;            # 首个元素
   quicklistNode* tail;            # 结尾元素
   long count;                     # 元素个数
   int nodes;                      # ziplist节点个数
-  int compressDepth;              # LZF算法压缩深度，默认为0(不压缩,由配置list-compress-depth决定)
-  ...
+  int compressDepth;              # LZF算法压缩深度，默认为0(0不压缩,由配置list-compress-depth决定;
+  ...                             # 为了支持快速push/pop操作,深度为1时首尾不压缩ziplist,深度为2时首尾第一二个都不压缩ziplist)
 }
 struct quicklistNode {            # 快速列表quicklist的一个节点
-  quicklistNode* prev;            # prev+next占16字节(64bit系统的指针是8个字节)
-  quicklistNode* next;
+  quicklistNode* prev;            # prev+next占16字节(因为64bit系统的指针是8个字节)
+  quicklistNode* next;            # prev+next双向指针串接起来
   ziplist*       zl;              # 引用压缩列表ziplist
   int32 size;                     # ziplist占用字节数zlbytes
   int16 count;                    # ziplist元素个数zllength
   int2 encoding;                  # 判断是原生字节数组,还是LZF压缩存储,2bits
-  ...
 }
 
-struct listpack<T> {              # 紧凑列表: Redis 5.0 对ziplist结构的改进，存储空间更小；不存在级联更新行为(元素独立)，性能更好；已使用在Stream中。
+struct listpack<T> {              # 紧凑列表: Redis 5.0 对ziplist结构的改进,存储空间更小;不存在级联更新行为(元素独立),性能更好;已用在Stream中
   int32 total_bytes;              # 占用字节数
   int16 size;                     # 元素个数
   T[] entries;                    # 紧凑排列的元素列表
@@ -255,8 +263,13 @@ struct zslnode {
    OK
    ... do something critical ...
  > del lock:id001
-   # 1. 分布式锁不能解决超时问题，如果在加锁和释放锁之间的逻辑执行的太长，以至于超出了锁的超时限制，就会出现问题。因为这时候第一个线程持有的锁过期了，临界区的逻辑还没有执行完，这个时候第二个线程就提前重新持有了这把锁，导致临界区代码不能得到严格的串行执行。为了避免这个问题，Redis 分布式锁不要用于较长时间的任务。如果真的偶尔出现了，数据出现的小波错乱可能需要人工介入解决。
-   # 2. 可重入性是指线程在持有锁的情况下再次请求加锁，如果一个锁支持同一个线程的多次加锁，那么这个锁就是可重入的。比如 Java 语言里有个 ReentrantLock 就是可重入锁。Redis 分布式锁如果要支持可重入，需要对客户端的 set 方法进行包装，使用线程的 Threadlocal 变量存储当前持有锁的计数。
+   # 1. 分布式锁不能解决超时问题，如果在加锁和释放锁之间的逻辑执行的太长，以至于超出了锁的超时限制，就会出现问题。
+   # 因为这时候第一个线程持有的锁过期了，临界区的逻辑还没有执行完，这个时候第二个线程就提前重新持有了这把锁，
+   # 导致临界区代码不能得到严格的串行执行。为了避免这个问题，Redis 分布式锁不要用于较长时间的任务。
+   # 如果真的偶尔出现了，数据出现的小波错乱可能需要人工介入解决。
+   # 2. 可重入性是指线程在持有锁的情况下再次请求加锁，如果一个锁支持同一个线程的多次加锁，
+   # 那么这个锁就是可重入的。比如 Java 语言里有个 ReentrantLock 就是可重入锁。
+   # Redis 分布式锁如果要支持可重入，需要对客户端的 set 方法进行包装，使用线程的 Threadlocal 变量存储当前持有锁的计数。
 --------------------------------------------------------------------
  # 压力测试工具
  > redis-benchmark -t set -P 2 -q # 管道提升性能: 成功返回SET:51975.05 requests per second, 慎用 参数-P越大QPS越高,但可能CPU已100%了.
