@@ -23,7 +23,7 @@ network> https://code.visualstudio.com/docs/setup/network
 
 > 同步配置
   # 1. 安装扩展Settings Sync > Shift + Alt + U 上传配置 Shift + Alt + D 下载配置
-       1) 添加GitHub Gist Token > code-settings-sync (选择gist) > GitHub Gist ID: 63c496a05632a4e605c48f588db80b8bc80d8528
+       1) 添加GitHub Gist Token > code-settings-sync (选择gist) > GitHub Gist ID
        2) GitHub Token: 63c496a05632a4e605c48f588db80b8bc80d8528 (GitHub Gist ID)
           GitHub Gist: 7e32bcc357be6d8149bd4947b119c9b3
           GitHub Gist Type: Secret
