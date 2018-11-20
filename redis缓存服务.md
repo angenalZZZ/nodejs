@@ -138,19 +138,15 @@ struct entry {                    # 压缩列表/元素内容列表/元素内容
   int<var> encoding;              # 元素类型编码
   optional byte[] content;        # 元素内容
 }
-struct ziplist_compressed {       # 压缩列表,LZF压缩存储
-  int32 size;
-  byte[] compressed_data;         # 元素内容
-}
 
 struct quicklist {                # 快速列表: 使用多个ziplist紧凑存储，ziplist之间用双向指针连起来；
-  ...                             # 单个ziplist长度默认为8k字节(由配置list-max-ziplist-size决定)，超出就会新增一个ziplist。
+  ...                             # 单个ziplist长度默认为8k字节,由配置list-max-ziplist-size决定[-1=4kb,-2=8kb..],超出就会新增一个ziplist
   quicklistNode* head;            # 首个元素
   quicklistNode* tail;            # 结尾元素
   long count;                     # 元素个数
   int nodes;                      # ziplist节点个数
-  int compressDepth;              # LZF算法压缩深度，默认为0(0不压缩,由配置list-compress-depth决定;
-  ...                             # 为了支持快速push/pop操作,深度为1时首尾不压缩ziplist,深度为2时首尾第一二个都不压缩ziplist)
+  int compressDepth;              # LZF算法压缩深度，默认为0(不压缩),由配置list-compress-depth决定：0,1,2...
+  ...                             # 为了支持快速push/pop操作,深度为1时首尾不压缩ziplist,深度为2时首尾第一二个都不压缩ziplist
 }
 struct quicklistNode {            # 快速列表quicklist的一个节点
   quicklistNode* prev;            # prev+next占16字节(因为64bit系统的指针是8个字节)
@@ -160,15 +156,19 @@ struct quicklistNode {            # 快速列表quicklist的一个节点
   int16 count;                    # ziplist元素个数zllength
   int2 encoding;                  # 判断是原生字节数组,还是LZF压缩存储,2bits
 }
+struct ziplist_compressed {       # 压缩列表,LZF压缩存储
+  int32 size;
+  byte[] compressed_data;         # 元素内容
+}
 
-struct listpack<T> {              # 紧凑列表: Redis 5.0 对ziplist结构的改进,存储空间更小;不存在级联更新行为(元素独立),性能更好;已用在Stream中
+struct listpack<T> {              # 紧凑列表: Redis 5.0 对ziplist结构改进,存储空间更小;不存在级联更新行为(元素独立),性能好,已用在Stream中
   int32 total_bytes;              # 占用字节数
   int16 size;                     # 元素个数
   T[] entries;                    # 紧凑排列的元素列表
   int8 end;                       # 标志，紧凑列表的结束，值恒定 0xFF
 }
-struct lpentry {
-  int<var> encoding;              # 编码是1、2、3、4、5个字节，同UTF8编码一样，通过字节最高位为1确定编码长度。
+struct lpentry {                  # 紧凑列表的元素
+  int<var> encoding;              # 编码可选择1|2|3|4|5个字节，同UTF8编码一样，通过字节最高位为1确定编码长度
   optional byte[] content;
   int<var> length;                # 用于计算长度（支持类型多，设计复杂）
 }
@@ -203,6 +203,7 @@ struct intset<T> {                # 整数集合: 元素个数较少，紧凑的
   int32 length;                   # 元素个数
   int<T> contents;                # 整数数组
 }
+
 --------------------------------------------------------------------
  > sadd books java                 # 添加: 返回1
  > sadd books java                 # 重复: 返回0
@@ -231,6 +232,7 @@ struct zslnode {
   zslnode*[] forwards;            # 多层连接指针
   zslnode* backward;              # 回溯指针
 }
+
 --------------------------------------------------------------------
  > zadd books 9.0 "java"           # 添加: 返回1
  > zadd books 8.8 python           # 添加: 返回1
@@ -271,7 +273,7 @@ struct zslnode {
    # 那么这个锁就是可重入的。比如 Java 语言里有个 ReentrantLock 就是可重入锁。
    # Redis 分布式锁如果要支持可重入，需要对客户端的 set 方法进行包装，使用线程的 Threadlocal 变量存储当前持有锁的计数。
 --------------------------------------------------------------------
- # 压力测试工具
+ # 压力测试工具(dev)
  > redis-benchmark -t set -P 2 -q # 管道提升性能: 成功返回SET:51975.05 requests per second, 慎用 参数-P越大QPS越高,但可能CPU已100%了.
 
 ~~~
