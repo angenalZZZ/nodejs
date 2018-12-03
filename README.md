@@ -78,11 +78,11 @@
 
 > 引用类型: Object、Array、Date、Function
 
-1.引用类型是保存在**堆内存**中,而**栈内存**(Heap)中会有一个**堆内存地址**,通过这个地址变量被指向堆内存中`Object`真正的值,因此引用类型是按照引用访问的.
+1.引用类型是保存在**堆内存**(Heap)中,而**栈内存**(Stack)中会有一个**堆内存地址**(Pointer),通过这个地址变量指向堆内存中`Object`真正的值.
 
 2.数组`Array`不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.
 
-3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制`一层` `...还有解构功能: 解构数组、对象等`.
+3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制`一层` `...还有析构赋值功能: 如析构数组、对象等`.
 ````javascript
 var p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
 ````
@@ -99,9 +99,9 @@ console.log(p1.name);console.log(p2.sex); // 此时p1,p2都有sex属性
 console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
 ````
 
-`扩展String`
+`检验`
 ````javascript
-// format格式：'{0:f2}'.format(12.456) // 12.46
+// 字符串 format格式：'{0:f2}'.format(12.456) // 12.46
 String.prototype.format = function(...args) {
     return this.replace(/\{(\d+)(:\w+)?\}/g, function (m, n) {
         let s = m.split(':');
@@ -114,12 +114,52 @@ String.prototype.format = function(...args) {
         return args[n];
     });
 };
+
+// 类型转换 typeof
+typeof 1 > "number"
+typeof 'a' > "string"
+typeof undefined > "undefined"
+typeof true > "boolean"
+typeof Symbol() > "symbol"
+typeof _  > "undefined"
+typeof [] > "object"
+typeof {} > "object"
+typeof null > "object"
+typeof console.log > "function"
+// 转换过程, 调用的是valueOf, 方法可重写.
+let varObj = {
+    [Symbol.toPrimitive](){return 2}, // 转换成对象(es6):转换类型时此方法调用优化级最高!
+    valueOf(){return 0},     // 转换成值:转换类型时此方法调用优化级低
+    //toString(){return '1'} // 转换成字符串
+};
+1 + varObj > 3
+'1'+varObj > "12"
+// 比较
+NaN!=NaN > true
+1=='1' > true
+1=='2' > false
+// 实例对象 new
+// 发生：1.新生成一个对象，2.链接到原型，3.绑定this，4.返回新对象
+function new () {
+    // 创建一个空对象
+    let obj = new Object()
+    // 获得构造函数
+    let con = [].shift.call(arguments) // arguments 参数、callee 当前函数的引用
+    // 链接到原型[函数]
+    obj.__proto__ = con.prototype // instanceof 内部机制是通过判断对象的原型链中是不是能找到类型的 prototype
+    // 绑定 this, 执行构造函数
+    let res = con.apply(obj, arguments)
+    // 确保 new 出来的是个对象
+    return typeof res === 'object' ? res : obj
+}
+
 ````
 
-5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外)，优先级是:`箭头`函数>`new`绑定>`显式`绑定[`bind`>`call`|`apply`]>`隐式`绑定>`默认`绑定。
+5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外[箭头函数无this])，
+    优先级是:`箭头`函数>`new`绑定>`显式`绑定[`bind`>`call`|`apply`]>`隐式`绑定>`默认`绑定。
 ````javascript
     apply、call、bind方法的共同点和语法区别：
-      三者都是用来改变函数的this对象的指向的；第一个参数都是this要指向的对象，也就是想指定的上下文；
+      三者都是用来改变函数的this对象[实例]的指向的；第一个参数都是this要指向的对象，也就是想指定的上下文[实例]；
       语法a：apply([thisObj[,argArray]])
       语法c：call([thisObj[,arg1[,arg2[,arg3[,.argN]]]]])
         thisObj的取值有以下4种情况：
