@@ -170,7 +170,7 @@ function new () {
       语法b：bind([thisObj[,arg1[,arg2[,arg3[,.argN]]]]]): function([,arg1[,arg2[,arg3[,.argN]]]])
         bind不兼容IE6,7,8
 ````
-6.作用域链`scope chain`,ES2015`es6`中引入let和const,创建块级作用域,阻止变量提升到整个函数(如var)和变量重复声明.
+6.作用域链`scope chain`,ES2015`es6`中引入let和const,创建块级作用域,阻止变量提升到整个函数(var问题)和变量重复声明.
 
 7.模块代码规范: 模块化编程、可维护、动态加载、性能优化等。
 ````javascript
