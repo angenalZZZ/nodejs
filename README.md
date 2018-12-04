@@ -82,7 +82,7 @@
 
 2.数组`Array`不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.
 
-3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制`一层` `...还有析构赋值功能: 如析构数组、对象等`.
+3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制`一层` `...还能解构赋值: 如解构–数组–对象等`.
 ````javascript
 var p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
 ````
@@ -170,7 +170,7 @@ function new () {
       语法b：bind([thisObj[,arg1[,arg2[,arg3[,.argN]]]]]): function([,arg1[,arg2[,arg3[,.argN]]]])
         bind不兼容IE6,7,8
 ````
-6.作用域链`scope chain`,在ES2015`es6`中引入了let, 通过let可以创建块级作用域, 阻止了变量提升.
+6.作用域链`scope chain`,在ES2015`es6`中引入了let和const,创建块级作用域,阻止变量提升到整个函数(如var)和变量重复声明问题.
 
 7.模块代码规范: 模块化编程、可维护、动态加载、性能优化等。
 ````javascript
