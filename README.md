@@ -99,62 +99,6 @@ console.log(p1.name);console.log(p2.sex); // 此时p1,p2都有sex属性
 console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
 ````
 
-`检验`
-````javascript
-// 字符串 format格式：'{0:f2}'.format(12.456) // 12.46
-String.prototype.format = function(...args) {
-    return this.replace(/\{(\d+)(:\w+)?\}/g, function (m, n) {
-        let s = m.split(':');
-        if (s.length == 2) {
-            let f = s[1].substring(0, s[1].length - 1);
-            if (f.match(/^f\d+$/)) {
-                return args[n].toFixed(parseInt(f.substring(1)));
-            }
-        }
-        return args[n];
-    });
-};
-
-// 类型转换 typeof
-typeof 1 > "number"
-typeof 'a' > "string"
-typeof undefined > "undefined"
-typeof true > "boolean"
-typeof Symbol() > "symbol"
-typeof _  > "undefined"
-typeof [] > "object"
-typeof {} > "object"
-typeof null > "object"
-typeof console.log > "function"
-// 转换过程, 调用的是valueOf, 方法可重写.
-let varObj = {
-    [Symbol.toPrimitive](){return 2}, // 转换成对象(es6):转换类型时此方法调用优化级最高!
-    valueOf(){return 0},     // 转换成值:转换类型时此方法调用优化级低
-    //toString(){return '1'} // 转换成字符串
-};
-1 + varObj > 3
-'1'+varObj > "12"
-// 比较
-NaN!=NaN > true
-1=='1' > true
-1=='2' > false
-// 实例对象 new
-// 发生：1.新生成一个对象，2.链接到原型，3.绑定this，4.返回新对象
-function new () {
-    // 创建一个空对象
-    let obj = new Object()
-    // 获得构造函数
-    let con = [].shift.call(arguments) // arguments 参数、callee 当前函数的引用
-    // 链接到原型[函数]
-    obj.__proto__ = con.prototype // instanceof 内部机制是通过判断对象的原型链中是不是能找到类型的 prototype
-    // 绑定 this, 执行构造函数
-    let res = con.apply(obj, arguments)
-    // 确保 new 出来的是个对象
-    return typeof res === 'object' ? res : obj
-}
-
-````
-
 5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外[箭头函数无this])，
     优先级是:`箭头`函数>`new`绑定>`显式`绑定[`bind`>`call`|`apply`]>`隐式`绑定>`默认`绑定。
 ````javascript
@@ -213,6 +157,79 @@ function new () {
         导入的再导出: import {sum} from './example.js' ... export {sum} ; 或 export * from "./example.js"; //完全导出
       限制: export 与 import 都有一个重要的限制，那就是它们必须被用在其他语句或表达式的外部，而不能使用在if等代码块内部。
             原因之一是模块语法需要让 JS 能静态判断需要导出什么，正因为此，你只能在模块的顶级作用域使用 export与import。
+````
+
+8.深入理解 `js` / `ECMA6` `ES6` / `ECMAScript6`
+````javascript
+// 字符串 format格式：'{0:f2}'.format(12.456) > 12.46
+String.prototype.format = function(...args) {
+    return this.replace(/\{(\d+)(:\w+)?\}/g, function (m, n) {
+        let s = m.split(':');
+        if (s.length == 2) {
+            let f = s[1].substring(0, s[1].length - 1);
+            if (f.match(/^f\d+$/)) {
+                return args[n].toFixed(parseInt(f.substring(1)));
+            }
+        }
+        return args[n];
+    });
+};
+
+// 类型转换 typeof
+typeof 1 > "number"
+typeof 'a' > "string"
+typeof undefined > "undefined"
+typeof true > "boolean"
+typeof Symbol() > "symbol"
+typeof _  > "undefined"
+typeof [] > "object"
+typeof {} > "object"
+typeof null > "object"
+typeof console.log > "function"
+
+// 转换类型或值, 优先调用[Symbol.toPrimitive]转换类型, 其次调用valueOf转换值, 方法可重写:
+let varObj = {
+    [Symbol.toPrimitive](){return 2}, // 转换对象(es6)此方法调用优化级最高
+    valueOf(){return 0},     // 转换值
+    //toString(){return '1'} // 转换字符串
+};
+1 + varObj > 3
+'1'+varObj > "12"
+
+// 比较
+NaN!=NaN > true
+1 == '1' > true
+1 == '2' > false
+
+// 实例对象 new ：1.新生成一个对象，2.链接到原型，3.绑定this，4.返回新对象
+function new () {
+    // 创建一个空对象
+    let obj = new Object()
+    // 获得构造函数
+    let con = [].shift.call(arguments) // arguments 参数、callee 当前函数的引用
+    // 链接到原型[函数]
+    obj.__proto__ = con.prototype      // instanceof 内部机制是通过判断对象的原型链中是不是能找到类型的 prototype
+    // 绑定 this, 执行构造函数
+    let res = con.apply(obj, arguments)
+    // 确保 new 出来的是个对象
+    return typeof res === 'object' ? res : obj
+}
+
+// es6 / Promise: 确保resolve回调只有一次(同步或异步均实用); 如何确保回调一定执行-如下：
+function timeoutPromise(delay) {
+	return new Promise(function (resolve, reject) {
+		setTimeout(function () { reject(`请求超时时间已到(${delay/1000}秒)`); }, delay);
+	});
+}
+Promise.race([function () {
+	// TODO:请求
+}, timeoutPromise(3000)]).then(function (res) {
+	// TODO:响应
+}, function (err) {
+	// TODO:超时
+});
+
+
 ````
 
 ---
