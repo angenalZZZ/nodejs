@@ -159,7 +159,7 @@ console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
             原因之一是模块语法需要让 JS 能静态判断需要导出什么，正因为此，你只能在模块的顶级作用域使用 export与import。
 ````
 
-8.深入理解 `js` / `ECMA6` `ES6` / `ECMAScript6`
+8.深入理解 `js` > `ES4-ES3.1-harmony` > `ES5` > `ES6` `ECMA6` `ECMAScript2015` > `javascript.next`
 ````javascript
 // 字符串 format格式：'{0:f2}'.format(12.456) > 12.46
 String.prototype.format = function(...args) {
@@ -215,18 +215,18 @@ function new () {
     return typeof res === 'object' ? res : obj
 }
 
-// es6 / Promise: 确保resolve回调只有一次(同步或异步均实用); 如何确保回调一定执行-如下：
+// es6 / Promise: 确保resolve回调只有一次(同步或异步均实用); 那么,如何确保回调一定执行-如下：
 function timeoutPromise(delay) {
-	return new Promise(function (resolve, reject) {
-		setTimeout(function () { reject(`请求超时时间已到(${delay/1000}秒)`); }, delay);
-	});
+    return new Promise(function (resolve, reject) {
+        setTimeout(function () { reject(`请求超时时间已到(${delay/1000}秒)`); }, delay);
+    });
 }
 Promise.race([function () {
-	// TODO:请求
+    // TODO:请求
 }, timeoutPromise(3000)]).then(function (res) {
-	// TODO:响应
+    // TODO:响应
 }, function (err) {
-	// TODO:超时
+    // TODO:超时
 });
 
 
