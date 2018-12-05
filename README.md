@@ -82,9 +82,9 @@
 
 2.数组`Array`不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.
 
-3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制`一层` `...还能解构赋值: 如解构–数组–对象等`.
+3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制`一层` `...还能解构赋值: 如数组、对象等`.
 ````javascript
-var p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
+let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
 ````
 
 4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象
@@ -236,11 +236,10 @@ Promise.race([function () {
 
 
 # TypeScript 基础
- `[ (es6)ES2015, ES2016,ES2017,ES2018... ]`
+ `[ (es6)ES2015,ES2016,ES2017,ES2018... ]`
 
 ```javascript
-// # 申明变量：var全局变量, let局部变量, const常量
-// # 基本类型...
+// # 申明变量：var全局变量, let局部变量, const局部常量
 let isDone: boolean = false;
 // ECMAScript 2015 即 es6
 let decimal: number = 6;
