@@ -1,8 +1,7 @@
 
 `[程序设计]`
 
-> 分析三个阶段`IPO`：输入`Input`、处理`Process`、输出`Output`，对硬件和软件程序都适用。
-  算法是一个程序的灵魂，算法的复杂度包括时间复杂度和空间复杂度；好的算法是两者都比较低，但往往很难同时做到。
+> 分析三个阶段`IPO`：输入`Input`、处理`Process`、输出`Output`，对硬件和软件程序都适用。算法是一个程序的灵魂，算法的复杂度包括时间复杂度和空间复杂度；好的算法是两者都比较低，但往往很难同时做到。
 
     时间复杂度O不是以秒为单位，算法运行速度是从其增速的角度度量的：即输入越多，算法运行的时间改变的快慢。
         O(1)一次计算，O(logn)二分查找算法[对数时间-有序数组]，
@@ -86,6 +85,7 @@
 3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制`一层` `...还能解构赋值: 如数组、对象等`.
 ````javascript
 let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
+let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo","sex":1}, ()=>{alert('hello')}];
 ````
 
 4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象
@@ -160,35 +160,22 @@ console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
             原因之一是模块语法需要让 JS 能静态判断需要导出什么，正因为此，你只能在模块的顶级作用域使用 export与import。
 ````
 
-8.深入理解 `js` > `ES4-ES3.1-harmony` > `ES5` > `ES6` `ECMA6` `ECMAScript2015` > `javascript.next`
+8.深入理解 `js` : `ES4-ES3.1-harmony` > `ES5` > `ES6` `ECMA6` `ECMAScript6.0` > `javascript.next`
 ````javascript
-// 字符串 format格式：'{0:f2}'.format(12.456) > 12.46
-String.prototype.format = function(...args) {
-    return this.replace(/\{(\d+)(:\w+)?\}/g, function (m, n) {
-        let s = m.split(':');
-        if (s.length == 2) {
-            let f = s[1].substring(0, s[1].length - 1);
-            if (f.match(/^f\d+$/)) {
-                return args[n].toFixed(parseInt(f.substring(1)));
-            }
-        }
-        return args[n];
-    });
-};
-
 // 类型转换 typeof
 typeof 1 > "number"
-typeof 'a' > "string"
+typeof NaN > "number"
+typeof '' > "string"
 typeof undefined > "undefined"
+typeof _  > "undefined"
 typeof true > "boolean"
 typeof Symbol() > "symbol"
-typeof _  > "undefined"
 typeof [] > "object"
 typeof {} > "object"
 typeof null > "object"
 typeof console.log > "function"
 
-// 转换类型或值, 优先调用[Symbol.toPrimitive]转换类型, 其次调用valueOf转换值, 方法可重写:
+// 转换对象或值, 优先调用[Symbol.toPrimitive]转换对象, 其次调用valueOf转换值, 两个方法均可重写:
 let varObj = {
     [Symbol.toPrimitive](){return 2}, // 转换对象(es6)此方法调用优化级最高
     valueOf(){return 0},     // 转换值
@@ -216,19 +203,33 @@ function new () {
     return typeof res === 'object' ? res : obj
 }
 
-// es6 / Promise: 确保resolve回调只有一次(同步或异步均实用); 那么,如何确保回调一定执行-如下：
-function timeoutPromise(delay) {
-    return new Promise(function (resolve, reject) {
-        setTimeout(function () { reject(`请求超时时间已到(${delay/1000}秒)`); }, delay);
+// 字符串格式化 format：'{0:f2}'.format(12.456) > 12.46
+String.prototype.format = function(...args) {
+    return this.replace(/\{(\d+)(:\w+)?\}/g, function (m, n) {
+        let s = m.split(':');
+        if (s.length != 2) return args[n];
+        let f = s[1].substring(0, s[1].length - 1);
+        return f.match(/^f\d+$/) ? args[n].toFixed(parseInt(f.substring(1))) : args[n];
     });
+};
+
+// es6 > 申明变量：let、const
+// es6 > 箭头函数: 简写（一个输入参数或一个输出结果）i => {} | (a,b,c) => a+b+c;
+
+// es6 > Promise: 确保resolve回调只有一次; 那么, 如何确保 fn 执行超时有提醒(放弃继续执行fn)：
+function PromiseRace(fn, delay) {
+  return Promise.race([new Promise(function (resolve, reject) {
+    setTimeout(function () { reject(`请求超时时间已到(${delay / 1000}秒)`); }, delay);
+  }), new Promise(fn)]);
 }
-Promise.race([function () {
-    // TODO:请求
-}, timeoutPromise(3000)]).then(function (res) {
-    // TODO:响应
+PromiseRace(function (resolve, reject) {
+  // TODO:请求  setTimeout(resolve, 3000);
+}, 2000).then(function (res) {
+  // TODO:响应
 }, function (err) {
-    // TODO:超时
+  // TODO:超时  有提醒! alert(err);
 });
+
 
 
 ````
