@@ -214,9 +214,24 @@ String.prototype.format = function(...args) {
 };
 
 // es6 > 申明变量：let、const
-// es6 > 箭头函数: 简写（一个输入参数或一个输出结果）i => {} | (a,b,c) => a+b+c;
+// es6 > 箭头函数: 简写（一个输入参数或一个语句有输出结果）: i => {} | (a,b,c) => a+b+c; 函数内没有自身的this;
+// es6 > 参数扩展: function(a, b, c, ...args){}  function(def = 1){}
+// es6 > 数组扩展: map 映射; reduce 汇总; filter 过滤; forEach 遍历;
+let str_map = [1,2,3].map((value, index, array) => `key-${index+1}: ${value}`).join("\n");
+let avg_arr = [1,2,3].reduce((previousValue, currentValue, currentIndex, array) => {
+  return currentIndex == array.length - 1 
+    ? (previousValue + currentValue) / array.length
+    : previousValue + currentValue;
+});
+let arr_find = [1,2,3].filter((value, index, array) => index % 2 == 1);
+[1,2,3].forEach((value, index, array) => console.log(index % 2 == 1));
 
-// es6 > Promise: 确保resolve回调只有一次; 那么, 如何确保 fn 执行超时有提醒(放弃继续执行fn)：
+// es6 > Promise: 确保resolve回调只有一次;
+new Promise(function (resolve, reject) { setTimeout(resolve, 1000); }).then(resolveReturn, rejectReturn);
+// es6 > Promise.all: 确保p1,p2,p3, ajax1,ajax2,ajax3全部执行后再执行then
+Promise.all([p1,p2,p3, ajax1,ajax2,ajax3]).then(resolvesReturn, rejectsReturn);
+
+// es6 > Promise.race: 确保 fn 执行超时有提醒(放弃继续执行fn)
 function PromiseRace(fn, delay) {
   return Promise.race([new Promise(function (resolve, reject) {
     setTimeout(function () { reject(`请求超时时间已到(${delay / 1000}秒)`); }, delay);
@@ -230,6 +245,28 @@ PromiseRace(function (resolve, reject) {
   // TODO:超时  有提醒! alert(err);
 });
 
+// es6 > generator 执行生成器: function *() { #代码块1; yield; #代码块2; yield; #代码块3; return; }
+let gen, ret = { value: undefined, done: false };
+function *generator1(init, next1) {
+  alert(init);
+  let next2 = yield '代码块1.结果:' + next1;
+  alert(next2);
+  let next3 = yield '代码块2.结果:' + next2;
+  alert(next3);
+  let next4 = yield '代码块3.结果:' + next3;
+  return '完成.结果：' + next4;
+}
+function doClick(e){
+  let {x, y} = e; // 点击坐标
+  if (!gen) gen = generator1('代码块1', [x, y]); // 初始化generator
+  if (!ret.done) {
+    console.log(ret = gen.next([x, y]));        // 执行一步generator
+    // 334 91 ; {value: "代码块1.结果:334,91", done: false}
+    // 455 86 ; {value: "代码块2.结果:455,86", done: false}
+    // 391 11 ; {value: "代码块3.结果:391,11", done: false}
+    // 449 13 ; {value: "完成.结果：449,13", done: true}
+  }
+}
 
 
 ````
