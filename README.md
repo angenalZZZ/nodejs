@@ -222,7 +222,7 @@ let avg_arr = [1,2,3].reduce((previousValue, currentValue, currentIndex, array) 
   return currentIndex == array.length - 1 
     ? (previousValue + currentValue) / array.length
     : previousValue + currentValue;
-});
+}); // 当数组为空时,reduce第二个参数initialValue必填,否则会抛出异常.
 let arr_find = [1,2,3].filter((value, index, array) => index % 2 == 1);
 [1,2,3].forEach((value, index, array) => console.log(index % 2 == 1));
 
