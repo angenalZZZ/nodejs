@@ -1,11 +1,11 @@
 
 `[程序设计]`
 
-> 分析三个阶段`IPO`：输入`Input`、处理`Process`、输出`Output`，对硬件和软件程序都很适用。算法是一个程序的灵魂，算法的复杂度包括时间复杂度和空间复杂度；好的算法是两者都比较低，但往往很难同时做到。
+> 分三个阶段`IPO`：输入`Input`、处理`Process`、输出`Output`，对硬件和软件程序都很适用。算法是一个程序的灵魂，算法的复杂度包括时间复杂度和空间复杂度；好的算法是两者都比较低，但往往很难同时做到。
 
-    时间复杂度O不是以秒为单位，算法运行速度是从其增速的角度度量的：即输入越多，算法运行的时间改变的快慢。
-        O(1)一次计算，O(logn)二分查找算法[对数时间-有序数组]，
-        O(n)简单查找算法[线性时间]，O(n*logn)快速排序算法，O(n2)选择排序算法，O(n!)著名的旅行商问题.
+    时间复杂度不是以秒为单位，算法运行速度是从其增速的角度度量的：即输入越多，算法运行的时间改变的快慢。
+        O(1)一次计算[最快]，O(logN)二分查找[对数时间&有序数组]，O(NlogN)快速排序，O(Nlog2N)归并排序，
+        O(N)简单查找[线性时间]，O(N2)选择排序，O(N!)著名的旅行商问题。
     空间复杂度是指CPU寄存器、内存、磁盘读写、网络传输等输入和输出占用的空间。
 
 `[编程定律]`
@@ -930,17 +930,33 @@ myEmitter.on('event', () => {
 });
 myEmitter.emit('event');//输出A,B
 
-
 //5.事件中的异常处理
 myEmitter.on('error', (err) => {
   console.log('有错误');
 });
 myEmitter.emit('error', new Error('whoops!'));
 
-//5.监听器数量限制
+//6.监听器数量限制
 // 每个事件默认可以注册最多 10 个监听器。 单个 EventEmitter 实例的限制可以使用 emitter.setMaxListeners(n) 方法改变。 所有 EventEmitter 实例的默认值可以使用 EventEmitter.defaultMaxListeners 属性改变。
 
-//在监听器中再次*触发*同一个事件会造成死循环,而且Events内部只是用克隆副本的方法避免了*监听*同一事件的死循环,无法避免*触发*事件的循环,因此在使用中要避免这种情况.
+//7.在监听器中再次*触发*同一个事件会造成死循环,而且Events内部只是用克隆副本的方法避免了*监听*同一事件的死循环,无法避免*触发*事件的循环,因此在使用中要避免这种情况.
+
+//8.事件循环&定时器
+setImmediate(() => console.log(1));
+setTimeout(() => console.log(2));
+Promise.resolve().then(() => console.log(3));
+process.nextTick(() => console.log(4));
+(() => console.log(5))();
+# 输出: 5,4,3,2,1
+# nodejs 的事件循环有六个阶段： 本次循环（process.nextTick、Promise.）-> 下次循环（setTimeout、setInterval）
+#   timers: setTimeout、setInterval...
+#   pending callbacks: 上一轮残留的IO回调
+#   idle, prepare: 内部使用
+#   poll: 授受新的IO事件，处理其他阶段未处理的回调，node在合适的情况会停留在该阶段
+#   check: setImmediate 的回调
+#   close callbacks: 关闭的回调
+# 流程： timers > nextTick > mircotask > check > nextTick > mircotask > timers
+
 ```
 
 
