@@ -3,13 +3,14 @@
 ~~~
   [git] git config --global user.name "yangzhou"
         git config --global user.email "angenal@hotmail.com"
-        npm set init-author-name yangzhou
-        npm set init-author-email angenal@hotmail.com
-        npm set init-license MIT
+        
   [系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
   [用户变量 Path] += D:\Program\nodejs\node_global
-  npm config set cache "D:\Program\nodejs\node_cache"      [写权限]
-  npm config set prefix "D:\Program\nodejs\node_global"    [写权限]
+  npm set init-author-name yangzhou
+  npm set init-author-email angenal@hotmail.com
+  npm set init-license MIT
+  npm config set cache "D:\Program\nodejs\node_cache"      [全局缓存下载目录]
+  npm config set prefix "D:\Program\nodejs\node_global"    [全局模块安装目录]
   npm config set proxy http://localhost:23547              [不建议]
   npm config set https-proxy http://localhost:23547        [不建议]
   npm config set registry https://registry.npm.taobao.org  [不建议]
