@@ -5,11 +5,13 @@
         git config --global user.email "angenal@hotmail.com"
         npm set init-author-name yangzhou
         npm set init-author-email angenal@hotmail.com
-        npm set init-license MIT        
+        npm set init-license MIT
   [系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
   [用户变量 Path] += D:\Program\nodejs\node_global
   npm config set cache "D:\Program\nodejs\node_cache"      [写权限]
   npm config set prefix "D:\Program\nodejs\node_global"    [写权限]
+  npm config set proxy http://localhost:23547              [不建议]
+  npm config set https-proxy http://localhost:23547        [不建议]
   npm config set registry https://registry.npm.taobao.org  [不建议]
   yarn config set registry https://registry.npm.taobao.org [不建议]
 ~~~
@@ -20,8 +22,8 @@
  npm info [package-name]
  npm config ls -l                                         [检查代理等配置]
  npm i npm@latest -g                                      [建议]
- npm i --proxy=http://localhost:23547                     [建议]
- npm i --registry=https://registry.npm.taobao.org         [建议]
+ npm i --proxy=http://localhost:23547                     [建议] [不建议 npm config set proxy]
+ npm i --registry=https://registry.npm.taobao.org         [建议] [不建议 npm config set registry]
  # install cnpm
  npm i -g cnpm --registry=https://registry.npm.taobao.org [代理taobao]
  npm i -g nrm	                                          [代理切换]
