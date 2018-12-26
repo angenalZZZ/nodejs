@@ -33,6 +33,8 @@
 
 ####   [**Rx 响应式编程 - 交互式图表**](http://rxmarbles.com)
 
+> [RxJS 中文文档](https://cn.rx.js.org)
+
 ~~~
   # 创建 CREATION OBSERVABLES
   Observable.from([10,20,30]).delayWhen(x => timer(x))
