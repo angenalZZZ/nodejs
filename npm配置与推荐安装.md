@@ -47,24 +47,24 @@ npm i -D [--save-dev]                                     [添加项目工具依
 
 ~~~
 npm i -g webpack webpack-cli webpack-dev-server # 配置例子 https://github.com/teabyii/webpack-examples
-npm i -g typescript    >tsc >tsserver # ts-node | io-ts    非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js
-npm i -g vue-cli       >vue           # 构建工具Vue
+npm i -g typescript    >tsc >tsserver # ts-node | io-ts  非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js
 npm i -g @angular/cli  >ng            # 跨平台构建工具Angular2，ng set --global warnings.packageDeprecation=false
-npm i -g weex-toolkit  >weex          # 跨平台构建工具weex https://github.com/apache/incubator-weex https://alibaba.github.io
+cnpm i -g vue-cli      >vue           # 构建工具Vue
+cnpm i -g weex-toolkit >weex          # 跨平台构建工具weex https://github.com/apache/incubator-weex https://alibaba.github.io
 npm i -g supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
 npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
 npm i -g serve http-server json-server lite-server
  # > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
-npm i -g yo jspm sqlpad @compodoc/compodoc # 其他工具
+npm i -g yo jspm sqlpad @compodoc/compodoc # 其他
 ~~~
 
  # npm 后端安装包 (npm|yarn) install
 
 ~~~
-# web框架-serve
+# web框架
 npm i -g yo generator-k  # Koa项目构建 https://github.com/minghe/generator-k
 npm i -g think-cli       # think基于Koa2构建 https://github.com/thinkjs/thinkjs  https://thinkjs.org
-npm i -g express         # Express项目构建 https://github.com/expressjs/express  http://www.expressjs.com.cn/resources/frameworks.html
+npm i -g express         # Express项目构建 https://github.com/expressjs/express  http://www.expressjs.com.cn
 npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hapi  https://hapijs.com
     # Lab & Code 测试插件
     # Joi 面向 Object Schema 的验证器插件
@@ -80,19 +80,18 @@ npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hap
     # Sequelize 数据库访问-ORM  https://github.com/danecando/hapi-sequelize
     # and so on ... 案例教程 https://github.com/yeshengfei/hapi-tutorial
 
-# 数据库访问-ORM
+# orm数据库访问
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
 npm i -S mongoose  # for Mongodb https://mongoosejs.com/docs/index.html
 
-# web IRC客户端(Internet Relay Chat)
-yarn global add thelounge
-
 # hash算法
-npm i siphash  # 随机性好、输出均匀-性能突出（用于字典的高效查找）、偏向性小（防hash攻击） https://github.com/jedisct1/siphash-js
+npm i siphash  # 随机性好、输出均匀&性能突出(用于字典的高效查找)、偏向性小(防hash攻击) https://github.com/jedisct1/siphash-js
 
-# 实用
-npm install chalk --save  # 命令行输出文字颜色  https://github.com/chalk/chalk
-npm install commander --save  # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
+# cli实用
+npm install chalk --save   # 命令行输出文字颜色  https://github.com/chalk/chalk
+npm install commander --save # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
+yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
+
 
 ~~~
 
