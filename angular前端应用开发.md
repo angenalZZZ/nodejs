@@ -23,7 +23,7 @@
   ng serve --open  # --open（或只用 -o）选项会自动打开浏览器，访问 http://localhost:4200
 ~~~
 
-> 第四步：[VSCode打开项目 或 通过 Stackblitz 在线编辑](http://www.stackblitz.com/)
+> 第四步：[VSCode IDE 编辑器 或 通过 Stackblitz 在线编辑](http://www.stackblitz.com/)
 
 ~~~
   cd my-app
@@ -33,7 +33,7 @@
 
 ####   [**Rx 响应式编程**](http://reactivex.io/languages.html)
 
-> [RxJS 中文文档](https://cn.rx.js.org)  [交互式解释图](http://rxmarbles.com)
+> [RxJS 中文文档](https://cn.rx.js.org) 、 [交互式解释图](http://rxmarbles.com)
 
 ~~~
   # 创建 CREATION OBSERVABLES
