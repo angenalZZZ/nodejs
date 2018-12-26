@@ -34,8 +34,77 @@
 ####   [**Rx 响应式编程 - 交互式图表**](http://rxmarbles.com)
 
 ~~~
-  Observable.from([10,20,30]).delayWhen(x => timer(x))    # from
+  # 创建 CREATION OBSERVABLES
+  Observable.from([10,20,30]).delayWhen(x => timer(x))
+  Observable.interval(10)
+  Observable.of(1)
+  Observable.timer(30, 10)
   
+  # 条件 CONDITIONAL OPERATORS
+  defaultIfEmpty(true)
+  every(x => x < 10)
+  sequenceEqual
+  
+  # 合并 COMBINATION OPERATORS
+  combineLatest((x, y) => "" + x + y)
+  concat
+  merge
+  race
+  startWith(1)
+  withLatestFrom((x, y) => "" + x + y)
+  zip
+  
+  # 过滤 FILTERING OPERATORS
+  debounceTime(10)
+  debounce(x => Rx.Observable.timer(10 * x))
+  distinct
+  distinctUntilChanged
+  elementAt(2)
+  filter(x => x > 10)
+  find(x => x > 10)
+  findIndex(x => x > 10)
+  first
+  ignoreElements
+  last
+  sample
+  skip(2)
+  skipUntil
+  skipWhile(x => x < 5)
+  take(2)
+  takeLast(1)
+  takeUntil
+  takeWhile(x => x < 5)
+  throttle(x => Rx.Observable.timer(10 * x))
+  throttleTime(25)
+  
+  # 计算 MATHEMATICAL OPERATORS
+  count(x => x > 10)
+  max
+  min
+  reduce((x, y) => x + y)
+  
+  # 转换 TRANSFORMATION OPERATORS
+  buffer
+  bufferCount(3, 2)
+  bufferTime(30)
+  bufferToggle(start$, x => Observable.timer(x))
+  bufferWhen
+  obs1$.concatMap(() => obs2$, (x, y) => "" + x + y)
+  obs1$.concatMapTo(() => obs2$, (x, y) => "" + x + y)
+  map(x => 10 * x)
+  mapTo("a")
+  obs1$.mergeMap(() => obs2$, (x, y) => "" + x + y, 2)
+  obs1$.mergeMapTo(() => obs2$, (x, y) => "" + x + y, 2)
+  pairwise
+  pluck("a")
+  repeat(3)
+  scan((x, y) => x + y)
+  obs1$.switchMap(() => obs2$, (x, y) => "" + x + y)
+  obs1$.switchMapTo(() => obs2$, (x, y) => "" + x + y)
+  
+  # 实用 UTILITY OPERATORS
+  delay(20)
+  delayWhen(x => Observable.timer(20 * x))
 ~~~
 
 
