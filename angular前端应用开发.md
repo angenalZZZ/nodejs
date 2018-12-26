@@ -31,9 +31,9 @@
 ~~~
 
 
-####   [**Rx 响应式编程 - 交互式图表**](http://rxmarbles.com)
+####   [**Rx 响应式编程**](http://reactivex.io/languages.html)
 
-> [RxJS 中文文档](https://cn.rx.js.org)
+> [RxJS 中文文档](https://cn.rx.js.org)  [交互式解释图](http://rxmarbles.com)
 
 ~~~
   # 创建 CREATION OBSERVABLES
