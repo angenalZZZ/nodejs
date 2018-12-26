@@ -13,7 +13,7 @@
   npm config set prefix "D:\Program\nodejs\node_global"    [全局模块安装目录]
   npm config set proxy http://localhost:23547              [不建议]
   npm config set https-proxy http://localhost:23547        [不建议]
-  npm config set registry https://registry.npm.taobao.org  [不建议]
+  npm config set registry https://registry.npm.taobao.org  [不建议] [默认值https://registry.npmjs.org/]
   yarn config set registry https://registry.npm.taobao.org [不建议]
 ~~~
 
@@ -44,7 +44,7 @@ npm i -D [--save-dev]                                     [添加项目工具依
 ~~~
 
  # npm 全局安装包 npm install -g
- 
+
 ~~~
 npm i -g webpack webpack-cli webpack-dev-server # 配置例子 https://github.com/teabyii/webpack-examples
 npm i -g typescript    >tsc >tsserver # ts-node | io-ts    非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js
@@ -81,14 +81,18 @@ npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hap
     # and so on ... 案例教程 https://github.com/yeshengfei/hapi-tutorial
 
 # 数据库访问-ORM
-npm i -S mongoose  # MongoDB https://mongoosejs.com/docs/index.html
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
+npm i -S mongoose  # for Mongodb https://mongoosejs.com/docs/index.html
 
 # web IRC客户端(Internet Relay Chat)
 yarn global add thelounge
 
 # hash算法
-npm i siphash      # 随机性好、输出均匀-性能突出（用于字典的高效查找）、偏向性小（防hash攻击） https://github.com/jedisct1/siphash-js
+npm i siphash  # 随机性好、输出均匀-性能突出（用于字典的高效查找）、偏向性小（防hash攻击） https://github.com/jedisct1/siphash-js
+
+# 实用
+npm install chalk --save  # 命令行输出文字颜色  https://github.com/chalk/chalk
+npm install commander --save  # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
 
 ~~~
 
