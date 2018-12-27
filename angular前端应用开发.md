@@ -23,7 +23,7 @@
   ng serve --open  # --open（或只用 -o）选项会自动打开浏览器，访问 http://localhost:4200
 ~~~
 
-> 第四步：[VSCode IDE 编辑器 或 通过 Stackblitz 在线编辑](http://www.stackblitz.com/)
+> 第四步：[使用 VSCode 编辑器 或 通过 Stackblitz 在线编辑](http://www.stackblitz.com/)
 
 ~~~
   cd my-app
