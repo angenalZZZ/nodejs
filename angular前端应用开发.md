@@ -34,9 +34,9 @@
 ####   [**Rx 响应式编程**](http://reactivex.io/languages.html)
 
 > `Rx` = `Observables` + `LINQ` + `Schedulers`. <br>
-  `ReactiveX`来自微软，它是一种针对异步数据流的编程。它将一切数据(包括http请求、事件、数据)包装成流的形式，<br>
-  然后用强大丰富的操作符进行处理，使开发者能以同步编程方式处理异步数据实现复杂的功能。<br>
   [RxJS 中文文档](https://cn.rx.js.org) 、 [交互式解释图](http://rxmarbles.com)
+  `ReactiveX`来自微软，它是一种针对异步数据流的编程。它将一切数据(包括http请求、事件、数据)包装成流的形式，<br>
+    然后用强大丰富的操作符进行处理，使开发者能以同步编程方式处理异步数据实现复杂的功能。
 
 ~~~
   # 创建 CREATION OBSERVABLES
