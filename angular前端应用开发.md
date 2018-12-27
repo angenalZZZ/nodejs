@@ -30,6 +30,15 @@
   code .  # VSCode打开项目
 ~~~
 
+####   [**调用后端HTTP服务**](https://angular.cn/guide/http)
+
+> `axios` [中文文档](https://www.jianshu.com/p/7a9fbcbb1114)
+  `rxrest` [Reactive rest library](https://github.com/soyuka/rxrest)
+
+~~~
+  cd my-app
+~~~
+
 
 ####   [**Rx 响应式编程**](http://reactivex.io/languages.html)
 
