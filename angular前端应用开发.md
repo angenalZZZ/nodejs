@@ -32,7 +32,7 @@
 
 ####   [**调用后端HTTP服务**](https://angular.cn/guide/http)
 
-> `axios` [中文文档](https://www.jianshu.com/p/7a9fbcbb1114)
+> `axios` [http请求/中文文档](https://www.jianshu.com/p/7a9fbcbb1114) <br>
   `rxrest` [Reactive rest library](https://github.com/soyuka/rxrest)
 
 ~~~
