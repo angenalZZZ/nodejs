@@ -91,6 +91,8 @@ npm i siphash # 随机性好、输出均匀&性能突出(用于字典的高效�
 npm install rxjs --save    # 响应式编程的库 https://cn.rx.js.org
 npm install chalk --save   # 命令行输出文字颜色  https://github.com/chalk/chalk
 npm install commander --save # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
+npm install pidusage --save  # 检查进程(PID) / CPU & 内存的使用 https://github.com/soyuka/pidusage
+
 yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
 
 ~~~
