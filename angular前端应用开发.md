@@ -34,6 +34,7 @@
 ####   [**数据绑定**](https://angular.cn/guide/displaying-data)
 
 > `Component` 组件 = `Model` 数据流(ajax) + `View` Html模板(.html) + `Controller` 控制器(.ts)
+  `Component` 划分 = `Router` 页面展示(url) + `Business` 业务功能组件 + `Library` 基础组件库
 
 ~~~
   # 1.单向绑定
