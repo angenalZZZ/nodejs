@@ -30,13 +30,23 @@
   code .  # VSCode打开项目
 ~~~
 
+
+####   [**数据绑定**](https://angular.cn/guide/displaying-data)
+
+> `Component` 组件 = `Model` 数据流 + `View` Html模板 + `Controller` 控制器
+
+~~~
+  cd .
+~~~
+
+
 ####   [**调用后端HTTP服务**](https://angular.cn/guide/http)
 
 > `axios` [http请求/中文文档](https://www.jianshu.com/p/7a9fbcbb1114) <br>
   `rxrest` [Reactive rest library](https://github.com/soyuka/rxrest)
 
 ~~~
-  cd my-app
+  cd .
 ~~~
 
 
