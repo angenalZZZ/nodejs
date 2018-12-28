@@ -33,16 +33,61 @@
 
 ####   [**数据绑定**](https://angular.cn/guide/displaying-data)
 
-> `Component` 组件 = `Model` 数据流 + `View` Html模板 + `Controller` 控制器
+> `Component` 组件 = `Model` 数据流(ajax) + `View` Html模板(.html) + `Controller` 控制器(.ts)
 
 ~~~
-  cd .
+  # 1.单向绑定
+   #1）控制器文件ts -> 模板文件html
+    #ts:
+      imgUrl: string = "1.png";
+    #html:
+      <img src="1.png">
+      <img src="{{imgUrl}}">
+      <img [src]="imgUrl">
+   #2）模板文件html -> 控制器文件ts
+    #html:
+      <imput (keyup)="keyPress($event)">
+    #ts:
+      keyPress(e){ if(e.keyCode==13) console.log('你输入了回车键'); }
+---------------------------------------------------------------------------
+  # 2.双向绑定
+   #  控制器文件ts <-> 模板文件html
+    #html:
+      <imput [(ngModel)]="inputEmail">
+    #ts:
+      # 引入FormsModule
+      inputEmail: string = "b@h.cn";
+    #==等价于==#
+    #ts:
+      # 引入FormsModule
+      inputEmail: string = "b@h.cn";
+      onInputEmail(e){ this.inputEmail = e.target.value; }
+    #html:
+      <imput [value]="inputEmail" (input)="onInputEmail($event)">
+---------------------------------------------------------------------------
+  # 3.css类绑定
+    #html:
+      <img class="a b c" src="1.png">
+      <img [class.a]="aIsTrue" [class.b]="1" [class.c]="true" src="{{imgUrl}}">
+      <img [ngClass]="{ a:1, b:bIsTrue, c:true }" [src]="imgUrl">
+---------------------------------------------------------------------------
+  # 4.style样式绑定
+    #html:
+      <img style="border:0;" src="1.png">
+      <img [style.border]="0" src="{{imgUrl}}">
+      <img [ngStyle]="{ 'border':'0px' }" [src]="imgUrl">
+---------------------------------------------------------------------------
+# 5.html基本属性绑定
+    #html:
+      <img [attr.width]="imgWidth" src="1.png">
+---------------------------------------------------------------------------
+
 ~~~
 
 
 ####   [**调用后端HTTP服务**](https://angular.cn/guide/http)
 
-> `axios` [http请求/中文文档](https://www.jianshu.com/p/7a9fbcbb1114) <br>
+> `axios` [axios中文文档](https://www.jianshu.com/p/7a9fbcbb1114) <br>
   `rxrest` [Reactive rest library](https://github.com/soyuka/rxrest)
 
 ~~~
