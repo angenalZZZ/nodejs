@@ -34,7 +34,7 @@
 ####   [**数据绑定**](https://angular.cn/guide/displaying-data)
 
 > `Component` 组件 = `Model` 数据流(ajax) + `View` Html模板(.html) + `Controller` 控制器(.ts) <br>
-  `Component` 划分 = `Router` 页面展示(page-url) + `Business` 业务功能(interactive-use) + `Library` 基础组件(ui)
+  `Component` 分类 = `Router` 页面设计(page-url) + `Business` 业务功能(interactive-use) + `Library` 基础组件(ui)
 
 ~~~
   # 1.单向绑定
@@ -78,40 +78,51 @@
       <img [style.border]="0" src="{{imgUrl}}">
       <img [ngStyle]="{ 'border':'0px' }" [src]="imgUrl">
 ---------------------------------------------------------------------------
-  # 5.html基本属性绑定
+  # 5.html属性绑定
     #html:
       <img [attr.width]="imgWidth" src="{{imgUrl}}">
 ~~~
 
 
-####   [**组件传值-交互**](https://angular.cn/guide/component-interaction)
+####   [**组件传值**](https://angular.cn/guide/component-interaction)
 
 > `@Input` 输入 = 父组件给子组件传值 <br>
-  `@Output` 输出 = 子组件调用父组件方法-传值
+  `@Output` 输出 = 子组件调用父组件方法&传值
 
 ~~~
-  # 1.父组件给子组件传值 
-   #1）子组件ts
+  # 1. @Input 父组件给子组件传值 
+   #1）子组件 ts
     #ts:
       @Input() title: string;
-   #2) 父组件html
+   #2) 父组件 html
     #html:
      <app-child [title]="parentTitle"></app-child>
 ---------------------------------------------------------------------------
-  # 2.子组件调用父组件方法
-   #1）子组件ts
+  # 2. @Input 子组件执行父组件定义的方法
+   #1）子组件 ts & html
     #ts:
       @Input() exitPage;
       title = 'back home!';
-       子组件html
     #html:
       <button (click)="exitPage(title)"></button>
-   #2) 父组件html
+   #2) 父组件 ts & html
     #html:
      <app-child [exitPage]="parentExitPage"></app-child>
     #ts:
-     parentExitPage(title){ alert(`${title}`); }
+     parentExitPage(titleOfChild){ alert(`接收数据：${titleOfChild}`); }
 ---------------------------------------------------------------------------
+  # 3. @Output 子组件执行父组件定义的方法
+   #1）子组件 ts & html
+    #ts:
+      @Output() exitPage = new EventEmitter();
+      title = 'back home!';
+    #html:
+      <button (click)="exitPage.emit(title)"></button>
+   #2) 父组件 ts & html
+    #html:
+     <app-child (exitPage)="parentExitPage($event)"></app-child>
+    #ts:
+     parentExitPage(e){ alert(`接收事件：${e}`); }
 ~~~
 
 
