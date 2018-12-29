@@ -80,9 +80,22 @@
 ---------------------------------------------------------------------------
 # 5.html基本属性绑定
     #html:
-      <img [attr.width]="imgWidth" src="1.png">
+      <img [attr.width]="imgWidth" src="{{imgUrl}}">
 ---------------------------------------------------------------------------
 
+~~~
+
+
+####   [**组件传值**](https://angular.cn/guide/component-interaction)
+
+> `@Input` 输入 = 父组件给子组件传值 <br>
+  `@Output` 输出 = 子组件调用父组件方法/传值
+
+~~~
+  # 1.
+   #1）控制器文件ts -> 模板文件html
+    #ts:
+    
 ~~~
 
 
@@ -92,7 +105,7 @@
   `rxrest` [Reactive rest library](https://github.com/soyuka/rxrest)
 
 ~~~
-  cd .
+  # 参考官方文档
 ~~~
 
 
