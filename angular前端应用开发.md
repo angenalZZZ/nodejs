@@ -78,7 +78,7 @@
       <img [style.border]="0" src="{{imgUrl}}">
       <img [ngStyle]="{ 'border':'0px' }" [src]="imgUrl">
 ---------------------------------------------------------------------------
-# 5.html基本属性绑定
+  # 5.html基本属性绑定
     #html:
       <img [attr.width]="imgWidth" src="{{imgUrl}}">
 ~~~
@@ -97,6 +97,21 @@
    #2) 父组件html
     #html:
      <app-child [title]="parentTitle"></app-child>
+---------------------------------------------------------------------------
+  # 2.子组件调用父组件方法
+   #1）子组件ts
+    #ts:
+      @Input() exitPage;
+      title = 'back home!';
+       子组件html
+    #html:
+      <button (click)="exitPage(title)"></button>
+   #2) 父组件html
+    #html:
+     <app-child [exitPage]="parentExitPage"></app-child>
+    #ts:
+     parentExitPage(title){ alert(`${title}`); }
+---------------------------------------------------------------------------
 ~~~
 
 
