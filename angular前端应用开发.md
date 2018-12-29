@@ -34,7 +34,7 @@
 ####   [**数据绑定**](https://angular.cn/guide/displaying-data)
 
 > `Component` 组件 = `Model` 数据流(ajax) + `View` Html模板(.html) + `Controller` 控制器(.ts) <br>
-  `Component` 划分 = `Router` 页面展示(page-url) + `Business` 业务功能(interactive-use) + `Library` 基础组件(ui-foundation)
+  `Component` 划分 = `Router` 页面展示(page-url) + `Business` 业务功能(interactive-use) + `Library` 基础组件(ui)
 
 ~~~
   # 1.单向绑定
@@ -81,21 +81,22 @@
 # 5.html基本属性绑定
     #html:
       <img [attr.width]="imgWidth" src="{{imgUrl}}">
----------------------------------------------------------------------------
-
 ~~~
 
 
-####   [**组件传值**](https://angular.cn/guide/component-interaction)
+####   [**组件传值-交互**](https://angular.cn/guide/component-interaction)
 
 > `@Input` 输入 = 父组件给子组件传值 <br>
-  `@Output` 输出 = 子组件调用父组件方法/传值
+  `@Output` 输出 = 子组件调用父组件方法-传值
 
 ~~~
-  # 1.
-   #1）控制器文件ts -> 模板文件html
+  # 1.父组件给子组件传值 
+   #1）子组件ts
     #ts:
-    
+      @Input() title: string;
+   #2) 父组件html
+    #html:
+     <app-child [title]="parentTitle"></app-child>
 ~~~
 
 
