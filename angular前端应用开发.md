@@ -139,10 +139,28 @@
 ####   [**Rx 响应式编程**](http://reactivex.io/languages.html)
 
 > `Rx` = `Observables` + `LINQ` + `Schedulers`. [ 可观察数据 > Linq操作数据 > 订阅结果数据 ] <br>
-  [RxJS 中文文档](https://cn.rx.js.org) 、 [交互式解释图](http://rxmarbles.com) <br>
+  [RxJS 中文文档](https://cn.rx.js.org) [RxJS调试](https://cartant.github.io/rxjs-spy)、 [交互式解释图](http://rxmarbles.com) <br>
   `ReactiveX`来自微软，它是一种针对异步数据流的编程。1它将一切数据(包括http请求、事件、数据等)包装成流的形式，2然后用强大丰富的操作符进行处理，使开发者能以同步编程方式处理异步数据，轻松实现复杂的功能。
 
 ~~~
+   ____           _ ____      
+|  _ \ __  __  | / ___|    
+| |_) |\ \/ /  | \___ \  
+|  _ <  >  < |_| |___) |    
+|_| \_\/_/\_\___/|____/ 
+
+试试下面这段代码来开启 RxJS 之旅:
+
+    var subscription = Rx.Observable.interval(500).take(4).subscribe(function (x) { console.log(x) });
+
+引入 rxjs-spy 帮助你调试 RxJS 代码，试试下面这段代码:
+
+    rxSpy.spy();
+    var subscription = Rx.Observable.interval(500).tag("interval").subscribe();
+    rxSpy.show();
+    rxSpy.log("interval");
+
+
   # 创建 CREATION OBSERVABLES
   Observable.from([10,20,30]).delayWhen(x => timer(x))
   Observable.interval(10)
