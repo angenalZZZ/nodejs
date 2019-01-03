@@ -161,7 +161,7 @@
   rxSpy.log("interval");
 
 ---------------------------------------------------------------------------
-  > 查找Rx功能接口：
+  # 查找Rx功能接口：
   > Object.keys(Rx)
   > ["Scheduler", "Symbol", "Subject", "AnonymousSubject", "Observable", "Subscription", "Subscriber", 
     "AsyncSubject", "ReplaySubject", "BehaviorSubject", "ConnectableObservable", "Notification", "EmptyError", 
