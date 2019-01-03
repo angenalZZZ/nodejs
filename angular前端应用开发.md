@@ -161,12 +161,17 @@
   rxSpy.log("interval");
 
 ---------------------------------------------------------------------------
-  > 查找可观察对象的接口：
+  > 查找Rx功能接口：
   > Object.keys(Rx)
-  > ["Scheduler", "Symbol", "Subject", "AnonymousSubject", "Observable", "Subscription", "Subscriber", "AsyncSubject", "ReplaySubject", "BehaviorSubject", "ConnectableObservable", "Notification", "EmptyError", "ArgumentOutOfRangeError", "ObjectUnsubscribedError", "TimeoutError", "UnsubscriptionError", "TimeInterval", "Timestamp", "TestScheduler", "VirtualTimeScheduler", "AjaxResponse", "AjaxError", "AjaxTimeoutError"]
+  > ["Scheduler", "Symbol", "Subject", "AnonymousSubject", "Observable", "Subscription", "Subscriber", 
+    "AsyncSubject", "ReplaySubject", "BehaviorSubject", "ConnectableObservable", "Notification", "EmptyError", 
+    "ArgumentOutOfRangeError", "ObjectUnsubscribedError", "TimeoutError", "UnsubscriptionError", "TimeInterval", 
+    "Timestamp", "TestScheduler", "VirtualTimeScheduler", "AjaxResponse", "AjaxError", "AjaxTimeoutError"]
   
   > Object.keys(Rx.Observable)
-  > ["create", "bindCallback", "bindNodeCallback", "combineLatest", "concat", "defer", "empty", "forkJoin", "from", "fromEvent", "fromEventPattern", "fromPromise", "generate", "if", "interval", "merge", "race", "never", "of", "onErrorResumeNext", "pairs", "range", "using", "throw", "timer", "zip", "ajax", "webSocket"]
+  > ["create", "bindCallback", "bindNodeCallback", "combineLatest", "concat", "defer", "empty", "forkJoin", 
+    "from", "fromEvent", "fromEventPattern", "fromPromise", "generate", "if", "interval", "merge", "race", "never", 
+    "of", "onErrorResumeNext", "pairs", "range", "using", "throw", "timer", "zip", "ajax", "webSocket"]
   
   # 创建 CREATION OBSERVABLES
   Observable.from([10,20,30]).delayWhen(x => timer(x))
