@@ -88,7 +88,7 @@ let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({.
 let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo","sex":1}, ()=>{alert('hello')}];
  # (undefined==null) == true; (undefined===null) == false;
  # (Object.getOwnPropertyNames(window).length > Object.keys(window).length) == true;
- # Object.assign({sex:0},p1); Object.assign({name:"名字0"},"abc",{name:"名字1"}) > {0: "a", 1: "b", 2: "c", name: "名字1"}
+ # Object.assign({sex:0},p1); Object.assign({name:"名字0"},"abc",{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
 ````
 
 4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象
