@@ -78,11 +78,11 @@
 
 > 引用类型: Object、Array、Date、Function
 
-1.引用类型是保存在**堆内存**(Heap)中,而**栈内存**(Stack)中会有一个**堆内存地址**(Pointer),通过这个地址变量指向堆内存中`Object`真正的值.
+1.引用类型是保存在**堆内存**(Heap)中,而**栈内存**(Stack)中会有一个**堆内存地址**(Pointer),地址变量指向堆内存中`Object`真正的值.
 
 2.数组`Array`不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.
 
-3.在ES6中我们可以用`Object.assign(target, ...sources)` 或者 `...`对引用类型进行浅复制`一层` `...还能解构赋值: 如数组、对象等`.
+3.在ES6中可以用`Object.assign(target, ...sources)` 或者 `...` 对引用类型进行浅复制`一层` `...解构赋值: 如数组、对象等`.
 ````javascript
 let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
 let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo","sex":1}, ()=>{alert('hello')}];
