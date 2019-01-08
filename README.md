@@ -86,8 +86,8 @@
 ````javascript
 let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.create(p3);
 let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo","sex":1}, ()=>{alert('hello')}];
- # (undefined==null) == true; (undefined===null) == false;
- # p4.e = 3.14; ('name' in p4 == true); p4.hasOwnProperty('name') == false; // in检查对象&原型, hasOwnProperty不检查原型.
+ # (undefined==null) == true; (undefined===null) == false; //https://github.com/yygmind/blog
+ # p4.e = 3.14; ('name' in p4 == true); p4.hasOwnProperty('name') == false; //in检查对象.e&原型,hasOwnProperty不检查原型.
  # (Object.getOwnPropertyNames(window).length > Object.keys(window).length) == true;
  # Object.assign({sex:0},p1); Object.assign({name:"名字0"},"abc",{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
 ````
