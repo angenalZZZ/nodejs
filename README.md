@@ -69,9 +69,9 @@
 
 2.`Number`是基于“二进制浮点数”实现的,使用的是“双精度”格式,不能用于===比较；特殊的(NaN!==NaN)只能使用isNaN()判断。
 
-3.`for...in`枚举对象中的属性,在ES5中引入了一个新的方法`Object.keys()`,不同之处在于,它可以将结果以数组的形式返回
+3.`for...in`枚举对象中的属性,在ES5中引入了一个新的方法`Object.keys()`,不同之处在于,它可以将结果以数组的形式返回.
 
-4.**类型转换**虽然很方便，但有时也跟我们预期相去甚远，如：{}+[]返回0
+4.**类型转换**虽然很方便，但有时也跟我们预期相去甚远，如：{}+[]返回0.
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/15517231.png)
 
 5.**基本类型**是按值传递的，**引用类型**在传递过程中,对象`a`先产生了一个`副本a`,这个`副本a`并不是深克隆得到的`副本a`,`副本a`地址同样指向对象`a`指向的堆内存.
@@ -86,6 +86,9 @@
 ````javascript
 let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
 let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo","sex":1}, ()=>{alert('hello')}];
+ # (undefined==null) == true, (undefined===null) == false,
+ # (Object.getOwnPropertyNames(window).length > Object.keys(window).length) == true,
+ # Object.assign({},"abc",{name:"名字"}) > {0: "a", 1: "b", 2: "c", name: "名字"}
 ````
 
 4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象
