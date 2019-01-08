@@ -93,6 +93,9 @@ npm install chalk --save   # 命令行输出文字颜色  https://github.com/cha
 npm install commander --save # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
 npm install pidusage --save  # 检查进程(PID) / CPU & 内存的使用 https://github.com/soyuka/pidusage
 
+# test 测试
+npm i proxyquire           # https://github.com/thlorenz/proxyquire
+
 yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
 
 ~~~
