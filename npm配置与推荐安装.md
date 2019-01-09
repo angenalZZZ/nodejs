@@ -83,6 +83,7 @@ npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hap
     # 1. npm init -y
     # 2. yarn add hapi nodemon (nodemon监听package.json>scripts:{"start":"nodemon index.js"})
     # 3. yarn run start
+    #  https://github.com/wesharehoodies/graphql-nodejs-hapi-api
 
 # orm 数据库访问
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
