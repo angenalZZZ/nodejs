@@ -80,10 +80,11 @@ npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hap
     # Sequelize 数据库访问-ORM  https://github.com/danecando/hapi-sequelize
     # and so on ... 案例教程 https://github.com/yeshengfei/hapi-tutorial
     # ...bash: 
-    # 1. npm init -y
-    # 2. yarn add hapi nodemon (nodemon监听package.json>scripts:{"start":"nodemon index.js"})
-    # 3. yarn run start
-    # 4. 扩展 https://github.com/wesharehoodies/graphql-nodejs-hapi-api
+    # 1. npm init -y           (初始app)
+    # 2. yarn add hapi nodemon (监听nodemon > package.json > scripts:{"start":"nodemon index.js"} )
+    # 3. yarn run start        (启动app)
+    # 4. yarn add knex mssql   (数据库mssql)
+    # 5. Facebook GraphQL: http://graphql.cn/learn/ https://github.com/wesharehoodies/graphql-nodejs-hapi-api
 
 # orm 数据库访问
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
