@@ -180,9 +180,9 @@
   Observable.timer(30, 10) # 初始30ms后timer为10
   
   # 条件 CONDITIONAL OPERATORS
-  defaultIfEmpty(true), Rx.Observable.of().defaultIfEmpty(1).subscribe(x => console.log(x)) # x=1 处理断流,没有数据流的情况
-  every(x => x < 10), Rx.Observable.of(2,3,4,5).every(x=>x<5).subscribe(x => console.log(x))# x=false 截流处理,所有流是否满足条件
-  sequenceEqual
+  defaultIfEmpty(true), Rx.Observable.of().defaultIfEmpty(1).subscribe(x => console.log(x)) # x=1 处理断流,没有数据流的情况.
+  every(x => x < 10), Rx.Observable.of(2,3,4,5).every(x=>x<5).subscribe(x => console.log(x))# x=false 截流处理,所有流是否满足条件.
+  sequenceEqual # 判断两组数据流是否完全相同(不区分时空),都完成后才返回true; 截两组流的处理,合并可截多组流.
   
   # 合并 COMBINATION OPERATORS
   combineLatest((x, y) => "" + x + y)
