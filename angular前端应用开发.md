@@ -174,14 +174,14 @@
     "of", "onErrorResumeNext", "pairs", "range", "using", "throw", "timer", "zip", "ajax", "webSocket"]
   
   # 创建 CREATION OBSERVABLES
-  Observable.from([10,20,30]).delayWhen(x => timer(x))
-  Observable.interval(10)
-  Observable.of(1)
-  Observable.timer(30, 10)
+  Observable.from([10,20,30]) # 参数为数组
+  Observable.of(1), Observable.of(1,2,3) # 参数为0-多个可选
+  Observable.interval(10)  # 每隔10ms产生一次流
+  Observable.timer(30, 10) # 初始30ms后timer为10
   
   # 条件 CONDITIONAL OPERATORS
-  defaultIfEmpty(true)
-  every(x => x < 10)
+  defaultIfEmpty(true), Rx.Observable.of().defaultIfEmpty(1).subscribe(x => console.log(x)) # x=1 处理断流,没有数据流的情况
+  every(x => x < 10), Rx.Observable.of(2,3,4,5).every(x=>x<5).subscribe(x => console.log(x))# x=false 截流处理,所有流是否满足条件
   sequenceEqual
   
   # 合并 COMBINATION OPERATORS
