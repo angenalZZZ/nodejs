@@ -185,7 +185,8 @@
   sequenceEqual # 判断两组数据流是否完全相同(不区分时空),都完成后才返回true; 截两组流的处理,合并可截多组流.
   
   # 合并 COMBINATION OPERATORS
-  combineLatest((x, y) => "" + x + y)
+  combineLatest((x, y) => "" + x + y), Rx.Observable.combineLatest(Rx.Observable.of(1), 
+      Rx.Observable.from(['A','B','C','D'])).map(x => x.join('')).subscribe(x => console.log(x)) # 1A 1B 1C 1D
   concat
   merge
   race
