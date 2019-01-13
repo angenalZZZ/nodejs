@@ -79,6 +79,12 @@ npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hap
     # Vision 网页模板渲染插件
     # Sequelize 数据库访问-ORM  https://github.com/danecando/hapi-sequelize
     # and so on ... 案例教程 https://github.com/yeshengfei/hapi-tutorial
+    # ...bash: 
+    # 1. npm init -y           (初始app)
+    # 2. yarn add hapi nodemon (监听nodemon > package.json > scripts:{"start":"nodemon index.js"} )
+    # 3. yarn run start        (启动app)
+    # 4. yarn add knex mssql   (数据库mssql)
+    # 5. Facebook GraphQL: http://graphql.cn/learn/ https://github.com/wesharehoodies/graphql-nodejs-hapi-api
 
 # orm 数据库访问
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
@@ -92,6 +98,9 @@ npm install rxjs --save    # 响应式编程的库 https://cn.rx.js.org
 npm install chalk --save   # 命令行输出文字颜色  https://github.com/chalk/chalk
 npm install commander --save # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
 npm install pidusage --save  # 检查进程(PID) / CPU & 内存的使用 https://github.com/soyuka/pidusage
+
+# test 测试
+npm i proxyquire           # https://github.com/thlorenz/proxyquire
 
 yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
 

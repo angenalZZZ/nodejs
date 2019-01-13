@@ -139,23 +139,54 @@
 ####   [**Rx 响应式编程**](http://reactivex.io/languages.html)
 
 > `Rx` = `Observables` + `LINQ` + `Schedulers`. [ 可观察数据 > Linq操作数据 > 订阅结果数据 ] <br>
-  [RxJS 中文文档](https://cn.rx.js.org) 、 [交互式解释图](http://rxmarbles.com) <br>
+  [RxJS 中文文档](https://cn.rx.js.org)、 [RxJS调试](https://cartant.github.io/rxjs-spy)、 [交互式解释图](http://rxmarbles.com) <br>
   `ReactiveX`来自微软，它是一种针对异步数据流的编程。1它将一切数据(包括http请求、事件、数据等)包装成流的形式，2然后用强大丰富的操作符进行处理，使开发者能以同步编程方式处理异步数据，轻松实现复杂的功能。
 
 ~~~
+ ____           _ ____      
+|  _ \ __  __  | / ___|    
+| |_) |\ \/ /  | \___ \  
+|  _ <  >  < |_| |___) |    
+|_| \_\/_/\_\___/|____/ 
+
+开启 RxJS 之旅:
+
+  var subscription = Rx.Observable.interval(500).take(4).subscribe(function (x) { console.log(x) });
+
+引入 rxjs-spy 帮助你调试 RxJS 代码，试试下面这段代码:
+
+  rxSpy.spy();
+  var subscription = Rx.Observable.interval(500).tag("interval").subscribe();
+  rxSpy.show();
+  rxSpy.log("interval");
+
+---------------------------------------------------------------------------
+  # 查找Rx功能接口：
+  > Object.keys(Rx)
+  > ["Scheduler", "Symbol", "Subject", "AnonymousSubject", "Observable", "Subscription", "Subscriber", 
+    "AsyncSubject", "ReplaySubject", "BehaviorSubject", "ConnectableObservable", "Notification", "EmptyError", 
+    "ArgumentOutOfRangeError", "ObjectUnsubscribedError", "TimeoutError", "UnsubscriptionError", "TimeInterval", 
+    "Timestamp", "TestScheduler", "VirtualTimeScheduler", "AjaxResponse", "AjaxError", "AjaxTimeoutError"]
+  
+  > Object.keys(Rx.Observable)
+  > ["create", "bindCallback", "bindNodeCallback", "combineLatest", "concat", "defer", "empty", "forkJoin", 
+    "from", "fromEvent", "fromEventPattern", "fromPromise", "generate", "if", "interval", "merge", "race", "never", 
+    "of", "onErrorResumeNext", "pairs", "range", "using", "throw", "timer", "zip", "ajax", "webSocket"]
+  
   # 创建 CREATION OBSERVABLES
-  Observable.from([10,20,30]).delayWhen(x => timer(x))
-  Observable.interval(10)
-  Observable.of(1)
-  Observable.timer(30, 10)
+  Observable.from([10,20,30]) # 参数为数组
+  Observable.of(1), Observable.of(1,2,3) # 参数为0-多个可选
+  Observable.interval(10)  # 每隔10ms产生一次流
+  Observable.timer(30, 10) # 初始30ms后timer为10
   
   # 条件 CONDITIONAL OPERATORS
-  defaultIfEmpty(true)
-  every(x => x < 10)
-  sequenceEqual
+  defaultIfEmpty(true), Rx.Observable.of().defaultIfEmpty(1).subscribe(x => console.log(x)) # x=1 处理断流,没有数据流的情况.
+  every(x => x < 10), Rx.Observable.of(2,3,4,5).every(x=>x<5).subscribe(x => console.log(x))# x=false 截流处理,所有流是否满足条件.
+  sequenceEqual # 判断两组数据流是否完全相同(不区分时空),都完成后才返回true; 截两组流的处理,合并可截多组流.
   
   # 合并 COMBINATION OPERATORS
-  combineLatest((x, y) => "" + x + y)
+  combineLatest((x, y) => "" + x + y), Rx.Observable.combineLatest(Rx.Observable.of(1), 
+      Rx.Observable.from(['A','B','C','D'])).map(x => x.join('')).subscribe(x => console.log(x)) # 1A 1B 1C 1D
   concat
   merge
   race

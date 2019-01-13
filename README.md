@@ -69,23 +69,28 @@
 
 2.`Number`是基于“二进制浮点数”实现的,使用的是“双精度”格式,不能用于===比较；特殊的(NaN!==NaN)只能使用isNaN()判断。
 
-3.`for...in`枚举对象中的属性,在ES5中引入了一个新的方法`Object.keys()`,不同之处在于,它可以将结果以数组的形式返回
+3.`for...in`枚举对象中的属性,在ES5中引入了一个新的方法`Object.keys()`,不同之处在于,它可以将结果以数组的形式返回.
 
-4.**类型转换**虽然很方便，但有时也跟我们预期相去甚远，如：{}+[]返回0
+4.**类型转换**虽然很方便，但有时也跟我们预期相去甚远，如：{}+[]返回0.
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/15517231.png)
 
 5.**基本类型**是按值传递的，**引用类型**在传递过程中,对象`a`先产生了一个`副本a`,这个`副本a`并不是深克隆得到的`副本a`,`副本a`地址同样指向对象`a`指向的堆内存.
 
 > 引用类型: Object、Array、Date、Function
 
-1.引用类型是保存在**堆内存**(Heap)中,而**栈内存**(Stack)中会有一个**堆内存地址**(Pointer),通过这个地址变量指向堆内存中`Object`真正的值.
+1.引用类型是保存在**堆内存**(Heap)中,而**栈内存**(Stack)中会有一个**堆内存地址**(Pointer),地址变量指向堆内存中`Object`真正的值.
 
 2.数组`Array`不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.
 
-3.在ES6中我们可以用`Object.assign` 或者 `...`对引用类型进行浅复制`一层` `...还能解构赋值: 如数组、对象等`.
+3.在ES6中可以用`Object.assign(target, ...sources)` 或者 `...` 对引用类型进行浅复制`一层` `...解构赋值: 如数组、对象等`.
 ````javascript
-let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.assign({sex:0},p1);
+let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.create(p3);
 let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo","sex":1}, ()=>{alert('hello')}];
+ # 前端js: https://yuchengkai.cn/docs/frontend  难点js: https://github.com/yygmind/blog
+ # (undefined==null) == true; (undefined===null) == false;
+ # p4.e=3.14; ('name' in p4 ==true);p4.hasOwnProperty('name')==false; //in检查对象p4.e&原型,hasOwnProperty不检查原型.
+ # (Object.getOwnPropertyNames(window).length > Object.keys(window).length) == true;
+ # Object.assign({sex:0},p1); Object.assign({name:"名字0"},"abc",{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
 ````
 
 4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象
