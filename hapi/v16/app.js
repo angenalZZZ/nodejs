@@ -1,14 +1,14 @@
 // 配置文档
-const PROD = (process.env.NODE_ENV === 'production'); // 生产环境
-require('env2')(PROD ? './.env.prod' : './.env');
 global.ENV = process.env;
-ENV.PROD = PROD;
 global.PKG = require('package')(module);
+// 配置环境
+ENV.PROD = (process.env.NODE_ENV === 'production');
+require('env2')(ENV.PROD ? './.env.prod' : './.env');
 const config = require('./config');
 // 接口框架 https://github.com/hapijs/hapi/blob/v16/API.md
 const Hapi = require('hapi');
 // 接口路由
-var routes = require("glob").sync('./routes/*.js').reduce(function (a, f) { var m = require(f); if (m instanceof Array) m.forEach(o => a.push(o)); return a; }, []);
+const routes = require("glob").sync('./routes/*.js').reduce(function (a, f) { var m = require(f); if (m instanceof Array) m.forEach(o => a.push(o)); return a; }, []);
 // 接口实例
 const server = new Hapi.Server(config.hapiConfig.serverOptions);
 // 接口网址
@@ -25,13 +25,14 @@ const pluginAuthJWT = require('./plugins/hapi-auth-jwt2');
 const startHapi = async () => {
   // 配置插件
   await server.register([
-    plugHapiError,
-    plugHapiRedisConnection, // redis connection > request.redis.get
     ...plugHapiSwagger, // 接口文档
-    plugHapiPagination, // 分页
+    plugHapiError, // 异常捕获
+    plugHapiRedisConnection, // 缓存 redis connection > request.redis.get
+    plugHapiPagination, // 分页插件
     hapiAuthJWT, pluginAuthJWT, // JWT认证授权(先调用/token获取认证)
   ], err => {
     if (err) throw err;
+    // server.views();
     // 配置路由
     server.route([
       ...routes,

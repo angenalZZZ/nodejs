@@ -80,6 +80,20 @@ const default_cookie_options = {
 module.exports = [
   {
     method: methods.post,
+    config: {
+      tags: TAGS,
+      description: '创建token',
+      auth: false,
+      validate: {
+        headers: Joi.object({
+          authorization: Joi.string().description('用户信息base64'),
+        }).unknown(),
+        payload: {
+          user: Joi.string().description('用户信息base64'),
+          cookie: Joi.string().default('token').description('auth-cookie')
+        },
+      },
+    },
     path: `/${DIR}`,
     handler: async (req, res) => {
       const session = authFunc(req);
@@ -100,24 +114,20 @@ module.exports = [
           res().header('Authorization', `Bearer ${token}`);
         }
       }
-    },
-    config: {
-      tags: TAGS,
-      description: '创建token',
-      auth: false,
-      validate: {
-        headers: Joi.object({
-          authorization: Joi.string().description('用户信息base64'),
-        }).unknown(),
-        payload: {
-          user: Joi.string().description('用户信息base64'),
-          cookie: Joi.string().default('token').description('auth-cookie')
-        },
-      },
-    },
+    }
   },
   {
     method: methods.delete,
+    config: {
+      tags: TAGS,
+      description: '删除token',
+      validate: {
+        ...validate.jwt,
+        payload: {
+          cookie: Joi.string().default('token').description('auth-cookie')
+        }
+      }
+    },
     path: `/${DIR}`,
     handler: async (req, res) => {
       const { id } = req.auth.credentials;
@@ -141,17 +151,6 @@ module.exports = [
         }
       });
       if (!redisChecked) res(Boom.unauthorized('unchecked'));
-    },
-    config: {
-      tags: TAGS,
-      description: '删除token',
-      // auth: false,
-      validate: {
-        ...validate.jwt,
-        payload: {
-          cookie: Joi.string().default('token').description('auth-cookie')
-        }
-      }
     }
   }
 ];

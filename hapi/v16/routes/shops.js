@@ -8,6 +8,16 @@ const models = require('../models');
 const routes = [
   {
     method: methods.get,
+    config: {
+      tags: TAGS,
+      description: '获取店铺列表',
+      auth: false,
+      validate: {
+        query: {
+          ...validate.pager(),
+        },
+      },
+    },
     path: `/${DIR}`,
     handler: async (req, res) => {
       let result;
@@ -22,33 +32,10 @@ const routes = [
       // 开启分页的插件，返回的数据结构里，需要带上 result 与 totalCount 两个字段
       result = { results, totalCount };
       res(result);
-    },
-    config: {
-      tags: TAGS,
-      description: '获取店铺列表',
-      auth: false,
-      validate: {
-        query: {
-          ...validate.pager(),
-        },
-      },
-    },
+    }
   },
   {
     method: methods.get,
-    path: `/${DIR}/{id}/goods`,
-    handler: async (req, res) => {
-      let result;
-      const { rows: results, count: totalCount } = await models.goods.findAndCountAll({
-        attributes: ['id', 'name'],
-        where: { shop_id: req.params.id },
-        limit: req.query.limit,
-        offset: (req.query.page - 1) * req.query.limit,
-      });
-      // 开启分页的插件，返回的数据结构里，需要带上 result 与 totalCount 两个字段
-      result = { results, totalCount };
-      res(result);
-    },
     config: {
       tags: TAGS,
       description: '获取店铺的商品列表',
@@ -62,6 +49,19 @@ const routes = [
         },
       },
     },
+    path: `/${DIR}/{id}/goods`,
+    handler: async (req, res) => {
+      let result;
+      const { rows: results, count: totalCount } = await models.goods.findAndCountAll({
+        attributes: ['id', 'name'],
+        where: { shop_id: req.params.id },
+        limit: req.query.limit,
+        offset: (req.query.page - 1) * req.query.limit,
+      });
+      // 开启分页的插件，返回的数据结构里，需要带上 result 与 totalCount 两个字段
+      result = { results, totalCount };
+      res(result);
+    }
   },
 ];
 

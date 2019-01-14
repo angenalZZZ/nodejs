@@ -7,10 +7,6 @@ const DIR = 'orders', TAGS = [API, DIR];
 const routes = [
   {
     method: methods.post,
-    path: `/${DIR}`,
-    handler: async (req, res) => {
-      res(req.auth.credentials);
-    },
     config: {
       tags: TAGS,
       description: '创建订单',
@@ -27,13 +23,13 @@ const routes = [
         },
       },
     },
+    path: `/${DIR}`,
+    handler: async (req, res) => {
+      res(req.auth.credentials);
+    }
   },
   {
     method: methods.post,
-    path: `/${DIR}/{id}/pay`,
-    handler: async (req, res) => {
-      res(req.auth.credentials);
-    },
     config: {
       tags: TAGS,
       description: '支付某条订单',
@@ -45,6 +41,10 @@ const routes = [
         },
       },
     },
+    path: `/${DIR}/{id}/pay`,
+    handler: async (req, res) => {
+      res(req.auth.credentials);
+    }    
   },
 ];
 

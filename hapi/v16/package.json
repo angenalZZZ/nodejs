@@ -5,7 +5,7 @@
   "email": "angenal@hotmail.com",
   "main": "app.js",
   "scripts": {
-    "dev": "supervisor app.js"
+    "start": "node app.js"
   },
   "repository": {
     "type": "git",
