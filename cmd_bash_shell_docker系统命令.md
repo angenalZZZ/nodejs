@@ -22,3 +22,17 @@
   $ netstat -ap tcp | grep -i "time_wait"    # tcp超时
   
 ~~~
+
+
+> docker 命令 <br>
+  `Dockerfile` : `build` > `Image(tag)` > `push Registry` <br>
+  `Registry`   : `Repository` > `Image(tag)` <br>
+  `Docker`     : `pull Image(tag)`|`load .tar` > `run Container from-Image(tag)` <br>
+  `Disk`       : `Image(tag) save .tar`, `Container export .tar(snapshot)`, `Data file`
+  
+
+~~~
+  # 
+  
+~~~
+
