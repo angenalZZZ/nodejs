@@ -22,7 +22,7 @@
   
   [2. TypeScript 基础](#typescript-基础) 
   
-  [3. Node.js 基础](#nodejs-基础) 
+  [3. Node.js 基础](#nodejs-基础)  & [中文Api](http://nodejs.cn/api)
 
 `[实用程序库]`
 
