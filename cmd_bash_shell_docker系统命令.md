@@ -29,7 +29,7 @@
   `Registry`   : `Repository` > `Image` <br>
   `Disk`       : `Image save .tar`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
-  \t\t\t > `run Container from-Image`, `--volumes-from Data-Container`, `-v load.Data-File`
+  &amp;&amp;&amp;&amp; > `run Container from-Image`, `--volumes-from Data-Container`, `-v load.Data-File`
 
 ~~~
   # 
