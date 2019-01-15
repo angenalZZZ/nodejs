@@ -27,7 +27,8 @@
 > docker 命令 <br>
   `Dockerfile` : `build` > `Image(tag=name+version)` > `push Registry` <br>
   `Registry`   : `Repository` > `Image` <br>
-  `Docker`     : `pull Image from-Registry`|`load .tar from-Disk` > `run Container from-Image`, `--volumes-from Data-Container` <br>
+  `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
+                  > `run Container from-Image`, `--volumes-from Data-Container` <br>
   `Disk`       : `Image save .tar`, `Container export .tar(snapshot)`, `-v load Data-File`
   
 
