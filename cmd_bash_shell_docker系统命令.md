@@ -30,7 +30,7 @@
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Runtime`    > `container run from-Image`, `--volumes-from Data-Container`, `-v load.Data-File`
 
-> `docker-compose.yml`
+> `docker-compose.yml` [官方文档](https://docs.docker.com/compose/overview)
 ~~~
   version: '3' # docker compose 版本号
   services:
@@ -39,32 +39,32 @@
       #   context: . # 构建镜像的上下文(本地相对路径)
       #   dockerfile: Dockerfile # 指定dockerfile文件
       #   args: # 构建镜像使用的环境变量
-      #     - NODE_ENV=dev
+      #   - NODE_ENV=dev
       container_name: web-container
       image: docker-web-image # 使用已存在的镜像
       ports: # 端口映射
-        - "9999:8888"
+      - "9999:8888"
       networks: # 网络设置
-        - app-docker-network
+      - app-docker-network
       depends_on: # 容器服务启动依赖
-        - redis
+      - redis
       volumes: # 外挂数据
-        - "./:/work/app/"
+      - "./:/work/app/"
       restart: always # 重启设置
       env_file: # 环境变量配置文件 key=value
-        - ./docker.env
+      - ./docker.env
       environment: # 设置容器运行时环境变量，会覆盖docker.env相同变量
-        - NODE_ENV: dev
+      - NODE_ENV: dev
       command: npm run dev # 容器启动后执行的命令
       
     redis:
       container_name: redis-container
       image: redis:latest
       networks:
-        - app-docker-network
+      - app-docker-network
 
   networks: # 网络设置-自定义网络
     app-docker-network:
-      -
+    -
 ~~~
 
