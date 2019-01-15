@@ -32,6 +32,7 @@
 
 > `docker-compose.yml` [官方文档](https://docs.docker.com/compose/overview)  |  [老版本 2](https://www.jianshu.com/p/2217cfed29d7)
 ~~~
+  # 启动：docker-compose up -d , 停止：docker-compose down
   version: '3' # docker compose 版本
   services:
     web:
@@ -49,6 +50,8 @@
       - back-tier
       depends_on: # 容器服务启动依赖
       - redis
+      # links: # 外链
+      # - redis
       volumes: # 外挂数据
       - "./:/work/app/"
       restart: always # 重启设置
