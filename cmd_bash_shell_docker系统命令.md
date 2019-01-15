@@ -16,7 +16,7 @@
   > rd /s /q %windir%\temp & md %windir%\temp [临时文件]
   $ rm -f -r [目录]
   
-  # 列出所有端口
+  # 列出网络监听端口
   > netstat -ap tcp | findstr -i "listening" # tcp端口
   $ netstat -ap tcp | grep -i "listening"    # tcp端口
   $ netstat -ap tcp | grep -i "time_wait"    # tcp超时
@@ -25,10 +25,10 @@
 
 
 > docker 命令 <br>
-  `Dockerfile` : `build` > `Image(tag)` > `push Registry` <br>
-  `Registry`   : `Repository` > `Image(tag)` <br>
-  `Docker`     : `pull Image(tag)`|`load .tar` > `run Container from-Image(tag)` <br>
-  `Disk`       : `Image(tag) save .tar`, `Container export .tar(snapshot)`, `Data file`
+  `Dockerfile` : `build` > `Image(tag=name+version)` > `push Registry` <br>
+  `Registry`   : `Repository` > `Image` <br>
+  `Docker`     : `pull Image from-Registry`|`load .tar from-Disk` > `run Container from-Image`, `--volumes-from Data-Container` <br>
+  `Disk`       : `Image save .tar`, `Container export .tar(snapshot)`, `-v load Data-File`
   
 
 ~~~
