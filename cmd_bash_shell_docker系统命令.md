@@ -1,6 +1,6 @@
 # **系统命令**
 
-# [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) & [**linux-bash**](https://wangchujiang.com/linux-command/hot.html)  | [windows工具集](https://github.com/Awesome-Windows/Awesome)
+# [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tools](https://github.com/Awesome-Windows/Awesome) & [**linux-bash**](https://wangchujiang.com/linux-command/hot.html) 
 
 ~~~
   # 清屏
