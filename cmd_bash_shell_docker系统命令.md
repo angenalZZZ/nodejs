@@ -21,6 +21,34 @@
   $ netstat -ap tcp | grep -i "listening"    # tcp端口
   $ netstat -ap tcp | grep -i "time_wait"    # tcp超时
   
+  # 关机
+  > sleep 9000; shutdown -s
+  > at 03:30:00PM shutdown -s
+  > schtasks /create /sc once /tn "auto shutdown my computer" /tr "shutdown -s" /st 15:30
+  > at 11:00:00PM /every:M,T,W,TH,F,SA,SU shutdown -s
+  > at 11:00:00PM shutdown -r [-r 重启]
+  
+  # 系统硬件序列号
+  wmic memorychip get serialnumber
+  wmic diskdrive get serialnumber
+  wmic baseboard get serialnumber
+  wmic cdrom where drive='c:' get SerialNumber
+  # 修改计算机名
+  wmic computersystem where caption='currentname' rename newname
+  # 关闭WiFi
+  netsh interface set interface name="Wireless Network Connection" admin=DISABLED
+  # 防火墙开关
+  netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state on
+  netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state off
+  # 时区
+  tzutil /g [获取] /l [列表] /s [设置] "Asia/Shanghai"
+  # 系统自动登录
+  autologon  userName domainName password
+  # 打印
+  wmic printer get name,default
+  wmic printer where default='TRUE' get name
+  wmic printer where name='printername' call setdefaultprinter
+  
 ~~~
 
 # [**docker**](https://docs.docker.com)
@@ -42,11 +70,12 @@
   docker network connect [network-name] [container] # 加入容器网络
 ~~~
 
-> **Dockerfile** [参考官方文档](https://docs.docker.com/dockerfile/overview)
+> **Dockerfile** [参考文档](https://docs.docker.com/dockerfile/overview)
 ~~~
+  # 基础镜像
   FROM node:10.15.0
   
-  # 说明镜像相关信息，通过 docker inspect 查看
+  # 备注镜像相关信息，通过 docker inspect 查看
   LABEL maintainer="test <test@gmail.com>"
   LABEL description="this is a test image"
   LABEL version="1.0"
