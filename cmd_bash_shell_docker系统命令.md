@@ -30,9 +30,9 @@
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Runtime`    > `container run from-Image`, `--volumes-from Data-Container`, `-v load.Data-File`
 
-> `docker-compose.yml` [官方文档](https://docs.docker.com/compose/overview)
+> `docker-compose.yml` [官方文档](https://docs.docker.com/compose/overview) [老版本 2](https://www.jianshu.com/p/2217cfed29d7)
 ~~~
-  version: '3' # docker compose 版本号
+  version: '3' # docker compose 版本
   services:
     web:
       # build: # 构建镜像
@@ -45,7 +45,8 @@
       ports: # 端口映射
       - "9999:8888"
       networks: # 网络设置
-      - app-docker-network
+      - front-tier
+      - back-tier
       depends_on: # 容器服务启动依赖
       - redis
       volumes: # 外挂数据
@@ -61,10 +62,12 @@
       container_name: redis-container
       image: redis:latest
       networks:
-      - app-docker-network
+      - back-tier
 
   networks: # 网络设置-自定义网络
-    app-docker-network:
-    -
+    front-tier:
+      driver: bridge
+    back-tier:
+      driver: bridge
 ~~~
 
