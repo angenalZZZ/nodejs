@@ -1,6 +1,6 @@
-# [**系统命令**](https://github.com/)
+# [**系统命令**]
 
-> cmd & bash 命令
+> [windows-cmd](https://github.com/Awesome-Windows/awesome-windows-command-line) & [linux-bash](https://wangchujiang.com/linux-command/hot.html) 命令
 
 ~~~
   # 清屏
@@ -23,14 +23,15 @@
   
 ~~~
 
+# [**docker命令**](https://docs.docker.com)
 
 > docker 命令 <br>
-  `Dockerfile` : `build` > `Image(tag=name+version)` > `push Registry` <br>
-  `Registry`   : `Repository` > `Image-Url` | `Disk` : `Image save .tar`, `Container export .tar(snapshot)` <br>
+  `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
+  `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
-  `Runtime`    > `container run from-Image`, `--volumes-from Data-Container`, `-v load.Data-File`
+  `Runtime`    : `docker container run Image` + `--volumes-from Data-Container` | `-v from-Disk:Data-Dir`
 
-> `docker-compose.yml` [官方文档](https://docs.docker.com/compose/overview)  |  [老版本 2](https://www.jianshu.com/p/2217cfed29d7)
+> *docker-compose.yml* [官方文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7)
 ~~~
   # 启动：docker-compose up -d , 停止：docker-compose down
   version: '3' # docker compose 版本
