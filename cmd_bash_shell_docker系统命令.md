@@ -31,18 +31,18 @@
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Runtime`    : `docker container run Image` + `--volumes-from Data-Container` | `-v from-Disk:Data-Dir`
 
-> **command**
+> **command** [参考文档](https://docs.docker.com)
 ~~~
   # 构建
   docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
   # 运行
-  docker run --name test-image-docker -it -p 9999:8888 test-image # 已加载镜像 test-image, 用 docker images 查询
+  docker run --name test-image-docker -it -p 9999:8888 test-image # 已加载镜像 test-image 时, 用 docker images 查询
   # 自定义网络
   docker network create -d bridge [network-name]    # 创建容器网络
   docker network connect [network-name] [container] # 加入容器网络
 ~~~
 
-> **Dockerfile** [官方文档](https://docs.docker.com/dockerfile/overview)
+> **Dockerfile** [参考官方文档](https://docs.docker.com/dockerfile/overview)
 ~~~
   FROM node:10.15.0
   
