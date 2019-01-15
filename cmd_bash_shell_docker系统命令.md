@@ -33,17 +33,17 @@
   wmic diskdrive get serialnumber
   wmic baseboard get serialnumber
   wmic cdrom where drive='c:' get SerialNumber
+  # 系统自动登录
+  autologon  userName domainName password
   # 修改计算机名
   wmic computersystem where caption='currentname' rename newname
-  # 关闭WiFi
+  # 网络WiFi关闭
   netsh interface set interface name="Wireless Network Connection" admin=DISABLED
   # 防火墙开关
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state on
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state off
   # 时区
   tzutil /g [获取] /l [列表] /s [设置] "Asia/Shanghai"
-  # 系统自动登录
-  autologon  userName domainName password
   # 打印
   wmic printer get name,default
   wmic printer where default='TRUE' get name
