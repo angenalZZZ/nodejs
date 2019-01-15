@@ -30,7 +30,7 @@
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Runtime`    > `container run from-Image`, `--volumes-from Data-Container`, `-v load.Data-File`
 
-> `docker-compose.yml` [官方文档](https://docs.docker.com/compose/overview) [老版本 2](https://www.jianshu.com/p/2217cfed29d7)
+> `docker-compose.yml` `[官方文档]`(https://docs.docker.com/compose/overview) | `[老版本 2]`(https://www.jianshu.com/p/2217cfed29d7)
 ~~~
   version: '3' # docker compose 版本
   services:
