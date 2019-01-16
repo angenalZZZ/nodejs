@@ -198,3 +198,34 @@ git push --all         # 推送本地仓库的所有分支和标签
 git push origin master # 推送本地仓库的主分支master到远程仓库origin
 ~~~
 
+####  27.**push.sh**
+
+~~~
+#!/usr/bin/env bash
+
+# Exit immediately if a command returns a non-zero status.
+set -e
+
+# Set git credentials
+git config --global user.email "info@veggiemonk.ovh"
+git config --global user.name "veggiemonk-bot"
+
+# let git know where to apply the changes
+git checkout master
+
+echo "Adding data files"
+git add data/*
+
+echo "Checking the number of files staged"
+files=$(git diff --cached --numstat | wc -l | tr -d '[:space:]');
+[[ $files -eq 0 ]] && echo "nothing to push, exiting..." && exit
+
+echo "Commiting files"
+git commit -m "Automated update repository metadata [skip ci]"
+
+echo "Pushing changes"
+git push https://$GITHUB_USER:$GITHUB_TOKEN@github.com/veggiemonk/awesome-docker master >/dev/null 2>&1
+
+echo "Done."
+~~~
+
