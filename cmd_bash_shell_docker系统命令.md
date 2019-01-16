@@ -115,7 +115,7 @@
 ~~~
 
 > **docker-compose.yml** [官方文档v3](https://docs.docker.com/compose/overview) | [中文版](https://docs.docker-cn.com/compose/reference) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7)<br>
-  `启动`：`docker-compose up -d` | `停止`：`docker-compose down` <br>
+  [`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` <br>
   `其他命令`：`pause`、`unpause`、`start`、`stop`、`restart`、`kill`、`down`...
 ~~~
   version: '3' # docker compose 版本(版本不同,语法命令有所不同)
