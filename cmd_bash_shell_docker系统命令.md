@@ -32,7 +32,7 @@
   wmic memorychip get serialnumber
   wmic diskdrive get serialnumber
   wmic baseboard get serialnumber
-  wmic cdrom where drive='c:' get SerialNumber
+  wmic cdrom where drive='G:' get SerialNumber
   # 系统自动登录
   autologon  userName domainName password
   # 修改计算机名
@@ -43,11 +43,13 @@
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state on
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state off
   # 时区
-  tzutil /g [获取] /l [列表] /s [设置] "Asia/Shanghai"
+  tzutil /g [获取] /l [列表]
+  tzutil /s "China Standard Time" [设置]
   # 打印
-  wmic printer get name,default
-  wmic printer where default='TRUE' get name
-  wmic printer where name='printername' call setdefaultprinter
+  wmic printer get Default,DeviceID,Name                                  # 获取打印机设备
+  wmic printer get DeviceID,Network,PrinterPaperNames                     # 设备ID,网络打印机,打印纸张
+  wmic printer where default='TRUE' get name                              # 获取默认打印机
+  wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
 ~~~
 
