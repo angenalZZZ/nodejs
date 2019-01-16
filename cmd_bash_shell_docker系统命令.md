@@ -46,8 +46,8 @@
   tzutil /g [获取] /l [列表]
   tzutil /s "China Standard Time" [设置]
   # 打印
-  wmic printer get Default,DeviceID,Name                                  # 获取打印机设备
-  wmic printer get DeviceID,Network,PrinterPaperNames                     # 设备ID,网络打印机,打印纸张
+  wmic printer get Default,DeviceID,Name,Network                          # 获取打印机设备
+  wmic printer get DeviceID,PrinterPaperNames                             # 设备ID,打印纸张
   wmic printer where default='TRUE' get name                              # 获取默认打印机
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
