@@ -91,17 +91,17 @@
   # COPY <src> <dest>
   # 复制资源到工作目录，不会解压，无法从远程地址下载
   COPY ./ ./
-
-  # ARG 构建镜像时可传递的参数，配置 ENV 使用 docker build --build-arg NODE_ENV=dev
+  
+  # RUN 构建镜像时执行的命令(安装运行时环境、软件等)
+  RUN npm install
+  
+  # ARG 构建镜像时可传递的参数，配合 ENV 使用 docker build --build-arg NODE_ENV=dev
   ARG NODE_ENV
   ARG TZ='Asia/Shanghai'
   
-  # ENV 容器运行时环境变量，配置 ARG 使用 $NODE_ENV '${TZ}'
+  # ENV 容器运行时环境变量，配合 ARG 使用 $NODE_ENV '${TZ}'
   ENV NODE_ENV=$NODE_ENV
   ENV TZ '${TZ}'
-  
-  # RUN 构建镜像时执行的命令
-  RUN npm install
   
   # EXPOSE 容器端口(可指定多个)，启动时指定与宿主机端口的映射 docker run -p 9999:8888
   EXPOSE 8080 8888
@@ -109,21 +109,21 @@
   # CMD 容器启动后执行的命令，会被 docker run 命令覆盖
   CMD ["npm", "start"]  # other, web-proxy: CMD ["nginx", "-g", "daemon off;"]
   
-  # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖
+  # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖；一般不会使用；
   # 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
 
 ~~~
 
 > **docker-compose.yml** [官方文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7)
 ~~~
-  # 启动：docker-compose up -d , 停止：docker-compose down
-  version: '3' # docker compose 版本
-  services:
-    web:
+  # 启动：docker-compose up -d  停止：docker-compose down
+  version: '3' # docker compose 版本(版本不同,语法命令有所不同)
+  services:    # docker services 容器服务编排
+    web:       # docker container service
       # build: # 构建镜像
-      #   context: . # 构建镜像的上下文(本地相对路径)
-      #   dockerfile: Dockerfile # 指定dockerfile文件
-      #   args: # 构建镜像使用的环境变量
+      #   context: . # 构建镜像的上下文(本地工作目录)
+      #   dockerfile: Dockerfile # 指定构建文件
+      #   args: # 构建镜像时传递的参数/环境变量
       #   - NODE_ENV=dev
       container_name: web-container
       image: docker-web-image # 使用已存在的镜像
@@ -151,7 +151,7 @@
       networks:
       - back-tier
 
-  networks: # 网络设置-自定义网络
+  networks: # 网络设置(自定义)
     front-tier:
       driver: bridge
     back-tier:
