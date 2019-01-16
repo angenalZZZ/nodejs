@@ -55,24 +55,24 @@
 
 # [**docker**](https://docs.docker.com)
 
-> docker 命令 <br>
+> **Docker** <br>
   `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
 
-> **command** [参考文档](https://docs.docker.com)
+> **Command** [参考例子](https://docs.docker.com/samples/)
 ~~~
   # 构建
   docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
   # 运行
   docker run --name test-image-docker -it -p 9999:8888 test-image # 已加载镜像 test-image 时, 用 docker images 查询
   # 网络
-  docker network create -d bridge [network-name]    # 创建容器自定义网络
-  docker network connect [network-name] [container] # 加入容器自定义网络
+  docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
+  docker network connect [network-name] [container] # 加入自定义网络
 ~~~
 
-> **Dockerfile** [参考文档](https://docs.docker.com/dockerfile/overview)
+> **Dockerfile** [参考文档](https://docs.docker.com/get-started/)
 ~~~
   # 基础镜像
   FROM node:10.15.0
