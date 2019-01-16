@@ -203,29 +203,29 @@ git push origin master # 推送本地仓库的主分支master到远程仓库orig
 ~~~
 #!/usr/bin/env bash
 
-# Exit immediately if a command returns a non-zero status.
+# 设置异常时退出bash
 set -e
 
-# Set git credentials
+# 设置认证授权
 git config --global user.email "info@veggiemonk.ovh"
 git config --global user.name "veggiemonk-bot"
 
-# let git know where to apply the changes
+# 切换至master分支准备提交
 git checkout master
 
-echo "Adding data files"
+echo "在master分支中添加新的内容准备提交."
 git add data/*
 
-echo "Checking the number of files staged"
+echo "检查master分支中是否有变更的内容，如果没有就退出bash."
 files=$(git diff --cached --numstat | wc -l | tr -d '[:space:]');
 [[ $files -eq 0 ]] && echo "nothing to push, exiting..." && exit
 
-echo "Commiting files"
+echo "在master分支中提交."
 git commit -m "Automated update repository metadata [skip ci]"
 
-echo "Pushing changes"
+echo "推送提交的内容至远程仓库的master分支."
 git push https://$GITHUB_USER:$GITHUB_TOKEN@github.com/veggiemonk/awesome-docker master >/dev/null 2>&1
 
-echo "Done."
+echo "完成提交master分支."
 ~~~
 
