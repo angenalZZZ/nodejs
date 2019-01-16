@@ -198,7 +198,7 @@ git push --all         # 推送本地仓库的所有分支和标签
 git push origin master # 推送本地仓库的主分支master到远程仓库origin
 ~~~
 
-####  27.**push.sh**
+####  27.<font color=red size=5>push.sh</font>
 
 ~~~
 #!/usr/bin/env bash
