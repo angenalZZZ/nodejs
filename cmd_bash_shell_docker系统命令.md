@@ -81,7 +81,7 @@
   LABEL description="this is a test image"
   LABEL version="1.0"
   
-  # 设置工作目录，若不存在会自动创建，其他指令会以此为工作路径
+  # 设置工作目录，若不存在会自动创建，其他指令会以此为相对路径
   WORKDIR /work/app
   
   # ADD <src> <dest>
@@ -121,23 +121,23 @@
   services:    # docker services 容器服务编排
     web:       # docker container service
       # build: # 构建镜像
-      #   context: . # 构建镜像的上下文(本地工作目录)
-      #   dockerfile: Dockerfile # 指定构建文件
-      #   args: # 构建镜像时传递的参数/环境变量
+      #   context: . # 构建镜像的上下文(本地构建的工作目录)
+      #   dockerfile: Dockerfile # 指定构建文件(工作目录下)
+      #   args: # 构建镜像时传递的参数/用于运行时环境变量
       #   - NODE_ENV=dev
-      container_name: web-container
-      image: docker-web-image # 使用已存在的镜像
-      ports: # 端口映射
+      container_name: web-container # 容器名称
+      image: docker-web-image       # 使用已有的镜像(用 docker images 查询)
+      ports: # 端口映射(宿主机端口:容器端口)
       - "9999:8888"
-      networks: # 网络设置
+      networks: # 网络设置(加入自定义网络)
       - front-tier
       - back-tier
-      depends_on: # 容器服务启动依赖
-      - redis
-      # links: # 外链
+      # links: # 外链容器(不安全)
       # - redis
-      volumes: # 外挂数据
-      - "./:/work/app/"
+      volumes: # 外挂数据(映射宿主机目录:容器工作目录)
+      - "./data/:/work/app/data/"
+      depends_on: # 启动时依赖的容器
+      - redis
       restart: always # 重启设置
       env_file: # 环境变量配置文件 key=value
       - ./docker.env
