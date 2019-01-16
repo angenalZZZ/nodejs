@@ -114,9 +114,10 @@
 
 ~~~
 
-> **docker-compose.yml** [官方文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7)
+> **docker-compose.yml** [官方文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7)<br>
+  `启动`：`docker-compose up -d` | `停止`：`docker-compose down`
+  `其他`：`pause`、`unpause`、`start`、`stop`、`restart`、`kill`、`down`.
 ~~~
-  # 启动：docker-compose up -d  停止：docker-compose down
   version: '3' # docker compose 版本(版本不同,语法命令有所不同)
   services:    # docker services 容器服务编排
     web:       # docker container service
@@ -136,12 +137,12 @@
       # - redis
       volumes: # 外挂数据(映射宿主机目录:容器工作目录)
       - "./data/:/work/app/data/"
-      depends_on: # 启动时依赖的容器
+      depends_on: # 启动时依赖的容器(容器启动顺序: 推荐第三方工具 wait-for-it dockerize 等)
       - redis
       restart: always # 重启设置
       env_file: # 环境变量配置文件 key=value
-      - ./docker.env
-      environment: # 设置容器运行时环境变量，会覆盖docker.env相同变量
+      - ./docker-web.env
+      environment: # 设置容器运行时环境变量，会覆盖env_file相同变量
       - NODE_ENV: dev
       command: npm run dev # 容器启动后执行的命令
       
