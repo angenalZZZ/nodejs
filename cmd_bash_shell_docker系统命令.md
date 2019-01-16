@@ -11,10 +11,10 @@
   > dir [目录] # 默认当前目录
   $ ls  [目录] # 默认当前目录
   
-  # 文件删除 [-f-强制删除]
+  # 文件删除
   > del /f /s /q [目录|文件]
-  > rd /s /q %windir%\temp & md %windir%\temp [临时文件]
-  $ rm -f -r [目录]
+  > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
+  $ rm -f -r [目录] [-f 强制]
   
   # 列出网络监听端口
   > netstat -ap tcp | findstr -i "listening" # tcp端口
@@ -57,7 +57,7 @@
   `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
-  `Runtime`    : `docker container run Image` + `--volumes-from Data-Container` | `-v from-Disk:Data-Dir`
+  `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
 
 > **command** [参考文档](https://docs.docker.com)
 ~~~
@@ -95,9 +95,9 @@
   ARG NODE_ENV
   ARG TZ='Asia/Shanghai'
   
-  # ENV 容器运行时环境变量，配置 ARG 使用 $NODE_ENV ${TZ}
+  # ENV 容器运行时环境变量，配置 ARG 使用 $NODE_ENV '${TZ}'
   ENV NODE_ENV=$NODE_ENV
-  ENV TZ ${TZ}
+  ENV TZ '${TZ}'
   
   # RUN 构建镜像时执行的命令
   RUN npm install
@@ -106,7 +106,7 @@
   EXPOSE 8080 8888
   
   # CMD 容器启动后执行的命令，会被 docker run 命令覆盖
-  CMD ["npm", "start"]  # CMD ["nginx", "-g", "daemon off;"]
+  CMD ["npm", "start"]  # other, web-proxy: CMD ["nginx", "-g", "daemon off;"]
   
   # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖
   # 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
