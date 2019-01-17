@@ -95,14 +95,17 @@ let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo"
 
 4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象
 `__proto__`是大部分主流浏览器(IE除外)引擎提供的,还被Node.js支持.
-获取原型`Object.getPrototypeOf`、修改原型`Object.setPrototypeOf`
+获取原型`Object.getPrototypeOf`(获取变量类型)、修改原型`Object.setPrototypeOf`(修改变量类型)
 ````javascript
 function Person(name) { this.name = name }
 var p1 = new Person(`p1`), p2 = new Person(`p2`);
 if(Object.getPrototypeOf(p1)===Person.prototype)
-    Object.setPrototypeOf(Person.prototype,{sex:1});
+    Object.setPrototypeOf(Person.prototype,{sex:1});//修改类型Person
 console.log(p1.name);console.log(p2.sex); // 此时p1,p2都有sex属性
-console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
+console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true 变量类型都相同
+var fakeDate = {}, notDate = {};
+Object.setPrototypeOf(fakeDate, Date.prototype);//修改变量fakeDate的类型为Date
+console.log(Object.getPrototypeOf(fakeDate)===Object.getPrototypeOf(notDate))//false 变量类型已修改
 ````
 
 5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外[箭头函数无this])，
