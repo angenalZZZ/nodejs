@@ -93,9 +93,8 @@ let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo"
  # Object.assign({sex:0},p1); Object.assign({name:"名字0"},"abc",{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
 ````
 
-4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象
-`__proto__`是大部分主流浏览器(IE除外)引擎提供的,还被Node.js支持.
-获取原型`Object.getPrototypeOf`(获取变量类型)、修改原型`Object.setPrototypeOf`(修改变量类型)
+4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,<br>而所有被创建的对象都会共享原型对象
+`__proto__`是大部分主流浏览器(IE除外)引擎提供的,还被Node.js支持.<br>获取原型`Object.getPrototypeOf`(获取变量类型)、修改原型`Object.setPrototypeOf`(修改变量类型)
 ````javascript
 function Person(name) { this.name = name }
 var p1 = new Person(`p1`), p2 = new Person(`p2`);
@@ -108,7 +107,7 @@ Object.setPrototypeOf(fakeDate, Date.prototype);//修改变量fakeDate的类型�
 console.log(Object.getPrototypeOf(fakeDate)===Object.getPrototypeOf(notDate))//false 变量类型已修改
 ````
 
-5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外[箭头函数无this])，
+5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外[箭头函数无this])，<br>
     优先级是:`箭头`函数>`new`绑定>`显式`绑定[`bind`>`call`|`apply`]>`隐式`绑定>`默认`绑定。
 ````javascript
     apply、call、bind方法的共同点和语法区别：
