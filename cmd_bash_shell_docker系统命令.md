@@ -61,7 +61,7 @@
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
 
-> **Command** [参考例子](https://docs.docker.com/samples/)
+> **Shell** [例子](https://docs.docker.com/samples/)
 ~~~
   # 构建
   docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
@@ -72,7 +72,7 @@
   docker network connect [network-name] [container] # 加入自定义网络
 ~~~
 
-> **Dockerfile** [参考文档](https://docs.docker.com/get-started/)
+> **Dockerfile** [文档](https://docs.docker.com/get-started/)
 ~~~
   # 基础镜像
   FROM node:10.15.0
@@ -115,7 +115,7 @@
 
 ~~~
 
-> **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [官方文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7)<br>
+> **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7)<br>
   [`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`、`unpause`、`start`、`stop`、`restart`...
 ~~~
   version: '3' # docker compose 版本(版本不同,语法命令有所不同)
