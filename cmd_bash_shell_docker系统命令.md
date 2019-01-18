@@ -53,9 +53,10 @@
   
 ~~~
 
-# [**docker**](https://docs.docker.com) [安装Docker](https://docs.docker.com/install/)
+# [**docker**](https://docs.docker.com)
 
-> `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
+>  [安装Docker](https://docs.docker.com/install/) <br>
+  `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
@@ -162,11 +163,21 @@
 
 > [阿里云/fp-api/front](https://cr.console.aliyun.com/repository/cn-hangzhou/fp-api/front/detail)
 
-    1. 登录阿里云Docker Registry
+  1. 登录阿里云Docker Registry
 ~~~
   $ sudo docker login --username=angenal@hotmail.com registry.cn-hangzhou.aliyuncs.com
 ~~~
-    2. 从Registry中拉取镜像
+  2. 从Registry中拉取镜像
 ~~~
   $ sudo docker pull registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
 ~~~
+  3. 将镜像推送到Registry
+~~~
+  # [ImageId]和[镜像版本号]参数(用 docker images 查询)
+  # 　公网地址：registry.cn　经典内网：registry-internal.cn　专有网络：registry-vpc.cn
+  $ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
+  $ sudo docker push registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
+~~~
+
+
+
