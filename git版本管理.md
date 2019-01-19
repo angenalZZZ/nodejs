@@ -198,3 +198,34 @@ git push --all         # 推送本地仓库的所有分支和标签
 git push origin master # 推送本地仓库的主分支master到远程仓库origin
 ~~~
 
+####  27.[push.sh 参考文档](https://github.com/fengyuhetao/shell)
+
+~~~
+#!/usr/bin/env bash
+
+# 设置异常时退出bash
+set -e
+
+# 设置认证授权
+git config --global user.email "info@veggiemonk.ovh"
+git config --global user.name "veggiemonk-bot"
+
+# 切换至master分支准备提交
+git checkout master
+
+echo "在master分支中添加新的内容准备提交."
+git add data/*
+
+echo "检查master分支中是否有变更的内容，如果没有就退出bash."
+files=$(git diff --cached --numstat | wc -l | tr -d '[:space:]');
+[[ $files -eq 0 ]] && echo "nothing to push, exiting..." && exit
+
+echo "在master分支中提交."
+git commit -m "Automated update repository metadata [skip ci]"
+
+echo "推送提交的内容至远程仓库的master分支."
+git push https://$GITHUB_USER:$GITHUB_TOKEN@github.com/veggiemonk/awesome-docker master >/dev/null 2>&1
+
+echo "完成提交master分支."
+~~~
+

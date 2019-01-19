@@ -16,13 +16,19 @@
     4. 系统设计的架构受限于生产设计，反映出公司组织的沟通架构。(Conway定律!)
     5. 组织成员投入大量精力到琐碎的事情上。(车棚效应!!!)
 
+`[中文输入]`
+
+    1. 空格：中文输入法下按Shift+Space进入全角模式后，输入空格即可。
+    2. ￥（）〔〕〈〉＆＃＠ ● ○ ⒈⒉⒊⒋⒌⒍⒎⒏⒐⒑⒒⒓⒔⒕⒖⒗⒘⒙⒚⒛ ＋－×÷ ⊙∝ √×✔✘
+    3. 壹贰叁肆伍陆柒捌玖拾 微毫厘分百千万亿兆吉
+
 `[编程基础]`
 
   [1. JavaScript 基础](#javascript-基础) 
   
   [2. TypeScript 基础](#typescript-基础) 
   
-  [3. Node.js 基础](#nodejs-基础) 
+  [3. Node.js 基础](#nodejs-基础)  & [中文Api](http://nodejs.cn/api)
 
 `[实用程序库]`
 
@@ -67,14 +73,14 @@
 
 1.**原始类型**又被称为**基本类型**，原始类型保存的变量和值直接保存在**栈内存**(Stack)中,且空间相互独立,通过值来访问.
 
-2.`Number`是基于“二进制浮点数”实现的,使用的是“双精度”格式,不能用于===比较；特殊的(NaN!==NaN)只能使用isNaN()判断。
+2.`Number`是基于“二进制浮点数”实现,使用“双精度”格式,不能用于===比较；特殊的(NaN!==NaN)只能使用isNaN()判断。
 
 3.`for...in`枚举对象中的属性,在ES5中引入了一个新的方法`Object.keys()`,不同之处在于,它可以将结果以数组的形式返回.
 
 4.**类型转换**虽然很方便，但有时也跟我们预期相去甚远，如：{}+[]返回0.
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/15517231.png)
 
-5.**基本类型**是按值传递的，**引用类型**在传递过程中,对象`a`先产生了一个`副本a`,这个`副本a`并不是深克隆得到的`副本a`,`副本a`地址同样指向对象`a`指向的堆内存.
+5.**基本类型**是按值传递的，**引用类型**在传递过程中,<br>　　对象`a`先产生了一个`副本a`,这个`副本a`并不是深克隆得到的`副本a`,`副本a`地址同样指向对象`a`指向的堆内存.
 
 > 引用类型: Object、Array、Date、Function
 
@@ -93,20 +99,21 @@ let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo"
  # Object.assign({sex:0},p1); Object.assign({name:"名字0"},"abc",{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
 ````
 
-4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象
-`__proto__`是大部分主流浏览器(IE除外)引擎提供的,还被Node.js支持.
-获取原型`Object.getPrototypeOf`、修改原型`Object.setPrototypeOf`
+4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,<br>　　而所有被创建的对象都会共享原型对象
+`__proto__`是大部分主流浏览器(IE除外)引擎提供的,还被Node.js支持.<br>　　获取原型`Object.getPrototypeOf`(获取变量类型)、修改原型`Object.setPrototypeOf`(修改变量类型)
 ````javascript
 function Person(name) { this.name = name }
 var p1 = new Person(`p1`), p2 = new Person(`p2`);
 if(Object.getPrototypeOf(p1)===Person.prototype)
-    Object.setPrototypeOf(Person.prototype,{sex:1});
+    Object.setPrototypeOf(Person.prototype,{sex:1});//修改类型Person
 console.log(p1.name);console.log(p2.sex); // 此时p1,p2都有sex属性
-console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true
+console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true 变量类型都相同
+var fakeDate = {}, notDate = {};
+Object.setPrototypeOf(fakeDate, Date.prototype);//修改变量fakeDate的类型为Date
+console.log(Object.getPrototypeOf(fakeDate)===Object.getPrototypeOf(notDate))//false 变量类型已修改
 ````
 
-5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外[箭头函数无this])，
-    优先级是:`箭头`函数>`new`绑定>`显式`绑定[`bind`>`call`|`apply`]>`隐式`绑定>`默认`绑定。
+5.`this`是在`执行`时确定其指向的对象(箭头函数中的`this`除外[箭头函数无this])，<br>　　优先级是:`箭头`函数>`new`绑定>`显式`绑定[`bind`>`call`|`apply`]>`隐式`绑定>`默认`绑定。
 ````javascript
     apply、call、bind方法的共同点和语法区别：
       三者都是用来改变函数的this对象[实例]的指向的；第一个参数都是this要指向的对象，也就是想指定的上下文[实例]；

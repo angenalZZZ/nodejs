@@ -62,15 +62,13 @@ npm i -g yo jspm sqlpad @compodoc/compodoc # 其他
 
 ~~~
 # web 框架
-npm i -g yo generator-k  # Koa项目构建 https://github.com/minghe/generator-k
-npm i -g think-cli       # think基于Koa2构建 https://github.com/thinkjs/thinkjs  https://thinkjs.org
-npm i -g express         # Express项目构建 https://github.com/expressjs/express  http://www.expressjs.com.cn
-npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hapi    https://hapijs.com
-    # Lab & Code 测试插件
-    # Joi 面向 Object Schema 的验证器插件
+npm i -g express         # express项目构建 https://github.com/expressjs/express  http://www.expressjs.com.cn
+npm i -g think-cli       # think基于koa2构建 https://github.com/thinkjs/thinkjs  https://thinkjs.org
+npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hapi    https://hapijs.com
     # Bell 第三方登录插件
     # Good 监控日志相关插件
     # Boom 友好的 HTTP 错误返回插件
+    # Joi 面向 Object Schema 的验证器插件
     # h2o2 代理转发插件
     # Catbox 缓存策略插件
     # hapi-auth-cookie 基于 Cookie 的用户认证插件
@@ -78,8 +76,9 @@ npm i -S hapi            # hapi基于Express构建 https://github.com/hapijs/hap
     # tv 可交互式的 debug 控制台
     # Vision 网页模板渲染插件
     # Sequelize 数据库访问-ORM  https://github.com/danecando/hapi-sequelize
-    # and so on ... 案例教程 https://github.com/yeshengfei/hapi-tutorial
-    # ...bash: 
+    # Lab & Code 测试插件
+    # ...案例教程 https://github.com/yeshengfei/hapi-tutorial
+    # ...Go:
     # 1. npm init -y           (初始app)
     # 2. yarn add hapi nodemon (监听nodemon > package.json > scripts:{"start":"nodemon index.js"} )
     # 3. yarn run start        (启动app)
@@ -101,7 +100,6 @@ npm install pidusage --save  # 检查进程(PID) / CPU & 内存的使用 https:/
 
 # test 测试
 npm i proxyquire           # https://github.com/thlorenz/proxyquire
-
 yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
 
 ~~~
