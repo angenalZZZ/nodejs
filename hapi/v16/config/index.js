@@ -49,6 +49,7 @@ exports.hapiConfig = {
     },
     // 调试模式/开启日志输出
     debug: {
+      log: ['error'],
       // log: ['auth', 'unauthenticated', 'error', 'jwt'],
       // request: ['error']
     },

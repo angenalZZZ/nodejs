@@ -1,0 +1,23 @@
+{
+    "restartable": "rs",
+    "ignore": [
+      ".git",
+      ".vscode/settings.json",
+      "node_modules/**/node_modules"
+    ],
+    "verbose": true,
+    "execMap": {
+      "js": "node --harmony"
+    },
+    "watch": [
+      "config/",
+      "models/",
+      "routes/",
+      "utils/",
+      "app.js"
+    ],
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "ext": "js json"
+  }

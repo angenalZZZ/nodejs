@@ -63,7 +63,6 @@ npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.
 npm i hapi-swagger@7
 npm i inert@4
 npm i vision@4
-npm i package
 
 # 数据库操作
 npm i sequelize-cli -D

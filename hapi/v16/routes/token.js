@@ -54,8 +54,8 @@ const generateJWT = (session) => {
   };
   const options = {
     algorithm: ENV.JWT_algorithms,
-    expiresIn: payload.exp, // 过期时间ms-毫秒, 或字符标识-秒: 60, "2 days", "10h", "7d"
-    notBefore: payload.nbf, // 什么时间之前，该 JWT 都是不可用的
+    // notBefore: payload.nbf, // 什么时间之前，该 JWT 都是不可用的
+    // expiresIn: payload.exp, // 过期时间ms-毫秒, 或字符标识-秒: 60, "2 days", "10h", "7d"
     // audience: '', // 接收 JWT 的一方
     // subject: '', // 面向的用户
     // issuer: '', // 签发者

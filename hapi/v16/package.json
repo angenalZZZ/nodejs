@@ -5,21 +5,22 @@
   "email": "angenal@hotmail.com",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "nodemon app.js --config"
   },
   "repository": {
     "type": "git",
     "url": "https://github.com/angenalZZZ/nodejs/tree/master/hapi/v16"
   },
   "keywords": [
-    "hapi"
+    "hapi",
+    "hapi-v16"
   ],
   "author": "yangzhou",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/angenalZZZ/nodejs/issues"
   },
-  "homepage": "https://github.com/angenalZZZ/nodejs#readme",
+  "homepage": "https://github.com/angenalZZZ/nodejs",
   "dependencies": {
     "aguid": "^2.0.0",
     "boom": "^5.2.0",
@@ -37,7 +38,6 @@
     "knex": "^0.16.3",
     "mssql": "^4.3.0",
     "mysql2": "^1.6.1",
-    "package": "^1.0.1",
     "redis": "^2.8.0",
     "sequelize": "^4.40.0",
     "timezone": "^1.0.20",
