@@ -1,11 +1,12 @@
  # npm 配置
 
 ~~~
-  [git] git config --global user.name "yangzhou"
-        git config --global user.email "angenal@hotmail.com"
-        
-  [系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
-  [用户变量 Path] += D:\Program\nodejs\node_global
+  [git全局用户]
+  git config --global user.name "yangzhou"
+  git config --global user.email "angenal@hotmail.com"
+
+  [nodejs系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
+  [nodejs用户变量 Path] += D:\Program\nodejs\node_global
   npm set init-author-name yangzhou
   npm set init-author-email angenal@hotmail.com
   npm set init-license MIT
@@ -37,7 +38,7 @@
  # npm 如何安装 (npm|yarn)
 
 ~~~
- # Unix参数风格: -S -单个字母, GNU风格: --save --英文字符，node-cli参考: commander.js,chalk.js,Lnquirer.js,Yargs...
+# Unix风格: -S -单个字母, GNU风格: --save --英文字符，node-cli参考: commander.js,chalk.js,Lnquirer.js,Yargs.
 npm init -f                                               [初始化项目package.json]
 npm i -S [--save --no-save]                               [添加项目程序依赖包到dependencies]
 npm i -D [--save-dev]                                     [添加项目工具依赖包到devDependencies]
@@ -54,7 +55,7 @@ cnpm i -g weex-toolkit >weex          # 跨平台构建工具 https://github.com
 npm i -g supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
 npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
 npm i -g serve http-server json-server lite-server
- # > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
+# > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
 npm i -g yo jspm sqlpad @compodoc/compodoc
 ~~~
 
