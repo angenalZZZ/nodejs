@@ -78,7 +78,7 @@ npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hap
     # Sequelize 数据库访问-ORM  https://github.com/danecando/hapi-sequelize
     # Lab & Code 测试插件
     # ...案例教程 https://github.com/yeshengfei/hapi-tutorial
-    # ...yarn:
+    # ...Go:
     # 1. npm init -y           (初始app)
     # 2. yarn add hapi nodemon (监听nodemon > package.json > scripts:{"start":"nodemon index.js"} )
     # 3. yarn run start        (启动app)
