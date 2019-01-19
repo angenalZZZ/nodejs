@@ -55,7 +55,7 @@ npm i -g supervisor                   # 监视代码的改动后自动重启 Nod
 npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
 npm i -g serve http-server json-server lite-server
  # > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
-npm i -g yo jspm sqlpad @compodoc/compodoc # 其他
+npm i -g yo jspm sqlpad @compodoc/compodoc
 ~~~
 
  # npm 后端安装包 (npm|yarn) install
@@ -78,28 +78,25 @@ npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hap
     # Sequelize 数据库访问-ORM  https://github.com/danecando/hapi-sequelize
     # Lab & Code 测试插件
     # ...案例教程 https://github.com/yeshengfei/hapi-tutorial
-    # ...Go:
+    # ...GraphQL: http://graphql.cn/learn/ https://github.com/wesharehoodies/graphql-nodejs-hapi-api
     # 1. npm init -y           (初始app)
-    # 2. yarn add hapi nodemon (监听nodemon > package.json > scripts:{"start":"nodemon index.js"} )
-    # 3. yarn run start        (启动app)
-    # 4. yarn add knex mssql   (数据库mssql)
-    # 5. Facebook GraphQL: http://graphql.cn/learn/ https://github.com/wesharehoodies/graphql-nodejs-hapi-api
+    # 2. yarn add hapi         (框架hapi > package.json > scripts:{"start":"nodemon app.js"} )
+    # 3. yarn add knex mssql   (数据mssql)
+    # 4. yarn run start        (启动app)
 
 # orm 数据库访问
-npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
 npm i -S mongoose  # for Mongodb https://mongoosejs.com/docs/index.html
+npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
 
 # algorithm 算法
-npm i siphash # 随机性好、输出均匀&性能突出(用于字典的高效查找)、偏向性小(防hash攻击) https://github.com/jedisct1/siphash-js
+npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击) https://github.com/jedisct1/siphash-js
 
 # utility 实用
-npm install rxjs --save    # 响应式编程的库 https://cn.rx.js.org
-npm install chalk --save   # 命令行输出文字颜色  https://github.com/chalk/chalk
-npm install commander --save # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
-npm install pidusage --save  # 检查进程(PID) / CPU & 内存的使用 https://github.com/soyuka/pidusage
-
-# test 测试
-npm i proxyquire           # https://github.com/thlorenz/proxyquire
+npm i rxjs       # 响应式编程的库 https://cn.rx.js.org
+npm i chalk      # 命令行输出文字颜色  https://github.com/chalk/chalk
+npm i commander  # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
+npm i pidusage   # 检查进程(PID) / CPU & 内存的使用 https://github.com/soyuka/pidusage
+npm i proxyquire # https://github.com/thlorenz/proxyquire
 yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
 
 ~~~
