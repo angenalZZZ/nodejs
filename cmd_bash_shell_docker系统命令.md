@@ -55,8 +55,11 @@
 
 # [**docker**](https://docs.docker.com)
 
->  [安装Docker](https://docs.docker.com/install/) <br>
-  `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
+>  [安装Docker](https://docs.docker.com/install/) 、 [下载Docker](https://download.docker.com)<br>
+  `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
+  `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore).[.](http://8fe1b42e.m.daocloud.io)
+  
+> `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
