@@ -779,7 +779,7 @@ function version_100<T extends { new(...args: any[]): {} }>(ctor: T) {
 
 
 # **Node.js 基础**
-> [awesome-nodejs 超棒的开源库与应用工具](https://github.com/sindresorhus/awesome-nodejs)
+> [awesome-nodejs 超棒的开源库与应用工具](https://github.com/sindresorhus/awesome-nodejs)、 [rxjs - rxjs/operators - 响应式编程](https://github.com/ReactiveX/rxjs)
 
 ## 全局变量
 
