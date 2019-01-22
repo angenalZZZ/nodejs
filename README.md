@@ -21,6 +21,8 @@
     1. 空格：中文输入法下按Shift+Space进入全角模式后，输入空格即可。
     2. ￥（）〔〕〈〉＆＃＠ ● ○ ⒈⒉⒊⒋⒌⒍⒎⒏⒐⒑⒒⒓⒔⒕⒖⒗⒘⒙⒚⒛ ＋－×÷ ⊙∝ √×✔✘
     3. 壹贰叁肆伍陆柒捌玖拾 微毫厘分百千万亿兆吉
+    
+> [awesome 超棒的开源库与应用工具](https://github.com/sindresorhus/awesome)
 
 `[编程基础]`
 
@@ -777,7 +779,7 @@ function version_100<T extends { new(...args: any[]): {} }>(ctor: T) {
 
 
 # **Node.js 基础**
-
+> [awesome-nodejs 超棒的开源库与应用工具](https://github.com/sindresorhus/awesome-nodejs)
 
 ## 全局变量
 
@@ -837,6 +839,13 @@ const TransformStream=require('stream').Transform;
 
 ````
 
+> **扩展**:<br>
+　　1. [`get-stream` - Get a stream as a string or buffer.](https://github.com/sindresorhus/get-stream)<br>
+　　2. [`into-stream` - Convert a buffer/string/array/object into a stream.](https://github.com/sindresorhus/into-stream)<br>
+　　3. [`byline` - Super-simple line-by-line Stream reader.](https://github.com/jahewson/node-byline)<br>
+　　4. [multistream - Combine multiple streams into a single stream.](https://github.com/feross/multistream)
+
+
 ## **进程-管道-通信**
 
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/38089481.jpg)
@@ -895,9 +904,9 @@ n.on('message', function(m) {
 n.send({ hello: 'world' });
 ```
 
->> **扩展**:
-　　1. [`execa` - Better child_process](https://github.com/sindresorhus/execa)
-　　2. [`fkill` - Fabulously kill processes. Cross-platform.](https://github.com/sindresorhus/fkill-cli)
+> **扩展**:<br>
+　　1. [`execa` - Better child_process](https://github.com/sindresorhus/execa)<br>
+　　2. [`fkill` - Fabulously kill processes. Cross-platform.](https://github.com/sindresorhus/fkill-cli)<br>
 
 
 **node进程间通信原理**
