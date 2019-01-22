@@ -845,7 +845,7 @@ IPC进程间通信,常见的通信技术如下:
 
 ![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/46822480.jpg)
 
-    管道实际是用于进程间通信的一段`共享内存`，创建管道的进程称为管道服务器，连接到一个管道的进程为管道客户机。<br>
+    管道实际是用于进程间通信的一段`共享内存`，创建管道的进程称为管道服务器，连接到一个管道的进程为管道客户机。
     一个进程在向管道写入数据后，另一进程就可以从管道的另一端将其读取出来。
 
 ```javascript
@@ -895,14 +895,16 @@ n.on('message', function(m) {
 n.send({ hello: 'world' });
 ```
 ```javascript
-// 进程管理扩展: https://github.com/sindresorhus/execa
-/*  Promise interface.
-    Strips the final newline from the output so you don't have to do stdout.trim().
-    Supports shebang binaries cross-platform.
-    Improved Windows support.
-    Higher max buffer. 10 MB instead of 200 KB.
-    Executes locally installed binaries by name.
-    Cleans up spawned processes when the parent process dies. */
+
+    进程管理>扩展:
+    1. [execa](https://github.com/sindresorhus/execa)
+    　Promise interface.
+    　Strips the final newline from the output so you don't have to do stdout.trim().
+    　Supports shebang binaries cross-platform.
+    　Improved Windows support.
+    　Higher max buffer. 10 MB instead of 200 KB.
+    　Executes locally installed binaries by name.
+    　Cleans up spawned processes when the parent process dies.
 
 ```
 
