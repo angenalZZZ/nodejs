@@ -840,10 +840,10 @@ const TransformStream=require('stream').Transform;
 ````
 
 > **扩展**:<br>
-　　1. [`get-stream` - Get a stream as a string or buffer.](https://github.com/sindresorhus/get-stream)<br>
-　　2. [`into-stream` - Convert a buffer/string/array/object into a stream.](https://github.com/sindresorhus/into-stream)<br>
-　　3. [`byline` - Super-simple line-by-line Stream reader.](https://github.com/jahewson/node-byline)<br>
-　　4. [multistream - Combine multiple streams into a single stream.](https://github.com/feross/multistream)
+　1. [`get-stream` - Get a stream as a string or buffer.](https://github.com/sindresorhus/get-stream)<br>
+　2. [`into-stream` - Convert a buffer/string/array/object into a stream.](https://github.com/sindresorhus/into-stream)<br>
+　3. [`byline` - Super-simple line-by-line Stream reader.](https://github.com/jahewson/node-byline)<br>
+　4. [`multistream` - Combine multiple streams into a single stream.](https://github.com/feross/multistream)<br>
 
 
 ## **进程-管道-通信**
@@ -905,8 +905,8 @@ n.send({ hello: 'world' });
 ```
 
 > **扩展**:<br>
-　　1. [`execa` - Better child_process](https://github.com/sindresorhus/execa)<br>
-　　2. [`fkill` - Fabulously kill processes. Cross-platform.](https://github.com/sindresorhus/fkill-cli)<br>
+　1. [`execa` - Better child_process](https://github.com/sindresorhus/execa)<br>
+　2. [`fkill` - Fabulously kill processes. Cross-platform.](https://github.com/sindresorhus/fkill-cli)<br>
 
 
 **node进程间通信原理**
@@ -1157,5 +1157,17 @@ readStream2.pipe(gzip2).pipe(decryptStream2)
 .on('finish', function () { console.log('解密完成'); }).pipe(process.stdout);
 
 ````
+
+> **扩展**:<br>
+　1. [`unique-random` - 生成连续唯一的随机数](https://github.com/sindresorhus/unique-random)<br>
+　2. [`mathjs` - 扩展数学公式](https://github.com/josdejong/mathjs)<br>
+　3. [`algebra` - 代数结构](https://github.com/fibo/algebra)<br>
+　4. [`Moment.js` - 日期转换](https://github.com/moment/moment)、[`date-fns` - 日期转换](https://github.com/date-fns/date-fns)<br>
+　5. [`joi` - 验证请求数据输入](https://github.com/hapijs/joi)<br>
+　6. [`pretty-bytes` - Convert bytes to a human readable string: 1337 → 1.34 kB.](https://github.com/sindresorhus/pretty-bytes)<br>
+　7. [`pretty-ms` - Convert milliseconds to a human readable string: 1337000000 → 15d 11h 23m 20s.](https://github.com/sindresorhus/pretty-ms)<br>
+　8. [`kue` - Redis-backed priority job queue.](https://github.com/Automattic/kue)<br>
+　9. [`其他`...](https://github.com/sindresorhus/awesome-nodejs)
+ 
 ---
 ---
