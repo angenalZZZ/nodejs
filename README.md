@@ -894,10 +894,9 @@ n.on('message', function(m) {
 });
 n.send({ hello: 'world' });
 ```
-```javascript
 
     进程管理>扩展:
-    1. [execa](https://github.com/sindresorhus/execa)
+    1. [`execa`](https://github.com/sindresorhus/execa)
     　Promise interface.
     　Strips the final newline from the output so you don't have to do stdout.trim().
     　Supports shebang binaries cross-platform.
@@ -906,7 +905,6 @@ n.send({ hello: 'world' });
     　Executes locally installed binaries by name.
     　Cleans up spawned processes when the parent process dies.
 
-```
 
 **node进程间通信原理**
 `fork`创建进程之后，会在父子进程之间建立IPC通信,并过message与send()等方法进行通信, <br>　该通信方法基于由node的管道技术实现,而这个管道技术不同于上文提到的操作系统的*管道*, <br>　node的管道技术由libuv提供,而在不同操作系统下具体实现不同:Windows下由命名管道实现,linux下由UNIX域套接字实现.
