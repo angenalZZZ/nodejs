@@ -895,15 +895,9 @@ n.on('message', function(m) {
 n.send({ hello: 'world' });
 ```
 
-    进程管理>扩展:
-    1. [`execa`](https://github.com/sindresorhus/execa)
-    　Promise interface.
-    　Strips the final newline from the output so you don't have to do stdout.trim().
-    　Supports shebang binaries cross-platform.
-    　Improved Windows support.
-    　Higher max buffer. 10 MB instead of 200 KB.
-    　Executes locally installed binaries by name.
-    　Cleans up spawned processes when the parent process dies.
+>> **扩展**:
+　　1. [`execa` - Better child_process](https://github.com/sindresorhus/execa)
+　　2. [`fkill` - Fabulously kill processes. Cross-platform.](https://github.com/sindresorhus/fkill-cli)
 
 
 **node进程间通信原理**
