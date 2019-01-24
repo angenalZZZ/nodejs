@@ -2,7 +2,7 @@
 
 ####  简介：[`v2`](https://cn.vuejs.org/v2/guide/)、[`v3`](https://cn.vuejs.org/v3/guide/) <br>
 
-> 　[Vue.js组件精讲](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)<br>
+> [Vue.js组件精讲](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)<br>
   `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
 　　`路由`：用于接收参数、获取数据、可视化、用户交互等常规业务；无`props`、`event`，不复用，不对外提供api；<br>
 　　`业务`：用于多页面复用，一般不跨项目；往往集成了数据的输入输出、校验、事件、生命周期`钩子`、用户交互；<br>
@@ -95,8 +95,7 @@
   };
   function broadcast(componentName, eventName, params) {
     this.$children.forEach(child => {
-      const name = child.$options.name
-      if (name === componentName) {
+      if (componentName === child.$options.name) {
         child.$emit.apply(child, [eventName].concat(params))
       } else {
         broadcast.apply(child, [componentName, eventName].concat([params]))
