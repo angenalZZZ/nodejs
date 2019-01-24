@@ -49,8 +49,8 @@
     
     // 组件-结合扩展: mixins
     mixins: [session],
-    // 组件-对内提供(下级组件可inject:user): provide, -依赖注入(根组件实例app,用户角色roles): inject
-    provide: { user: userProvider }, inject: ['parent-provide-prop-name','app','roles'],
+    // 组件-对内提供(下级组件可inject:user): provide, 依赖注入(根组件实例app,用户角色roles): inject
+    provide: { user: userProvider }, inject: ['app','roles'], // root|parent: provide property name
     
     // 组件-内部方法: methods
     methods: {
