@@ -1,6 +1,6 @@
 # vue 前端开发
 
-####  简介：[v2](https://cn.vuejs.org/v2/guide/)、[v3](https://cn.vuejs.org/v3/guide/) <br>
+####  简介：[v2](https://cn.vuejs.org/v2/guide/)、[`v3`](https://cn.vuejs.org/v3/guide/) <br>
 
 > `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
 　　`路由`：用于接收参数、获取数据、可视化、用户交互等常规业务；无`props`、`event`，不复用，不对外提供api；<br>
@@ -20,11 +20,12 @@
   // 导入扩展功能
   import session from '../mixins/session.js'
   import userProvider from '../providers/user.js'
+  
   // 组件对象
   export default {
     // el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
     components: { iButton }, // 组件-输入: 依赖的子组件
-    name: 'iComponent', // 组件-输出: <i-component/> #if this.$options.name
+    name: 'iComponent', // 组件-输出: <i-component>... #if this.$options.name
     
     // 组件-输出属性: props
     props: {
@@ -42,13 +43,11 @@
         btn1Title: '点击我!'
       }
     },
-    
     // 组件-计算属性: computed
     computed: {},
     
     // 组件-结合扩展: mixins
     mixins: [session],
-    
     // 组件-对内提供(下级组件可inject:user): provide, -依赖注入: inject
     provide: { user: userProvider }, inject: [],
     
@@ -56,8 +55,8 @@
     methods: {
       handleClick (event) {
         const btn = event.target, eventArgs = btn;
-        // 自定义事件-外部监听: this.$on('eventName', (eventArgs) => { return false;/*阻止冒泡*/});
-        this.$emit('eventName', eventArgs);
+        // 自定义事件-监听script: this.$on('eventName', (eventArgs) => { return false;/*阻止冒泡*/});
+        this.$emit('eventName', eventArgs); //-监听template: <i-component @eventName="handleClick">...
       }
     },
     
