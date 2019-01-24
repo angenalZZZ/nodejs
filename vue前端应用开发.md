@@ -9,8 +9,10 @@
 
 ~~~vue
   <template>
-    <button ref="btn1" v-bind:title="btn1Title" :class="'btn' + btnCls1" @click.native="handleClick"></button>
-    <i-button ref="ibtn1" @eventName="handleClick"></i-button>
+    <button ref="btn1" v-bind:title="btn1Title" :class="'btn' + btnCls1" @click.native="handleClick">
+      <slot name="icon"><i class="icon-default"></i></slot> <span class="lbl"><slot>按钮默认文本</slot></span>
+    </button>
+    <i-button ref="ibtn1" @eventName="handleClick"><i slot="btn-icon" class="icon-ok"></i>按钮文本</i-button>
   </template>
   <script>
   // 导入子组件
@@ -23,6 +25,7 @@
     // el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
     components: { iButton }, // 组件-输入: 依赖的子组件
     name: 'iComponent', // 组件-输出: <i-component/> #if this.$options.name
+    
     // 组件-输出属性: props
     props: {
       vid: {
@@ -32,12 +35,23 @@
         }
       }
     },
+    
     // 组件-内部属性: data
     data () {
       return {
         btn1Title: '点击我!'
       }
     },
+    
+    // 组件-计算属性: computed
+    computed: {},
+    
+    // 组件-结合扩展: mixins
+    mixins: [session],
+    
+    // 组件-对内提供(下级组件可inject:user): provide, -依赖注入: inject
+    provide: { user: userProvider }, inject: [],
+    
     // 组件-内部方法: methods
     methods: {
       handleClick (event) {
@@ -46,8 +60,7 @@
         this.$emit('eventName', eventArgs);
       }
     },
-    // 组件-结合扩展: mixins, -对内提供(下级组件可inject:user): provide, -依赖注入: inject
-    mixins: [session], provide: { user: userProvider }, inject: [],
+    
     // 生命周期钩子：创建组件实例
     created () {
       // 创建事件、依赖对象等
