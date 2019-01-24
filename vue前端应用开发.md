@@ -50,20 +50,21 @@
     // 组件-结合扩展: mixins
     mixins: [session],
     // 组件-对内提供(下级组件可inject:['user']): provide, +依赖注入(根组件实例app,用户角色roles): inject
-    provide: { user: userProvider }, inject: ['app','roles'], // root|parent: provide property name
+    provide: { user: userProvider }, inject: ['app','roles'], // [跨级通信]root|parent: provide property name
     
     // 组件-内部方法: methods
     methods: {
       handleClick (event) {
         const btn = event.target, eventArgs = btn;
-        // 自定义事件-监听script: this.$on('eventName', (eventArgs) => { return false;/*阻止冒泡*/});
-        this.$emit('eventName', eventArgs); //-监听template: <i-component @eventName="handleClick">...
+        // 自定义事件+监听template: <i-component @eventName="handleClick">...
+        this.$emit('eventName', eventArgs);
       }
     },
     
     // 生命周期钩子：创建组件实例
     created () {
       // 创建事件、依赖对象等
+      // 自定义事件+监听script: this.$on('eventName', (eventArgs) => { return false;/*阻止冒泡*/});
     },
     // 生命周期钩子：创建组件后进行渲染时
     mounted () {
