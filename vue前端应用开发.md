@@ -1,11 +1,12 @@
 # vue 前端开发
 
-####  简介：[v2](https://cn.vuejs.org/v2/guide/)、[`v3`](https://cn.vuejs.org/v3/guide/) <br>
+####  简介：[`v2`](https://cn.vuejs.org/v2/guide/)、[`v3`](https://cn.vuejs.org/v3/guide/) <br>
 
 > `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
 　　`路由`：用于接收参数、获取数据、可视化、用户交互等常规业务；无`props`、`event`，不复用，不对外提供api；<br>
 　　`业务`：用于多页面复用，一般不跨项目；往往集成了数据的输入输出、校验、事件、生命周期`钩子`、用户交互；<br>
-　　`基础`：用于功能单一、能大量复用的组件，能通过配置实现不同的功能，注重api的设计、兼容性、性能、高可用；
+　　`基础`：用于功能单一、能大量复用的组件，能通过配置实现不同的功能，注重api的设计、兼容性、性能、高可用；<br>
+  　[Vue.js组件精讲](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)
 
 ~~~vue
   <template>
@@ -26,9 +27,9 @@
   export default {
     // el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
     components: { iButton }, // 组件-输入: 依赖的子组件
-    name: 'iComponent', // 组件-输出: <i-component>... #if this.$options.name
+    name: 'iComponent',  // 组件名称-输出: <i-component>... #if this.$options.name
     
-    // 组件-输出属性: props
+    // 组件-输入属性: props
     props: {
       vid: {
         type: Number, default: 0,
@@ -47,7 +48,7 @@
     // 组件-计算属性: computed
     computed: {},
     
-    // 组件-结合扩展: mixins
+    // 组件-混合|扩展: mixins
     mixins: [session],
     // 组件-对内提供(下级组件可inject:['user']): provide, +依赖注入(根组件实例app,用户角色roles): inject
     provide: { user: userProvider }, inject: ['app','roles'], // [跨级通信]root|parent: provide property name
@@ -64,12 +65,16 @@
     // 生命周期钩子：创建组件实例
     created () {
       // 创建事件、依赖对象等
-      // 自定义事件+监听script: this.$on('eventName', (eventArgs) => { return false;/*阻止冒泡*/});
+      // 自定义事件+监听script: this.$on('eventName', (eventArgs) => { return true;/*冒泡~无返回时-阻止冒泡*/});
     },
     // 生命周期钩子：创建组件后进行渲染时
     mounted () {
+      // this.$_? Vue的内置方法
       this.$options; // 组件实例的可选项
-      this.$refs.ibtn1; this.$parent.$options.name; this.$children; // 组件实例之间的通信
+      this.$refs.ibtn1; this.$parent.$options.name; this.$root; this.$children; // 组件实例之间的通信
+      // v1.x 废弃的:
+      // 1. 向上级派发任务结果$dispatch & 向下级广播通知事件$broadcast => v2.x $emit + $on
+      
     },
     // 生命周期钩子：组件销毁前
     beforeDestroy () {
