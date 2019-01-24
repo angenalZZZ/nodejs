@@ -9,28 +9,38 @@
 
 ~~~vue
   <template>
-    <button ref="btn1" :class="'btn' + btnCls1" @click.native="handleClick"></button>
+    <button ref="btn1" v-bind:title="btn1Title" :class="'btn' + btnCls1" @click.native="handleClick"></button>
     <i-button ref="ibtn1" @eventName="handleClick"></i-button>
   </template>
   <script>
   export default {
     el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
-    components: {}, // 组件-输入: 依赖的子组件
+    components: { iButton }, // 组件-输入: 依赖的子组件
     name: 'iComponent', // 组件-输出: <i-component/> - this.$options.name
-    props:{}, data(){}, methods:{}, // 组件-输出属性: props, -内部属性: data, -内部方法: methods
-    mixins:[], provide:{}, inject:[], // 组件-结合扩展: mixins, -对内提供: provide, -依赖注入: inject
+    // 组件-输出属性: props
+    props: {},
+    // 组件-内部属性: data
+    data () {
+      return {
+        btn1Title: '点击我!'
+      }
+    },
+    // 组件-内部方法: methods
+    methods: {
+    },
+    mixins: [], provide: {}, inject: [], // 组件-结合扩展: mixins, -对内提供: provide, -依赖注入: inject
     // 生命周期钩子：创建组件实例
-    created(){
+    created () {
       // 创建事件、依赖对象等
     },
     // 生命周期钩子：创建组件后进行渲染时
-    mounted(){
-      this.$options; // 可选项
-      this.$emit('eventName', eventArgs); // 自定义事件 this.$on('eventName', (eventArgs) => { });
-      this.$refs; this.$parent; this.$children; // 访问组件/通信
+    mounted () {
+      this.$options; // 组件实例的可选项
+      this.$emit('eventName', eventArgs); // 自定义事件: this.$on('eventName', (eventArgs) => {});
+      this.$refs.ibtn1; this.$parent.$options.name; this.$children; // 组件实例之间的通信
     },
     // 生命周期钩子：组件销毁前
-    beforeDestroy(){
+    beforeDestroy () {
       // 销毁事件、依赖对象等
     }
   }
