@@ -26,7 +26,7 @@
     // 生命周期钩子：创建组件后进行渲染时
     mounted(){
       this.$options; // 可选项
-      this.$emit('eventName', eventArgs); // 自定义事件
+      this.$emit('eventName', eventArgs); // 自定义事件 this.$on('eventName', (eventArgs) => { });
       this.$refs; this.$parent; this.$children; // 访问组件/通信
     },
     // 生命周期钩子：组件销毁前
