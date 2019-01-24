@@ -13,12 +13,20 @@
     <i-button ref="ibtn1" @eventName="handleClick"></i-button>
   </template>
   <script>
+  import iButton from '../components/i-button.vue'
   export default {
     el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
     components: { iButton }, // 组件-输入: 依赖的子组件
-    name: 'iComponent', // 组件-输出: <i-component/> - this.$options.name
+    name: 'iComponent', // 组件-输出: <i-component/> #if this.$options.name
     // 组件-输出属性: props
-    props: {},
+    props: {
+      vid: {
+        type: Number, default: 0,
+        validator (value) {
+          return (0 <= value && value < 100);
+        }
+      }
+    },
     // 组件-内部属性: data
     data () {
       return {
@@ -27,6 +35,11 @@
     },
     // 组件-内部方法: methods
     methods: {
+      handleClick (event) {
+        const btn = event.target, eventArgs = btn;
+        // 自定义事件-外部监听: this.$on('eventName', (eventArgs) => { return false;/*阻止冒泡*/});
+        this.$emit('eventName', eventArgs);
+      }
     },
     mixins: [], provide: {}, inject: [], // 组件-结合扩展: mixins, -对内提供: provide, -依赖注入: inject
     // 生命周期钩子：创建组件实例
@@ -36,7 +49,6 @@
     // 生命周期钩子：创建组件后进行渲染时
     mounted () {
       this.$options; // 组件实例的可选项
-      this.$emit('eventName', eventArgs); // 自定义事件: this.$on('eventName', (eventArgs) => {});
       this.$refs.ibtn1; this.$parent.$options.name; this.$children; // 组件实例之间的通信
     },
     // 生命周期钩子：组件销毁前
