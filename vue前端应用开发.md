@@ -21,13 +21,14 @@
   <script>
   // 导入第三方库
   // 数据校验: https://github.com/yiminghe/async-validator
+  import AsyncValidator from 'async-validator';
   
   // 导入子组件库
-  import iButton from '../components/i-button.vue'
+  import iButton from '../components/i-button.vue';
   
   // 导入扩展功能
-  import session from '../mixins/session.js'
-  import userProvider from '../providers/user.js'
+  import session from '../mixins/session.js';
+  import userProvider from '../providers/user.js';
   
   // 组件对象
   export default {
@@ -67,6 +68,14 @@
         const btn = event.target, eventArgs = btn;
         // 自定义事件+监听template: <i-component @eventName="handleClick">...
         this.$emit('eventName', eventArgs);
+      },
+      onBlur (event) {
+        const descriptor = [
+          { required: true, message: '邮箱不能为空', trigger: 'blur' },
+          { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
+        ];
+        const validator = new AsyncValidator(descriptor);
+        validator.validate(model, { firstFields: true }, errors => { });
       }
     },
     
