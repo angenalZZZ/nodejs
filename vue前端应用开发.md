@@ -84,8 +84,8 @@
   exports.emitter = {
     methods: {
       dispatch(componentName, eventName, params) {
-        let parent = this.$parent || this.$root, name = parent.$options.name;
-        while (parent && (name !== componentName) && (parent = parent.$parent) && (name = parent.$options.name)) ;
+        let parent = this.$parent || this.$root, name = parent.$options.name, i = 10;
+        while (parent && (name!==componentName) && (0<i--) && (parent=parent.$parent) && (name=parent.$options.name));
         if (parent) parent.$emit.apply(parent, [eventName].concat(params));
       },
       broadcast(componentName, eventName, params) {
