@@ -80,14 +80,12 @@
   };
   
   // 组件-混合|扩展: '../mixins/emitter.js'
-  // v1.x 废弃的: 向上级派发任务结果$dispatch & 向下级广播通知事件$broadcast => v2.x $emit + $on
+  // 拾起 v1.x 废弃的: 向上级派发任务结果$dispatch & 向下级广播通知事件$broadcast => v2.x $emit + $on
   exports.emitter = {
     methods: {
       dispatch(componentName, eventName, params) {
         let parent = this.$parent || this.$root, name = parent.$options.name;
-        while (parent && (!name || name !== componentName)) {
-          if (parent = parent.$parent) name = parent.$options.name;
-        }
+        while (parent && (name !== componentName) && (parent = parent.$parent)) name = parent.$options.name;
         if (parent) parent.$emit.apply(parent, [eventName].concat(params));
       },
       broadcast(componentName, eventName, params) {
