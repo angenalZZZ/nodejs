@@ -10,7 +10,8 @@
 ~~~vue
   <template>
     <button ref="btn1" v-bind:title="btn1Title" :class="'btn' + btnCls1" @click.native="handleClick">
-      <slot name="icon"><i class="icon-default"></i></slot> <span class="lbl"><slot>按钮默认文本</slot></span>
+      <slot name="icon"><i class="icon-default"></i></slot>
+      <span class="lbl"><slot>按钮默认文本</slot></span>
     </button>
     <i-button ref="ibtn1" @eventName="handleClick"><i slot="btn-icon" class="icon-ok"></i>按钮文本</i-button>
   </template>
@@ -48,8 +49,8 @@
     
     // 组件-结合扩展: mixins
     mixins: [session],
-    // 组件-对内提供(下级组件可inject:user): provide, -依赖注入: inject
-    provide: { user: userProvider }, inject: [],
+    // 组件-对内提供(下级组件可inject:user): provide, -依赖注入(根组件实例app,用户角色roles): inject
+    provide: { user: userProvider }, inject: ['parent-provide-prop-name','app','roles'],
     
     // 组件-内部方法: methods
     methods: {
