@@ -2,11 +2,11 @@
 
 ####  简介：[`v2`](https://cn.vuejs.org/v2/guide/)、[`v3`](https://cn.vuejs.org/v3/guide/) <br>
 
-> `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
+> 　[Vue.js组件精讲](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)<br>
+  `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
 　　`路由`：用于接收参数、获取数据、可视化、用户交互等常规业务；无`props`、`event`，不复用，不对外提供api；<br>
 　　`业务`：用于多页面复用，一般不跨项目；往往集成了数据的输入输出、校验、事件、生命周期`钩子`、用户交互；<br>
 　　`基础`：用于功能单一、能大量复用的组件，能通过配置实现不同的功能，注重api的设计、兼容性、性能、高可用；<br>
-  　[Vue.js组件精讲](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)
 
 ~~~vue
   <template>
@@ -72,14 +72,38 @@
       // this.$_? Vue的内置方法
       this.$options; // 组件实例的可选项
       this.$refs.ibtn1; this.$parent.$options.name; this.$root; this.$children; // 组件实例之间的通信
-      // v1.x 废弃的:
-      // 1. 向上级派发任务结果$dispatch & 向下级广播通知事件$broadcast => v2.x $emit + $on
-      
     },
     // 生命周期钩子：组件销毁前
     beforeDestroy () {
       // 销毁事件、依赖对象等
     }
+  };
+  
+  // 组件-混合|扩展: '../mixins/emitter.js'
+  // v1.x 废弃的: 向上级派发任务结果$dispatch & 向下级广播通知事件$broadcast => v2.x $emit + $on
+  exports.emitter = {
+    methods: {
+      dispatch(componentName, eventName, params) {
+        let parent = this.$parent || this.$root, name = parent.$options.name;
+        while (parent && (!name || name !== componentName)) {
+          if (parent = parent.$parent) name = parent.$options.name;
+        }
+        if (parent) parent.$emit.apply(parent, [eventName].concat(params));
+      },
+      broadcast(componentName, eventName, params) {
+        broadcast.call(this, componentName, eventName, params);
+      }
+    }
+  };
+  function broadcast(componentName, eventName, params) {
+    this.$children.forEach(child => {
+      const name = child.$options.name
+      if (name === componentName) {
+        child.$emit.apply(child, [eventName].concat(params))
+      } else {
+        broadcast.apply(child, [componentName, eventName].concat([params]))
+      }
+    })
   }
   </script>
 ~~~
