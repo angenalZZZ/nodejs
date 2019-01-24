@@ -14,6 +14,7 @@
   </template>
   <script>
   export default {
+    el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
     components: {}, // 组件-输入: 依赖的子组件
     name: 'iComponent', // 组件-输出: <i-component/> - this.$options.name
     props:{}, data(){}, methods:{}, // 组件-输出属性: props, -内部属性: data, -内部方法: methods
