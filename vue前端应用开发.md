@@ -15,8 +15,10 @@
   <script>
   // 导入子组件
   import iButton from '../components/i-button.vue'
-  // 导入功能扩展
-  import iSession from '../mixins/i-session.vue'
+  // 导入扩展功能
+  import iSession from '../mixins/i-session.js'
+  import userProvider from '../providers/p-user.js'
+  // 组件对象
   export default {
     // el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
     components: { iButton }, // 组件-输入: 依赖的子组件
@@ -44,8 +46,8 @@
         this.$emit('eventName', eventArgs);
       }
     },
-    // 组件-结合扩展: mixins, -对内提供: provide, -依赖注入: inject
-    mixins: [iSession], provide: {}, inject: [],
+    // 组件-结合扩展: mixins, -对内提供(下级组件可inject/user): provide, -依赖注入: inject
+    mixins: [iSession], provide: { user: userProvider }, inject: [],
     // 生命周期钩子：创建组件实例
     created () {
       // 创建事件、依赖对象等
