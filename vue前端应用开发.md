@@ -70,10 +70,11 @@
         this.$emit('eventName', eventArgs);
       },
       onBlur (event) {
-        const descriptor = [
+        const descriptor = {
+        email: [
           { required: true, message: '邮箱不能为空', trigger: 'blur' },
           { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
-        ];
+        ]}, model = { email: '1@qq.com' };
         const validator = new AsyncValidator(descriptor);
         validator.validate(model, { firstFields: true }, errors => { });
       }
