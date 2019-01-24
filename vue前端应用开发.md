@@ -39,21 +39,23 @@
     props: {
       vid: {
         type: Number, default: 0,
-        validator (value) {
-          return (0 <= value && value < 100);
-        }
+        validator (v) { return (0 <= v && v < 100) }
       }
     },
-    
     // 组件-内部属性: data
     data () {
       return {
+        vidValue: this.vid,
         btn1Title: '点击我!'
       }
     },
     // 组件-计算属性: computed
     computed: {},
-    
+    // 组件-监听属性: watch
+    watch: {
+      // 监听输入属性: vid
+      vid (v) { this.vidValue = v }
+    },
     // 组件-混合|扩展: mixins
     mixins: [session],
     // 组件-对内提供(下级组件可inject:['user']): provide, +依赖注入(根组件实例app,用户角色roles): inject
