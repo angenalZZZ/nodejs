@@ -13,9 +13,12 @@
     <i-button ref="ibtn1" @eventName="handleClick"></i-button>
   </template>
   <script>
+  // 导入子组件
   import iButton from '../components/i-button.vue'
+  // 导入功能扩展
+  import iSession from '../mixins/i-session.vue'
   export default {
-    el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
+    // el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
     components: { iButton }, // 组件-输入: 依赖的子组件
     name: 'iComponent', // 组件-输出: <i-component/> #if this.$options.name
     // 组件-输出属性: props
@@ -41,7 +44,8 @@
         this.$emit('eventName', eventArgs);
       }
     },
-    mixins: [], provide: {}, inject: [], // 组件-结合扩展: mixins, -对内提供: provide, -依赖注入: inject
+    // 组件-结合扩展: mixins, -对内提供: provide, -依赖注入: inject
+    mixins: [iSession], provide: {}, inject: [],
     // 生命周期钩子：创建组件实例
     created () {
       // 创建事件、依赖对象等
