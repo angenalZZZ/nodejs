@@ -1,6 +1,7 @@
 # **系统命令**
 
 # [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [**linux-bash**](https://wangchujiang.com/linux-command/hot.html) | [shell](https://github.com/fengyuhetao/shell) | [docker](#docker)
+> [Index of Linux Command](https://ss64.com/bash/)、[List of Windows CMD](https://ss64.com/nt/)
 
 ~~~
   # 清屏
