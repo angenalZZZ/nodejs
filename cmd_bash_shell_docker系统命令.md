@@ -74,6 +74,14 @@
   # 网络
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
   docker network connect [network-name] [container] # 加入自定义网络
+  # 基础
+  docker [OPTIONS] COMMAND
+  docker [COMMAND] --help
+  docker images
+  docker search ubuntu
+  docker pull ubuntu:latest
+  docker container
+  
 ~~~
 
 > **docker-search-tags.sh** 找标签/版本列表
