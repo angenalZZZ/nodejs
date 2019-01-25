@@ -85,6 +85,9 @@
   docker search ubuntu [搜索镜像]
   docker pull ubuntu:latest [下载镜像]
   docker run -it alpine /bin/sh [查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh]
+  docker run -d -p 8080:80 -p 8081:443 dockersamples/static-site [查找镜像+运行容器+后端服务+]
+  docker stop 8b49 & docker rm 8b49 [CONTAINER ID: 8b49b31cea06][停止+删除-容器:前缀4位|完整ID]
+  docker container prune [删除所有停止的容器]
 ~~~
 
 > **docker-search-tags.sh** 标签/版本列表
