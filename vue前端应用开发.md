@@ -70,7 +70,14 @@
       }
     },
     // 组件-计算属性: computed
-    computed: {},
+    computed: {
+      // 查找上级组件:form
+      form () {
+        let parent = this.$parent, name = 'Form';
+        while (parent.$options.name!==name && (parent=parent.$parent));
+        return (parent.$options.name!==name ? null : parent);
+      },
+    },
     // 组件-监听属性: watch
     watch: {
       // 监听输入属性: vid
