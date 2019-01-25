@@ -84,9 +84,9 @@
   docker container ls -a | docker ps -a # 查看容器
   docker search ubuntu # 搜索镜像
   docker pull ubuntu:latest # 下载镜像
-  docker run -it alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh
+  docker run -it -e AUTHOR="Test" alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh
   docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site # 查找镜像+运行容器mysite+后端服务
-  docker stop 8b49 & docker rm 8b49 # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID]
+  docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
   docker container prune # 删除所有停止的容器
   docker port mysite     # 查看容器端口映射
   docker inspect mysite  # 查看容器详情
@@ -105,7 +105,8 @@
   done
 ~~~
 
-> **Dockerfile** [文档](https://docs.docker.com/get-started)
+> **Dockerfile** [文档](https://docs.docker.com/get-started) <br>
+　　$ docker build -t <YOUR_USERNAME>/myapp . # 构建+标签[用户/镜像名称]
 ~~~
   # 基础镜像
   FROM node:10.15.0
@@ -145,7 +146,6 @@
   
   # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖；一般不会使用；
   # 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
-
 ~~~
 
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7)<br>
