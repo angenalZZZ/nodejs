@@ -76,7 +76,7 @@
   docker network connect [network-name] [container] # 加入自定义网络
 ~~~
 
-> **docker-search-tags.sh** 查找标签&版本
+> **docker-search-tags.sh** 找标签/版本列表
 ~~~
   # Usage: $ ./docker-search-tags.sh ubuntu
   for Repo in $* ; do
