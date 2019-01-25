@@ -20,21 +20,18 @@
   </template>
   <script>
   // 导入第三方库
-  // 数据校验: https://github.com/yiminghe/async-validator
-  import AsyncValidator from 'async-validator';
-  
-  // 导入子组件库
-  import iButton from '../components/i-button.vue';
-  
+  import AsyncValidator from 'async-validator'; // 数据校验: https://github.com/yiminghe/async-validator
+  // 导入组件库
+  import iButton from '../components/i-button.vue'; // 自定义组件
   // 导入扩展功能
   import session from '../mixins/session.js';
   import userProvider from '../providers/user.js';
   
-  // 组件对象
+  // 组件设计、功能描述、版本说明
   export default {
     // el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
-    components: { iButton }, // 组件-输入: 依赖的子组件
-    name: 'iComponent',  // 组件名称-输出: <i-component>... #if this.$options.name
+    name: 'iComponent',      // 组件类名: <i-component>... this.$options.name
+    components: { iButton }, // 组件依赖: 模板中的子组件
     
     // 组件-输入属性: props
     props: {
