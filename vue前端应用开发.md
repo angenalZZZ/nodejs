@@ -2,7 +2,8 @@
 
 ####  简介：[`v2`](https://cn.vuejs.org/v2/guide/)、[`v3`](https://cn.vuejs.org/v3/guide/)<br>
 [`Vue.js组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、
-[`Vue.js组件代码`](https://github.com/angenal/vue-component-book)
+[`Vue.js组件代码`](https://github.com/angenal/vue-component-book)<br>
+[`quasarchs UI库`](http://www.quasarchs.com/guide/opening-dev-server-to-public.html)
 
 
 > `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
