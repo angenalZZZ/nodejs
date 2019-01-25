@@ -2,8 +2,8 @@
 
 ####  简介：[`v2`](https://cn.vuejs.org/v2/guide/)、[`v3`](https://cn.vuejs.org/v3/guide/)<br>
 [`Vue.js组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、
-[`Vue.js组件代码`](https://github.com/angenal/vue-component-book)<br>
-[`quasarchs UI库`](http://www.quasarchs.com/guide/opening-dev-server-to-public.html)
+[`Vue.js组件代码`](https://github.com/angenal/vue-component-book) <br>
+[`UI库quasarchs`](http://www.quasarchs.com/guide/opening-dev-server-to-public.html)
 
 
 > `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
@@ -41,7 +41,7 @@
   export default {
     // el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
     name: 'iComponent',      // 组件类名: <i-component>... this.$options.name
-    components: { iButton }, // 组件依赖: 模板中的子组件 + 模板中的slot:内容分发
+    components: { iButton }, // 组件依赖: 模板中的子组件 + 模板中的slot:处理内容分发
 
     // 组件-输入属性: props
     props: {
