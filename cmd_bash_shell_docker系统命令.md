@@ -56,16 +56,16 @@
 
 # [**docker**](https://docs.docker.com)
 
->  [安装Docker](https://docs.docker.com/install/) 、 [下载Docker](https://download.docker.com)<br>
+>  [下载Docker](https://download.docker.com)、[安装Docker](https://docs.docker.com/install/)<br>
   `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
-  `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore).[.](http://8fe1b42e.m.daocloud.io)
+  `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore) [..](http://8fe1b42e.m.daocloud.io)
   
 > `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
 
-> **Shell** [例子](https://docs.docker.com/samples/)
+> **Shell** [samples](https://docs.docker.com/samples)、[labs](https://github.com/angenal/labs)
 ~~~
   # 构建
   docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
@@ -78,10 +78,9 @@
   docker [OPTIONS] COMMAND
   docker [COMMAND] --help
   docker images
+  docker container
   docker search ubuntu
   docker pull ubuntu:latest
-  docker container
-  
 ~~~
 
 > **docker-search-tags.sh** 找标签/版本列表
