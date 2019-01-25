@@ -214,9 +214,9 @@
   $ sudo docker push registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
 ~~~
 
-#### 开发服务器
+#### 免费的开发服务器
 
-> [ngrok 转发服务](https://dashboard.ngrok.com/get-started)
+> [`ngrok`转发服务](https://dashboard.ngrok.com/get-started)
 
 ~~~
   # 配置认证服务 add your account's authtoken to your ngrok.yml file.
