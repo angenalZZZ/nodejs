@@ -22,9 +22,16 @@
   // 导入第三方库
   import AsyncValidator from 'async-validator'; // 数据校验: https://github.com/yiminghe/async-validator
   // 导入组件库
-  import iView from 'iview'; // 第三方组件库: https://www.iviewui.com/docs/guide/start
+  //----------------------------
+  import iView from 'iview'; // 第三方组件库 iview: https://www.iviewui.com/docs/guide/start
   import 'iview/dist/styles/iview.css'; // 第三方组件库相关样式
+  //----------------------------
+  import { Button, ... } from 'element-ui' // 第三方组件库 element: https://github.com/ElemeFE/element
+  Vue.component(Button.name, Button); // 注册Vue全局组件，一般写在根组件App.vue(根组件只创建一次)
+  //----------------------------
   import iButton from '../components/i-button.vue'; // 自定义组件
+  // Vue.component(iButton.name, iButton); // 注册Vue全局组件(使用场景比较多时)
+  //----------------------------
   // 导入扩展功能
   import session from '../mixins/session.js';
   import userProvider from '../providers/user.js';
@@ -60,7 +67,7 @@
     // 组件-混合|扩展(实例this上下文中扩展了session的属性与方法): mixins
     mixins: [session], // (e.g.) export default { data(){}, methods:{}, mounted(){}, ... }
     // 组件-对内提供(下级组件可inject:['user']): provide, +依赖注入(根组件实例app,用户角色roles): inject
-    provide: { user: userProvider }, inject: ['app','roles'], // [跨级通信]root|parent: provide property name
+    provide: { user: userProvider }, inject: ['app','roles'], // [跨级通信]root|parent: provide objects
     
     // 组件-内部方法: methods
     methods: {
