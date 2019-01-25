@@ -71,7 +71,7 @@
     },
     // 组件-计算属性: computed
     computed: {
-      // 查找上级组件:form
+      // 查找上级组件:form +当使用频率高时,考虑写在mixins/混合|扩展
       form () {
         let parent = this.$parent, name = 'Form';
         while (parent.$options.name!==name && (parent=parent.$parent));
