@@ -77,13 +77,13 @@
   docker [COMMAND] --help
   docker [OPTIONS] COMMAND
   docker images [查看镜像]
-  docker container ls -a ; docker ps -a [查看容器]
-  docker search ubuntu
-  docker pull ubuntu:latest
-  docker run -it alpine /bin/sh [查找镜像alpine:latest+运行容器alpine+执行命令/bin/sh]
+  docker container ls -a | docker ps -a [查看容器]
+  docker search ubuntu [搜索镜像]
+  docker pull ubuntu:latest [下载镜像]
+  docker run -it alpine /bin/sh [查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh]
 ~~~
 
-> **docker-search-tags.sh** 查找标签/版本列表
+> **docker-search-tags.sh** 标签/版本列表
 ~~~
   # Usage: $ ./docker-search-tags.sh ubuntu
   for Repo in $* ; do
