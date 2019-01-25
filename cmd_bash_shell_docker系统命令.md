@@ -68,7 +68,7 @@
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
 
-> **Shell** [samples](https://docs.docker.com/samples)、[labs](https://github.com/angenal/labs)
+> **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)
 ~~~
   # 构建
   docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
@@ -105,8 +105,8 @@
   done
 ~~~
 
-> **Dockerfile** [文档](https://docs.docker.com/get-started) <br>
-　　$ docker build -t <YOUR_USERNAME>/myapp . # 构建+标签[用户/镜像名称]
+> **Dockerfile** [文档](https://docs.docker.com/get-started)<br>
+　$ docker build -t <YOUR_USERNAME>/myapp . # 构建+标签[用户名/镜像名]
 ~~~
   # 基础镜像
   FROM node:10.15.0
