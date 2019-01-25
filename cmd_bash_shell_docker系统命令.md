@@ -76,13 +76,14 @@
   # 基础
   docker [COMMAND] --help
   docker [OPTIONS] COMMAND
-  docker images
-  docker container
+  docker images [查看镜像]
+  docker container ls -a ; docker ps -a [查看容器]
   docker search ubuntu
   docker pull ubuntu:latest
+  docker run -it alpine /bin/sh [查找镜像alpine:latest+运行容器alpine+执行命令/bin/sh]
 ~~~
 
-> **docker-search-tags.sh** 找标签/版本列表
+> **docker-search-tags.sh** 查找标签/版本列表
 ~~~
   # Usage: $ ./docker-search-tags.sh ubuntu
   for Repo in $* ; do
@@ -95,7 +96,7 @@
   done
 ~~~
 
-> **Dockerfile** [文档](https://docs.docker.com/get-started/)
+> **Dockerfile** [文档](https://docs.docker.com/get-started)
 ~~~
   # 基础镜像
   FROM node:10.15.0
