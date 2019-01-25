@@ -22,6 +22,8 @@
   // 导入第三方库
   import AsyncValidator from 'async-validator'; // 数据校验: https://github.com/yiminghe/async-validator
   // 导入组件库
+  import iView from 'iview'; // 第三方组件库: https://www.iviewui.com/docs/guide/start
+  import 'iview/dist/styles/iview.css'; // 第三方组件库相关样式
   import iButton from '../components/i-button.vue'; // 自定义组件
   // 导入扩展功能
   import session from '../mixins/session.js';
@@ -31,10 +33,11 @@
   export default {
     // el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
     name: 'iComponent',      // 组件类名: <i-component>... this.$options.name
-    components: { iButton }, // 组件依赖: 模板中的子组件
-    
+    components: { iButton }, // 组件依赖: 模板中的子组件 + 模板中的slot:内容分发
+
     // 组件-输入属性: props
     props: {
+      /* 传递数据 vid */
       vid: {
         type: Number, default: 0,
         validator (v) { return (0 <= v && v < 100) }
