@@ -10,6 +10,12 @@
 [`组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、
 [`组件代码`](https://github.com/angenal/vue-component-book) 
 
+> `安装`: [@vue/cli@3.x](https://cli.vuejs.org/zh/guide/installation.html)
+
+~~~
+> npm install -g @vue/cli
+> yarn global add @vue/cli
+~~~
 
 > `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
 　　`路由`：用于接收参数、获取数据、可视化、用户交互等常规业务；无`props`、`event`，不复用，不对外提供api；<br>
