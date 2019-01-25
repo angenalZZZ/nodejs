@@ -1,8 +1,8 @@
 # vue 前端开发
 
 ####  简介：[`v2`](https://cn.vuejs.org/v2/guide/)、[`v3`](https://cn.vuejs.org/v3/guide/)<br>
-[Vue.js组件精讲](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f) 
-、[Vue.js组件代码](https://github.com/angenal/vue-component-book)
+[`Vue.js组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、
+[`Vue.js组件代码`](https://github.com/angenal/vue-component-book)
 
 
 > `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
@@ -57,8 +57,8 @@
       // 监听输入属性: vid
       vid (v) { this.vidValue = v }
     },
-    // 组件-混合|扩展: mixins
-    mixins: [session],
+    // 组件-混合|扩展(实例this上下文中扩展了session的属性与方法): mixins
+    mixins: [session], // (e.g.) export default { data(){}, methods:{}, mounted(){}, ... }
     // 组件-对内提供(下级组件可inject:['user']): provide, +依赖注入(根组件实例app,用户角色roles): inject
     provide: { user: userProvider }, inject: ['app','roles'], // [跨级通信]root|parent: provide property name
     
@@ -70,11 +70,12 @@
         this.$emit('eventName', eventArgs);
       },
       onBlur (event) {
+        // 数据校验
         const descriptor = { email: [
           { required: true, message: '邮箱不能为空', trigger: 'blur' },
           { type: 'email', message: '邮箱格式不正确', trigger: 'blur' }
         ]}, validator = new AsyncValidator(descriptor);
-        validator.validate({ email: this.vidValue + '@qq.com'}, { firstFields: true}, (errors, fields) => { return !errors});
+        validator.validate({email:this.vidValue+'@qq.com'},{firstFields:true},(errors,fields)=>{return !errors})
       }
     },
     
@@ -92,7 +93,7 @@
     // 生命周期钩子：组件销毁前
     beforeDestroy () {
       // 销毁事件、依赖对象等
-    }
+    },
   };
   
   // 组件-混合|扩展: '../mixins/emitter.js'
