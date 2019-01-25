@@ -51,15 +51,14 @@
   wmic printer get DeviceID,PrinterPaperNames                             # 设备ID,打印纸张
   wmic printer where default='TRUE' get name                              # 获取默认打印机
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
-  
 ~~~
 
 # [**docker**](https://docs.docker.com)
 
->  [下载Docker](https://download.docker.com)、[安装Docker](https://docs.docker.com/install/)<br>
+>  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install/)<br>
   `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
   `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore) [..](http://8fe1b42e.m.daocloud.io)
-  
+
 > `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
@@ -75,8 +74,8 @@
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
   docker network connect [network-name] [container] # 加入自定义网络
   # 基础
-  docker [OPTIONS] COMMAND
   docker [COMMAND] --help
+  docker [OPTIONS] COMMAND
   docker images
   docker container
   docker search ubuntu
