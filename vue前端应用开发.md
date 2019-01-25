@@ -5,7 +5,8 @@
 [`iview`](https://www.iviewui.com/docs/guide/start)、
 [`quasarchs`](http://www.quasarchs.com/guide/opening-dev-server-to-public.html)、
 [`vuetify`](https://github.com/vuetifyjs/vuetify)、
-[`vant`](https://github.com/youzan/vant)<br>
+[`vant`](https://github.com/youzan/vant)、
+[`vue-material`](https://github.com/vuematerial/vue-material)<br>
 　[`Vue.js组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、[`Vue.js组件代码`](https://github.com/angenal/vue-component-book) 
 
 
