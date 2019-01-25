@@ -6,7 +6,7 @@
 [`vuetify`](https://github.com/vuetifyjs/vuetify)、
 [`vant`](https://github.com/youzan/vant)、
 [`vue-material`](https://github.com/vuematerial/vue-material)<br>
-　[`iview`](https://www.iviewui.com/docs/guide/start)、
+　　[`iview`](https://www.iviewui.com/docs/guide/start)、
 [`组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、
 [`组件代码`](https://github.com/angenal/vue-component-book) 
 
