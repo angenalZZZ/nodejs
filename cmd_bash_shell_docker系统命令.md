@@ -89,6 +89,7 @@
   docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site # 查找镜像+运行容器mysite+后端服务
   docker run --name redis5 -d -m 512m -p 6379:6379 -v "F:\app\docker_redis5\redis.conf:/etc/redis/redis.conf"
    -v "F:\app\docker_redis5\data:/data" redis:5.0.3-alpine redis-server /etc/redis/redis.conf # [映射本地配置]
+  docker run --name centos.netcore -it -p 8000:80 -v "F:\app\dotnetcore\centos\a:/home/a" centos:latest bash
   docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
   docker container prune   # 删除所有停止的容器
   docker port mysite       # 查看容器端口映射
