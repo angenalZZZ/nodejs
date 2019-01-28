@@ -137,7 +137,9 @@ console.log(Object.getPrototypeOf(fakeDate)===Object.getPrototypeOf(notDate))//f
     异步模块定义（AMD）是Asynchronous Module Definition的缩写，是 RequireJS 对模块定义的规范化产出。
     通用模块定义（CMD）是Common Module Definition的缩写，是SeaJS 对模块定义的规范化产出。
     
-    `CommonJS` 每个文件就是一个模块的同步模块（后端）加载。nodejs就是服务器端广泛使用的模块化机制[global对象-多个文件分享变量]；通过module.exports 导出对外的变量或接口，通过 require() 来导入其他模块的输出到当前模块作用域中的对象。
+    `CommonJS` 每个文件就是一个模块的同步模块（后端）加载。nodejs就是服务器端广泛使用的模块化机制[global对象-多个文件分享变量]；
+    通过module.exports 导出对外的变量或接口，通过 require() 来导入其他模块的输出到当前模块作用域中的对象
+     【缓存加载(运行时优化)+静态绑定(导出对象)】
       定义模块: module.exports
       加载模块: var app = require('./app.js')
       入口文件: package.json > main = index.js(默认)
@@ -155,7 +157,8 @@ console.log(Object.getPrototypeOf(fakeDate)===Object.getPrototypeOf(notDate))//f
             })
       使用: 页面index.html中先通过引入require.min.js，再引入main.js（用于配置（require.config），以及引入其他模块）
       
-    `ES6` 内置的模块化语法，我们在浏览器端无需额外引入requirejs来进行模块化。
+    `ES6` 内置的模块化语法，我们在浏览器端无需额外引入requirejs来进行模块化
+     【静态加载(编译时优化)+动态绑定(导出变量)】
       特点: 1.模块自动运行在严格模式下；
             2.在模块的顶级作用域创建的变量，不会被自动添加到共享的全局作用域，它们只会在模块顶级作用域的内部存在；
             3.模块顶级作用域的 this 值为 undefined
