@@ -107,6 +107,8 @@
   docker container ls -a | docker ps -a # 查看容器
   docker search ubuntu # 搜索镜像
   docker pull ubuntu:latest # 下载镜像
+  docker container export -o="F:\app\snapshot\ubuntu_19_04.tar" ubuntu
+  docker export ubuntu > "F:\app\snapshot\ubuntu_19_04.tar" # 导出镜像
   
   docker run -it -e AUTHOR="Test" alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh
   
