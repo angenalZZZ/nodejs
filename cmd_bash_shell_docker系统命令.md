@@ -71,6 +71,13 @@
   wmic printer get DeviceID,PrinterPaperNames                             # 设备ID,打印纸张
   wmic printer where default='TRUE' get name                              # 获取默认打印机
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
+  
+  # 服务安装ssh
+  $ rpm -qa | grep ssh  #-centos: netstat -antp | grep sshd [端口:22]
+  $ yum install -y initscripts #-centos: install service [/sbin/service]
+  $ yum install -y openssh-server #-centos: install sshd
+  $ service sshd start | service sshd stop #-centos: [启动sshd|停止服务]
+  $ chkconfig sshd on #-centos: [开机启动]
 ~~~
 
 # [**docker**](https://docs.docker.com)
@@ -110,7 +117,7 @@
    -v "F:\app\docker_redis5\data:/data" redis:5.0.3-alpine redis-server /etc/redis/redis.conf # [映射本地配置]
    
   docker run --name centos.netcore --network=net1d -d -m 512m -p 8000:80 &\
-   -v "F:\app\dotnetcore\centos\a:/home/a" centos:latest bash &\
+   -v "F:\app\dotnetcore\centos\a:/home/a" centos:latest /usr/sbin/init &\
    rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1 &\
    rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-sdk-2.1 &\
    cd /home/a & dotnet ConsoleApp2NewLife.dll #+复制App: docker cp ...\publish centos.netcore:/home/a
