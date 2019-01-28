@@ -278,4 +278,27 @@ struct zslnode {
 
 ~~~
 
+####  3.配置Redis
+
+~~~
+# 配置文件路径: /etc/redis/redis.conf
+--------------------------------------------------------------------
+# ***限制redis只能本地访问***
+  # bind 127.0.0.1
+# ***指定访问端口号***
+  port 6379
+# ***守护线程的方式启动***
+  daemonize no
+# ***日志跟踪级别***
+  loglevel notice
+# ***日志跟踪文件***
+  logfile ""
+# ***设置密码***
+  requirepass 123456
+# ***数据持久化到本地磁盘***
+  appendonly yes
+# ***数据持久化路径: /data/appendonly.aof
+  appendfilename "appendonly.aof"
+
+~~~
 
