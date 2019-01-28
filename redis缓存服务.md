@@ -1,6 +1,6 @@
 
 # **[安装redis - Remote Dictionary Service](http://redis.io)**
-> [1.查询服务信息](#1.查询服务信息)、[2.基础数据结构](#2.基础数据结构)、[3.配置Redis](#3.配置Redis)
+> [1.查询服务信息](#1查询服务信息)、[2.基础数据结构](#2基础数据结构)、[3.配置Redis](#3配置Redis)
 
 ~~~
 mac    > brew install redis
