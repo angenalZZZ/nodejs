@@ -35,8 +35,8 @@
   
   # 列出网络监听端口
   > netstat -ap tcp | findstr -i "listening" # tcp端口
-  $ netstat -ap tcp | grep -i "listening"    # tcp端口
-  $ netstat -ap tcp | grep -i "time_wait"    # tcp超时
+  $ netstat -atW | grep -i "listen"    # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
+  $ netstat -atW | grep -i "time_wait" # tcp超时
   
   # 关机
   > sleep 9000; shutdown -s
