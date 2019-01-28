@@ -1,5 +1,6 @@
 
 # **[安装redis - Remote Dictionary Service](http://redis.io)**
+> [1.查询服务信息](#1.查询服务信息)、[2.基础数据结构](#2.基础数据结构)、[3.配置Redis](#3.配置Redis)
 
 ~~~
 mac    > brew install redis
@@ -10,7 +11,8 @@ github > git clone --branch 2.8 --depth 1 git@github.com:antirez/redis.git;cd re
 docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;docker exec -it redis-server redis-cli
 ~~~
 
-####  1.查询服务信息 [try redis-cli](http://try.redis.io)
+####  1.查询服务信息
+> [try redis-cli](http://try.redis.io)
 
 ~~~
 redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
@@ -58,7 +60,8 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 > debug object [key]            # 调试输出 key of object: { Value at: 指针地址, refcount: 引用计数, encoding: 数据类型, serializedlength..}
 ~~~
 
-####  2.基础数据结构 [Redis核心原理与应用实践](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
+####  2.基础数据结构
+> [Redis核心原理与应用实践](https://juejin.im/book/5afc2e5f6fb9a07a9b362527)
 
 ~~~
 --------------------------------------------------------------------
