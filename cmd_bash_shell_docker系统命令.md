@@ -28,6 +28,10 @@
   > dir [目录] # 默认当前目录
   $ ls  [目录] # 默认当前目录
   
+  # 文件复制
+  > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a
+  $ cp -if /mnt/floppy/* ~/floppy # [~/floppy 指向 /root/floppy 或 /home/floppy]
+  
   # 文件删除
   > del /f /s /q [目录|文件]
   > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
