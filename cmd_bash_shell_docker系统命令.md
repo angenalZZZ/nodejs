@@ -13,6 +13,17 @@
   > ver
   $ uname -a
   
+  # 用户登陆
+  $ w
+  
+  # 内存情况
+  $ free -h
+  $ top
+  
+  # 进程详情
+  > tasklist
+  $ ps aux
+  
   # 文件列表
   > dir [目录] # 默认当前目录
   $ ls  [目录] # 默认当前目录
@@ -85,11 +96,15 @@
   docker container ls -a | docker ps -a # 查看容器
   docker search ubuntu # 搜索镜像
   docker pull ubuntu:latest # 下载镜像
+  docker network create -d bridge net1d # 创建自定义网络net1d
   docker run -it -e AUTHOR="Test" alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh
   docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site # 查找镜像+运行容器mysite+后端服务
-  docker run --name redis5 -d -m 512m -p 6379:6379 -v "F:\app\docker_redis5\redis.conf:/etc/redis/redis.conf"
+  docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 -v "F:\app\docker_redis5\redis.conf:/etc/redis/redis.conf" \
    -v "F:\app\docker_redis5\data:/data" redis:5.0.3-alpine redis-server /etc/redis/redis.conf # [映射本地配置]
-  docker run --name centos.netcore -it -p 8000:80 -v "F:\app\dotnetcore\centos\a:/home/a" centos:latest bash
+  docker run --name centos.netcore --network=net1d -d -m 512m -p 8000:80 -v "F:\app\dotnetcore\centos\a:/home/a" centos:latest bash &\
+   rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1 &\
+   rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-sdk-2.1 &\
+   cd /home/a & dotnet ConsoleApp2NewLife.dll #+复制App: docker cp ...\publish centos.netcore:/home/a
   docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
   docker container prune   # 删除所有停止的容器
   docker port mysite       # 查看容器端口映射
