@@ -131,13 +131,13 @@ console.log(Object.getPrototypeOf(fakeDate)===Object.getPrototypeOf(notDate))//f
 ````
 6.作用域链`scope chain`,ES2015`es6`中引入let和const,创建块级作用域,阻止变量提升到整个函数(var问题)和变量重复声明.
 
-7.模块代码规范: 模块化编程、可维护、动态加载、性能优化等。
+7.模块代码规范: 模块化编程、可维护、动态加载、性能优化等。[`ES6`Module的语法](http://es6.ruanyifeng.com/#docs/module)
 ````javascript
     RequireJS 和 SeaJS 都是模块化框架的代表，AMD和CMD，是他们各自定义模块化的方式，大同小异，主要是代码风格和API不同。
     异步模块定义（AMD）是Asynchronous Module Definition的缩写，是 RequireJS 对模块定义的规范化产出。
     通用模块定义（CMD）是Common Module Definition的缩写，是SeaJS 对模块定义的规范化产出。
     
-    `CommonJS` 每个文件就是一个模块的同步模块（后端）加载。nodejs就是服务器端广泛使用的模块化机制[global对象-多个文件分享变量]；通过module.exports 导出对外的变量或接口，通过 require() 来导入其他模块的输出到当前模块作用域中。
+    `CommonJS` 每个文件就是一个模块的同步模块（后端）加载。nodejs就是服务器端广泛使用的模块化机制[global对象-多个文件分享变量]；通过module.exports 导出对外的变量或接口，通过 require() 来导入其他模块的输出到当前模块作用域中的对象。
       定义模块: module.exports
       加载模块: var app = require('./app.js')
       入口文件: package.json > main = index.js(默认)
@@ -160,7 +160,7 @@ console.log(Object.getPrototypeOf(fakeDate)===Object.getPrototypeOf(notDate))//f
             2.在模块的顶级作用域创建的变量，不会被自动添加到共享的全局作用域，它们只会在模块顶级作用域的内部存在；
             3.模块顶级作用域的 this 值为 undefined
             4.对于需要让模块外部代码访问的内容，模块必须导出它们
-      定义模块: export let name = ""; export function () ; export class Rect ; export { multiply }
+      定义模块: export let name = ""; export function (); export class Rect; export { multiply }
         重命名模块: export { multiply as m }
         导出默认值: export default function () ; 或 export { multiply as default }
       加载模块: import { identifier1,identifier2 } from "./example.js"
