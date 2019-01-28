@@ -105,26 +105,41 @@
       }
     },
     
+    // 生命周期钩子：组件初始化之前
+    beforeCreate () {
+    },
     // 生命周期钩子：创建组件实例
     created () {
       // 创建事件、依赖对象等
       // 自定义事件+监听script: this.$on('eventName', (eventArgs) => { return true;/*冒泡~无返回时-阻止冒泡*/});
     },
-    // 生命周期钩子：创建组件后进行渲染时
+    // 生命周期钩子：DOM组件渲染前
+    beforeMount () {
+    },
+    // 生命周期钩子：DOM组件渲染后
     mounted () {
       // this.$_? Vue的内置方法
       this.$options; // 组件实例的可选项
       this.$refs.ibtn1; this.$parent.$options.name; this.$root; this.$children; // 组件实例之间的通信
     },
+    // 生命周期钩子：DOM数据更新之前
+    beforeUpdate () {
+    },
+    // 生命周期钩子：DOM数据更新之后
+    updated () {
+    },
     // 生命周期钩子：组件销毁前
     beforeDestroy () {
       // 销毁事件、依赖对象等
     },
+    // 生命周期钩子：组件销毁后
+    destroyed () {
+    }
   };
   
-  // 组件-混合|扩展: '../mixins/emitter.js'
+  // 组件-混合|扩展: '../mixins/emitter.js' > import emitter from '../mixins/emitter.js';
   // 拾起 v1.x 废弃的: 向上级派发任务结果$dispatch & 向下级广播通知事件$broadcast => v2.x $emit + $on
-  exports.emitter = {
+  exports default {
     methods: {
       dispatch(componentName, eventName, params) {
         let parent = this.$parent || this.$root, name = parent.$options.name, level = 10;
