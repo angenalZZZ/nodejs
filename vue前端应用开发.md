@@ -48,9 +48,35 @@
   import session from '../mixins/session.js';
   import userProvider from '../providers/user.js';
   
-  // 组件设计、功能描述、版本说明
+  // 组件设计、功能描述、版本说明 ^ import Component1 from '../components/component1.vue'
   export default {
-    // el: document.getElementById('app'), // 将数据渲染进DOM元素: <div id="app">...
+    /* el: document.getElementById('app'), // el: '#app', 
+    * render: h => h(App) // 组件渲染
+    * 1.自动挂载: 将组件渲染后自动挂载到DOM元素上 ^ <div id="app">...
+    * 2.手动挂载: 组件类型变量用大写+实例用小写
+    ----方式一 -------------------------------------------
+    import Vue from 'vue';
+    const Component1 = Vue.extend({
+      template: '<div>{{ message }}</div>',
+      data () {
+        return {
+          message: 'Hello, Vue'
+        };
+      },
+    });
+    const component1 = new Component1().$mount(); document.body.appendChild(component1.$el);
+    // new Component1().$mount('#app');
+    // new Component1({ el: '#app' });
+    ----方式二 -------------------------------------------
+    import Component1 from '../components/component1.vue';
+    const Instance1 = new Vue({
+      render (h) => h(Component1, { props: { vid: 1 } }) // 这里可以传入一些组件的 props 选项
+    });
+    const component1 = Instance1.$mount(); document.body.appendChild(component1.$el);
+    //let component1 = Instance1.$children[0]; // 因为 Instance 下只 Render 了 component 一个子组件
+    // $mount渲染组件 ~ $destroy销毁实例+removeChild(把节点从DOM中移除)
+    */
+    
     name: 'iComponent',      // 组件类名: <i-component>... this.$options.name
     components: { iButton }, // 组件依赖: 模板中的子组件 + 模板中的slot:处理内容分发
 
@@ -59,7 +85,7 @@
       /* 传递数据 vid */
       vid: {
         type: Number, default: 0,
-        validator (v) { return (0 <= v && v < 100) }
+        validator (v) { return (0 <= v && v <= 100) }
       }
     },
     // 组件-内部属性: data
@@ -71,7 +97,7 @@
     },
     // 组件-计算属性: computed
     computed: {
-      // 查找上级组件:form +当使用频率高时,考虑写在mixins/混合|扩展
+      // 查找上级组件:form (当使用频率太高时,考虑写在mixins文件[混合&扩展vm])
       form () {
         let parent = this.$parent, name = 'Form';
         while (parent.$options.name!==name && (parent=parent.$parent));
@@ -80,7 +106,7 @@
     },
     // 组件-监听属性: watch
     watch: {
-      // 监听输入属性: vid
+      // 监听数据变化
       vid (v) { this.vidValue = v }
     },
     // 组件-混合|扩展(实例this上下文中扩展了session的属性与方法): mixins
@@ -108,29 +134,29 @@
     // 生命周期钩子：组件初始化之前
     beforeCreate () {
     },
-    // 生命周期钩子：创建组件实例
+    // 生命周期钩子：创建组件实例后，会开始渲染模板。
     created () {
-      // 创建事件、依赖对象等
-      // 自定义事件+监听script: this.$on('eventName', (eventArgs) => { return true;/*冒泡~无返回时-阻止冒泡*/});
+      // 创建事件、对象依赖、预加载等任务
+      // 自定义事件+监听script: this.$on('eventName', (eventArgs) => { return true;/*~返回false可阻止冒泡*/});
     },
-    // 生命周期钩子：DOM组件渲染前
+    // 生命周期钩子：组件渲染前(vm.$mount([el]).$el > Html元素[DOM节点])
     beforeMount () {
     },
-    // 生命周期钩子：DOM组件渲染后
+    // 生命周期钩子：组件渲染后，会挂载到DOM节点上。
     mounted () {
       // this.$_? Vue的内置方法
       this.$options; // 组件实例的可选项
       this.$refs.ibtn1; this.$parent.$options.name; this.$root; this.$children; // 组件实例之间的通信
     },
-    // 生命周期钩子：DOM数据更新之前
+    // 生命周期钩子：数据更新之前
     beforeUpdate () {
     },
-    // 生命周期钩子：DOM数据更新之后
+    // 生命周期钩子：数据更新之后
     updated () {
     },
     // 生命周期钩子：组件销毁前
     beforeDestroy () {
-      // 销毁事件、依赖对象等
+      // 处理销毁事件、对象依赖、从DOM节点移除组件等任务
     },
     // 生命周期钩子：组件销毁后
     destroyed () {
@@ -138,7 +164,7 @@
   };
   
   // 组件-混合|扩展: '../mixins/emitter.js' > import emitter from '../mixins/emitter.js';
-  // 拾起 v1.x 废弃的: 向上级派发任务结果$dispatch & 向下级广播通知事件$broadcast => v2.x $emit + $on
+  // v1.x : $dispatch(向上级派发任务结果) + $broadcast(向下级广播通知事件) > v2.x : $emit(触发事件) + $on(监听事件)
   exports default {
     methods: {
       dispatch(componentName, eventName, params) {
