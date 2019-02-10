@@ -51,9 +51,9 @@
   // 组件设计、功能描述、版本说明 ^ import Component1 from '../components/component1.vue'
   export default {
     /* el: document.getElementById('app'), // el: '#app', 
-    * render: h => h(App) // 组件渲染
-    * 1.自动挂载: 将组件渲染后自动挂载到DOM元素上 ^ <div id="app">...
-    * 2.手动挂载: 组件类型变量用大写+实例用小写
+    * render: h => h(App)
+    * 1.自动挂载: 将组件render渲染后自动mount挂载到DOM元素上 ^ <div id="app">...
+    * 2.手动挂载: 组件类型Component1用大写+实例component1用小写
     ----方式一 -------------------------------------------
     import Vue from 'vue';
     const Component1 = Vue.extend({
@@ -73,8 +73,8 @@
       render (h) => h(Component1, { props: { vid: 1 } }) // 这里可以传入一些组件的 props 选项
     });
     const component1 = Instance1.$mount(); document.body.appendChild(component1.$el);
-    //let component1 = Instance1.$children[0]; // 因为 Instance 下只 Render 了 component 一个子组件
-    // $mount渲染组件 ~ $destroy销毁实例+removeChild(把节点从DOM中移除)
+    //let component1 = Instance1.$children[0]; // 因为 Instance 下只 render 了一个 component 子组件
+    // $mount渲染组件 ~ $destroy销毁实例+removeChild (把节点从DOM中移除)
     */
     
     name: 'iComponent',      // 组件类名: <i-component>... this.$options.name
