@@ -31,22 +31,29 @@
     <i-button ref="ibtn1" @eventName="handleClick"><i slot="btn-icon" class="icon-ok"></i>按钮文本</i-button>
   </template>
   <script>
-  // 导入第三方库
-  import AsyncValidator from 'async-validator'; // 数据校验: https://github.com/yiminghe/async-validator
-  // 导入组件库
+  // 导入UI组件库
   //----------------------------
   import iView from 'iview'; // 第三方组件库 iview: https://www.iviewui.com/docs/guide/start
   import 'iview/dist/styles/iview.css'; // 第三方组件库相关样式
   //----------------------------
   import { Button, ... } from 'element-ui' // 第三方组件库 element: https://github.com/ElemeFE/element
   Vue.component(Button.name, Button); // 注册Vue全局组件，一般写在根组件App.vue(根组件只创建一次)
+  // 导入开源库
+  import AsyncValidator from 'async-validator'; // 数据校验: https://github.com/yiminghe/async-validator
   //----------------------------
-  import iButton from '../components/i-button.vue'; // 自定义组件
-  // Vue.component(iButton.name, iButton); // 注册Vue全局组件(使用场景比较多时)
+  // 自定义组件
+  import Alert from '../components/alert.vue.js';
+  import iButton from '../components/i-button.vue';
+  // Vue.prototype.$Alert = Alert; // 扩展全局组件vm(使用场景比较多时)
+  // Vue.component(iButton.name, iButton); // 注册Vue全局组件
   //----------------------------
-  // 导入扩展功能
+  // 自定义功能
   import session from '../mixins/session.js';
   import userProvider from '../providers/user.js';
+  // 路由导航
+  // import router from '../router.js';
+  // 配置环境
+  Vue.config.productionTip = false;
   
   // 组件设计、功能描述、版本说明 ^ import Component1 from '../components/component1.vue'
   export default {
@@ -58,22 +65,18 @@
     import Vue from 'vue';
     const Component1 = Vue.extend({
       template: '<div>{{ message }}</div>',
-      data () {
-        return {
-          message: 'Hello, Vue'
-        };
-      },
+      data () { return { message: 'Hello, Vue' } }
     });
     const component1 = new Component1().$mount(); document.body.appendChild(component1.$el);
-    // new Component1().$mount('#app');
-    // new Component1({ el: '#app' });
+    // new Component1().$mount('#app'); // new Component1({ el: '#app' });
     ----方式二 -------------------------------------------
     import Component1 from '../components/component1.vue';
     const Instance1 = new Vue({
+      // router, // 路由
       render (h) => h(Component1, { props: { vid: 1 } }) // 这里可以传入一些组件的 props 选项
     });
     const component1 = Instance1.$mount(); document.body.appendChild(component1.$el);
-    //let component1 = Instance1.$children[0]; // 因为 Instance 下只 render 了一个 component 子组件
+    //let component1 = Instance1.$children[0]; // 因为 Instance 下只 render 了一个 component 子组件(mounted)
     // $mount渲染组件 ~ $destroy销毁实例+removeChild (把节点从DOM中移除)
     */
     
