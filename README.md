@@ -90,22 +90,21 @@
 
 2.数组`Array`不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.
 
-3.在ES6中可用`Object.assign(target,...sources)` 或者Object spread`...` 对引用类型进行浅复制`一层` (后者性能更优)<br>　　`...解构赋值: 如数组、对象等` (需配置`ESLint`)
+3.在ES6中可用`Object.assign(target,...sources)` 或者Object spread`...` 对引用类型进行浅复制`一层` (后者性能更优)<br>　　`...解构赋值: 如数组、对象等` (需配置`ESLint`)　[前端`js`](https://yuchengkai.cn/docs/frontend)、[难点`js`](https://github.com/yygmind/blog)
 ````javascript
-/* 配置ESLint: .eslintrc.yml
+/* 配置ESLint > .eslintrc.yml
 parserOptions:
     ecmaVersion: 9
 rules:
     prefer-object-spread: error
 */
-let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.create(p3);
+let [first, ...rest] = [1, 2, 3, 4], p1={name:`hello`}, p2={...p1}, p3=({...p1,age:1}), p4=Object.create(p3);
 let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo","sex":1}, ()=>{alert('hello')}];
- # 前端js: https://yuchengkai.cn/docs/frontend  难点js: https://github.com/yygmind/blog
- # (undefined==null) == true; (undefined===null) == false;
- # p4.e=3.14; ('name' in p4 ==true);p4.hasOwnProperty('name')==false; //in检查对象p4.e&原型,hasOwnProperty不检查原型.
- # (Object.getOwnPropertyNames(window).length > Object.keys(window).length) == true;
- # Object.assign({},p1,{sex:0,name:`hi`}); > {sex:0,name:`hi`} //后面的-覆盖前面的-对象属性,...解构时不会复制继承的属性
- # Object.assign({},"abc",{name:"名字0"},{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
+ // (undefined==null) == true; (undefined===null) == false;
+ // p4.e=3.14; ('name' in p4 ==true);p4.hasOwnProperty('name')==false; //in检查对象p4.e&原型,hasOwnProperty不检查原型
+ // (Object.getOwnPropertyNames(window).length > Object.keys(window).length) == true;
+ // Object.assign({},p1,{sex:0,name:`hi`}); > {sex:0,name:`hi`} //后面的-覆盖前面的-对象属性,...解构时不会复制继承的属性
+ // Object.assign({},"abc",{name:"名字0"},{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
 ````
 
 4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,<br>　　而所有被创建的对象都会共享原型对象
