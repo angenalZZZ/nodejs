@@ -13,7 +13,7 @@
 ~~~
 
 > `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot` 构成了组件设计的核心。<br>
-　　`路由`：用于接收参数、加载数据、组件渲染、可视化用户交互等常规业务；不对外提供接口`props`、`event`，不可复用；<br>
+　　`路由`：用于接收参数、加载数据、页面渲染、可视化-用户交互等业务；不提供接口`props`、`event`，不能复用；<br>
 　　`业务`：用于多页面复用，一般不跨项目；往往集成了数据的输入输出、校验、事件处理`event`、生命周期`钩子`；<br>
 　　`基础`：用于功能单一、能大量复用的组件，可通过配置实现不同的功能；注重api的设计、兼容性、性能、高可用。<br>
 
@@ -55,10 +55,11 @@
   
   // 组件设计、功能描述、版本说明 ^ import Component1 from '../components/component1.vue'
   export default {
-    /* el: document.getElementById('app'), // el: '#app', 
+    /* el: document.getElementById('app'), // or ^ el: '#app',
     * render: h => h(App)
-    * 1.自动挂载: 组件render渲染后,自动mount挂载到DOM元素上el ^ <div id="app">...
+    * 1.自动挂载: 组件render渲染后, 自动mount挂载到DOM元素el ^ <div id="app">...
     * 2.手动挂载: 类型Component1用大写+实例component1用小写
+     $mount渲染组件 >> events用户交互 >> removeChild把节点从DOM元素el中移除 >> $destroy销毁实例 >> router路由导航
     ----方式一 -------------------------------------------
     import Vue from 'vue';
     const Component1 = Vue.extend({
@@ -75,7 +76,6 @@
     });
     const component1 = Instance1.$mount(); document.body.appendChild(component1.$el);
     //let component1 = Instance1.$children[0]; // 因为 Instance 下只 render 了一个 component 子组件(mounted)
-    // $mount渲染组件 ~ $destroy销毁实例+removeChild (把节点从DOM中移除)
     */
     
     name: 'iComponent',      // 组件类名: <i-component>... this.$options.name
