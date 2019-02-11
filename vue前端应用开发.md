@@ -47,16 +47,16 @@
   // 自定义组件
   import Alert from '../components/alert.vue.js';
   import iButton from '../components/i-button.vue';
-  // Vue.prototype.$Alert = Alert; // 扩展全局组件vm (使用场景比较多时, script调用:this.$Alert({}) )
+  // Vue.prototype.$Alert = Alert; // 扩展全局组件实例 (一般写在根组件, script调用:this.$Alert({}) )
   // Vue.component(iButton.name, iButton); // 注册Vue全局组件 (使用场景比较多时, template调用)
+  // 配置环境
+  // Vue.config.productionTip = false;
   //----------------------------
-  // 自定义功能
+  // 扩展功能
   import session from '../mixins/session.js';
   import userProvider from '../providers/user.js';
   // 路由导航
   // import router from '../router.js';
-  // 配置环境
-  // Vue.config.productionTip = false;
   
   // 组件设计、功能描述、版本说明 ^ import Component1 from '../components/component1.vue'
   export default {
