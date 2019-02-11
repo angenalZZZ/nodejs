@@ -30,6 +30,9 @@
     </button>
     <i-button ref="ibtn1" @eventName="handleClick"><i slot="btn-icon" class="icon-ok"></i>按钮文本</i-button>
   </template>
+  <style>
+  /* 样式表 */
+  </style>
   <script>
   // 导入UI组件库
   //----------------------------
@@ -44,8 +47,8 @@
   // 自定义组件
   import Alert from '../components/alert.vue.js';
   import iButton from '../components/i-button.vue';
-  // Vue.prototype.$Alert = Alert; // 扩展全局组件vm(使用场景比较多时)
-  // Vue.component(iButton.name, iButton); // 注册Vue全局组件
+  // Vue.prototype.$Alert = Alert; // 扩展全局组件vm (使用场景比较多时, script调用:this.$Alert({}) )
+  // Vue.component(iButton.name, iButton); // 注册Vue全局组件 (使用场景比较多时, template调用)
   //----------------------------
   // 自定义功能
   import session from '../mixins/session.js';
