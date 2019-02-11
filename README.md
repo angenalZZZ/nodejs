@@ -103,7 +103,7 @@ let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo"
  // (undefined==null) == true; (undefined===null) == false;
  // p4.e=3.14; ('name' in p4 ==true);p4.hasOwnProperty('name')==false; //in检查对象p4.e&原型,hasOwnProperty不检查原型
  // (Object.getOwnPropertyNames(window).length > Object.keys(window).length) == true;
- // Object.assign({},p1,{sex:0,name:`hi`}); > {sex:0,name:`hi`} //后面的-覆盖前面的-对象属性,...解构时不会复制继承的属性
+ // Object.assign({},p1,{sex:0,name:`hi`}); > {sex:0,name:`hi`} //后面的-覆盖前面的-对象属性, ...解构时不复制继承的属性
  // Object.assign({},"abc",{name:"名字0"},{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
 ````
 
