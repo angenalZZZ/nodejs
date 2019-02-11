@@ -1,26 +1,21 @@
 # vue 前端开发
 
-####  简介：[`v2`](https://cn.vuejs.org/v2/guide/)、[`v3`](https://cn.vuejs.org/v3/guide/)<br>
-　`UI库`：[`element`](https://github.com/ElemeFE/element)、
-[`quasarchs`](http://www.quasarchs.com/guide/opening-dev-server-to-public.html)、
-[`vuetify`](https://github.com/vuetifyjs/vuetify)、
-[`vant`](https://github.com/youzan/vant)、
-[`vue-material`](https://github.com/vuematerial/vue-material)<br>
-　　[`iview`](https://www.iviewui.com/docs/guide/start)、
-[`组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、
-[`组件代码`](https://github.com/angenal/vue-component-book) 
+####  简介：[`v2`](https://cn.vuejs.org/v2/guide/)、`v3` <br>
+　`UI库`：[`element`](https://github.com/ElemeFE/element)、[`iview`](https://www.iviewui.com/docs/guide/start)、
+[`quasarchs`](http://www.quasarchs.com/guide/opening-dev-server-to-public.html)、[`vuetify`](https://github.com/vuetifyjs/vuetify)、
+[`vant`](https://github.com/youzan/vant)、[`vue-material`](https://github.com/vuematerial/vue-material) <br>
+　　[`组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、[`组件代码`](https://github.com/angenal/vue-component-book) 
 
 > `安装`: [@vue/cli@3.x](https://cli.vuejs.org/zh/guide/installation.html)
 
 ~~~
-> npm install -g @vue/cli
-> yarn global add @vue/cli
+> npm install -g @vue/cli  or > yarn global add @vue/cli
 ~~~
 
-> `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot`构成了组件的核心。<br>
-　　`路由`：用于接收参数、获取数据、可视化、用户交互等常规业务；无`props`、`event`，不复用，不对外提供api；<br>
-　　`业务`：用于多页面复用，一般不跨项目；往往集成了数据的输入输出、校验、事件、生命周期`钩子`、用户交互；<br>
-　　`基础`：用于功能单一、能大量复用的组件，能通过配置实现不同的功能，注重api的设计、兼容性、性能、高可用；<br>
+> `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot` 构成了组件设计的核心。<br>
+　　`路由`：用于接收参数、加载数据、组件渲染、可视化用户交互等常规业务；不对外提供接口`props`、`event`，不可复用；<br>
+　　`业务`：用于多页面复用，一般不跨项目；往往集成了数据的输入输出、校验、事件处理`event`、生命周期`钩子`；<br>
+　　`基础`：用于功能单一、能大量复用的组件，可通过配置实现不同的功能；注重api的设计、兼容性、性能、高可用。<br>
 
 ~~~vue
   <template>
