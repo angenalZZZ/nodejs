@@ -117,7 +117,7 @@ if(Object.getPrototypeOf(p1)===Person.prototype)
 console.log(p1.name);console.log(p2.sex); // 此时p1,p2都有sex属性
 console.log(Object.getPrototypeOf(p1)===Object.getPrototypeOf(p2))//true 变量类型都相同
 var fakeDate = {}, notDate = {};
-Object.setPrototypeOf(fakeDate, Date.prototype);//修改变量fakeDate的类型为Date
+Object.setPrototypeOf(fakeDate, Date.prototype);//修改变量fakeDate的类型为Date > (fakeDate instanceof Date == true)
 console.log(Object.getPrototypeOf(fakeDate)===Object.getPrototypeOf(notDate))//false 变量类型已修改
 ````
 
