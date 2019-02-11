@@ -100,11 +100,11 @@ rules:
 */
 let [first, ...rest] = [1, 2, 3, 4], p1={name:`hello`}, p2={...p1}, p3=({...p1,age:1}), p4=Object.create(p3);
 let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo","sex":1}, ()=>{alert('hello')}];
- // (undefined==null) == true; (undefined===null) == false;
- // p4.e=3.14; ('name' in p4 ==true);p4.hasOwnProperty('name')==false; //in检查对象p4.e&原型,hasOwnProperty不检查原型
- // (Object.getOwnPropertyNames(window).length > Object.keys(window).length) == true;
- // Object.assign({},p1,{sex:0,name:`hi`}); > {sex:0,name:`hi`} //后面的-覆盖前面的-对象属性, ...解构时不复制继承的属性
- // Object.assign({},"abc",{name:"名字0"},{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
+// (undefined==null) == true; (undefined===null) == false;
+// p4.e=3.14; ('name' in p4 ==true);p4.hasOwnProperty('name')==false; //in检查对象p4.e&原型,hasOwnProperty不检查原型
+// (Object.getOwnPropertyNames(window).length > Object.keys(window).length) == true;
+// Object.assign({},p1,{sex:0,name:`hi`}); > {sex:0,name:`hi`} //后面的-覆盖前面的-对象属性, ...解构时不复制继承的属性
+// Object.assign({},"abc",{name:"名字0"},{name:"名字1"}) > {0:"a",1:"b",2:"c",name:"名字1"}
 ````
 
 4.**原型** 绝大部分的函数(少数内建函数除外)都有一个`prototype`属性,这个属性是原型对象用来创建新对象实例,<br>　　而所有被创建的对象都会共享原型对象
