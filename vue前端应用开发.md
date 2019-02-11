@@ -62,8 +62,8 @@
   export default {
     /* el: document.getElementById('app'), // el: '#app', 
     * render: h => h(App)
-    * 1.自动挂载: 将组件render渲染后自动mount挂载到DOM元素上 ^ <div id="app">...
-    * 2.手动挂载: 组件类型Component1用大写+实例component1用小写
+    * 1.自动挂载: 组件render渲染后,自动mount挂载到DOM元素上el ^ <div id="app">...
+    * 2.手动挂载: 类型Component1用大写+实例component1用小写
     ----方式一 -------------------------------------------
     import Vue from 'vue';
     const Component1 = Vue.extend({
