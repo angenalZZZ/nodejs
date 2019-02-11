@@ -90,7 +90,7 @@
 
 2.数组`Array`不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.
 
-3.在ES6中可用`Object.assign(target,...sources)` 或者ES9中Object spread`...` 对引用类型进行浅复制`一层``...解构赋值: 如数组、对象等`
+3.在ES6中可用`Object.assign(target,...sources)` 或者Object spread`...` 对引用类型进行浅复制`一层`<br>　　`...解构赋值: 如数组、对象等`(配置ESLint: .eslintrc.yml > parserOptions:\n ecmaVersion: 9 \n rules:\n prefer-object-spread: error)
 ````javascript
 let [first, ...rest] = [1, 2, 3, 4], p1 = {name:`hello`}, p2 = {...p1}, p3 = ({...p1,age:1}), p4 = Object.create(p3);
 let [success, [...abc], person, sayHello] = [true, ['a','b','c'], {"name":"halo","sex":1}, ()=>{alert('hello')}];
