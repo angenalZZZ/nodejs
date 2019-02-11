@@ -56,7 +56,7 @@
   // 路由导航
   // import router from '../router.js';
   // 配置环境
-  Vue.config.productionTip = false;
+  // Vue.config.productionTip = false;
   
   // 组件设计、功能描述、版本说明 ^ import Component1 from '../components/component1.vue'
   export default {
@@ -75,8 +75,8 @@
     ----方式二 -------------------------------------------
     import Component1 from '../components/component1.vue';
     const Instance1 = new Vue({
-      // router, // 路由
-      render (h) => h(Component1, { props: { vid: 1 } }) // 这里可以传入一些组件的 props 选项
+      // router, // 路由导航
+      render (h) => h(Component1, { props: { vid: 1 } }) // 传入组件的 props 选项
     });
     const component1 = Instance1.$mount(); document.body.appendChild(component1.$el);
     //let component1 = Instance1.$children[0]; // 因为 Instance 下只 render 了一个 component 子组件(mounted)
