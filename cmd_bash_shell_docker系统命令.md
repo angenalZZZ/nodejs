@@ -112,16 +112,16 @@
   
   docker run -it -e AUTHOR="Test" alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh
   
-  docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site # 查找镜像+运行容器mysite+后端服务
+  docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site # 查找镜像&运行容器mysite&后端服务&端口映射
   
-  docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 &\
-   -v "F:\app\docker_redis5\redis.conf:/etc/redis/redis.conf" \
-   -v "F:\app\docker_redis5\data:/data" redis:5.0.3-alpine redis-server /etc/redis/redis.conf # [映射本地配置]
-   
-  docker run --name centos.netcore --network=net1d -d -m 512m -p 8000:80 &\
-   -v "F:\app\dotnetcore\centos\a:/home/a" centos:latest /usr/sbin/init &\
-   rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1 &\
-   rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-sdk-2.1 &\
+  docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 \
+   -v "d:\app\docker_redis5\redis.conf:/etc/redis/redis.conf" \
+   -v "d:\app\docker_redis5\data:/data" redis:5.0.3-alpine redis-server /etc/redis/redis.conf # [映射本地配置]
+  
+  docker run --name centos.netcore --network=net1d -d -m 512m -p 8000:80 \
+   -v "d:\app\centos.netcore\home\app:/home/app" centos:latest /usr/sbin/init \
+   rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1 \
+   rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-sdk-2.1 \
    cd /home/a & dotnet ConsoleApp2NewLife.dll #+复制App: docker cp ...\publish centos.netcore:/home/a
   
   docker network create -d bridge net1d # 创建自定义网络net1d
