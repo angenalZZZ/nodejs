@@ -56,10 +56,12 @@
   // 组件设计、功能描述、版本说明 ^ import Component1 from '../components/component1.vue'
   export default {
     /* el: document.getElementById('app'), // or ^ el: '#app',
-    * render: h => h(App)
+    * //Vue渲染Htm-Node: h(html-tag, {attrs:{id:'',}, class:{btn:true,}, style...}|'html文本', [...children])
+    * //Vue渲染Com-Node: h(Component, {props:{vid:1,}, filters...}, [...children])
+    * render: h => h(App), //h即createElement: 唯一的vNode(Virtual-DOM组件树用来描述真实的Html-DOM,提升渲染的性能)
     * 1.自动挂载: 组件render渲染后, 自动mount挂载到DOM元素el ^ <div id="app">...
-    * 2.手动挂载: 类型Component1用大写+实例component1用小写
-     $mount渲染组件 >> events用户交互 >> removeChild把节点从DOM元素el中移除 >> $destroy销毁实例 >> router路由导航
+    * 2.手动挂载: 类型Component1大写首字母+实例component1小写首字母...
+      $mount渲染组件 >> events用户交互 >> removeChild把节点从DOM元素el中移除 >> $destroy销毁实例 >> router路由导航
     ----方式一 -------------------------------------------
     import Vue from 'vue';
     const Component1 = Vue.extend({
