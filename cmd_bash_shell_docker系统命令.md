@@ -113,32 +113,31 @@
   docker network connect [network-name] [container] # 加入自定义网络
   # 基础
   docker [COMMAND] --help
-  docker [OPTIONS] COMMAND
   docker images # 查看镜像
-  docker ps -a | docker container ls -a # 查看容器
+  docker ps -a  # 查看容器 | docker container ls -a
   docker search ubuntu # 搜索镜像
-  docker pull ubuntu:latest # 下载镜像
-  docker save -o d:\app\snapshot\ubuntu_latest.tar ubuntu:latest # 镜像存出 (docker images)
+  docker pull ubuntu   # 下载镜像
   docker load -i /opt/images/ubuntu_latest.tar # 镜像载入 (使用Xftp先将镜像tar上传至Docker虚拟机或共享盘)
-  docker export ubuntu > "d:\app\snapshot\ubuntu_19_04.tar"            # 导出镜像 (docker container export images)
-  docker container export -o="d:\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (docker container export images)
-  docker cp d:\app\xxx\publish centos.netcore:/home/app # 复制程序发布的目录至(docker container)目标目录
+  docker save -o d:\docker\app\snapshot\ubuntu_latest.tar ubuntu:latest       # 镜像存储 (docker images)
+  docker export ubuntu > "d:\docker\app\snapshot\ubuntu_19_04.tar"            # 导出镜像 (docker container export images)
+  docker container export -o="d:\docker\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (docker container export images)
+  docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (docker container)
   
-  docker run -it --rm -e AUTHOR="Test" alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+停止自动删除+执行命令
+  docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   
-  docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site # 查找镜像&运行容器mysite&后端服务&端口映射
+  docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site #查找镜像&运行容器mysite&后端服务&端口映射
   
   docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 
-    -v "d:\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\app\redis5\data:/data" 
+    -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf
   
-  docker run --name dotnet --network=net1d -it -m 512m -p 8080:80 -v "d:\app\dotnetcore:/app" 
+  docker run --name dotnet --network=net1d -it -m 512m -p 8080:80 -v "d:\docker\app\dotnetcore:/app" 
     microsoft/dotnet # 最新版dotnet
     microsoft/dotnet:sdk # 最新版dotnet-sdk
     microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
   # docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
   
-  docker run --name centos.netcore --network=net1d -it -m 512m -p 8000:80 -v "d:\app\centos.netcore\home:/home" centos bash
+  docker run --name centos.netcore --network=net1d -it -m 512m -p 8000:80 -v "d:\docker\app\centos.netcore\home:/home" centos bash
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-sdk-2.1
     $ dotnet /home/app/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
