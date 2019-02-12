@@ -104,26 +104,24 @@
   docker [COMMAND] --help
   docker [OPTIONS] COMMAND
   docker images # 查看镜像
-  docker container ls -a | docker ps -a # 查看容器
+  docker ps -a | docker container ls -a # 查看容器
   docker search ubuntu # 搜索镜像
   docker pull ubuntu:latest # 下载镜像
-  docker cp ...\publish centos.netcore:/home/app # 复制应用程序发布目录
-  docker container export -o="F:\app\snapshot\ubuntu_19_04.tar" ubuntu
-  docker export ubuntu > "F:\app\snapshot\ubuntu_19_04.tar" # 导出镜像
+  docker cp d:\app\xxx\publish centos.netcore:/home/app # 复制程序发布目录
+  docker export ubuntu > "d:\app\snapshot\ubuntu_19_04.tar"            # 导出镜像
+  docker container export -o="d:\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像
   
   docker run -it -e AUTHOR="Test" alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh
   
   docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site # 查找镜像&运行容器mysite&后端服务&端口映射
   
-  docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 \
-   -v "d:\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\app\redis5\data:/data" \
-   redis:5.0.3-alpine redis-server /etc/redis/redis.conf
+  docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 
+    -v "d:\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\app\redis5\data:/data" 
+    redis:5.0.3-alpine redis-server /etc/redis/redis.conf
   
-  docker run --name centos.netcore --network=net1d -d -m 512m -p 8000:80 \
-   -v "d:\app\centos.netcore\home\app:/home/app" centos:latest "/usr/sbin/init & \
-   rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1 \
-   rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-sdk-2.1 \
-   cd /home/app/ConsoleApp2NewLife & dotnet ConsoleApp2NewLife.dll"
+  docker run --name centos.netcore --network=net1d -it -m 512m -p 8000:80 -v "d:\app\centos.netcore\home:/home" centos /bin/bash
+    $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-sdk-2.1
+    $ dotnet /home/app/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问 tcp://127.0.0.1:8000
   
   docker network create -d bridge net1d # 创建自定义网络net1d
   docker network connect net1d redis5 & docker network connect net1d centos.netcore # 加入自定义网络net1d
