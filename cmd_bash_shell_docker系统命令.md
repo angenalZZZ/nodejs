@@ -131,12 +131,12 @@
     -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf
   
+  ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
+  # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
   docker run --name dotnet --network=net1d -it -m 512m -p 8080:80 -v "d:\docker\app\microsoft.net\app:/app" 
     microsoft/dotnet # 最新版dotnet
     microsoft/dotnet:sdk # 最新版dotnet-sdk
     microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
-  ## https://docs.docker.com/compose/aspnet-mssql-compose/
-  ## docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
   
   docker run --name centos.net --network=net1d -it -m 512m -p 8000:80 -v "d:\docker\app\centos.net\home:/home" centos bash
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
