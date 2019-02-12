@@ -118,14 +118,14 @@
   docker search ubuntu # 搜索镜像
   docker pull ubuntu   # 下载镜像
   docker load -i /opt/images/ubuntu_latest.tar # 镜像载入 (使用Xftp先将镜像tar上传至Docker虚拟机或共享盘)
-  docker save -o d:\docker\app\snapshot\ubuntu_latest.tar ubuntu:latest       # 镜像存储 (docker images)
-  docker export ubuntu > "d:\docker\app\snapshot\ubuntu_19_04.tar"            # 导出镜像 (docker container export images)
-  docker container export -o="d:\docker\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (docker container export images)
-  docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (docker container)
+  docker save -o d:\docker\app\snapshot\ubuntu_latest.tar ubuntu:latest       # 镜像存储 (images)
+  docker export ubuntu > "d:\docker\app\snapshot\ubuntu_19_04.tar"            # 导出镜像 (container export images)
+  docker container export -o="d:\docker\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (container export images)
+  docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (container copy dir)
   
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   
-  docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site #查找镜像&运行容器mysite&后端服务&端口映射
+  docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
   
   docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 
     -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
