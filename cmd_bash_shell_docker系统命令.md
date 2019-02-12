@@ -42,6 +42,11 @@
   $ netstat -atW | grep -i "listen"    # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
   $ netstat -atW | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get -y install xinetd telnetd
   
+  # 网络共享
+  > net share           # 查找
+  > net share c         # 添加
+  > net share c /delete # 删除
+  
   # 关机
   > sleep 9000; shutdown -s
   > at 03:30:00PM shutdown -s
