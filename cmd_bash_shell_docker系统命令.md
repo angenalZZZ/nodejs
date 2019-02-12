@@ -107,9 +107,11 @@
   docker ps -a | docker container ls -a # 查看容器
   docker search ubuntu # 搜索镜像
   docker pull ubuntu:latest # 下载镜像
-  docker cp d:\app\xxx\publish centos.netcore:/home/app # 复制程序发布目录
-  docker export ubuntu > "d:\app\snapshot\ubuntu_19_04.tar"            # 导出镜像
-  docker container export -o="d:\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像
+  docker save -o d:\app\snapshot\ubuntu_latest.tar ubuntu:latest # 镜像存出 (docker images)
+  docker load -i /opt/images/ubuntu_latest.tar # 镜像载入 (使用Xftp先将镜像tar上传至Docker虚拟机或共享盘)
+  docker export ubuntu > "d:\app\snapshot\ubuntu_19_04.tar"            # 导出镜像 (docker container export images)
+  docker container export -o="d:\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (docker container export images)
+  docker cp d:\app\xxx\publish centos.netcore:/home/app # 复制程序发布的目录至(docker container)目标目录
   
   docker run -it -e AUTHOR="Test" alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh
   
