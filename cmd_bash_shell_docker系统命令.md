@@ -113,7 +113,7 @@
   docker container export -o="d:\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (docker container export images)
   docker cp d:\app\xxx\publish centos.netcore:/home/app # 复制程序发布的目录至(docker container)目标目录
   
-  docker run -it -e AUTHOR="Test" alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+执行命令/bin/sh
+  docker run -it --rm -e AUTHOR="Test" alpine /bin/sh # 查找镜像alpine:latest+运行容器alpine+终端交互it+停止自动删除+执行命令
   
   docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site # 查找镜像&运行容器mysite&后端服务&端口映射
   
