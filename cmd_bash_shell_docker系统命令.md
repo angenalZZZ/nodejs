@@ -118,10 +118,10 @@
   docker search ubuntu # 搜索镜像
   docker pull ubuntu   # 下载镜像
   docker load -i /opt/images/ubuntu_latest.tar # 镜像载入 (使用Xftp先将镜像tar上传至Docker虚拟机或共享盘)
-  docker save -o d:\docker\app\snapshot\ubuntu_latest.tar ubuntu:latest       # 镜像存储 (images)
+  docker save -o d:\docker\app\snapshot\ubuntu_latest.tar ubuntu:latest       # 镜像存储 (save images)
   docker export ubuntu > "d:\docker\app\snapshot\ubuntu_19_04.tar"            # 导出镜像 (container export images)
   docker container export -o="d:\docker\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (container export images)
-  docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (container copy dir)
+  docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (copy dir to container)
   
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   
@@ -137,9 +137,9 @@
     microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
   # docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
   
-  docker run --name centos.netcore --network=net1d -it -m 512m -p 8000:80 -v "d:\docker\app\centos.netcore\home:/home" centos bash
-    $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-sdk-2.1
-    $ dotnet /home/app/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
+  docker run --name centos.net --network=net1d -it -m 512m -p 8000:80 -v "d:\docker\app\centos.net\home:/home" centos bash
+    $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
+    $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
   docker network create -d bridge net1d # 创建自定义网络net1d
   docker network connect net1d redis5 & docker network connect net1d centos.netcore # 加入自定义网络net1d
