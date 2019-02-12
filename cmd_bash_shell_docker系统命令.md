@@ -127,9 +127,15 @@
     -v "d:\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\app\redis5\data:/data" 
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf
   
-  docker run --name centos.netcore --network=net1d -it -m 512m -p 8000:80 -v "d:\app\centos.netcore\home:/home" centos /bin/bash
+  docker run --name dotnet --network=net1d -it -m 512m -p 8080:80 -v "d:\app\dotnetcore:/app" 
+    microsoft/dotnet # 最新版dotnet
+    microsoft/dotnet:sdk # 最新版dotnet-sdk
+    microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
+  # docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
+  
+  docker run --name centos.netcore --network=net1d -it -m 512m -p 8000:80 -v "d:\app\centos.netcore\home:/home" centos bash
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-sdk-2.1
-    $ dotnet /home/app/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问 tcp://127.0.0.1:8000
+    $ dotnet /home/app/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
   docker network create -d bridge net1d # 创建自定义网络net1d
   docker network connect net1d redis5 & docker network connect net1d centos.netcore # 加入自定义网络net1d
@@ -196,6 +202,7 @@
   
   # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖；一般不会使用；
   # 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
+  # ENTRYPOINT ["dotnet", "aspnetapp.dll"]
 ~~~
 
 > **.dockerignore** 配置文件/屏蔽读取
