@@ -73,13 +73,13 @@
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
   # 服务ssh
-  # < centos >---------------------------
+  # < centos >--------------------------- 
   $ rpm -qa | grep ssh  # 检查服务ssh是否已安装: netstat -antp | grep sshd [端口:22]
   $ yum install -y initscripts # 安装服务netstat [/sbin/service]
   $ yum install -y openssh-server # 安装服务ssh
   $ service sshd start | service sshd stop # 启动sshd|停止
   $ chkconfig sshd on # 开机启动
-  # < ubuntu >---------------------------
+  # < ubuntu >--------------------------- Ubuntu 18.04 LTS on Windows 10
   $ sudo apt-get remove --purge openssh-server   # 先删ssh
   $ sudo apt-get install openssh-server          # 再安装ssh
   $ sudo rm /etc/ssh/ssh_config                  # 先删配置文件，让ssh服务自己想办法链接
