@@ -93,7 +93,7 @@
 
 # [**docker**](https://docs.docker.com)
 
->  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install/)<br>
+>  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install)<br>
   `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
   `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore) [..](http://8fe1b42e.m.daocloud.io)
 
@@ -131,11 +131,12 @@
     -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf
   
-  docker run --name dotnet --network=net1d -it -m 512m -p 8080:80 -v "d:\docker\app\dotnetcore:/app" 
+  docker run --name dotnet --network=net1d -it -m 512m -p 8080:80 -v "d:\docker\app\microsoft.net\app:/app" 
     microsoft/dotnet # 最新版dotnet
     microsoft/dotnet:sdk # 最新版dotnet-sdk
     microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
-  # docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
+  ## https://docs.docker.com/compose/aspnet-mssql-compose/
+  ## docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
   
   docker run --name centos.net --network=net1d -it -m 512m -p 8000:80 -v "d:\docker\app\centos.net\home:/home" centos bash
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
