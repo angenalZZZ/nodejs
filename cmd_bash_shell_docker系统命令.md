@@ -72,12 +72,18 @@
   wmic printer where default='TRUE' get name                              # 获取默认打印机
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
-  # 服务安装ssh
-  $ rpm -qa | grep ssh  #-centos: netstat -antp | grep sshd [端口:22]
-  $ yum install -y initscripts #-centos: install service [/sbin/service]
-  $ yum install -y openssh-server #-centos: install sshd
-  $ service sshd start | service sshd stop #-centos: [启动sshd|停止服务]
-  $ chkconfig sshd on #-centos: [开机启动]
+  # 服务ssh
+  # < centos >---------------------------
+  $ rpm -qa | grep ssh  # 检查服务ssh是否已安装: netstat -antp | grep sshd [端口:22]
+  $ yum install -y initscripts # 安装服务netstat [/sbin/service]
+  $ yum install -y openssh-server # 安装服务ssh
+  $ service sshd start | service sshd stop # 启动sshd|停止
+  $ chkconfig sshd on # 开机启动
+  # < ubuntu >---------------------------
+  $ sudo apt-get remove --purge openssh-server   # 先删ssh
+  $ sudo apt-get install openssh-server          # 再安装ssh
+  $ sudo rm /etc/ssh/ssh_config                  # 先删配置文件，让ssh服务自己想办法链接
+  $ sudo service ssh --full-restart              # 再启动ssh
 ~~~
 
 # [**docker**](https://docs.docker.com)
