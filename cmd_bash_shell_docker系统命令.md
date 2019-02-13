@@ -117,6 +117,10 @@
   docker network ls                                 # 查看网络列表
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
   docker network connect [network-name] [container] # 加入自定义网络
+  docker network connect --alias db [network-name] [container-db] # 入网,提供别名访问
+  docker network connect --link other_container:alias_name [network-name] [container] # 入网,其它容器连接别名
+  docker network connect --ip 10.10.36.122 [network-name] [container] # 入网,其它容器连接指定ip
+  docker network disconnect [network-name] [container] # 退出网络
   # 基础
   docker [COMMAND] --help
   docker images # 查看镜像
