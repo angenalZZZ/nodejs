@@ -48,7 +48,9 @@
   > net share c /delete # 删除
   
   # 主机Host
-  $ cat /etc/hosts
+  > notepad C:\Windows\System32\drivers\etc\hosts
+  $ cat /etc/hosts   # 一次显示整个文件
+  $ cat > /etc/hosts # 从键盘创建一个文件
   
   # 关机
   > sleep 9000; shutdown -s
