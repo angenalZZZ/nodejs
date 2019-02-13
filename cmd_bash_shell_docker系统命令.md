@@ -121,6 +121,7 @@
   docker save -o d:\docker\app\snapshot\ubuntu_latest.tar ubuntu:latest       # 镜像存储 (save images)
   docker export ubuntu > "d:\docker\app\snapshot\ubuntu_19_04.tar"            # 导出镜像 (container export images)
   docker container export -o="d:\docker\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (container export images)
+  docker commit web myweb # 创建新容器myweb > 导出镜像 docker export myweb > "d:\docker\app\snapshot\myweb.tar"
   docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (copy dir to container)
   docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos.net\entrypoint.sh # 复制文件
   
