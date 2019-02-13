@@ -128,7 +128,7 @@
   docker search ubuntu # 搜索镜像
   docker pull ubuntu   # 下载镜像
   docker load -i /opt/images/ubuntu_latest.tar # 镜像载入 (使用Xftp先将镜像tar上传至Docker虚拟机或共享盘)
-  docker commit web myweb # 创建新镜像myweb(容器web) > 保存镜像...
+  docker commit web myweb # 创建新镜像myweb(容器web) > 保存镜像:
   docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest       # 保存镜像 (save images)
   docker export ubuntu > "d:\docker\snapshot\ubuntu_19_04.tar"           # 导出快照 (export snapshot)
   docker container export -o="d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出快照 (container export snapshot)
@@ -142,7 +142,7 @@
   
   docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 
     -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
-    redis:5.0.3-alpine redis-server /etc/redis/redis.conf
+    redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 或执行 docker-entrypoint.sh
   
   ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
   # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
