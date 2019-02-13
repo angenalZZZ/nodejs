@@ -122,10 +122,10 @@
   docker search ubuntu # 搜索镜像
   docker pull ubuntu   # 下载镜像
   docker load -i /opt/images/ubuntu_latest.tar # 镜像载入 (使用Xftp先将镜像tar上传至Docker虚拟机或共享盘)
-  docker save -o d:\docker\app\snapshot\ubuntu_latest.tar ubuntu:latest       # 镜像存储 (save images)
-  docker export ubuntu > "d:\docker\app\snapshot\ubuntu_19_04.tar"            # 导出镜像 (container export images)
-  docker container export -o="d:\docker\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (container export images)
-  docker commit web myweb # 创建新容器myweb > 导出镜像 docker export myweb > "d:\docker\app\snapshot\myweb.tar"
+  docker save -o d:\docker\snapshot\ubuntu_latest.tar ubuntu:latest       # 镜像存储 (save images)
+  docker export ubuntu > "d:\docker\snapshot\ubuntu_19_04.tar"            # 导出镜像 (container export images)
+  docker container export -o="d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (container export images)
+  docker commit web myweb # 创建新容器myweb > 导出镜像 docker export myweb > "d:\docker\snapshot\myweb.tar"
   docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (copy dir to container)
   docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos.net\entrypoint.sh # 复制文件
   
