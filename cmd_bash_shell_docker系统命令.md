@@ -166,8 +166,10 @@
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db
   
   docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
-  docker container prune   # 删除所有停止的容器
-  docker port mysite       # 查看容器端口映射
+  docker container prune [container]  # 删除所有停止的容器
+  docker rm [container]    # 删除容器
+  docker rmi [image]       # 删除镜像
+  docker port mysite       # 查看端口映射
   docker run -itd -P --name myweb --link redis5:redisdb web # 容器之间安全互联 > myweb连接redisdb(连接redis5的别名)
   docker stop web & docker commit web myweb & docker run -p 8080:80 -p 8000:80 -td myweb # 容器web映射多个端口
   docker exec redis5 ps -a # 在容器中执行命令
