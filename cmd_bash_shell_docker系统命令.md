@@ -47,6 +47,9 @@
   > net share c         # 添加
   > net share c /delete # 删除
   
+  # 主机Host
+  $ cat /etc/hosts
+  
   # 关机
   > sleep 9000; shutdown -s
   > at 03:30:00PM shutdown -s
@@ -155,6 +158,7 @@
   docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
   docker container prune   # 删除所有停止的容器
   docker port mysite       # 查看容器端口映射
+  docker run -itd -P --name myweb --link redis5:redisdb web # 容器之间安全互联 > myweb连接redisdb(连接redis5的别名)
   docker stop web & docker commit web myweb & docker run -p 8080:80 -p 8000:80 -td myweb # 容器web映射多个端口
   docker exec redis5 ps -a # 在容器中执行命令
   docker inspect mysite    # 查看容器详情
