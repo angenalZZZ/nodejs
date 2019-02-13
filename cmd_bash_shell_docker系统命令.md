@@ -153,6 +153,8 @@
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
   docker run -itd --name mysql --env MYSQL_ROOT_PASSWORD=123456 mysql # mariadb、mongo、microsoft/mssql-server-linux
+  docker run --name sqlserver2017 -p 11433:1433 -v "d:\docker\db\mssql\data:/var/opt/mssql/data" -v "d:\docker\db\mssql\log:/var/opt/mssql/log"
+    -e SA_PASSWORD="Your_password123" -e ACCEPT_EULA="Y" mcr.microsoft.com/mssql/server # 数据库sqlserver2017
   
   docker network create -d bridge net1d # 创建自定义网络net1d
   docker network connect net1d redis5 & docker network connect net1d centos.netcore # 加入自定义网络net1d
