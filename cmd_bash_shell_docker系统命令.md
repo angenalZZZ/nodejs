@@ -151,18 +151,18 @@
   
   docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
   
-  docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 
+  docker run --name redis5 --network=workgroup --network-alias=redis5 -d -m 512m -p 6379:6379 
     -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行 /usr/local/bin/docker-entrypoint.sh
   
   ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
   # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
-  docker run --name dotnet --network=net1d -it -m 512m -p 8080:80 -v "d:\docker\app\microsoft.net\app:/app" 
+  docker run --name dotnet --network=workgroup -it -m 512m -p 8080:80 -v "d:\docker\app\microsoft.net\app:/app" 
     microsoft/dotnet # 最新版dotnet
     microsoft/dotnet:sdk # 最新版dotnet-sdk
     microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
   
-  docker run --name centos.net --network=net1d -it -m 512m -p 8000:80 -v "d:\docker\app\centos.net\home:/home" 
+  docker run --name centos.net --network=workgroup -it -m 512m -p 8000:80 -v "d:\docker\app\centos.net\home:/home" 
     centos /bin/bash # 或执行: --workdir /home/ConsoleApp2NewLife centos /bin/sh -c "/bin/bash ./entrypoint.sh"
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
@@ -172,8 +172,8 @@
     -p 1434:1433 --link myweb:db # (-p)外部host端口1434连接db, (--link)容器myweb连接db, 外部host不安全连接--net:host
     -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y mcr.microsoft.com/mssql/server # 数据库sqlserver2017
   
-  docker network create -d bridge net1d # 创建自定义网络net1d
-  docker network connect net1d redis5 & docker network connect net1d centos.netcore # 加入自定义网络net1d
+  docker network create -d bridge workgroup # 创建自定义网络workgroup
+  docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db
   
   docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
