@@ -122,6 +122,7 @@
   docker export ubuntu > "d:\docker\app\snapshot\ubuntu_19_04.tar"            # 导出镜像 (container export images)
   docker container export -o="d:\docker\app\snapshot\ubuntu_19_04.tar" ubuntu # 导出镜像 (container export images)
   docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (copy dir to container)
+  docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos.net\entrypoint.sh # 复制文件
   
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   
