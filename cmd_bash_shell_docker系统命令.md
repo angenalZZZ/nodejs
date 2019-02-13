@@ -139,7 +139,8 @@
     microsoft/dotnet:sdk # 最新版dotnet-sdk
     microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
   
-  docker run --name centos.net --network=net1d -it -m 512m -p 8000:80 -v "d:\docker\app\centos.net\home:/home" centos bash
+  docker run --name centos.net --network=net1d -it -m 512m -p 8000:80 -v "d:\docker\app\centos.net\home:/home" 
+    centos /bin/bash # 或执行: --workdir /home/ConsoleApp2NewLife centos /bin/sh -c /bin/bash ./entrypoint.sh
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
