@@ -13,6 +13,12 @@
   > ver
   $ uname -a
   
+  # 帮助
+  > help cmd
+  $ help, --help
+  $ info
+  $ man
+  
   # 用户登陆
   $ w
   
@@ -27,6 +33,11 @@
   # 文件列表
   > dir [目录] # 默认当前目录
   $ ls  [目录] # 默认当前目录
+  
+  # 文件查找
+  > for /r C:\windows\addins\ %i in (explorer.exe) do @echo %i # 在指定目录下查找匹配文件
+  $ find / -name [filename] # 在根目录下查找匹配文件
+  $ find /etc -type f -name passwd
   
   # 文件复制
   > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a
@@ -142,7 +153,7 @@
   
   docker run --name redis5 --network=net1d -d -m 512m -p 6379:6379 
     -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
-    redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 或执行 docker-entrypoint.sh
+    redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行 /usr/local/bin/docker-entrypoint.sh
   
   ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
   # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
