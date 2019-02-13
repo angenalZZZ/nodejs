@@ -109,6 +109,7 @@
   # 运行
   docker run --name test-image-docker -it -p 9999:8888 test-image # 已加载镜像 test-image 时, 用 docker images 查询
   # 网络
+  docker network ls                                 # 查看网络列表
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
   docker network connect [network-name] [container] # 加入自定义网络
   # 基础
@@ -144,6 +145,8 @@
     centos /bin/bash # 或执行: --workdir /home/ConsoleApp2NewLife centos /bin/sh -c "/bin/bash ./entrypoint.sh"
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
+  
+  docker run -itd --name mysql --env MYSQL_ROOT_PASSWORD=123456 mysql # mariadb、mongo、microsoft/mssql-server-linux
   
   docker network create -d bridge net1d # 创建自定义网络net1d
   docker network connect net1d redis5 & docker network connect net1d centos.netcore # 加入自定义网络net1d
