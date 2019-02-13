@@ -169,9 +169,9 @@
   
   docker run -itd --name mysql --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=123456 
     mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux
-  docker run --name sqlserver2017 -v "d:\docker\db\mssql\data:/var/opt/mssql/data" -v "d:\docker\db\mssql\log:/var/opt/mssql/log"
+  docker run -itd --name sqlserver2017 -v "d:\docker\db\mssql\data:/var/opt/mssql/data" -v "d:\docker\db\mssql\log:/var/opt/mssql/log"
     -p 1434:1433 --link myweb:db 
-    # (-p)外部host端口1434连接db, (--link)单个容器myweb连接db, (--network-alias)多容器连接别名, (--net:host)外部host不安全连接
+     # (-p)外部端口1434连db, (--link)容器myweb连db, (--network-alias)入网,容器连db, (--net:host)外部不安全连接
     -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y mcr.microsoft.com/mssql/server # 数据库sqlserver2017
   
   docker network create -d bridge workgroup # 创建自定义网络workgroup
