@@ -154,6 +154,7 @@
   docker stop web & docker commit web myweb & docker run -p 8080:80 -p 8000:80 -td myweb # 容器web映射多个端口
   docker exec redis5 ps -a # 在容器中执行命令
   docker inspect mysite    # 查看容器详情
+  docker rename web myweb  # 容器重命名 > 查看容器 docker ps -a
   docker logs redis5       # 查看容器日志
 ~~~
 
