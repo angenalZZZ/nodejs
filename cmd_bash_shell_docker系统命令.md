@@ -144,6 +144,7 @@
   
   docker network create -d bridge net1d # 创建自定义网络net1d
   docker network connect net1d redis5 & docker network connect net1d centos.netcore # 加入自定义网络net1d
+  docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db
   
   docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
   docker container prune   # 删除所有停止的容器
