@@ -12,7 +12,7 @@
 > npm install -g @vue/cli  or > yarn global add @vue/cli
 ~~~
 
-> `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个api：`props`、`event`、`slot` 构成了组件设计的核心。<br>
+> `组件`：分为 `路由`、`业务`、`基础` 三类组件；三个[api](https://cn.vuejs.org/v2/api)：`props`、`event`、`slot`构成了组件设计的核心。<br>
 　　`路由`：用于接收参数、加载数据、页面渲染、可视化-用户交互等业务；不提供接口`props`、`event`，不能复用；<br>
 　　`业务`：用于多页面复用，一般不跨项目；往往集成了数据的输入输出、校验、事件处理`event`、生命周期`钩子`；<br>
 　　`基础`：用于功能单一、能大量复用的组件，可通过配置实现不同的功能；注重api的设计、兼容性、性能、高可用。<br>
@@ -56,12 +56,13 @@
   // 组件设计、功能描述、版本说明 ^ import Component1 from '../components/component1.vue'
   export default {
     /* el: document.getElementById('app'), // or ^ el: '#app',
-    * //Vue渲染Htm-Node: h(html-tag, {attrs:{id:'',}, class:{btn:true,}, style...}|'html文本', [...children])
-    * //Vue渲染Com-Node: h(Component, {props:{vid:1,}, filters...}, [...children])
-    * render: h => h(App), //h即createElement: 唯一的vNode(Virtual-DOM组件树用来描述真实的Html-DOM,提升渲染的性能)
-    * 1.自动挂载: 组件render渲染后, 自动mount挂载到DOM元素el ^ <div id="app">...
-    * 2.手动挂载: 类型Component1大写首字母+实例component1小写首字母...
-      $mount渲染组件 >> events用户交互 >> removeChild把节点从DOM元素el中移除 >> $destroy销毁实例 >> router路由导航
+    * //Vue渲染HtmNode: h(html-tag, {attrs:{id:'',}, class:{btn:true,}, style...}|'html文本', [...children])
+    * //Vue渲染ComNode: h(Component, {props:{vid:1,}, filters...}, [...children])
+    * render: h => h(App), //h即createElement: vNode唯一 (Virtual-DOM组件树用来描述真实的Html-DOM,提升渲染性能)
+    * template: `...text/x-template...`, //即<template>, 生成组件方式之一, 另一种方式是使用render函数
+    * 1.自动挂载: 组件实例render渲染后, 自动mount挂载到Html-DOM元素el ^ <div id="app">...
+    * 2.手动挂载: 组件类型Component1大写首字母+实例component1小写首字母...
+      $mount渲染组件, events用户交互, removeChild把节点从元素el中移除, $destroy销毁实例, <router-link>跳转...
     ----方式一 -------------------------------------------
     import Vue from 'vue';
     const Component1 = Vue.extend({
