@@ -63,7 +63,7 @@
     * 1.自动挂载: 组件实例render渲染后, 自动mount挂载到Html-DOM元素el ^ <div id="app">...
     * 2.手动挂载: 组件类型Component1大写首字母+实例component1小写首字母...
       $mount渲染组件, events用户交互, removeChild把节点从元素el中移除, $destroy销毁实例, <router-link>跳转...
-    ----方式一 -------------------------------------------
+    ----方式一 Vue.extend() ----------------------------------------
     import Vue from 'vue';
     const Component1 = Vue.extend({
       template: '<div>{{ message }}</div>',
@@ -71,11 +71,10 @@
     });
     const component1 = new Component1().$mount(); document.body.appendChild(component1.$el);
     // new Component1().$mount('#app'); // new Component1({ el: '#app' });
-    ----方式二 -------------------------------------------
+    ----方式二 new Vue() -------------------------------------------
     import Component1 from '../components/component1.vue';
     const Instance1 = new Vue({
-      // router, // 路由导航
-      render (h) => h(Component1, { props: { vid: 1 } }) // 传入组件的 props 选项
+      render (h) => h(Component1, { props: { vid: 1 } }) // 传入组件的 props 选项; // ,router // 路由导航...
     });
     const component1 = Instance1.$mount(); document.body.appendChild(component1.$el);
     //let component1 = Instance1.$children[0]; // 因为 Instance 下只 render 了一个 component 子组件(mounted)
