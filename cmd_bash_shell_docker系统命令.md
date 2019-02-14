@@ -46,7 +46,7 @@
   # 文件删除
   > del /f /s /q [目录|文件]
   > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
-  $ rm -f -r [目录] [-f 强制]
+  $ rm -f -r [目录] [f强制]
   
   # 列出网络监听端口
   > netstat -ap tcp | findstr -i "listening" # tcp端口
@@ -68,7 +68,7 @@
   > at 03:30:00PM shutdown -s
   > schtasks /create /sc once /tn "auto shutdown my computer" /tr "shutdown -s" /st 15:30
   > at 11:00:00PM /every:M,T,W,TH,F,SA,SU shutdown -s
-  > at 11:00:00PM shutdown -r [-r 重启]
+  > at 11:00:00PM shutdown -r [r重启]
   
   # 系统硬件序列号
   wmic memorychip get serialnumber
@@ -127,10 +127,10 @@
   # 网络
   docker network ls                                 # 查看网络列表
   docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
-  docker network connect [network-name] [container] # 加入自定义网络
-  docker network connect --alias db [network-name] [container-db] # 入网,提供别名访问
-  docker network connect --link other_container:alias_name [network-name] [container] # 入网,其它容器连接别名
-  docker network connect --ip 10.10.36.122 [network-name] [container] # 入网,其它容器连接指定ip
+  docker network connect [network-name] [container] # 1.加入自定义网络(参数2,3,4可一起写)
+  docker network connect --alias db [network-name] [container-db] # 2.入网,提供别名访问
+  docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
+  docker network connect --ip 10.10.36.122 [network-name] [container] # 4.入网,其它容器连接指定ip
   docker network disconnect [network-name] [container] # 退出网络
   # 基础
   docker [COMMAND] --help
