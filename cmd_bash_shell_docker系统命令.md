@@ -179,16 +179,22 @@
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db
   
   docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
-  docker container prune [container]  # 删除所有停止的容器
-  docker rm [container]    # 删除容器
-  docker rmi [image]       # 删除镜像
-  docker port mysite       # 查看端口映射
   docker run -itd -P --name myweb --link redis5:redisdb web # 容器之间安全互联 > myweb连接redisdb(连接redis5的别名)
   docker stop web & docker commit web myweb & docker run -p 8080:80 -p 8000:80 -td myweb # 容器web映射多个端口
   docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh" # 在容器中执行命令: 查看进程详情后,进入工作目录sh
-  docker inspect mysite    # 查看容器详情
-  docker rename web myweb  # 容器重命名 > 查看容器 docker ps -a
-  docker logs redis5       # 查看容器日志
+  
+  docker container prune [container] # 删除所有停止的容器
+  docker kill $(docker ps -a -q) # 杀死所有运行的容器
+  docker volume prune            # 删除未使用volumes
+  docker system prune            # 删除未使用数据
+  docker rm [container]          # 删除1个容器
+  docker rm $(docker ps -a -q)   # 删除所有容器
+  docker rmi [image]             # 删除1个镜像
+  docker rmi $(docker images -q) # 删除所有镜像
+  docker port [container]        # 查看端口映射
+  docker inspect [container]     # 查看容器详情
+  docker rename web [container]  # 容器重命名 > 查看容器 docker ps -a
+  docker logs [container]        # 查看容器日志
 ~~~
 
 > **docker-search-tags.sh** 标签/版本列表
