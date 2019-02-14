@@ -181,10 +181,9 @@
   docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
   docker run -itd -P --name myweb --link redis5:redisdb web # 容器之间安全互联 > myweb连接redisdb(连接redis5的别名)
   docker stop web & docker commit web myweb & docker run -p 8080:80 -p 8000:80 -td myweb # 容器web映射多个端口
-  docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh" # 在容器中执行命令: 查看进程详情后,进入工作目录sh
-  
-  docker container prune [container] # 删除所有停止的容器
+  docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh" # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
   docker kill $(docker ps -a -q) # 杀死所有运行的容器
+  docker container prune         # 删除所有停止的容器
   docker volume prune            # 删除未使用volumes
   docker system prune            # 删除未使用数据
   docker rm [container]          # 删除1个容器
