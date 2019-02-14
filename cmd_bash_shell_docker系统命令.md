@@ -176,7 +176,8 @@
   
   docker network create -d bridge workgroup # 创建自定义网络workgroup
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
-  docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}" db
+  docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" db
+  docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
   
   docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
   docker run -itd -P --name myweb --link redis5:redisdb web # 容器之间安全互联 > myweb连接redisdb(连接redis5的别名)
