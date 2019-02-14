@@ -58,7 +58,8 @@
   > net share c         # 添加
   > net share c /delete # 删除
   
-  # 主机Host
+  # 主机环境
+  > set              # 查看系统环境变量
   > notepad C:\Windows\System32\drivers\etc\hosts
   $ cat /etc/hosts   # 一次显示整个文件
   $ cat > /etc/hosts # 从键盘创建一个文件
