@@ -175,8 +175,9 @@
      # (-p)外部端口1434连db, (--link)容器myweb连db, (--network-alias)入网,容器连db, (--net:host)外部不安全连接
     -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y mcr.microsoft.com/mssql/server # 数据库sqlserver2017
   
-  docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687
-    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0 # NoSQL图形数据库
+  docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
+    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" 
+    neo4j:3.0 # 高性能的NoSQL图形数据库
   
   docker network create -d bridge workgroup # 创建自定义网络workgroup
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
