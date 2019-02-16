@@ -192,3 +192,10 @@
   </script>
 ~~~
 
+
+# web 前端存储 cookies, local, session, and db storage and indexed db
+
+####  es6：[`Brownies`](https://github.com/franciscop/brownies)
+
+
+
