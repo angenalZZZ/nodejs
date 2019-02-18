@@ -136,8 +136,8 @@ npm i jsonwebtoken
 ## 用户账号设计
 
     参考 dotnet new mvc --auth Individual
-   　　　Data/Migrations/*CreateIdentitySchema* & Data/*/ApplicationDbContext*
-   　　　如下：
+       　　　Data/Migrations/*CreateIdentitySchema* & Data/*/ApplicationDbContext*
+       　　　如下：
 ~~~
 CREATE TABLE [AspNetUsers] (
 	[Id] nvarchar(450) NOT NULL PRIMARY KEY CLUSTERED, 
