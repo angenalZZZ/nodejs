@@ -2,7 +2,7 @@
 
 [1. 项目工程初始化](#项目工程初始化) 
 
-[2. 接口契约与入参校验 —— 使用 Swagger & Joi](#接口契约与入参校验Swagger&Joi) 
+[2. 接口契约与入参校验 —— 使用 Swagger & Joi](#接口契约与入参校验Swagger+Joi) 
 
 [3. 身份验证实现 —— 使用 hapi-auth-jwt2](#身份验证hapi-auth-jwt2) 
 
@@ -54,7 +54,7 @@ npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.
 
 
 
-# **接口契约与入参校验Swagger&Joi**
+# **接口契约与入参校验Swagger+Joi**
 
 > 使用 Swagger
 
