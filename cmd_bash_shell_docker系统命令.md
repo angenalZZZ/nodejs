@@ -53,7 +53,15 @@
   # 列出网络监听端口
   > netstat -ap tcp | findstr -i "listening" # tcp端口
   $ netstat -atW | grep -i "listen"    # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
-  $ netstat -atW | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get -y install xinetd telnetd
+  $ netstat -alp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get install -y net-tools # xinetd telnetd
+  $ ss -t4 state time-wait             # tcp超时-ubuntu $ apt-get install -y iproute2 iproute2-doc
+  $ ss -at '( dport = :ssh or sport = :ssh )' # 端口为 ssh 的套接字
+  $ ss -lntp '( dst :443 or dst :80 )'        # 目的端口为 80,443 的套接字
+  $ ss -nt state connected dport = :80
+  $ ss -nt dport lt :100  # 端口小于100
+  $ ss -nt dport gt :1024 # 端口大于1024
+  $ ss -lntp  # tcp端口+users进程name-pid-fd
+  $ ss -aup   # udp端口
   
   # 网络共享
   > net share           # 查找
