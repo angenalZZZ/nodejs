@@ -4,7 +4,7 @@
 
 [2. 接口契约与入参校验 —— 使用 Swagger & Joi](#接口契约与入参校验——Swagger&Joi) 
 
-[3. 身份验证实现 —— 使用 hapi-auth-jwt2](#身份验证——hapi-auth-jwt2) 
+[3. 身份验证实现 —— 使用 hapi-auth-jwt2](#身份验证—hapi-auth-jwt2) 
 
 `[参考资源]`
 
@@ -125,7 +125,7 @@ node_modules/.bin/sequelize db:seed:undo --seed XXXXXXXXXXXXXX-demo-user.js
 
 ****
 
-# **身份验证——hapi-auth-jwt2**
+# **身份验证—hapi-auth-jwt2**
 
 > 用 jsonwebtoken 签发 JWT
 
@@ -136,7 +136,7 @@ npm i jsonwebtoken
 ## 用户账号设计
 
     参考 dotnet new mvc --auth Individual <br>
-    　　　Data/Migrations/*CreateIdentitySchema* & Data/*/ApplicationDbContext*
+   　　　Data/Migrations/*CreateIdentitySchema* & Data/*/ApplicationDbContext*
 
 ## jwt.sign 签发
 
