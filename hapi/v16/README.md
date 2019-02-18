@@ -133,6 +133,11 @@ node_modules/.bin/sequelize db:seed:undo --seed XXXXXXXXXXXXXX-demo-user.js
 npm i jsonwebtoken
 ```
 
+## 用户账号设计
+
+    参考 dotnet new mvc --auth Individual <br>
+    　　　Data/Migrations/*CreateIdentitySchema* & Data/*/ApplicationDbContext*
+
 ## jwt.sign 签发
 
 JWT 的签发语法是 jwt.sign(payload, secretOrPrivateKey, [options, callback])。默认的签发算法基于 HS256 (HMAC SHA256)，可以在 options 参数的 algorithm 另行修改。JWT 签发规范中的一些标准保留字段比如 exp，nbf，aud，sub，iss 等都没有默认值，可以一并在 payload 参数中按需声明使用，亦可以在第三个参数 options 中，通过 expiresIn，notBefore，audience，subject，issuer 来分别赋值，但是不允许在两处同时声明。
