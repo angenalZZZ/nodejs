@@ -346,18 +346,18 @@ obj\
 > [转发服务`ngrok`](https://dashboard.ngrok.com/get-started)
 
 ~~~
-  # 配置认证服务 add your account's authtoken to your ngrok.yml file.
-  $ ./ngrok authtoken 7pWLVhS1gxiMAQdaFeYJy_31krnw9drNLLJftaNSFnm
-  # 查看帮助文档
-  $ ./ngrok help
-  # 开启http服务
-  $ ngrok http 80                    # secure public URL for port 80 web server
+  # 保存路径 C:/Windows/System32/ngrok.exe
+  # 查看帮助
+  > ngrok help
+  # 配置认证账号 add your account's authtoken to your ngrok.yml file
+  > ngrok authtoken 7pWLVhS1gxiMAQdaFeYJy_31krnw9drNLLJftaNSFnm
+  # 开启转发服务
+  > ngrok http 80                    # secure public URL for port 80 web server
     ngrok http -subdomain=baz 8080   # port 8080 available at baz.ngrok.io
     ngrok http foo.dev:80            # tunnel to host:port instead of localhost
     ngrok tcp 22                     # tunnel arbitrary TCP traffic to port 22
     ngrok tls -hostname=foo.com 443  # TLS traffic for foo.com to port 443
     ngrok start foo bar baz          # start tunnels from the configuration file
-
 ~~~
 
 
