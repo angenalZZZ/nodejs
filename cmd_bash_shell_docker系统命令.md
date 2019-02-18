@@ -60,7 +60,7 @@
   $ ss -nt state connected dport = :80
   $ ss -nt dport lt :100  # 端口小于100
   $ ss -nt dport gt :1024 # 端口大于1024
-  $ ss -lntp  # tcp端口+users进程name-pid-fd
+  $ ss -lntp  # tcp端口+users进程name-pid-fd  # 常用ss(iproute2工具集)比netstat(net-tools工具集)更强大
   $ ss -aup   # udp端口
   
   # 网络共享
