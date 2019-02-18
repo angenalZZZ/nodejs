@@ -50,7 +50,7 @@
   > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
   $ rm -f -r [目录] [f强制]
   
-  # 列出网络监听端口
+  # 网络端口
   > netstat -ap tcp | findstr -i "listening" # tcp端口
   $ netstat -atW | grep -i "listen"    # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
   $ netstat -alp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get install -y net-tools # xinetd telnetd
@@ -74,7 +74,7 @@
   $ cat /etc/hosts   # 一次显示整个文件
   $ cat > /etc/hosts # 从键盘创建一个文件
   
-  # 关机
+  # 关机命令
   > sleep 9000; shutdown -s
   > at 03:30:00PM shutdown -s
   > schtasks /create /sc once /tn "auto shutdown my computer" /tr "shutdown -s" /st 15:30
@@ -95,16 +95,16 @@
   # 防火墙开关
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state on
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state off
-  # 时区
+  # 时区设置
   tzutil /g [获取] /l [列表]
   tzutil /s "China Standard Time" [设置]
-  # 打印
+  # 打印设置
   wmic printer get Default,DeviceID,Name,Network                          # 获取打印机设备
   wmic printer get DeviceID,PrinterPaperNames                             # 设备ID,打印纸张
   wmic printer where default='TRUE' get name                              # 获取默认打印机
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
-  # 服务ssh
+  # 安装服务ssh
   # < centos >--------------------------- 
   $ rpm -qa | grep ssh  # 检查服务ssh是否已安装: netstat -antp | grep sshd [端口:22]
   $ yum install -y initscripts # 安装服务netstat [/sbin/service]
@@ -116,6 +116,7 @@
   $ sudo apt-get install openssh-server          # 再安装ssh
   $ sudo rm /etc/ssh/ssh_config                  # 先删配置文件，让ssh服务自己想办法链接
   $ sudo service ssh --full-restart              # 再启动ssh
+  
 ~~~
 
 # [**docker**](https://docs.docker.com)
