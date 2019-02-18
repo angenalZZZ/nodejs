@@ -11,6 +11,7 @@
   
   # 系统
   > ver
+  > net config workstation
   $ uname -a
   
   # 帮助
