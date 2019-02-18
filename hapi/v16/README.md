@@ -2,7 +2,7 @@
 
 [1. 项目工程初始化](#项目工程初始化) 
 
-[2. 接口契约与入参校验 —— 使用 Swagger & Joi](#接口契约与入参校验Swagger+Joi) 
+[2. 接口契约与入参校验 —— 使用 Swagger & Joi](#接口契约与入参校验Swagger-Joi) 
 
 [3. 身份验证实现 —— 使用 hapi-auth-jwt2](#身份验证hapi-auth-jwt2) 
 
@@ -54,7 +54,7 @@ npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.
 
 
 
-# **接口契约与入参校验Swagger+Joi**
+# **接口契约与入参校验Swagger-Joi**
 
 > 使用 Swagger
 
@@ -137,6 +137,28 @@ npm i jsonwebtoken
 
     参考 dotnet new mvc --auth Individual
    　　　Data/Migrations/*CreateIdentitySchema* & Data/*/ApplicationDbContext*
+   　　　如下：
+~~~
+CREATE TABLE [AspNetUsers] (
+	[Id] nvarchar(450) NOT NULL PRIMARY KEY CLUSTERED, 
+	[AccessFailedCount] int NOT NULL, -- 登录失败次数
+	[ConcurrencyStamp] nvarchar(256), -- 并发标记
+	[Email] nvarchar(256), -- 邮箱账号
+	[EmailConfirmed] bit NOT NULL, -- 邮箱账号是否已确认?
+	[LockoutEnabled] bit NOT NULL, -- 启用封号
+	[LockoutEnd] datetimeoffset(7), -- 封号截至时间
+	[NormalizedEmail] nvarchar(256), -- 正常使用的邮箱账号
+	[NormalizedUserName] nvarchar(256), -- 正常使用的用户名账号
+	[PasswordHash] nvarchar(256), -- 安全密码
+	[PhoneNumber] nvarchar(256), -- 手机号账号
+	[PhoneNumberConfirmed] bit NOT NULL, -- 手机号账号是否已确认?
+	[SecurityStamp] nvarchar(256), -- 安全登录时间戳
+	[TwoFactorEnabled] bit NOT NULL, -- 启用双因子安全认证(账号登录+短信验证)
+	[UserName] nvarchar(256) -- 用户名账号
+) ON [PRIMARY];
+CREATE NONCLUSTERED INDEX [EmailIndex] ON [AspNetUsers] ([NormalizedEmail])... 邮箱账号登录
+CREATE UNIQUE NONCLUSTERED INDEX [UserNameIndex] ON [AspNetUsers] ([NormalizedUserName])... 用户名账号登录
+~~~
 
 ## jwt.sign 签发
 
