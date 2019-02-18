@@ -150,7 +150,7 @@
   
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   
-  docker run -d -p 8080:80 -p 8081:443 --name mysite dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
+  docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
   
   docker run --name redis5 --network=workgroup --network-alias=redis5 -d -m 512m -p 6379:6379 
     -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
@@ -183,11 +183,14 @@
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" db
   docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
+  docker run --name myweb -itd -P --network=workgroup --link redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
   
-  docker stop 8b49 & docker rm -f mysite # 停止+删除:容器[CONTAINER ID: 8b49b31cea06][前缀4位|完整ID|name]
-  docker run -itd -P --name myweb --link redis5:redisdb web # 容器之间安全互联 > myweb连接redisdb(连接redis5的别名)
+  docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh"  # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
   docker stop web & docker commit web myweb & docker run -p 8080:80 -p 8000:80 -td myweb # 容器web映射多个端口
-  docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh" # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
+  docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 Name]
+  docker container stop $(docker ps -aq)    # 停止所有容器
+  docker container start $(docker ps -aq)   # 启动所有容器
+  docker container restart $(docker ps -aq) # 重启所有容器
   docker kill $(docker ps -a -q) # 杀死所有运行的容器
   docker container prune         # 删除所有停止的容器
   docker volume prune            # 删除未使用volumes
