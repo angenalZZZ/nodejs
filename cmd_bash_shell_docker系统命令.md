@@ -116,7 +116,11 @@
   $ sudo apt-get install openssh-server          # 再安装ssh
   $ sudo rm /etc/ssh/ssh_config                  # 先删配置文件，让ssh服务自己想办法链接
   $ sudo service ssh --full-restart              # 再启动ssh
-  
+  $ sudo passwd root             # 修改root密码，用于root登录ssh
+  $ sudo vi /etc/ssh/sshd_config # 修改配置文件 > # Authentication: (全部启用,去除#)
+    # vim命令（:w 编辑模式, :x 回车保存）
+    > PermitRootLogin yes        # 启用root登录  #PermitRootLogin prohibit-password
+    > sudo service ssh restart   # 重启ssh
 ~~~
 
 # [**docker**](https://docs.docker.com)
