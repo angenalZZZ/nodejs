@@ -89,6 +89,8 @@ npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hap
 # orm 数据库访问
 npm i -S mongoose  # for Mongodb https://mongoosejs.com/docs/index.html
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
+npm i level     # 高性能缓存数据库Google LevelDB https://github.com/Level/level
+npm i ssdb-node # SSDB 基于LevelDB https://github.com/reanote/ssdb-node
 
 # algorithm 算法
 npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击) https://github.com/jedisct1/siphash-js
