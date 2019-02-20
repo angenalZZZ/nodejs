@@ -100,7 +100,7 @@ npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高
 # thread 线程
 npm i napajs # 多线程运行时 https://github.com/Microsoft/napajs
 
-# chat, bots, apps 聊天,机器人,应用
+# chat, bots, apps 聊天,机器人,应用 https://github.com/Microsoft/BotBuilder-Samples
 npm i botkit # 聊天机器人 https://github.com/howdyai/botkit
 
 # utility 实用
