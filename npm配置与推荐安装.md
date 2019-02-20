@@ -53,8 +53,9 @@ npm i -g @angular/cli  >ng            # 跨平台构建工具Angular2，ng set -
 cnpm i -g vue-cli      >vue           # 构建工具Vue2.x
 cnpm i -g @vue/cli     >vue           # 构建工具Vue3.x https://cli.vuejs.org
 cnpm i -g weex-toolkit >weex          # 跨平台构建工具 https://github.com/apache/incubator-weex https://alibaba.github.io
-npm i -g supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
+npm i -g create-rx-app >npx           # 跨平台构建工具RN https://github.com/Microsoft/reactxp
 npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
+npm i -g supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
 npm i -g serve http-server json-server lite-server
 # > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
 npm i -g yo jspm sqlpad @compodoc/compodoc
