@@ -45,7 +45,7 @@ npm i -D [--save-dev]                                     [添加项目工具依
 ~~~
 
  # npm 全局安装包 npm install -g
-  [TypeScript例子](https://github.com/Microsoft/TypeScriptSamples)、[机器人](https://github.com/Microsoft/BotBuilder-Samples)
+  [TypeScript](https://github.com/Microsoft/TypeScriptSamples)、[机器人](https://github.com/Microsoft/BotBuilder-Samples)、[物连网](https://github.com/ms-iot/samples)
   
 ~~~
 npm i -g typescript    >tsc >tsserver # ts-node | io-ts  非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js
@@ -98,10 +98,10 @@ npm i ssdb-node # SSDB 基于LevelDB https://github.com/reanote/ssdb-node
 # algorithm 算法
 npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击) https://github.com/jedisct1/siphash-js
 
-# thread 线程
+# thread 多线程
 npm i napajs # 多线程运行时 https://github.com/Microsoft/napajs
 
-# chat, bots, apps 聊天,机器人,应用
+# chat, bots 聊天,机器人
 npm i botkit # 聊天机器人 https://github.com/howdyai/botkit
 
 # utility 实用
