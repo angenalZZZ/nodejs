@@ -110,6 +110,9 @@ npm i chalk      # 命令行输出文字颜色  https://github.com/chalk/chalk
 npm i commander  # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
 npm i pidusage   # 检查进程(PID) / CPU & 内存的使用 https://github.com/soyuka/pidusage
 npm i proxyquire # https://github.com/thlorenz/proxyquire
+npm i monaco-editor # 在线代码编辑器 https://microsoft.github.io/monaco-editor/index.html
+
+#---------------------------------------------------------------------------------
 yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
 
 ~~~
