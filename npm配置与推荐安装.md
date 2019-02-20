@@ -63,7 +63,8 @@ npm i -g yo jspm sqlpad @compodoc/compodoc
 ~~~
 
  # npm 后端安装包 (npm|yarn) install
-
+  [TypeScript](https://github.com/Microsoft/TypeScript-Node-Starter)
+  
 ~~~
 # web 框架
 npm i -g express         # express项目构建 https://github.com/expressjs/express  http://www.expressjs.com.cn
