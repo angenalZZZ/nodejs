@@ -96,6 +96,9 @@ npm i ssdb-node # SSDB 基于LevelDB https://github.com/reanote/ssdb-node
 # algorithm 算法
 npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击) https://github.com/jedisct1/siphash-js
 
+# thread 线程
+npm i napajs # 多线程运行时 https://github.com/Microsoft/napajs
+
 # utility 实用
 npm i rxjs       # 响应式编程的库 https://cn.rx.js.org
 npm i chalk      # 命令行输出文字颜色  https://github.com/chalk/chalk
