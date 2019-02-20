@@ -13,6 +13,7 @@
   > ver
   > net config workstation
   $ uname -a
+  $ lsb_release -cs  # 当前系统的发行版名称
   
   # 帮助
   > help cmd
