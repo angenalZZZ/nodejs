@@ -205,9 +205,9 @@
      # (-p)外部端口1434连db, (--link)容器myweb连db, (--network-alias)入网,容器连db, (--net:host)外部不安全连接
     -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y mcr.microsoft.com/mssql/server # 数据库sqlserver2017
   
-  docker run -d --name rabbitmq3 --network=workgroup --network-alias=rabbitmq -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
-    -v "d:\docker\app\rabbitmq:/var/lib/rabbitmq" -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
-    rabbitmq:3-management # 消息库rabbitmq
+  docker run -d --name rabbitmq3 --network=workgroup --network-alias=rabbitmq -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 
+    -p 15671:15671 -p 15672:15672 -p 61613:61613 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
+    rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
     # 消息服务rabbitmq启用插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
     # https://docs.docker.com/samples/#library-references https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
   
