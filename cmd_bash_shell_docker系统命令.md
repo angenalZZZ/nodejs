@@ -118,6 +118,14 @@
   $ sudo rm /etc/ssh/ssh_config                  # 先删配置文件, 让ssh服务自己想办法链接-(忽略此操作)
   $ sudo ssh-keygen -A                           # 先生成主机keys-(当提示Could not load host key)
   $ sudo service ssh --full-restart              # 再启动ssh +(设置登录后)
+  # -------------------------------------
+  $ systemctl start sshd   # systemctl启动sshd
+  $ systemctl status sshd  # systemctl查看状态
+  $ systemctl enable sshd  # systemctl开机启动生效
+    ln -s '/usr/lib/systemd/system/sshd.service' '/etc/systemd/system/multi-user.target.wants/sshd.service'
+  $ systemctl disable sshd # systemctl关闭开机启动
+    rm '/etc/systemd/system/multi-user.target.wants/sshd.service'
+  # -------------------------------------
   $ sudo passwd root             # 修改root密码，用于root登录ssh
   $ sudo vi /etc/ssh/sshd_config # 修改配置文件 > # Authentication: (全部启用,去除#)
     # vim命令（:w 编辑模式, :x 回车保存）
