@@ -205,9 +205,13 @@
      # (-p)外部端口1434连db, (--link)容器myweb连db, (--network-alias)入网,容器连db, (--net:host)外部不安全连接
     -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y mcr.microsoft.com/mssql/server # 数据库sqlserver2017
   
+  docker run -d --name rabbitmq3 -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
+    -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 rabbitmq:3-management # 消息库rabbitmq
+    # 消息服务rabbitmq启用插件: docker exec -it rabbitmq3 bash ; /plugins/rabbitmq-plugins enable rabbitmq_web_stomp
+    # https://docs.docker.com/samples/#library-references  https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
+  
   docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
-    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" 
-    neo4j:3.0 # 高性能的NoSQL图形数据库
+    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0 # 高性能的NoSQL图形数据库
   
   docker network create -d bridge workgroup # 创建自定义网络workgroup
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
