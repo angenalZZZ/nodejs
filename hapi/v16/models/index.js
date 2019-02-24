@@ -2,11 +2,12 @@
 
 const fs = require('fs');
 const path = require('path');
+// 数据库查询ORM: Sequelize
 const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || 'development';
-const config = require(__dirname + '/../config/config.json')[env];
-// 使系统中默认的 createdAt 与 updatedAt 能以下划线的方式，与表结构保持一致
+const config = require(__dirname + '/../config/database.json')['mysql'][env];
+// 使系统中默认的 createdAt(created_at) 与 updatedAt(updated_at) 能以下划线的方式与表结构保持一致
 config.define = { underscored: true };
 const db = {};
 
@@ -34,6 +35,5 @@ Object.keys(db).forEach(modelName => {
 });
 
 db.sequelize = sequelize;
-db.Sequelize = Sequelize;
 
 module.exports = db;

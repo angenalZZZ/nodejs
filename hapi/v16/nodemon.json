@@ -12,6 +12,7 @@
     "watch": [
       "config/",
       "models/",
+      "plugins/",
       "routes/",
       "utils/",
       "app.js"

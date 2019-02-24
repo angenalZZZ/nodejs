@@ -7,16 +7,16 @@ const config = require('./config');
 // 接口框架 https://github.com/hapijs/hapi/blob/v16/API.md
 const Hapi = require('hapi');
 // 接口路由
-const routes = require("glob").sync('./routes/*.js').reduce(function (a, f) { var m = require(f); if (m instanceof Array) m.forEach(o => a.push(o)); return a; }, []);
+const routes = require('./utils/files').load('./routes');
 // 接口实例
 const server = new Hapi.Server(config.hapiConfig.serverOptions);
 // 接口网址
 config.hapiConfig.connections.forEach(o => server.connection(o));
 // 接口插件
-// const redis = require('redis'); // https://github.com/docdis/learn-redis https://github.com/dwyl/learn-redis
 const plugHapiSwagger = require('./plugins/hapi-swagger');
 const plugHapiError = require('hapi-error');
 const plugHapiRedisConnection = require('hapi-redis-connection');
+// const redis = require('redis'); // https://github.com/docdis/learn-redis https://github.com/dwyl/learn-redis
 const plugHapiPagination = require('./plugins/hapi-pagination');
 const hapiAuthJWT = require('hapi-auth-jwt2'); // https://github.com/dwyl/hapi-auth-jwt2
 const pluginAuthJWT = require('./plugins/hapi-auth-jwt2');
