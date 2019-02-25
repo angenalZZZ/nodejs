@@ -57,9 +57,12 @@ cnpm i -g weex-toolkit >weex          # 跨平台构建工具 https://github.com
 npm i -g create-rx-app >npx           # 跨平台构建工具RN https://github.com/Microsoft/reactxp
 npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
 npm i -g supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
-npm i -g serve http-server json-server lite-server
-# > lite-server -c configs/lsconfig.js<<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
-npm i -g yo jspm sqlpad @compodoc/compodoc
+npm i -g serve http-server            # 本地开发服务
+npm i -g json-server
+# > json-server ./mock/data.json <<<{"key":"value", ...}
+npm i -g lite-server
+# > lite-server -c ./lsconfig.js <<<{"port": 8000,"files":["./src/**/*.{html,htm,css,js}"],"server":{"baseDir":"./src"}}
+npm i -g yo jspm sqlpad @compodoc/compodoc # 标准文档生成工具
 ~~~
 
  # npm 后端安装包 (npm|yarn) install
