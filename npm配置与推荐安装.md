@@ -66,7 +66,7 @@ npm i -g yo jspm sqlpad @compodoc/compodoc # 标准文档生成工具
 ~~~
 
  # npm 后端安装包 (npm|yarn) install
-  [TypeScript](https://github.com/Microsoft/TypeScript-Node-Starter)、[机器人](https://botpress.io/docs)
+  [TypeScript](https://github.com/Microsoft/TypeScript-Node-Starter)、[机器人](https://botpress.io/docs)、[开源库与应用工具](https://github.com/sindresorhus/awesome-nodejs)
   
 ~~~
 # web 框架
