@@ -48,12 +48,12 @@ npm i -D [--save-dev]                                     [添加项目工具依
   [TypeScript](https://github.com/Microsoft/TypeScriptSamples)、[机器人](https://github.com/Microsoft/BotBuilder-Samples)、[物连网](https://github.com/ms-iot/samples)
   
 ~~~
-npm i -g typescript    >tsc >tsserver # ts-node | io-ts  非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node main.js
+npm i -g typescript    >tsc >tsserver # ts-node | io-ts  非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node .
 npm i -g webpack webpack-cli webpack-dev-server # 配置例子 https://github.com/teabyii/webpack-examples
 npm i -g @angular/cli  >ng            # 跨平台构建工具Angular2，ng set --global warnings.packageDeprecation=false
 cnpm i -g vue-cli      >vue           # 构建工具Vue2.x
 cnpm i -g @vue/cli     >vue           # 构建工具Vue3.x https://cli.vuejs.org
-cnpm i -g weex-toolkit >weex          # 跨平台构建工具 https://github.com/apache/incubator-weex https://alibaba.github.io
+cnpm i -g weex-toolkit >weex          # 跨平台构建工具 https://github.com/apache/incubator-weex
 npm i -g create-rx-app >npx           # 跨平台构建工具RN https://github.com/Microsoft/reactxp
 npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
 npm i -g supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
