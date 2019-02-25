@@ -13,8 +13,10 @@ Git for Windows: https://github.com/git-for-windows/git/releases/
 
 ~~~
 git init  # -目录-为当前工作区, .git/*[index指add的暂存区数据,objects指commit的本地仓库数据]
-git config --global user.name                # 查询全局git用户配置
-git config --local user.name "用户名"        # 设置当前项目git用户配置
+git config --global http.postBuffer 524288000 # 上传大小限制500M=1024*1024*500
+git config --global http.sslVerify "false"    # 关闭ssl验证(ssl网络异常或本地ssl服务异常)
+git config --global user.name                 # 查询全局git用户配置
+git config --local user.name "用户名"         # 设置当前项目git用户配置
 git config --local user.email "用户邮箱地址"  # 邮箱地址用来注册远程git账号
 ~~~
 
