@@ -86,6 +86,7 @@ npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hap
     # Sequelize 数据库访问-ORM  https://github.com/danecando/hapi-sequelize
     # Lab & Code 测试插件
     # ...案例教程 https://github.com/yeshengfei/hapi-tutorial
+    # ...学习实例 https://github.com/dwyl?utf8=✓&q=hapi&type=&language=javascript
     # ...GraphQL: http://graphql.cn/learn/ https://github.com/wesharehoodies/graphql-nodejs-hapi-api
     # 1. npm init -y           (初始app)
     # 2. yarn add hapi         (框架hapi > package.json > scripts:{"start":"nodemon app.js"} )
@@ -99,8 +100,8 @@ npm i redis     # 高性能缓存数据库 Redis
 npm i level     # 高性能缓存数据库Google LevelDB https://github.com/Level/level
 npm i ssdb-node # SSDB 基于LevelDB https://github.com/reanote/ssdb-node
 
-# algorithm 算法
-npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击) https://github.com/jedisct1/siphash-js
+# algorithm 算法 https://github.com/jedisct1/siphash-js
+npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击)
 
 # thread 多线程
 npm i napajs # 多线程运行时 https://github.com/Microsoft/napajs
