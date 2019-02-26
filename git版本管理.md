@@ -13,11 +13,11 @@ Git for Windows: https://github.com/git-for-windows/git/releases/
 
 ~~~
 git init  # -目录-为当前工作区, .git/*[index指add的暂存区数据,objects指commit的本地仓库数据]
-git config --global http.postBuffer 524288000 # 上传大小限制500M=1024*1024*500
-git config --global http.sslVerify "false"    # 关闭ssl验证(ssl网络异常或本地ssl服务异常)
+git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
+git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
 git config --global user.name                 # 查询全局git用户配置
-git config --local user.name "用户名"         # 设置当前项目git用户配置
-git config --local user.email "用户邮箱地址"  # 邮箱地址用来注册远程git账号
+git config --local user.name "用户名"         # 当前项目git用户配置
+git config --local user.email "用户邮箱地址"  # 当前项目git用户邮箱地址>注册远程git账号
 ~~~
 
 ####  2.检查git状态(当前工作区：新增文件要add [或添到.gitignore], 变更文件要commit)
@@ -60,7 +60,7 @@ git reset --soft HEAD^       # 回退一次commit
 ####  8.查看本地git仓库当前分支的提交记录
 
 ~~~
-git log
+git log -2
 ~~~
 
 ####  9.准备远程git仓库(##代表git账号: ***@mail.com)
