@@ -122,4 +122,6 @@ yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
 
 ~~~
 
+# 桌面应用
+  [node-webkit](https://github.com/nwjs/nw.js)、[Electron](https://www.cnblogs.com/cczw/archive/2016/10/21/5984012.html)
 
