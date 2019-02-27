@@ -245,11 +245,17 @@ watch: {
 }
 ~~~
 > `v-once` 用于优化更新性能：只渲染元素和组件`一次`，把`vNode`当静态内容，不处理后面的事件与交互。
+
 > `delimiters` 插入表达式的分隔符，可自定义，默认: {{ }}
+
 > `inheritAttrs` 是产生原生Html特性，可设置为false
+
 > `$isServer` 是否运行于服务器端-兼容SSR后端渲染
+
 > `errorHandler` 异常信息捕获
+
 > `transition` 做CSS过渡效果
+
 > `comments` 开启会扣留注释
 
 # web 前端 cookies, local, session, and db storage.
