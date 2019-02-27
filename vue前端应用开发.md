@@ -4,7 +4,7 @@
 　`UI库`：[`element`](https://github.com/ElemeFE/element)、[`iview`](https://www.iviewui.com/docs/guide/start)、
 [`quasarchs`](http://www.quasarchs.com/guide/opening-dev-server-to-public.html)、[`vuetify`](https://github.com/vuetifyjs/vuetify)、
 [`vant`](https://github.com/youzan/vant)、[`vue-material`](https://github.com/vuematerial/vue-material) <br>
-　　[`组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、[`组件代码`](https://github.com/angenal/vue-component-book) 
+　　[`组件精讲`](https://juejin.im/book/5bc844166fb9a05cd676ebca/section/5bc844166fb9a05cf52af65f)、[`组件代码`](https://github.com/angenal/vue-component-book) 、[一些重要的API](#一些重要的API)
 
 > `安装`: [@vue/cli@3.x](https://cli.vuejs.org/zh/guide/installation.html)
 
@@ -192,7 +192,7 @@
   </script>
 ~~~
 
-# `Vue`一些重要的API
+# 一些重要的API
 > `$nextTick` 下一个DOM更新之后执行一次
 ~~~
 methods: {
@@ -221,7 +221,8 @@ this.$set(this.items, 'length', 2);
 # this.item.otherName = 'otherValue';
 this.$set(this.item, 'otherName', 'otherValue');
 ~~~
-
+> `delimiters` 插入表达式的分隔符，可自定义，默认: {{ }}
+> `v-once` 
 
 # web 前端 cookies, local, session, and db storage.
 
