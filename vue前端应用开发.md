@@ -193,17 +193,34 @@
 ~~~
 
 # `Vue`一些重要的API
-> `$nextTick`: 下一个DOM更新之后执行一次
+> `$nextTick` 下一个DOM更新之后执行一次
 ~~~
-...
 methods: {
   clickShow () {
     this.show = true; console.log(this.$refs.p1);         // p1未定义 <p ref="p1" v-if="show">
     this.$nextTick(() => { console.log(this.$refs.p1); });// p1已更新至DOM,返回p1元素
   }
-...
 ~~~
-
+> `v-model` 数据的双向绑定，自定义组件`model:{prop:"value", event:"input"}`可修改。
+~~~
+# 方式一
+<InputNumber ref="input1" v-model="v" />
+# 方式二
+<InputNumber ref="input2" :value="v" @input="handleInput" />
+~~~
+> `.sync` 数据的双向绑定，自定义组件`{props:{value:{type:Number}}, ... this.$emit("update:value",this.value)}`
+~~~
+<InputNumber ref="input1" :value.sync="v" /> # v字面变量可用,其他的表达式或字面对象不可用
+~~~
+> `$set` 用于修改js限制的特殊操作符: 数组的索引符操作&长度修改, 对象的动态属性添加和删除等.
+~~~
+# this.items[0] = {};
+this.$set(this.items, 0, {}); // 等价于: let a=[...this.items]; a[0]={}; this.items=a;
+# this.items.length = 2;
+this.$set(this.items, 'length', 2);
+# this.item.otherName = 'otherValue';
+this.$set(this.item, 'otherName', 'otherValue');
+~~~
 
 
 # web 前端 cookies, local, session, and db storage.
