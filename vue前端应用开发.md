@@ -192,6 +192,19 @@
   </script>
 ~~~
 
+# `Vue`一些重要的API
+> `$nextTick`: 下一个DOM更新之后执行一次
+~~~
+...
+methods: {
+  clickShow () {
+    this.show = true; console.log(this.$refs.p1);         // p1未定义 <p ref="p1" v-if="show">
+    this.$nextTick(() => { console.log(this.$refs.p1); });// p1已更新至DOM,返回p1元素
+  }
+...
+~~~
+
+
 
 # web 前端 cookies, local, session, and db storage.
 
