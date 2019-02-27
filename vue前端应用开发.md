@@ -221,10 +221,36 @@ this.$set(this.items, 'length', 2);
 # this.item.otherName = 'otherValue';
 this.$set(this.item, 'otherName', 'otherValue');
 ~~~
-> `delimiters` 插入表达式的分隔符，可自定义，默认: {{ }}
+> `computed:{get(){},set(v){}}` 计算属性的set操作: 可对多个props|data一起赋值.
+~~~
+computed: {
+  get () {
+    return `${this.firstName} ${this.lastName}`
+  },
+  set (v) {
+    let s = v.split(' '); this.firstName = s.shift(); this.lastName = s.pop();
+  }
+}
+~~~
+> `watch` 监听状态的变化
+~~~
+watch: {
+  // 'item.otherName': (newVal, oldVal) { /* to work with change */ },
+  item: {
+     handler (newVal, oldVal) {
+       // todo: (newVal.otherName!==oldVal.otherName)
+     },
+     deep: true //, immediate: true
+  }
+}
+~~~
 > `v-once` 用于优化更新性能：只渲染元素和组件`一次`，把`vNode`当静态内容，不处理后面的事件与交互。
-> `$isServer` 是否运行于服务器端-兼容SSR
+> `delimiters` 插入表达式的分隔符，可自定义，默认: {{ }}
 > `inheritAttrs` 是产生原生Html特性，可设置为false
+> `$isServer` 是否运行于服务器端-兼容SSR后端渲染
+> `errorHandler` 异常信息捕获
+> `transition` 做CSS过渡效果
+> `comments` 开启会扣留注释
 
 # web 前端 cookies, local, session, and db storage.
 
