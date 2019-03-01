@@ -25,7 +25,7 @@
   > quser
   $ w
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
-  $ id -u           # 返回 uid                     添加用户(-d = $home)    (G = 选择用户组)(用户名admin)
+  $ id -u           # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin & useradd -d /home/admin -G root,adm,users admin
   $ passwd admin    # 修改密码
   $ su admin        # 切换用户
@@ -55,7 +55,7 @@
   $ ls  [目录] # 默认当前目录
   
   # 目录访问权限
-  $ sudo chmod 777 . # 修改当前目录(.)权限:可写
+  $ sudo chmod 777 . # 修改当前目录(.)权限:可读写
   
   # 文件查找
   > for /r C:\windows\addins\ %i in (explorer.exe) do @echo %i # 在指定目录下查找匹配文件
@@ -151,6 +151,14 @@
     # vim命令（:w 编辑模式, :x 回车保存）
     > PermitRootLogin yes        # 启用root登录  #PermitRootLogin prohibit-password
     > sudo service ssh restart   # 重启ssh
+  
+  # 图片压缩TinyPNG (使用: tinypng image 单个图片; tinypng folder 图片目录)
+  $ apt install git   # 安装Git  < ubuntu >
+  $ apt install curl  # 安装Curl < ubuntu >
+  $ mkdir -p /home/git & cd /home/git & sudo chmod 777 . # 创建git仓储目录:可读写
+  $ git clone git://github.com/xing/TinyPNG.git
+  $ ./TinyPNG/install.sh
+  
 ~~~
 
 # [**docker**](https://docs.docker.com)
