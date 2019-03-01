@@ -1,9 +1,5 @@
 
-# **[安装git](https://github.com/git-for-windows/git/releases/)**
-
-~~~
-Git for Windows: https://github.com/git-for-windows/git/releases/
-~~~
+# **[安装git](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[Git for Windows](https://github.com/git-for-windows/git/releases)
 
 
 # [新建git项目与git发布`点击看其他教程`](http://wangchujiang.com/linux-command/c/git.html)
