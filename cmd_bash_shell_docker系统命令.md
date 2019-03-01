@@ -26,9 +26,11 @@
   $ w
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
   $ id -u           # 返回 uid
+  $ mkdir -p /home/admin & useradd -d /home/admin admin & su admin # 添加用户并登录
+  $ passwd admin    # 修改密码
   $ login           # 用户登录
   $ users           # 用户列表
-  $ useradd         # 添加用户
+  $ userdel -r admin# 删除用户
   $ groups          # 用户组列表
   $ groupadd        # 添加用户组
   
