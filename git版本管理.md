@@ -52,13 +52,15 @@ git commit -m "Add cute octocat story"
 
 ~~~
 git commit -am '功能#01完成'  # 新增commit
-git reset --soft HEAD^       # 回退一次commit
+git commit --amend           # 修改最后一次提交
 ~~~
 
 ####  8.查看本地git仓库当前分支的提交记录
 
 ~~~
-git log -2
+git log -3                                # 显示最新的3次提交
+git log master --not --remotes=*/master   # 只显示本地提交master分支
+git log --branches --not --remotes=origin # 只显示本地提交的所有分支，用于与master分支比较
 ~~~
 
 ####  9.准备远程git仓库(##代表git账号: ***@mail.com)
@@ -149,10 +151,15 @@ git checkout -b branch1 0c304c9 # 从当前分支commit哈希值为0c304c9的节
 ~~~
 git rm '*.txt' # 删除*.txt
 git rm -f *    # 强制移除所有  (CMD: rd /q/s [删除目录], BASH: rm -rf [删除目录])
-git clean -xdf # 删除新增的文件
-git stash && git stash drop # 通过存储暂存区stash，在删除暂存区的方法放弃本地修改; 另外, git stash apply stash@{0} 可还原暂存区到工作区
-git checkout . # 还原所有修改，不会删除新增的文件
-git checkout -- [file]                  # 取消对文件file的修改
+git reset --soft HEAD^       # 回退一次commit,两次HEAD~2
+git reset --hard [commit_id] # 回退指定commit(--hard放弃本地改动)
+git reset HEAD               # 撤消已暂存的文件，不要本地提交
+git clean -nf                # 清除未跟踪文件 &目录: git clean -ndf
+git clean -ndfx              # 清除所有未跟踪文件，包括纳入ignore的文件
+git stash && git stash drop  # 通过存储暂存区stash，删除暂存区的方法放弃本地修改; 
+git stash apply stash@{0}    # 还原暂存区到工作区
+git checkout .               # 还原所有修改，不会删除新增的文件
+git checkout -- [file]                    # 取消对文件file的修改
 git checkout branch|tag|commit -- [file]  # 从仓库取出file覆盖当前分支文件file
 ~~~
 
