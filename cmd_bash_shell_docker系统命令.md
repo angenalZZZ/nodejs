@@ -26,6 +26,7 @@
   $ w
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
   $ id -u           # 返回 uid
+  $ login           # 用户登录
   $ users           # 用户列表
   $ useradd         # 添加用户
   $ groups          # 用户组列表
