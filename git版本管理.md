@@ -214,8 +214,8 @@ git push origin master # 推送本地仓库的主分支master到远程仓库orig
 set -e
 
 # 设置认证授权
-git config --global user.email "info@veggiemonk.ovh"
-git config --global user.name "veggiemonk-bot"
+git config --local user.name "veggiemonk-bot"
+git config --local user.email "info@veggiemonk.ovh"
 
 # 切换至master分支准备提交
 git checkout master
