@@ -24,6 +24,12 @@
   # 用户登陆
   > quser
   $ w
+  $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
+  $ id -u           # 返回 uid
+  $ users           # 用户列表
+  $ useradd         # 添加用户
+  $ groups          # 用户组列表
+  $ groupadd        # 添加用户组
   
   # 内存情况
   $ free -h
