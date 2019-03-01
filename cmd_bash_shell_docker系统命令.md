@@ -25,13 +25,16 @@
   > quser
   $ w
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
-  $ id -u           # 返回 uid
-  $ mkdir -p /home/admin & useradd -d /home/admin admin & su admin # 添加用户并登录
+  $ id -u           # 返回 uid                     添加用户(-d = $home)    (G = 选择用户组)(用户名admin)
+  $ mkdir -p /home/admin & chmod 777 /home/admin & useradd -d /home/admin -G root,adm,users admin
   $ passwd admin    # 修改密码
+  $ su admin        # 切换用户
+  $ cat /etc/passwd # 查看密码
   $ login           # 用户登录
-  $ users           # 用户列表
+  $ cat /etc/shadow # 用户列表
   $ userdel -r admin# 删除用户
-  $ groups          # 用户组列表
+  $ cat /etc/group  # 用户组列表
+  $ groups          # 用户所在组
   $ groupadd        # 添加用户组
   
   # 内存情况
@@ -50,6 +53,9 @@
   # 文件列表
   > dir [目录] # 默认当前目录
   $ ls  [目录] # 默认当前目录
+  
+  # 目录访问权限
+  $ sudo chmod 777 . # 修改当前目录(.)权限:可写
   
   # 文件查找
   > for /r C:\windows\addins\ %i in (explorer.exe) do @echo %i # 在指定目录下查找匹配文件
