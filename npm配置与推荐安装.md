@@ -1,13 +1,8 @@
  # npm 配置
 
 ~~~
-  [git全局用户]
-  git config --global user.name "yangzhou"
-  git config --global user.email "angenal@hotmail.com"
-  git config --global http.sslverify "false"
-
-  [nodejs系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
   [nodejs用户变量 Path] += D:\Program\nodejs\node_global
+  [nodejs系统变量 NODE_PATH] = D:\Program\nodejs\node_global\node_modules
   npm set init-author-name yangzhou
   npm set init-author-email angenal@hotmail.com
   npm set init-license MIT
