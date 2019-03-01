@@ -152,12 +152,15 @@
     > PermitRootLogin yes        # 启用root登录  #PermitRootLogin prohibit-password
     > sudo service ssh restart   # 重启ssh
   
-  # 图片压缩TinyPNG (使用: tinypng image 单个图片; tinypng folder 图片目录)
+  # 安装工具
   $ apt install git   # 安装Git  < ubuntu >
+  $ mkdir -p /git & cd /git & sudo chmod 777 . # 创建git仓储根目录:可读写
   $ apt install curl  # 安装Curl < ubuntu >
-  $ mkdir -p /home/git & cd /home/git & sudo chmod 777 . # 创建git仓储目录:可读写
-  $ git clone git://github.com/xing/TinyPNG.git
-  $ ./TinyPNG/install.sh
+  
+  # 图片压缩
+  $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
+  $ sudo apt-get install optipng     # png 图片压缩: optipng *.png ; find -type f -name "*.png" -exec optipng {} \;
+  $ git clone git://github.com/xing/TinyPNG.git & ./TinyPNG/install.sh # TinyPNG 图片压缩?
   
 ~~~
 
