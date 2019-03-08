@@ -64,7 +64,7 @@
   
   # 文件复制
   > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a
-  > robocopy /e source destination [file [file]...] # Windows的可靠文件复制/备份
+  > robocopy /e source destination [file [file]...] # Windows的可靠文件复制/备份  帮助: robocopy /?
   $ cp -if /mnt/floppy/* ~/floppy                   # [~/floppy 指向 /root/floppy 或 /home/floppy]
   
   # 文件删除
