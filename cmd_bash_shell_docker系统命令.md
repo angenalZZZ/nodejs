@@ -15,6 +15,14 @@
   $ uname -a
   $ lsb_release -cs  # 当前系统的发行版名称
   
+  # 时间
+  > wmic OS Get localdatetime /value # 当前本地时间
+  # 时间-工具 1.下载 http://sourceforge.net/projects/unxutils 2.解压,重命名usr/local/wbin/date.exe为unixdate.exe
+  > unixdate --help         # 帮助
+  > unixdate +%s            # 当前时间戳 unix timestamp
+  > unixdate "+%Y/%m/%d %X" # 当前时间 yyyy/MM/dd HH:mm:ss
+  
+  
   # 帮助
   > help cmd
   $ help, --help
@@ -118,18 +126,9 @@
   # 防火墙开关
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state on
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state off
-  
   # 时区设置
   tzutil /g [获取] /l [列表]
   tzutil /s "China Standard Time" [设置]
-  
-  # 时间
-  > wmic OS Get localdatetime /value # 当前本地时间
-  # 时间工具 1.下载 http://sourceforge.net/projects/unxutils 2.解压,重命名usr/local/wbin/date.exe为unixdate.exe
-  > unixdate --help         # 帮助
-  > unixdate +%s            # 当前时间戳 unix timestamp
-  > unixdate "+%Y/%m/%d %X" # 当前时间 yyyy/MM/dd HH:mm:ss
-  
   # 打印设置
   wmic printer get Default,DeviceID,Name,Network                          # 获取打印机设备
   wmic printer get DeviceID,PrinterPaperNames                             # 设备ID,打印纸张
