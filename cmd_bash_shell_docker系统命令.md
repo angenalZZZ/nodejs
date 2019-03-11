@@ -118,9 +118,15 @@
   # 防火墙开关
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state on
   netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state off
+  
   # 时区设置
   tzutil /g [获取] /l [列表]
   tzutil /s "China Standard Time" [设置]
+  # 时间
+  > wmic OS Get localdatetime /value # 当前本地时间
+  # 时间工具 1.下载 http://sourceforge.net/projects/unxutils 2.解压,重命名usr/local/wbin/date.exe为unixdate.exe
+  > unixdate --help
+  
   # 打印设置
   wmic printer get Default,DeviceID,Name,Network                          # 获取打印机设备
   wmic printer get DeviceID,PrinterPaperNames                             # 设备ID,打印纸张
