@@ -1,6 +1,21 @@
 
 # **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)
 
+#### create a new repository on the command line
+~~~bash
+echo "# CSharpOpen" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin https://github.com/angenal/CSharpOpen.git
+git push -u origin master
+~~~
+
+#### push an existing repository from the command line
+~~~bash
+git remote add origin https://github.com/angenal/CSharpOpen.git
+git push -u origin master
+~~~
 
 # [新建git项目与git发布`点击看其他教程`](http://wangchujiang.com/linux-command/c/git.html)
 
