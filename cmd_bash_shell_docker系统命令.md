@@ -122,10 +122,13 @@
   # 时区设置
   tzutil /g [获取] /l [列表]
   tzutil /s "China Standard Time" [设置]
+  
   # 时间
   > wmic OS Get localdatetime /value # 当前本地时间
   # 时间工具 1.下载 http://sourceforge.net/projects/unxutils 2.解压,重命名usr/local/wbin/date.exe为unixdate.exe
-  > unixdate --help
+  > unixdate --help         # 帮助
+  > unixdate +%s            # 当前时间戳 unix timestamp
+  > unixdate "+%Y/%m/%d %X" # 当前时间 yyyy/MM/dd HH:mm:ss
   
   # 打印设置
   wmic printer get Default,DeviceID,Name,Network                          # 获取打印机设备
