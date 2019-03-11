@@ -245,10 +245,15 @@
     -p 15671:15671 -p 15672:15672 -p 61613:61613 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
     rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
     # 消息服务rabbitmq启用插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
-    # https://docs.docker.com/samples/#library-references https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
+    # https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
   
   docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
-    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0 # 高性能的NoSQL图形数据库
+    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" 
+    neo4j:3.0 # 高性能的NoSQL图形数据库
+  
+  docker run --name m3db -p 7201:7201 -p 7203:7203 -p 9003:9003 
+    -v d:\docker\app\m3db\data:/var/lib/m3db -v d:\docker\app\m3db\m3dbnode.yml:/etc/m3dbnode/m3dbnode.yml 
+    quay.io/m3/m3dbnode # 分布式时序数据库TSDB/M3DB https://m3db.github.io/m3/how_to/single_node
   
   docker network create -d bridge workgroup # 创建自定义网络workgroup
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
