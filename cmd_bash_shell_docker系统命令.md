@@ -251,6 +251,9 @@
     -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" 
     neo4j:3.0 # 高性能的NoSQL图形数据库
   
+  docker run --name opentsdb -d -p 4242:4242 
+    -v d:\docker\app\opentsdb\data\hbase:/data/hbase -v d:\docker\app\opentsdb\tmp:/tmp 
+    -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker # 时序数据库opentsdb
   docker run --name m3db -p 7201:7201 -p 7203:7203 -p 9003:9003 
     -v d:\docker\app\m3db\data:/var/lib/m3db -v d:\docker\app\m3db\m3dbnode.yml:/etc/m3dbnode/m3dbnode.yml 
     quay.io/m3/m3dbnode # 分布式时序数据库TSDB/M3DB https://m3db.github.io/m3/how_to/single_node
