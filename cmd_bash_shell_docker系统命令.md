@@ -241,22 +241,23 @@
      # (-p)外部端口1434连db, (--link)容器myweb连db, (--network-alias)入网,容器连db, (--net:host)外部不安全连接
     -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y mcr.microsoft.com/mssql/server # 数据库sqlserver2017
   
-  docker run -d --name rabbitmq3 --network=workgroup --network-alias=rabbitmq -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 
-    -p 15671:15671 -p 15672:15672 -p 61613:61613 -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
+  docker run -d --name rabbitmq3 --network=workgroup --network-alias=rabbitmq 
+    -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
+    -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
     rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
-    # 消息服务rabbitmq启用插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
+    # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
     # https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
   
   docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
     -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" 
     neo4j:3.0 # 高性能的NoSQL图形数据库
   
-  docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 
-    -v d:\docker\app\postgresql\data:/var/lib/postgresql/data timescale/timescaledb:latest-pg11 # Supported by PostgreSQL
+  docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11 # by-PostgreSQL
   docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
-    -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker # 时序数据库opentsdb
-  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 -v d:\docker\app\m3db:/var/lib/m3db 
-    quay.io/m3/m3dbnode # 分布式时序数据库TSDB/M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
+    -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
+    # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
+  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
+    # 分布式时序数据库M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
   
   docker network create -d bridge workgroup # 创建自定义网络workgroup
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
