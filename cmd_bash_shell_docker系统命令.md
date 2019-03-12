@@ -256,7 +256,8 @@
     -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker # 时序数据库opentsdb
   docker run --name m3db -p 7201:7201 -p 7203:7203 -p 9003:9003 
     -v d:\docker\app\m3db\data:/var/lib/m3db -v d:\docker\app\m3db\m3dbnode.yml:/etc/m3dbnode/m3dbnode.yml 
-    quay.io/m3/m3dbnode # 分布式时序数据库TSDB/M3DB https://m3db.github.io/m3/how_to/single_node
+    quay.io/m3/m3dbnode # 分布式时序数据库TSDB/M3DB 
+    # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
   
   docker network create -d bridge workgroup # 创建自定义网络workgroup
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
