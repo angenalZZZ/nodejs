@@ -220,7 +220,8 @@
   
   docker run --name redis5 --network=workgroup --network-alias=redis5 -d -m 512m -p 6379:6379 
     -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
-    redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行 /usr/local/bin/docker-entrypoint.sh
+    redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
+  docker run -p 6379:6379 -itd redislabs/redistimeseries  # 时序Db https://github.com/RedisLabsModules
   
   ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
   # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
