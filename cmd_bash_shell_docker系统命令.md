@@ -251,12 +251,12 @@
     -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" 
     neo4j:3.0 # 高性能的NoSQL图形数据库
   
+  docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11
   docker run --name opentsdb -d -p 4242:4242 
     -v d:\docker\app\opentsdb\data\hbase:/data/hbase -v d:\docker\app\opentsdb\tmp:/tmp 
     -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker # 时序数据库opentsdb
-  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 
-    -v d:\docker\app\m3db\data:/var/lib/m3db quay.io/m3/m3dbnode # 分布式时序数据库TSDB/M3DB
-    # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
+  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 -v d:\docker\app\m3db:/var/lib/m3db 
+    quay.io/m3/m3dbnode # 分布式时序数据库TSDB/M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
   
   docker network create -d bridge workgroup # 创建自定义网络workgroup
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
