@@ -223,8 +223,7 @@
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
   docker run -p 6379:6379 -itd redislabs/redistimeseries  # 时序Db https://github.com/RedisLabsModules
   docker run --name ssdb --network=workgroup --network-alias=ssdb -d -m 512m -p 8888:8888 
-    -v d:\docker\app\ssdb\ssdb.conf:/ssdb/ssdb.conf -v d:\docker\app\ssdb\var:/ssdb/var
-    leobuskin/ssdb-docker # http://ssdb.io/zh_cn https://github.com/ideawu/ssdb
+    -v d:\docker\app\ssdb\ssdb.conf:/ssdb/ssdb.conf leobuskin/ssdb-docker # 替代Redis http://ssdb.io/zh_cn
   
   ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
   # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
