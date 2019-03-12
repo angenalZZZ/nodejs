@@ -235,11 +235,10 @@
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
   docker run --name mysql -itd --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=123456 
-    mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux
-  docker run --name sqlserver2017 -itd -v "d:\docker\app\mssql2017\data:/var/opt/mssql/data" -v "d:\docker\app\mssql2017\log:/var/opt/mssql/log"
-    -p 1434:1433 --link myweb:db 
-     # (-p)外部端口1434连db, (--link)容器myweb连db, (--network-alias)入网,容器连db, (--net:host)外部不安全连接
-    -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y mcr.microsoft.com/mssql/server # 数据库sqlserver2017
+    mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)入网,其它容器连db
+  docker run --name sqlserver2017 -itd -p 1434:1433 --link myweb:db -v "d:\docker\app\mssql2017\data:/var/opt/mssql/data" 
+    -v "d:\docker\app\mssql2017\log:/var/opt/mssql/log" -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y 
+    mcr.microsoft.com/mssql/server # 数据库sqlserver2017 (--link)容器myweb连db, (--net:host)外部不安全连接\不推荐
   
   docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
     -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
@@ -248,9 +247,8 @@
     # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
     # https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
   
-  docker run --name neo4j -d --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
-    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" 
-    neo4j:3.0 # 高性能的NoSQL图形数据库
+  docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
+    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0 # 高性能的NoSQL图形数据库
   
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11 # PostgreSQL
   docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
