@@ -21,7 +21,7 @@
   > unixdate --help         # 帮助
   > unixdate +%s            # 当前时间戳 unix timestamp
   > unixdate "+%Y/%m/%d %X" # 当前时间 yyyy/MM/dd HH:mm:ss
-  
+  $ time %s
   
   # 帮助
   > help cmd
@@ -219,9 +219,12 @@
   docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
   
   docker run --name redis5 --network=workgroup --network-alias=redis5 -d -m 512m -p 6379:6379 
-    -v "d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf" -v "d:\docker\app\redis5\data:/data" 
+    -v d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf -v d:\docker\app\redis5\data:/data 
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
   docker run -p 6379:6379 -itd redislabs/redistimeseries  # 时序Db https://github.com/RedisLabsModules
+  docker run --name ssdb --network=workgroup --network-alias=ssdb -d -m 512m -p 8888:8888 
+    -v d:\docker\app\ssdb\ssdb.conf:/ssdb/ssdb.conf
+    leobuskin/ssdb-docker # http://ssdb.io/zh_cn https://github.com/ideawu/ssdb
   
   ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
   # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
