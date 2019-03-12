@@ -31,7 +31,7 @@
   
   # 用户登陆
   > quser
-  $ w
+  $ w & whoami && id # 当前用户
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
   $ id -u           # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin & useradd -d /home/admin -G root,adm,users admin
@@ -64,7 +64,9 @@
   $ for n in {1..10000}; do echo content > "__${n}.tmp"; done  # 创建 10000 个临时文件
   
   # 目录访问权限
-  $ sudo chmod 777 . # 修改当前目录(.)权限:可读写
+  $ ls -la [目录]    # 查看目录及文件读写权限
+  $ sudo chmod 777 . # 修改当前目录(.)权限为可读写
+  $ sudo chown -R 1000 [目录] # 把[目录]的"拥有者"赋值给uid:1000 = $(id -u)
   
   # 文件查找
   > for /r C:\windows\addins\ %i in (explorer.exe) do @echo %i # 在指定目录下查找匹配文件
@@ -190,6 +192,8 @@
   # 构建
   docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
   # 运行
+  docker-machine ip          # 获得当前Docker宿主机的IP地址
+  docker-machine ssh default # 登录到Boot2docker虚拟机之上(Linux-无需如此)
   docker run --name test-image-docker -it -p 9999:8888 test-image # 已加载镜像 test-image 时, 用 docker images 查询
   # 网络
   docker network ls                                 # 查看网络列表
@@ -259,6 +263,11 @@
     # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
   docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
     # 分布式时序数据库M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
+  
+  git clone https://github.com/AliyunContainerService/docker-jenkins 
+    && cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
+    docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
+  # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
   
   docker network create -d bridge workgroup # 创建自定义网络workgroup
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
