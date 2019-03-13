@@ -114,6 +114,13 @@
   > at 11:00:00PM /every:M,T,W,TH,F,SA,SU shutdown -s
   > at 11:00:00PM shutdown -r [r重启]
   
+  # 开机自启动
+  > [Win+R] > shell:startup \ autostart-redis.vbs
+  < Set Wsh = CreateObject("WScript.Shell")
+  < Wsh.Run "C:\Windows\System32\bash.exe -c redis-server",0
+  < Set Wsh = Nothing
+  
+  
   # 系统硬件序列号
   wmic memorychip get serialnumber
   wmic diskdrive get serialnumber
