@@ -114,13 +114,6 @@
   > at 11:00:00PM /every:M,T,W,TH,F,SA,SU shutdown -s
   > at 11:00:00PM shutdown -r [r重启]
   
-  # 开机自启动
-  > [Win+R] > shell:startup \ autostart-redis.vbs
-  < Set Wsh = CreateObject("WScript.Shell")
-  < Wsh.Run "C:\Windows\System32\bash.exe -c redis-server",0
-  < Set Wsh = Nothing
-  
-  
   # 系统硬件序列号
   wmic memorychip get serialnumber
   wmic diskdrive get serialnumber
@@ -170,6 +163,22 @@
     # vim命令（:w 编辑模式, :x 回车保存）
     > PermitRootLogin yes        # 启用root登录  #PermitRootLogin prohibit-password
     > sudo service ssh restart   # 重启ssh
+    
+  # 安装数据库Redis
+  # < Windows Subsystem for Linux >--------------------------- 
+  $ sudo apt install gcc
+  $ wget http://download.redis.io/releases/redis-5.0.3.tar.gz
+  $ tar xzf redis-5.0.3.tar.gz
+  $ cd redis-5.0.3 & make install        # 安装Redis
+  $ cd utils & sudo ./install_server.sh  # 安装服务
+  $ redis-server                         # 启动服务(独立模式)
+  $ sudo service redis_6379 start        # 启动服务(非独立模式) start|stop|restart
+  $ sudo update-rc.d redis_6379 defaults # 将 Redis init 脚本添加到所有默认运行级别(stop服务后)
+  # 开机自启动Redis
+  > [Win+R] > shell:startup \ autostart-redis.vbs # Windows "启动文件夹"
+  < Set Wsh = CreateObject("WScript.Shell")
+  < Wsh.Run "C:\Windows\System32\bash.exe -c redis-server",0
+  < Set Wsh = Nothing
   
   # 安装工具
   $ apt install git   # 安装Git  < ubuntu >
