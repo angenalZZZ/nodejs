@@ -195,6 +195,7 @@
 # [**docker**](https://docs.docker.com)
 
 >  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install)<br>
+  ([docker-desktop](https://www.docker.com/products/docker-desktop)Build构建&Compose组织&Kubernetes集群)<br>
   `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
   `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore) [..](http://8fe1b42e.m.daocloud.io)
 
@@ -382,7 +383,7 @@ obj\
 ~~~
 
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>
-  　[`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
+  　[`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；Docker-Desktop已支持k8s<br>
   　　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`、`unpause`、`start`、`stop`、`restart`
 ~~~
