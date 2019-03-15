@@ -435,8 +435,9 @@ obj\
   > docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
   > docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
 ~~~
-> `k8s`扩展
-    [istio](https://istio.io/docs/setup/kubernetes/platform-setup/)：连接、安全、控制和观察服务
+> `k8s`扩展<br>
+  　[istio](https://istio.io/docs/setup/kubernetes/platform-setup/)：连接、安全、控制和观察服务
+
 
 ####  免费的容器镜像服务
 
