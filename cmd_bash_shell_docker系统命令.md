@@ -194,8 +194,8 @@
 
 # [**docker**](https://docs.docker.com)
 
->  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install)<br>
-  ([docker-desktop](https://www.docker.com/products/docker-desktop)Build构建&Compose组织&Kubernetes集群)<br>
+>  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install)
+   [docker-desktop](https://www.docker.com/products/docker-desktop)Build构建&Compose组织&Kubernetes集群<br>
   `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
   `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore) [..](http://8fe1b42e.m.daocloud.io)
 
