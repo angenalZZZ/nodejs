@@ -2,7 +2,7 @@
 
 # [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [**linux-bash**](https://wangchujiang.com/linux-command/hot.html) | [shell](https://github.com/fengyuhetao/shell) | [docker](#docker)
 > [Index of Linux Command](https://ss64.com/bash/)、[List of Windows CMD](https://ss64.com/nt/)<br>
-[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`k8s`](https://www.kubernetes.org.cn) 
+[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)、[`k8s`](#Kubernetes) 
 
 ~~~
   # 清屏
@@ -426,8 +426,10 @@ obj\
       driver: bridge
 ~~~
 
-> **Kubernetes-Clusters**　[`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
-  　　Docker-Desktop已添加Docker-Compose与Kubernetes进行完整的集成。<br>
+# [**Kubernetes**](https://www.kubernetes.org.cn)
+
+> [`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
+  　Docker-Desktop已添加Docker-Compose与Kubernetes进行完整的集成。<br>
 ~~~
   # 部署
   > docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
