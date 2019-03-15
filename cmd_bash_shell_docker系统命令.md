@@ -382,8 +382,7 @@ obj\
 ~~~
 
 > **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>
-  　[`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；Docker-Desktop已支持k8s<br>
-  　　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
+　　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。
 　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`、`unpause`、`start`、`stop`、`restart`
 ~~~
   version: '3' # docker compose 版本(版本不同,语法命令有所不同)
@@ -425,6 +424,14 @@ obj\
       driver: bridge
     back-tier:
       driver: bridge
+~~~
+
+> **Kubernetes-Clusters**　[`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
+  　　Docker-Desktop已添加Docker-Compose与Kubernetes进行完整的集成。<br>
+~~~
+  # 部署
+  > docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
+  > docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
 ~~~
 
 ####  免费的容器镜像服务
