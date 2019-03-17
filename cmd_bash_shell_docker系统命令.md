@@ -184,6 +184,12 @@
   < Wsh.Run "C:\Windows\System32\bash.exe -c redis-server",0
   < Set Wsh = Nothing
   
+  # 安装消息平台
+  > nsqlookupd                                     # 先启动nsqlookud
+  > nsqd --lookupd-tcp-address=127.0.0.1:4160      # 再启动两个nsqd
+  > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150 --http-address=0.0.0.0:4151
+  > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动nqsadmin
+  
   # 安装工具
   $ apt install git   # 安装Git  < ubuntu >
   $ mkdir -p /git & cd /git & sudo chmod 777 . # 创建git仓储根目录:可读写
