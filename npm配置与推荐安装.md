@@ -103,7 +103,8 @@ npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高
 npm i napajs # 多线程运行时 https://github.com/Microsoft/napajs
 
 # chat, bots 聊天,机器人
-npm i botkit # 聊天机器人 https://github.com/howdyai/botkit
+npm i socket.io  # 聊天服务 https://github.com/socketio/socket.io
+npm i botkit     # 聊天机器人 https://github.com/howdyai/botkit
 
 # utility 实用
 npm i rxjs       # 响应式编程的库 https://cn.rx.js.org
