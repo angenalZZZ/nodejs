@@ -201,6 +201,10 @@
   $ sudo apt-get install optipng     # png 图片压缩: optipng *.png ; find -type f -name "*.png" -exec optipng {} \;
   $ git clone git://github.com/xing/TinyPNG.git & ./TinyPNG/install.sh # TinyPNG 图片压缩?
   
+  # 加密解密
+  $ chmod +x toplip # 赋予可执行权限
+  $ ./toplip        # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
+  
   # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
   $ sysctl -w vm.max_map_count=262144      # 操作无效时, 使用 vi /etc/sysctl.conf 修改
   $ grep vm.max_map_count /etc/sysctl.conf # 检查设置
