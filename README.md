@@ -22,16 +22,16 @@
     2. ￥（）〔〕〈〉＆＃＠ ● ○ ⒈⒉⒊⒋⒌⒍⒎⒏⒐⒑⒒⒓⒔⒕⒖⒗⒘⒙⒚⒛ ＋－×÷ ⊙∝ √×✔✘
     3. 壹贰叁肆伍陆柒捌玖拾 微毫厘分百千万亿兆吉
 
-> [JavaScript Style Guide](https://github.com/airbnb/javascript)<br>
-> [awesome 超棒的开源库与应用工具](https://github.com/sindresorhus/awesome)
+> [GitHub star ranking](https://gitstar-ranking.com)<br>
+> [Programming languages awesome](https://github.com/sindresorhus/awesome#programming-languages)
 
 `[编程基础]`
 
-  [1. JavaScript 基础](#javascript-基础) 
+  [1. JavaScript 基础](#javascript-基础)  & [JavaScript Style Guide](https://github.com/airbnb/javascript)
   
   [2. TypeScript 基础](#typescript-基础) 
   
-  [3. Node.js 基础](#nodejs-基础)  & [中文Api](http://nodejs.cn/api)
+  [3. Node.js 基础](#nodejs-基础)  & [Node.js中文Api](http://nodejs.cn/api)  & [Node.js awesome](https://github.com/sindresorhus/awesome-nodejs)
 
 `[实用程序库]`
 
