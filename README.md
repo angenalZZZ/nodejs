@@ -21,7 +21,8 @@
     1. 空格：中文输入法下按Shift+Space进入全角模式后，输入空格即可。
     2. ￥（）〔〕〈〉＆＃＠ ● ○ ⒈⒉⒊⒋⒌⒍⒎⒏⒐⒑⒒⒓⒔⒕⒖⒗⒘⒙⒚⒛ ＋－×÷ ⊙∝ √×✔✘
     3. 壹贰叁肆伍陆柒捌玖拾 微毫厘分百千万亿兆吉
-    
+
+> [JavaScript Style Guide](https://github.com/airbnb/javascript)<br>
 > [awesome 超棒的开源库与应用工具](https://github.com/sindresorhus/awesome)
 
 `[编程基础]`
