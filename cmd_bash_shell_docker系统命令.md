@@ -249,7 +249,7 @@
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
-  docker run --name mysql -itd --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=123456 
+  docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=123456 
     mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此db
   docker run --name mssql -itd -p 1434:1433 --link myweb:db -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
     -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y 
