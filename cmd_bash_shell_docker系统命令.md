@@ -1,8 +1,7 @@
 # **系统命令**
 
 # [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [**linux**](https://wangchujiang.com/linux-command/hot.html) | [shell](https://github.com/fengyuhetao/shell) | [docker](#docker) | [k8s](#Kubernetes)
-> [Index of Linux Command](https://ss64.com/bash/)、[List of Windows CMD](https://ss64.com/nt/)<br>
-[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器) <br>
+> [Index of Linux Command](https://ss64.com/bash/)、[List of Windows CMD](https://ss64.com/nt/) 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器) <br>
 > [Linux常用命令](#Linux常用命令)、[`《Linux就该这么学》pdf`](https://www.linuxprobe.com/docs/LinuxProbe.pdf)、[`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)
 
 ~~~
