@@ -3,7 +3,7 @@
 # [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [**linux**](https://wangchujiang.com/linux-command/hot.html) | [shell](https://github.com/fengyuhetao/shell) | [docker](#docker) | [k8s](#Kubernetes)
 > [Linux常用命令](#Linux常用命令)、[`All Linux Command`](https://ss64.com/bash/)、[`All Windows CMD`](https://ss64.com/nt/)<br>
 > [`《Linux就该这么学》pdf`](https://www.linuxprobe.com/docs/LinuxProbe.pdf)、
-  [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)
+  [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)、
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)<br>
 
 ~~~
@@ -143,33 +143,6 @@
   wmic printer where default='TRUE' get name                              # 获取默认打印机
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
-  # 安装服务ssh
-  # < centos >--------------------------- 
-  $ rpm -qa | grep ssh  # 检查服务ssh是否已安装: netstat -antp | grep sshd [端口:22]
-  $ yum install -y initscripts # 安装服务netstat [/sbin/service]
-  $ yum install -y openssh-server # 安装服务ssh
-  $ service sshd start | service sshd stop # 启动sshd|停止
-  $ chkconfig sshd on # 开机启动
-  # < ubuntu >--------------------------- Ubuntu 18.04 LTS on Windows 10
-  $ sudo apt-get remove --purge openssh-server   # 先删ssh -(可忽略此操作)
-  $ sudo apt-get install openssh-server          # 再安装ssh
-  $ sudo rm /etc/ssh/ssh_config                  # 先删配置文件, 让ssh服务自己想办法链接-(可忽略此操作)
-  $ sudo ssh-keygen -A                           # 先生成主机keys-(当提示Could not load host key)
-  $ sudo service ssh --full-restart              # 再启动ssh +(设置登录后)
-  # systemctl------------------------------------
-  $ systemctl start sshd   # systemctl启动sshd
-  $ systemctl status sshd  # systemctl查看状态
-  $ systemctl enable sshd  # systemctl开机启动生效
-    ln -s '/usr/lib/systemd/system/sshd.service' '/etc/systemd/system/multi-user.target.wants/sshd.service'
-  $ systemctl disable sshd # systemctl关闭开机启动
-    rm '/etc/systemd/system/multi-user.target.wants/sshd.service'
-  # root-login------------------------------------
-  $ sudo passwd root             # 修改root密码，用于root登录ssh
-  $ sudo vi /etc/ssh/sshd_config # 修改配置文件 > # Authentication: (全部启用,去除#)
-    # vim命令（:w 编辑模式, :x 回车保存）
-    > PermitRootLogin yes        # 启用root登录  #PermitRootLogin prohibit-password
-    > sudo service ssh restart   # 重启ssh
-    
   # 安装数据库Redis
   # < Windows Subsystem for Linux >--------------------------- 
   $ sudo apt install gcc
@@ -920,4 +893,31 @@ smbmount：加载samba文件系统
 smbpasswd：改变samba用户的密码
 squid：HTTP代理服务器程序
 sshd：OpenSSH守护进程
+# 安装服务sshd
+  # < centos >--------------------------- 
+  $ rpm -qa | grep ssh  # 检查服务ssh是否已安装: netstat -antp | grep sshd [端口:22]
+  $ yum install -y initscripts # 安装服务netstat [/sbin/service]
+  $ yum install -y openssh-server # 安装服务ssh
+  $ service sshd start | service sshd stop # 启动sshd|停止
+  $ chkconfig sshd on # 开机启动
+  # < ubuntu >--------------------------- Ubuntu 18.04 LTS on Windows 10
+  $ sudo apt-get remove --purge openssh-server   # 先删ssh -(可忽略此操作)
+  $ sudo apt-get install openssh-server          # 再安装ssh
+  $ sudo rm /etc/ssh/ssh_config                  # 先删配置文件, 让ssh服务自己想办法链接-(可忽略此操作)
+  $ sudo ssh-keygen -A                           # 先生成主机keys-(当提示Could not load host key)
+  $ sudo service ssh --full-restart              # 再启动ssh +(设置登录后)
+  # systemctl------------------------------------
+  $ systemctl start sshd   # systemctl启动sshd
+  $ systemctl status sshd  # systemctl查看状态
+  $ systemctl enable sshd  # systemctl开机启动生效
+    ln -s '/usr/lib/systemd/system/sshd.service' '/etc/systemd/system/multi-user.target.wants/sshd.service'
+  $ systemctl disable sshd # systemctl关闭开机启动
+    rm '/etc/systemd/system/multi-user.target.wants/sshd.service'
+  # root-login------------------------------------
+  $ sudo passwd root             # 修改root密码，用于root登录ssh
+  $ sudo vi /etc/ssh/sshd_config # 修改配置文件 > # Authentication: (全部启用,去除#)
+    # vim命令（:w 编辑模式, :x 回车保存）
+    > PermitRootLogin yes        # 启用root登录  #PermitRootLogin prohibit-password
+    > sudo service ssh restart   # 重启ssh
+
 ~~~
