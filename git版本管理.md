@@ -49,7 +49,8 @@ echo hello-git > octocat.txt
 ####  4.添加跟踪的文件到暂存区(也表示添加了文件快照, 批量添加用git add '*.txt')
 
 ~~~
-git add octocat.txt
+git add octocat.txt       # 把文件添加到暂存区, 准备下面提交commit
+git reset HEAD <file>...  # 把文件从暂存区移除
 ~~~
 
 ####  5.检查git状态 > [当前分支]变更或新增并未commit, 但是要换分支处理hot-bug, 只能先保存stash中间状态git stash
