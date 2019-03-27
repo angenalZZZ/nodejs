@@ -54,7 +54,7 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 > info client list              # 列出所有的客户端链接地址
 > info stats | grep reject
   rejected_connections(超出最大连接数限制而被拒绝的客户端连接次数)数字很大，意味着服务器的最大连接数设置过低，需要调整 maxclients 参数。
-  
+
 > info stats | grep ops         # 每秒操作数:instantaneous_ops_per_sec:***
 > monitor                       # 如果 qps 过高，快速观察究竟是哪些 key 访问比较频繁，从而在业务上进行优化，减少 IO 次数(执行后立即ctrl+c中断)
 > debug object [key]            # 调试输出 key of object: { Value at: 指针地址, refcount: 引用计数, encoding: 数据类型, serializedlength..}
@@ -110,9 +110,12 @@ struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-
   byte[] content;                 # 数组内容
 }
 --------------------------------------------------------------------
+ > select 0                       # 查询db: 成功返回 +OK ; 异常返回 -ERR DB index is out of range
+ > scan 0 MATCH * COUNT 100       # 查询keys: Array
  > set key value                  # 添加/修改 (value包含空格时添加“”)
- > get key                        # 获取value
- > exists key                     # if key is exists: 成功返回1,失败返回0.
+ > get key                        # 获取数据: value
+ > type key                       # 数据类型: +string ...
+ > exists key                     # 是否存在: 成功返回1,失败返回0.
  > del key                        # 删除: 成功返回1,失败返回0.
  > mset name1 value1 name2 value2 # 批量设置
  > mget name1 name2               # 批量获取
