@@ -261,8 +261,10 @@
     rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
     # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
     # https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
+  # https://github.com/etcd-io/etcd/releases
+  # https://nsq.io/deployment/docker.html
   docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 
-    nsqio/nsq /nsqlookupd  # 消息平台 First Run nsqlookupd for nsqd & nsqadmin https://nsq.io/deployment/docker.html
+    nsqio/nsq /nsqlookupd  # 消息平台 First Run nsqlookupd for nsqd & nsqadmin 
   docker run --name nsqd --network=workgroup --network-alias=nsqd -p 4150:4150 -p 4151:4151 -v d:\docker\app\nsq\data:/data 
     nsqio/nsq /nsqd --data-path=/data --lookupd-tcp-address=nsqlookupd:4160 # --broadcast-address=<dockerIP>
   docker run --name nsqadmin -itd --network=workgroup -p 4171:4171 nsqio/nsq /nsqadmin --lookupd-http-address=nsqlookupd:4161
