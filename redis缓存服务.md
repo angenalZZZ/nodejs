@@ -16,7 +16,7 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 
 ~~~
 redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
-> info                          # 获取所有信息
+> info [all]                    # 获取所有信息
   # 1. Server 服务器运行的环境参数
   # 2. Clients 客户端相关信息
   # 3. Memory 服务器运行内存统计数据
@@ -116,6 +116,7 @@ struct SDS<T> {                   # T用作内存优化-结构分配:byte-short-
  > get key                        # 获取数据: value
  > type key                       # 数据类型: +string ...
  > exists key                     # 是否存在: 成功返回1,失败返回0.
+ > renamenx key key2              # 重命名: key to key2
  > del key                        # 删除: 成功返回1,失败返回0.
  > mset name1 value1 name2 value2 # 批量设置
  > mget name1 name2               # 批量获取
