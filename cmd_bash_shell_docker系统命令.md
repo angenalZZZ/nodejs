@@ -268,8 +268,8 @@
     /usr/local/bin/etcd --name s1 --data-dir /etcd-data 
     --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
     --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 
-    --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 # 安装http时取消,s2..https!
-    --initial-cluster-token tkn --initial-cluster-state new                                  # 安装http时取消-下面的语句!
+    --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 # 安装http时取消,s2...s3
+    --initial-cluster-token tkn --initial-cluster-state new                                  # 安装http时取消-下面语句
     --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
     --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --peer-cert-file /etcd-ssl-certs-dir/s1.pem --peer-key-file /etcd-ssl-certs-dir/s1-key.pem 
   # https://nsq.io/deployment/docker.html
