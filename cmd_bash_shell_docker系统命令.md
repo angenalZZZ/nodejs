@@ -261,10 +261,20 @@
     rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
     # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
     # https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
-  # https://github.com/etcd-io/etcd/releases
+  # 消息平台 etcd, nsq ...
+  # https://github.com/etcd-io/etcd/releases # 说明 http://play.etcd.io/install 安装TLS、Docker、Container Linux
+  docker run --name etcds1 --network=workgroup --network-alias=etcds1 -p 2379:2379 -p 2380:2380 
+    -v d:\docker\app\etcd\s1:/etcd-data -v d:\docker\app\etcd\certs:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
+    /usr/local/bin/etcd --name s1 --data-dir /etcd-data 
+    --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
+    --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 
+    --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 
+    --initial-cluster-token tkn --initial-cluster-state new 
+    --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
+    --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --peer-cert-file /etcd-ssl-certs-dir/s1.pem --peer-key-file /etcd-ssl-certs-dir/s1-key.pem 
   # https://nsq.io/deployment/docker.html
   docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 
-    nsqio/nsq /nsqlookupd  # 消息平台 First Run nsqlookupd for nsqd & nsqadmin 
+    nsqio/nsq /nsqlookupd  # First Run nsqlookupd for nsqd & nsqadmin 
   docker run --name nsqd --network=workgroup --network-alias=nsqd -p 4150:4150 -p 4151:4151 -v d:\docker\app\nsq\data:/data 
     nsqio/nsq /nsqd --data-path=/data --lookupd-tcp-address=nsqlookupd:4160 # --broadcast-address=<dockerIP>
   docker run --name nsqadmin -itd --network=workgroup -p 4171:4171 nsqio/nsq /nsqadmin --lookupd-http-address=nsqlookupd:4161
