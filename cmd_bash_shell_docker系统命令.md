@@ -263,7 +263,7 @@
     # https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
   # 消息平台 etcd, nsq ...
   # https://github.com/etcd-io/etcd/releases # 说明 http://play.etcd.io/install 安装TLS、Docker、Container Linux
-  docker run --name etcds1 --network=workgroup --network-alias=etcds1 -p 2379:2379 -p 2380:2380 
+  docker run --name etcds1 --network=workgroup --network-alias=etcds1 -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
     -v d:\docker\app\etcd\s1:/etcd-data -v d:\docker\app\etcd\certs:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
     /usr/local/bin/etcd --name s1 --data-dir /etcd-data 
     --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
