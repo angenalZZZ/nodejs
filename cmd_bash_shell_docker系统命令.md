@@ -83,7 +83,7 @@
   # 文件删除
   > del /f /s /q [目录|文件]
   > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
-  $ rm -f -r [目录] [f强制]
+  $ rm -f -r [r删除目录,否则删除文件] [f强制]
   
   # 网络地址
   > ipconfig /?
