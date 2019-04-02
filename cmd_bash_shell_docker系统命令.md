@@ -290,6 +290,8 @@
   docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
     # 分布式时序数据库M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
   
+  # Consul是google开源的一个使用go语言开发的服务发现、配置管理中心服务。
+  docker pull progrium/consul # Consul实践(高可用、高效服务架构方案) https://blog.51cto.com/dgd2010/1730439
   git clone https://github.com/AliyunContainerService/docker-jenkins 
     && cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
     docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
