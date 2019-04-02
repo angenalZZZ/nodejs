@@ -294,7 +294,7 @@
     docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
   # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
   
-  docker network create -d bridge workgroup # 创建自定义网络workgroup
+  docker network create -d bridge workgroup # 创建自定义网络workgroup; -d [host:共享一个IP地址,bridge(默认):分配给容器一个IP地址]
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" db
   docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
