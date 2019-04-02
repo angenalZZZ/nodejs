@@ -253,7 +253,8 @@
     mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此db
   docker run --name mssql -itd -p 1434:1433 --link myweb:db -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
     -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y 
-    mcr.microsoft.com/mssql/server # 数据库mssql (--link)容器myweb连db, (--net:host)外部不安全连接\不推荐
+    mcr.microsoft.com/mssql/server # 数据库mssql
+  # 外部访问控制：(--link)容器myweb连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
   
   docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
     -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
@@ -294,6 +295,7 @@
     docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
   # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
   
+  docker network create -d host hostgroup
   docker network create -d bridge workgroup # 创建自定义网络workgroup; -d [host:共享一个IP地址,bridge(默认):分配给容器一个IP地址]
   docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" db
