@@ -443,9 +443,8 @@ obj\
 
 # [**Consul**](https://hub.docker.com/_/consul)
 
-> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。
-[`安装说明`](https://hub.docker.com/_/consul)<br>
-  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载。[参数/开发模式](https://www.consul.io/docs/agent/options.html#_dev) [代理API](https://www.consul.io/docs/agent/http/agent.html)
+> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
+  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载。[`查看安装说明`](https://hub.docker.com/_/consul)、[`参数`/`开发模式`](https://www.consul.io/docs/agent/options.html#_dev)、[`代理API`](https://www.consul.io/docs/agent/http/agent.html)
 ~~~
   # /consul/data   容器暴露VOLUME
     # 对于客户端代理，这将存储有关群集的一些信息以及客户端的运行状况检查，以防重新启动容器。
@@ -477,7 +476,7 @@ obj\
     如果Docker守护程序暴露给Consul代理并且DOCKER_HOST设置了环境变量，则可以使用Docker容器ID配置检查以执行。
 ~~~
 
-> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中最重要的数据。[`play...`](http://play.etcd.io/install) [`下载`](https://github.com/etcd-io/etcd/releases)
+> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中最重要的数据。[`play...`](http://play.etcd.io/install) [`download`](https://github.com/etcd-io/etcd/releases)
 ~~~
   docker run --name etcds1 --network=workgroup --network-alias=etcds1 -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
     -v d:\docker\app\etcd\s1:/etcd-data -v d:\docker\app\etcd\certs:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
