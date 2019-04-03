@@ -1,6 +1,6 @@
 # **系统命令**
 
-# [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [**linux**](https://wangchujiang.com/linux-command/hot.html) | [shell](https://github.com/fengyuhetao/shell)、[Linux常用命令](#Linux常用命令) <br> [docker](#docker) | [k8s](#Kubernetes) | [Consul](#Consul)
+# [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [shell](https://github.com/fengyuhetao/shell) | [**linux**](https://wangchujiang.com/linux-command/hot.html) | [常用命令](#Linux常用命令)<br> [docker](#docker) | [k8s](#Kubernetes) | [Consul](#Consul)
 > [`All Linux Command`](https://ss64.com/bash/)、[`All Windows CMD`](https://ss64.com/nt/)<br>
 > [`《Linux就该这么学》pdf`](https://www.linuxprobe.com/docs/LinuxProbe.pdf)、
   [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)、
@@ -443,7 +443,7 @@ obj\
 
 # [**Consul**](https://hub.docker.com/_/consul)
 
-> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
+> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。[`安装`](https://hub.docker.com/_/consul)<br>
   　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。
    Consul集群中的每个主机都在运行Consul代理，每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。
    在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。
@@ -452,7 +452,7 @@ obj\
   
 ~~~
 
-> [`etcd`](https://coreos.com/etcd/docs/latest)  [`下载`](https://github.com/etcd-io/etcd/releases) [`play...`](http://play.etcd.io/install) 安装TLS、Docker、Container Linux
+> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中最重要的数据。[`play...`](http://play.etcd.io/install) [`下载`](https://github.com/etcd-io/etcd/releases)
 ~~~
   docker run --name etcds1 --network=workgroup --network-alias=etcds1 -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
     -v d:\docker\app\etcd\s1:/etcd-data -v d:\docker\app\etcd\certs:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
