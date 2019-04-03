@@ -473,7 +473,8 @@ obj\
   # 在端口53上公开Consul的DNS服务器
     docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8
   # 使用容器进行服务发现，有关详细信息，请参阅[代理API]
-    
+  # 在Docker容器中运行运行状况检查
+    如果Docker守护程序暴露给Consul代理并且DOCKER_HOST设置了环境变量，则可以使用Docker容器ID配置检查以执行。
 ~~~
 
 > [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中最重要的数据。[`play...`](http://play.etcd.io/install) [`下载`](https://github.com/etcd-io/etcd/releases)
