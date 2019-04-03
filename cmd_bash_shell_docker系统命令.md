@@ -464,14 +464,19 @@ obj\
   > docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
   > docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
   > docker exec -t dev-consul consul members # 查询集群中的所有成员
-  # 在客户端模式下 *** 运行Consul Agent
-  > docker run -d --net=host consul agent 
-      -bind=<external ip> # 当主机上其他容器也使用--net=host将代理暴露给容器外主机上运行的其他应用程序进程
-      -retry-join=<root agent ip> # 指定群集中用于在启动时加入的另一个代理的外部IP https://www.consul.io/docs/agent/options.html
-      -client=<bridge ip> # 通过网络（桥接网络）将Consul接口公开给其他容器，可使用选项-client=0.0.0.0绑定到所有接口
   # 在服务器模式下 *** 运行Consul Agent
-  > docker run -d --net=host consul agent -server 
-      -bind=<external ip> -retry-join=<root agent ip> -bootstrap-expect=<number of server agents>
+  > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络（桥接网络）
+      -retry-join=<root agent ip> # 指定群集中用于在启动时加入的另一个代理的外部IP https://www.consul.io/docs/agent/options.html
+      -bootstrap-expect=<number of server agents> # 其他数据中心数目，或者只指定为当前数据中心-bootstrap
+  # 在客户端模式下运行Consul Agent
+  > docker run -d --net=host consul agent 
+      -client=<bridge ip> # 客户端(默认127.0.0.1)通过（桥接网络）将接口公开给其他容器，可用选项-client=0.0.0.0绑定到所有接口
+      -bind=<external ip> # 当主机上其他容器也使用--net=host将代理暴露给容器外主机上运行的其他应用程序进程
+      -retry-join=<root agent ip> # 参考下：
+        # Using a DNS entry > consul agent -retry-join "consul.domain.internal"
+        # Using IPv4 > consul agent -retry-join "10.0.4.67"
+        # Using IPv6 > consul agent -retry-join "[::1]:8301"
+        # Using Cloud Auto-Joining > consul agent -retry-join "provider=aws tag_key=..."
   # 在端口53上公开Consul的DNS服务器 https://www.consul.io/docs/agent/services.html
   > docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8 -bind=<bridge ip>
   > docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get install -y dnsutils && dig consul.service.consul"
