@@ -443,11 +443,37 @@ obj\
 
 # [**Consul**](https://hub.docker.com/_/consul)
 
-> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。[`安装`](https://hub.docker.com/_/consul)<br>
-  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。
+> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。
+[`安装说明`](https://hub.docker.com/_/consul)<br>
+  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载。[参数/开发模式](https://www.consul.io/docs/agent/options.html#_dev) [代理API](https://www.consul.io/docs/agent/http/agent.html)
 ~~~
-  # 部署
-  
+  # /consul/data   容器暴露VOLUME
+    # 对于客户端代理，这将存储有关群集的一些信息以及客户端的运行状况检查，以防重新启动容器。
+    # 对于服务器代理，它存储客户端信息以及与一致性算法相关的快照和数据以及Consul的键/值存储和目录等其他状态。
+  # /consul/config 配置目录
+    # Consul总是--net=host在Docker中运行，因此在配置Consul的IP地址时需要注意。Consul具有其集群地址的概念以及其客户端地址。
+    # Consul群集地址是其他Consul代理可以联系给定代理的地址。客户端地址是主机上的其他进程联系Consul以发出HTTP或DNS请求的地址。
+    # -bind=<external ip> 告诉Consul启动时其群集地址？
+  # Consul包括一个小实用程序，用于查找客户端或按接口名称绑定地址。
+    # -e CONSUL_CLIENT_INTERFACE或CONSUL_BIND_INTERFACE 用于设置接口名称
+    # -bind=<interface ip> & -client=<interface ip> 用于查找客户端
+  # 开发模式 - 不带参数的Consul容器将为您提供处于开发模式的Consul服务器，使用开发服务器在桥接网络上运行，
+      对于在单个机器上测试Consul的多个实例非常有用。开发模式还在端口8500上启动Consul的Web UI版本。
+      通过-ui在命令行上向Consul 提供选项，可以将其添加到其他Consul配置中。
+    docker run -d --name=dev-consul -e CONSUL_BIND_INTERFACE=eth0 consul
+    docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
+    docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
+  $ docker exec -t dev-consul consul members # 查询集群中的所有成员
+  # 在客户端模式下运行Consul Agent
+    docker run -d --net=host -e 'CONSUL_LOCAL_CONFIG={"leave_on_terminate": true}' 
+      consul agent -bind=<external ip> -retry-join=<root agent ip>
+  # 在服务器模式下运行Consul Agent
+    docker run -d --net=host -e 'CONSUL_LOCAL_CONFIG={"skip_leave_on_interrupt": true}' 
+      consul agent -server -bind=<external ip> -retry-join=<root agent ip> -bootstrap-expect=<number of server agents>
+  # 在端口53上公开Consul的DNS服务器
+    docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8
+  # 使用容器进行服务发现，有关详细信息，请参阅[代理API]
+    
 ~~~
 
 > [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中最重要的数据。[`play...`](http://play.etcd.io/install) [`下载`](https://github.com/etcd-io/etcd/releases)
