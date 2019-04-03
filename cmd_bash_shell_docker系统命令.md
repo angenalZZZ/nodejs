@@ -444,9 +444,7 @@ obj\
 # [**Consul**](https://hub.docker.com/_/consul)
 
 > [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。[`安装`](https://hub.docker.com/_/consul)<br>
-  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。
-   Consul集群中的每个主机都在运行Consul代理，每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。
-   在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。
+  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。
 ~~~
   # 部署
   
