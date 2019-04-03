@@ -456,24 +456,28 @@ obj\
   # Consul包括一个小实用程序，用于查找客户端或按接口名称绑定地址。
     # -e CONSUL_CLIENT_INTERFACE或CONSUL_BIND_INTERFACE 用于设置接口名称
     # -bind=<interface ip> & -client=<interface ip> 用于查找客户端
-  # 开发模式 - 不带参数的Consul容器将为您提供处于开发模式的Consul服务器，使用开发服务器在桥接网络上运行，
+  # 开发模式 *** 不带参数的Consul容器将为您提供处于开发模式的Consul服务器，使用开发服务器在桥接网络上运行，
       对于在单个机器上测试Consul的多个实例非常有用。开发模式还在端口8500上启动Consul的Web UI版本。
       通过-ui在命令行上向Consul 提供选项，可以将其添加到其他Consul配置中。
-    docker run -d --name=dev-consul -e CONSUL_BIND_INTERFACE=eth0 consul
-    docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
-    docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
-  $ docker exec -t dev-consul consul members # 查询集群中的所有成员
-  # 在客户端模式下运行Consul Agent
-    docker run -d --net=host -e 'CONSUL_LOCAL_CONFIG={"leave_on_terminate": true}' 
-      consul agent -bind=<external ip> -retry-join=<root agent ip>
-  # 在服务器模式下运行Consul Agent
-    docker run -d --net=host -e 'CONSUL_LOCAL_CONFIG={"skip_leave_on_interrupt": true}' 
-      consul agent -server -bind=<external ip> -retry-join=<root agent ip> -bootstrap-expect=<number of server agents>
-  # 在端口53上公开Consul的DNS服务器
-    docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8
-  # 使用容器进行服务发现，有关详细信息，请参阅[代理API]
+  > docker run -d --name=dev-consul -e CONSUL_BIND_INTERFACE=eth0 consul
+      # 查找IP-join: docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" dev-consul
+  > docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
+  > docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
+  > docker exec -t dev-consul consul members # 查询集群中的所有成员
+  # 在客户端模式下 *** 运行Consul Agent
+  > docker run -d --net=host consul agent 
+      -bind=<external ip> # 当主机上其他容器也使用--net=host将代理暴露给容器外主机上运行的其他应用程序进程
+      -retry-join=<root agent ip> # 指定群集中用于在启动时加入的另一个代理的外部IP https://www.consul.io/docs/agent/options.html
+      -client=<bridge ip> # 通过网络（桥接网络）将Consul接口公开给其他容器，可使用选项-client=0.0.0.0绑定到所有接口
+  # 在服务器模式下 *** 运行Consul Agent
+  > docker run -d --net=host consul agent -server 
+      -bind=<external ip> -retry-join=<root agent ip> -bootstrap-expect=<number of server agents>
+  # 在端口53上公开Consul的DNS服务器 https://www.consul.io/docs/agent/services.html
+  > docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8 -bind=<bridge ip>
+  > docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get install -y dnsutils && dig consul.service.consul"
+  # 使用容器进行服务发现，有关详细信息，请参阅[代理API] https://www.consul.io/docs/agent/http/agent.html
   # 在Docker容器中运行运行状况检查
-    如果Docker守护程序暴露给Consul代理并且DOCKER_HOST设置了环境变量，则可以使用Docker容器ID配置检查以执行。
+      # 如果Docker守护程序暴露给Consul代理并且DOCKER_HOST设置了环境变量，则可以使用Docker容器ID配置检查以执行。
 ~~~
 
 > [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中最重要的数据。[`play...`](http://play.etcd.io/install) [`download`](https://github.com/etcd-io/etcd/releases)
