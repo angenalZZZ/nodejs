@@ -1,7 +1,7 @@
 # **系统命令**
 
-# [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [**linux**](https://wangchujiang.com/linux-command/hot.html) | [shell](https://github.com/fengyuhetao/shell) <br> [docker](#docker) | [k8s](#Kubernetes)
-> [Linux常用命令](#Linux常用命令)、[`All Linux Command`](https://ss64.com/bash/)、[`All Windows CMD`](https://ss64.com/nt/)<br>
+# [**windows-cmd**](https://github.com/Awesome-Windows/awesome-windows-command-line) | [windows-tool](https://github.com/Awesome-Windows/Awesome) | [**linux**](https://wangchujiang.com/linux-command/hot.html) | [shell](https://github.com/fengyuhetao/shell)、[Linux常用命令](#Linux常用命令) <br> [docker](#docker) | [k8s](#Kubernetes) | [Consul](#Consul)
+> [`All Linux Command`](https://ss64.com/bash/)、[`All Windows CMD`](https://ss64.com/nt/)<br>
 > [`《Linux就该这么学》pdf`](https://www.linuxprobe.com/docs/LinuxProbe.pdf)、
   [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)、
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)<br>
@@ -262,17 +262,7 @@
     rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
     # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
     # https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
-  # 消息平台 etcd, nsq ...
-  # https://github.com/etcd-io/etcd/releases # 说明 http://play.etcd.io/install 安装TLS、Docker、Container Linux
-  docker run --name etcds1 --network=workgroup --network-alias=etcds1 -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
-    -v d:\docker\app\etcd\s1:/etcd-data -v d:\docker\app\etcd\certs:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
-    /usr/local/bin/etcd --name s1 --data-dir /etcd-data 
-    --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
-    --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 
-    --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 # 安装http时取消,s2...s3
-    --initial-cluster-token tkn --initial-cluster-state new                                  # 安装http时取消-下面语句
-    --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
-    --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --peer-cert-file /etcd-ssl-certs-dir/s1.pem --peer-key-file /etcd-ssl-certs-dir/s1-key.pem 
+  # 消息平台 nsq ...
   # https://nsq.io/deployment/docker.html
   docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 
     nsqio/nsq /nsqlookupd  # First Run nsqlookupd for nsqd & nsqadmin 
@@ -451,6 +441,29 @@ obj\
 > `k8s`扩展<br>
   　[istio](https://istio.io/docs/setup/kubernetes/platform-setup/)：连接、安全、控制和观察服务
 
+# [**Consul**](https://hub.docker.com/_/consul)
+
+> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
+  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。
+   Consul集群中的每个主机都在运行Consul代理，每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。
+   在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。
+~~~
+  # 部署
+  
+~~~
+
+> [`etcd`](https://coreos.com/etcd/docs/latest)  [`下载`](https://github.com/etcd-io/etcd/releases) [`play...`](http://play.etcd.io/install) 安装TLS、Docker、Container Linux
+~~~
+  docker run --name etcds1 --network=workgroup --network-alias=etcds1 -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
+    -v d:\docker\app\etcd\s1:/etcd-data -v d:\docker\app\etcd\certs:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
+    /usr/local/bin/etcd --name s1 --data-dir /etcd-data 
+    --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
+    --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 
+    --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 # 安装http时取消,s2...s3
+    --initial-cluster-token tkn --initial-cluster-state new                                  # 安装http时取消-下面语句
+    --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
+    --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --peer-cert-file /etcd-ssl-certs-dir/s1.pem --peer-key-file /etcd-ssl-certs-dir/s1-key.pem 
+~~~
 
 ####  免费的容器镜像服务
 
