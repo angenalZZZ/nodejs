@@ -453,7 +453,7 @@ obj\
     # Consul总是--net=host在Docker中运行，因此在配置Consul的IP地址时需要注意。Consul具有其集群地址的概念以及其客户端地址。
     # Consul群集地址是其他Consul代理可以联系给定代理的地址。客户端地址是主机上的其他进程联系Consul以发出HTTP或DNS请求的地址。
     # -bind=<external ip> 告诉Consul启动时其群集地址？
-  # Consul包括一个小实用程序，用于查找客户端或按接口名称绑定地址。
+  # Consul包括一个小实用程序，用于查找客户端或按接口名称绑定地址
     # -e CONSUL_CLIENT_INTERFACE或CONSUL_BIND_INTERFACE 用于设置接口名称
     # -bind=<interface ip> & -client=<interface ip> 用于查找客户端
   
@@ -466,6 +466,15 @@ obj\
   > docker exec -t dev-consul-node0 consul info    # 查看Consul集群的基本信息 https://www.consul.io/docs/commands/info.html
   > docker exec -t dev-consul-node0 consul members # 查询Consul集群中的所有成员
   > curl http://localhost:8500/v1/health/service/consul?pretty # 查询Consul集群的健康状况
+  > docker exec -it dev-consul-node0 sh # 进入集群主机中执行shell
+  $ consul --help                               # 操作帮助
+  $ consul catalog nodes                        # 节点列表
+  $ consul kv put config/api/request_limit 2000 # 添加数据
+  $ consul kv get config/api/request_limit      # 查询数据
+  $ consul kv delete config/api/request_limit   # 删除数据
+  $ consul intention check api postgresql       # 检查api
+  $ consul intention create api postgresql      # 创建api
+  $ consul intention delete api postgresql
   
   # 在服务器模式下运行Consul Agent
   > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络（桥接网络）
