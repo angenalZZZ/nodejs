@@ -211,6 +211,14 @@
   docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
   docker network connect --ip 10.10.36.122 [network-name] [container] # 4.入网,其它容器连接指定ip
   docker network disconnect [network-name] [container] # 退出网络
+  docker network create -d host hostgroup   # 创建自定义网络hostgroup; -d [host:与主机共享一个IP地址/内网地址]
+  docker network create -d bridge workgroup # 创建自定义网络workgroup; -d [bridge(默认):分配给容器一个IP地址]
+  docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
+  docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
+  docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
+  docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
+  docker run --name myweb -d -P --network=workgroup --link redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
+
   # 基础
   docker [COMMAND] --help
   docker images # 查看镜像
@@ -222,12 +230,30 @@
   docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest       # 保存镜像 (save images)
   docker export ubuntu > "d:\docker\snapshot\ubuntu_19_04.tar"           # 导出快照 (export snapshot)
   docker container export -o="d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出快照 (container export snapshot)
-  
   docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (copy dir to container)
   docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos.net\entrypoint.sh # 复制文件
+
+  docker container start $(docker ps -aq)   # 启动所有容器
+  docker container stop $(docker ps -aq)    # 停止所有容器
+  docker container restart $(docker ps -aq) # 重启所有容器
+  docker kill $(docker ps -a -q) # 杀死所有运行的容器
+  docker container prune         # 删除所有停止的容器
+  docker volume prune            # 删除未使用volumes
+  docker system prune            # 删除未使用数据
+  docker rm [container]          # 删除1个容器
+  docker rm $(docker ps -a -q)   # 删除所有容器
+  docker rmi [image]             # 删除1个镜像
+  docker rmi $(docker images -q) # 删除所有镜像
+  docker port [container]        # 查看端口映射
+  docker inspect [container]     # 查看容器详情
+  docker rename web [container]  # 容器重命名 > 查看容器 docker ps -a
+  docker logs [container]        # 查看容器日志
   
+  docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 Name]
+  docker stop web & docker commit web myweb & docker run -p 8080:80 -p 8000:80 -td myweb # 容器web映射多个端口
+  docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh"  # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
+
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
-  
   docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
   
   docker run --name redis5 --network=workgroup --network-alias=redis5 -d -m 512m -p 6379:6379 
@@ -279,39 +305,11 @@
     # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
   docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
     # 分布式时序数据库M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
-  
-  # Consul是google开源的一个使用go语言开发的服务发现、配置管理中心服务。
-  docker pull progrium/consul # Consul实践(高可用、高效服务架构方案) https://blog.51cto.com/dgd2010/1730439
+
   git clone https://github.com/AliyunContainerService/docker-jenkins 
     && cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
-    docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
+  docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
   # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
-  
-  docker network create -d host hostgroup
-  docker network create -d bridge workgroup # 创建自定义网络workgroup; -d [host:共享一个IP地址,bridge(默认):分配给容器一个IP地址]
-  docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
-  docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" db
-  docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
-  docker run --name myweb -itd -P --network=workgroup --link redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
-  
-  docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh"  # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
-  docker stop web & docker commit web myweb & docker run -p 8080:80 -p 8000:80 -td myweb # 容器web映射多个端口
-  docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 Name]
-  docker container stop $(docker ps -aq)    # 停止所有容器
-  docker container start $(docker ps -aq)   # 启动所有容器
-  docker container restart $(docker ps -aq) # 重启所有容器
-  docker kill $(docker ps -a -q) # 杀死所有运行的容器
-  docker container prune         # 删除所有停止的容器
-  docker volume prune            # 删除未使用volumes
-  docker system prune            # 删除未使用数据
-  docker rm [container]          # 删除1个容器
-  docker rm $(docker ps -a -q)   # 删除所有容器
-  docker rmi [image]             # 删除1个镜像
-  docker rmi $(docker images -q) # 删除所有镜像
-  docker port [container]        # 查看端口映射
-  docker inspect [container]     # 查看容器详情
-  docker rename web [container]  # 容器重命名 > 查看容器 docker ps -a
-  docker logs [container]        # 查看容器日志
 ~~~
 
 > **docker-search-tags.sh** 标签/版本列表
@@ -494,8 +492,10 @@ obj\
     --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 
     --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 # 安装http时取消,s2...s3
     --initial-cluster-token tkn --initial-cluster-state new                                  # 安装http时取消-下面语句
-    --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
-    --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem --peer-cert-file /etcd-ssl-certs-dir/s1.pem --peer-key-file /etcd-ssl-certs-dir/s1-key.pem 
+    --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
+    --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
+    --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
+    --peer-cert-file /etcd-ssl-certs-dir/s1.pem --peer-key-file /etcd-ssl-certs-dir/s1-key.pem 
 ~~~
 
 ####  免费的容器镜像服务
