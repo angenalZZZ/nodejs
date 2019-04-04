@@ -90,6 +90,7 @@
   $ ifconfig | grep addr
   
   # 网络端口
+  > netstat -aT # tcp端口
   > netstat -ap tcp | findstr -i "listening" # tcp端口
   $ netstat -atW | grep -i "listen"      # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
   $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get install -y net-tools
@@ -464,6 +465,7 @@ obj\
   > docker run -d --name dev-consul-node1 -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0. # 可运行多个
   > docker exec -t dev-consul-node0 consul info    # 查看Consul集群的基本信息 https://www.consul.io/docs/commands/info.html
   > docker exec -t dev-consul-node0 consul members # 查询Consul集群中的所有成员
+  > curl http://localhost:8500/v1/health/service/consul?pretty # 查询Consul的健康状况
   
   # 在服务器模式下运行Consul Agent
   > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络（桥接网络）
