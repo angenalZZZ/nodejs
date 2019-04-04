@@ -213,8 +213,8 @@
   docker network disconnect [network-name] [container] # 退出网络
   docker network create -d host hostgroup   # 创建自定义网络hostgroup; -d [host:与主机共享一个IP地址/内网地址]
   docker network create -d bridge workgroup # 创建自定义网络workgroup; -d [bridge(默认):分配给容器一个IP地址]
-  docker network connect workgroup redis5 & docker network connect workgroup centos.netcore # 加入自定义网络workgroup
-  docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
+  docker network connect workgroup redis5 && docker network connect workgroup centos.netcore # 加入自定义网络workgroup
+  docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container] # 查询IP地址
   docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
   docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
   docker run --name myweb -d -P --network=workgroup --link redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
@@ -249,8 +249,8 @@
   docker rename web [container]  # 容器重命名 > 查看容器 docker ps -a
   docker logs [container]        # 查看容器日志
   
-  docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 Name]
-  docker stop web & docker commit web myweb & docker run -p 8080:80 -p 8000:80 -td myweb # 容器web映射多个端口
+  docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 containerName]
+  docker stop web & docker commit web myweb & docker run -p 8080:80 -td myweb # commit新容器myweb&端口映射
   docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh"  # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
 
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
@@ -305,7 +305,8 @@
     # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
   docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
     # 分布式时序数据库M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
-
+  
+  # 基于 Jenkins 快速搭建持续集成环境
   git clone https://github.com/AliyunContainerService/docker-jenkins 
     && cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
   docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
@@ -540,6 +541,9 @@ obj\
 ----
 
 ## Linux常用命令
+
+    特殊连接符：
+      & (中间> 连接两条命令并按顺序执行; 结尾> 使命令程序在后台执行进程并脱离终端)
 
 #### 一、Linux下常用命令：文件与目录操作
 ~~~
