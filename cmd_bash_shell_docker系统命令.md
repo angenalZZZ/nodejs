@@ -456,15 +456,16 @@ obj\
     # -e CONSUL_CLIENT_INTERFACE或CONSUL_BIND_INTERFACE 用于设置接口名称
     # -bind=<interface ip> & -client=<interface ip> 用于查找客户端
   
-  # 开发模式 *** 不带参数的Consul容器将为您提供处于开发模式的Consul服务器，使用开发服务器在桥接网络上运行，
+  # 在开发模式下运行Consul 不带参数的Consul容器将为您提供处于开发模式的Consul服务器，使用开发服务器在桥接网络上运行，
       对于在单个机器上测试Consul的多个实例非常有用。开发模式还在端口8500上启动Consul的Web UI版本。
       通过-ui在命令行上向Consul 提供选项，可以将其添加到其他Consul配置中。
-  > docker run -d --name=dev-consul -e CONSUL_BIND_INTERFACE=eth0 consul
-      # 查找IP-join: docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" dev-consul
-  > docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
-  > docker run -d -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0.2
-  > docker exec -t dev-consul consul members # 查询集群中的所有成员
-  # 在服务器模式下 *** 运行Consul Agent
+  > docker run -d --name dev-consul-node0 -e CONSUL_BIND_INTERFACE=eth0 consul # 不指定任何参数
+      # 查找IP-join: docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" dev-consul-node0
+  > docker run -d --name dev-consul-node1 -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0. # 可运行多个
+  > docker exec -t dev-consul-node0 consul info    # 查看Consul集群的基本信息 https://www.consul.io/docs/commands/info.html
+  > docker exec -t dev-consul-node0 consul members # 查询Consul集群中的所有成员
+  
+  # 在服务器模式下运行Consul Agent
   > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络（桥接网络）
       -retry-join=<root agent ip> # 指定群集中用于在启动时加入的另一个代理的外部IP
       -bootstrap-expect=<number of server agents> # 其他数据中心数目，或者只指定为当前数据中心-bootstrap
