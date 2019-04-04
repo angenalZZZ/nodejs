@@ -472,9 +472,9 @@ obj\
   $ consul kv put config/api/request_limit 2000 # 添加数据
   $ consul kv get config/api/request_limit      # 查询数据
   $ consul kv delete config/api/request_limit   # 删除数据
-  $ consul intention check api postgresql       # 检查api
-  $ consul intention create api postgresql      # 创建api
-  $ consul intention delete api postgresql
+  $ consul intention check api postgresql       # 检查微服务api
+  $ consul intention create api postgresql      # 创建微服务api
+  $ consul intention delete api postgresql      # 删除微服务api
   
   # 在服务器模式下运行Consul Agent
   > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络（桥接网络）
