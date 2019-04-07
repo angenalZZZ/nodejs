@@ -307,6 +307,13 @@
   docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
     # 分布式时序数据库M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
   
+  docker run --name minio-service -p 9000:9000 -v d:\docker\app\minio\data:/data -v d:\docker\app\minio\config:/root/.minio 
+    -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" 
+    minio/minio server /data # 对象存储服务，例如图片、视频、日志文件、备份数据和容器/虚拟机镜像等 https://docs.min.io/cn
+    # 设置安全密钥: using Docker secrets
+    # echo "AKIAIOSFODNN7EXAMPLE" | docker secret create access_key -
+    # echo "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" | docker secret create secret_key -
+  
   # 基于 Jenkins 快速搭建持续集成环境
   git clone https://github.com/AliyunContainerService/docker-jenkins 
     && cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
