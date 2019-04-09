@@ -307,7 +307,7 @@
   docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
     # 分布式时序数据库M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
   
-  # 云存储解决方案minio
+  # 云存储解决方案minio  文档指南 https://docs.min.io/cn/
   > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
   > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
   > mc config host add minio http://127.0.0.1:9000 <YOUR-ACCESS-KEY> <YOUR-SECRET-KEY> # 客户端cli: https://dl.minio.io/client/mc/release
