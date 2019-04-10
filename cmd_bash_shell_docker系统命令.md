@@ -17,6 +17,9 @@
   $ uname -a
   $ lsb_release -cs  # 当前系统的发行版名称
   
+  # 系统修复
+  > sfc/scannow
+  
   # 时间
   > wmic OS Get localdatetime /value # 当前本地时间
   # 时间-工具 1.下载 http://sourceforge.net/projects/unxutils 2.解压,重命名usr/local/wbin/date.exe为unixdate.exe
