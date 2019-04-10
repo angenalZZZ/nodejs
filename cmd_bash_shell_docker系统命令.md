@@ -315,6 +315,7 @@
   > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
   > mc config host add minio http://127.0.0.1:9000 <YOUR-ACCESS-KEY> <YOUR-SECRET-KEY> # 客户端cli: https://dl.minio.io/client/mc/release
   > mc ls -r minio # 获取对象列表
+  > mc find minio/img --maxdepth 3 --name "*.png" --path "*" --larger 1KB --smaller 2MB --older-than 0d2h30m --json
   docker run --name minio-service -p 9000:9000 -v d:\docker\app\minio\data:/data -v d:\docker\app\minio\config:/root/.minio 
     -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" 
     minio/minio server /data # 对象存储服务，例如图片、视频、日志文件、备份数据和容器/虚拟机镜像等 https://docs.min.io/cn
