@@ -313,8 +313,9 @@
   # 云存储解决方案minio  文档指南 https://docs.min.io/cn/
   > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
   > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
-  > mc config host add minio http://127.0.0.1:9000 <YOUR-ACCESS-KEY> <YOUR-SECRET-KEY> # 客户端cli: https://dl.minio.io/client/mc/release
-  > mc ls -r minio # 获取对象列表
+  > nssm install MinIO minio.exe server d:\docker\app\minio\data # 安装/Windows服务/云存储MinIO
+  > mc config host add minio http://127.0.0.1:9000 <ACCESS-KEY> <SECRET-KEY> # 客户端:https://dl.minio.io/client/mc/release
+  > mc ls -r minio # 获取所有云存储对象列表
   > mc find minio/img --maxdepth 3 --name "*.png" --path "*" --larger 1KB --smaller 2MB --older-than 0d2h30m --json
   docker run --name minio-service -p 9000:9000 -v d:\docker\app\minio\data:/data -v d:\docker\app\minio\config:/root/.minio 
     -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" 
