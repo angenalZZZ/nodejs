@@ -172,6 +172,14 @@
   # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve
   
+  # 安装 SSH 建立安全的加密连接：一个密码对应一个SSH-key
+  > ssh-keygen -t rsa -C "angenal.2008@yahoo.com.cn"
+  > dir "C:\Users\Administrator/.ssh"     # 存储的本地公钥位置
+  > clip < %USERPROFILE%/.ssh/id_rsa.pub  # 拷贝公钥到粘贴板中
+  $ cat ~/.ssh/id_rsa.pub                 # https://code.aliyun.com/help/ssh/README
+  $ xclip -sel clip < ~/.ssh/id_rsa.pub   # GNU/Linux (requires xclip)
+  $ pbcopy < ~/.ssh/id_rsa.pub            # Mac-OS
+  
   # 安装工具
   $ apt install git   # 安装Git  < ubuntu >
   $ mkdir -p /git & cd /git & sudo chmod 777 . # 创建git仓储根目录:可读写
