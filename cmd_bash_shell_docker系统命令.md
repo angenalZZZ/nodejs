@@ -163,7 +163,7 @@
   < Wsh.Run "C:\Windows\System32\bash.exe -c redis-server",0
   < Set Wsh = Nothing
   # 性能测试Redis
-  > redis-benchmark -h 127.0.0.1 -p 6369 -n 10000 -q   # 本机Redis  < SET: 72K, GET: 72K > requests per second
+  > redis-benchmark -h 127.0.0.1 -p 6369 -n 10000 -q   # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q                       # 本机BuntDB < SET:230K,GET:5000K > requests per second
   
   # 安装消息平台
