@@ -229,7 +229,7 @@
   docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
   docker network connect --ip 10.10.36.122 [network-name] [container] # 4.入网,其它容器连接指定ip
   docker network disconnect [network-name] [container] # 退出网络
-  docker network create -d host hostgroup   # 创建自定义网络hostgroup; -d [host:与主机共享一个IP地址/内网地址]
+  docker network create -d host host        # 创建自定义网络host(默认已添加); -d [host:与主机共享一个IP地址/内网地址]
   docker network create -d bridge workgroup # 创建自定义网络workgroup; -d [bridge(默认):分配给容器一个IP地址]
   docker network connect workgroup redis5 && docker network connect workgroup centos.netcore # 加入自定义网络workgroup
   docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container] # 查询IP地址
