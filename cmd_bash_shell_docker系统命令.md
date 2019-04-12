@@ -157,6 +157,7 @@
   $ redis-server                         # 启动服务(独立模式)
   $ sudo service redis_6379 start        # 启动服务(非独立模式) start|stop|restart
   $ sudo update-rc.d redis_6379 defaults # 将 Redis init 脚本添加到所有默认运行级别(stop服务后)
+  $ redis-cli -h 127.0.0.1 -p 6379 -a 123456 -n 0 # 客户端命令: [p端口],[a密码],[n数据库]
   # 开机自启动Redis
   > [Win+R] > shell:startup \ autostart-redis.vbs # Windows "启动文件夹"
   < Set Wsh = CreateObject("WScript.Shell")
