@@ -295,7 +295,7 @@
   
   docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=123456 
     mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此db
-  docker run --name mssql -itd -p 1434:1433 --link myweb:db -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
+  docker run --name mssql -itd -p 1434:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
     -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y 
     mcr.microsoft.com/mssql/server # 数据库mssql
   # 外部访问控制：(--link)容器myweb连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
