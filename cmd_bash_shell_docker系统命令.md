@@ -323,7 +323,7 @@
     -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
     # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
   docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
-    # 分布式时序数据库M3DB # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
+    # 分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
   
   # 云存储解决方案minio  文档指南 https://docs.min.io/cn/
   > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
