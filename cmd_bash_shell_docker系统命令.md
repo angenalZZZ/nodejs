@@ -155,17 +155,18 @@
   $ sudo apt install gcc              # 安装gcc编译工具
   $ sudo apt install build-essential  # 安装gcc/g++编译工具(可选)
   $ sudo apt install make             # 安装构建工具make
-  $ wget http://download.redis.io/releases/redis-5.0.3.tar.gz
-  $ tar xzf redis-5.0.3.tar.gz
+  $ wget http://download.redis.io/releases/redis-5.0.3.tar.gz  # 下载源码
+  $ tar xzf redis-5.0.3.tar.gz                                 # 解压源码
   $ cd redis-5.0.3 && make install       # 安装Redis
   $ cd utils && sudo ./install_server.sh # 安装Redis服务
-  $ redis-server                         # 启动服务(独立模式)
+  $ rm -f -r ~/redis-5.0.3 && rm -f ~/redis-5.0.3.tar.gz       # 删除源码
+  $ redis-server                         # 启动服务(独立模式), 可通过 ps aux 查看进程
   $ sudo service redis_6379 start        # (可选)启动服务(非独立模式) start|stop|restart
   $ sudo update-rc.d redis_6379 defaults # (可选)将 Redis init 脚本添加到所有默认运行级别(stop服务后)
+  # 开机启动Redis
+  > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前,设置Windows服务登录账户为Administrator
   # 客户端命令Redis
   > redis-cli -h 127.0.0.1 -p 6379 -a 123456 -n 0 # [p端口],[a密码],[n数据库]
-  # 开机自启动Redis
-  > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前,设置Windows服务登录账户为Administrator
   # 性能测试Redis
   > redis-benchmark -n 10000 -q   # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q  # 本机BuntDB < SET:230K,GET:5000K > requests per second
