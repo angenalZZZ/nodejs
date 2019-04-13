@@ -152,7 +152,8 @@
   $ lsb_release -c                  # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list  # 更新软件源: https://www.cnblogs.com/xudalin/p/9071902.html
   $ sudo apt-get update && sudo apt-get upgrade
-  $ sudo apt install gcc            # 安装 gcc 编译器
+  $ sudo apt install gcc              # 安装gcc编译工具
+  $ sudo apt install build-essential  # 安装gcc/g++编译工具
   $ wget http://download.redis.io/releases/redis-5.0.3.tar.gz
   $ tar xzf redis-5.0.3.tar.gz
   $ cd redis-5.0.3 & make install        # 安装Redis
