@@ -148,8 +148,11 @@
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
   # 安装数据库Redis
-  # < Windows Subsystem for Linux >--------------------------- 
-  $ sudo apt install gcc
+  # < Windows Subsystem for Linux | WSL >---------------------------
+  $ lsb_release -c                  # 获取系统代号,更新软件源sources.list
+  $ sudo vim /etc/apt/sources.list  # 更新软件源: https://www.cnblogs.com/xudalin/p/9071902.html
+  $ sudo apt-get update && sudo apt-get upgrade
+  $ sudo apt install gcc            # 安装 gcc 编译器
   $ wget http://download.redis.io/releases/redis-5.0.3.tar.gz
   $ tar xzf redis-5.0.3.tar.gz
   $ cd redis-5.0.3 & make install        # 安装Redis
@@ -1026,10 +1029,10 @@ sshd：OpenSSH守护进程
   $ systemctl disable sshd # systemctl关闭开机启动
     rm '/etc/systemd/system/multi-user.target.wants/sshd.service'
   # root-login------------------------------------
-  $ sudo passwd root             # 修改root密码，用于root登录ssh
-  $ sudo vi /etc/ssh/sshd_config # 修改配置文件 > # Authentication: (全部启用,去除#)
-    # vim命令（:w 编辑模式, :x 回车保存）
-    > PermitRootLogin yes        # 启用root登录  #PermitRootLogin prohibit-password
-    > sudo service ssh restart   # 重启ssh
+  $ sudo passwd root              # 修改root密码，用于root登录ssh
+  $ sudo vim /etc/ssh/sshd_config # 修改配置文件 > # Authentication: (全部启用,去除#)
+    # vim命令（:w 编辑模式, :i 插入模式, :x 回车保存, :qa! 退出不保存, gg dG 清空文件）
+    > PermitRootLogin yes         # 启用root登录  #PermitRootLogin prohibit-password
+    > sudo service ssh restart    # 重启ssh
 
 ~~~
