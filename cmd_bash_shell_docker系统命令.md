@@ -154,10 +154,11 @@
   $ sudo apt-get update && sudo apt-get upgrade
   $ sudo apt install gcc              # 安装gcc编译工具
   $ sudo apt install build-essential  # 安装gcc/g++编译工具
+  $ sudo apt install make
   $ wget http://download.redis.io/releases/redis-5.0.3.tar.gz
   $ tar xzf redis-5.0.3.tar.gz
-  $ cd redis-5.0.3 & make install        # 安装Redis
-  $ cd utils & sudo ./install_server.sh  # 安装服务
+  $ cd redis-5.0.3 && make install       # 安装Redis
+  $ cd utils & sudo ./install_server.sh  # 安装Redis服务
   $ redis-server                         # 启动服务(独立模式)
   $ sudo service redis_6379 start        # 启动服务(非独立模式) start|stop|restart
   $ sudo update-rc.d redis_6379 defaults # 将 Redis init 脚本添加到所有默认运行级别(stop服务后)
