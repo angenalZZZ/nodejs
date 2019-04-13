@@ -14,6 +14,7 @@
   # 系统
   > ver
   > net config workstation
+  > shell:startup    # [开始]菜单/启动/添加*.vbs
   $ uname -a
   $ lsb_release -cs  # 当前系统的发行版名称
   
