@@ -149,25 +149,25 @@
   
   # 安装数据库Redis
   # < Windows Subsystem for Linux | WSL >---------------------------
-  $ lsb_release -c                  # 获取系统代号,更新软件源sources.list
-  $ sudo vim /etc/apt/sources.list  # 更新软件源: https://www.cnblogs.com/xudalin/p/9071902.html
-  $ sudo apt-get update && sudo apt-get upgrade
+  $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
+  $ sudo vim /etc/apt/sources.list    # 更新软件源 https://www.cnblogs.com/xudalin/p/9071902.html
+  $ sudo apt-get update && sudo apt-get upgrade # 更新升级(可选)
   $ sudo apt install gcc              # 安装gcc编译工具
-  $ sudo apt install build-essential  # 安装gcc/g++编译工具
-  $ sudo apt install make
+  $ sudo apt install build-essential  # 安装gcc/g++编译工具(可选)
+  $ sudo apt install make             # 安装构建工具make
   $ wget http://download.redis.io/releases/redis-5.0.3.tar.gz
   $ tar xzf redis-5.0.3.tar.gz
   $ cd redis-5.0.3 && make install       # 安装Redis
-  $ cd utils & sudo ./install_server.sh  # 安装Redis服务
+  $ cd utils && sudo ./install_server.sh # 安装Redis服务
   $ redis-server                         # 启动服务(独立模式)
-  $ sudo service redis_6379 start        # 启动服务(非独立模式) start|stop|restart
-  $ sudo update-rc.d redis_6379 defaults # 将 Redis init 脚本添加到所有默认运行级别(stop服务后)
+  $ sudo service redis_6379 start        # (可选)启动服务(非独立模式) start|stop|restart
+  $ sudo update-rc.d redis_6379 defaults # (可选)将 Redis init 脚本添加到所有默认运行级别(stop服务后)
   $ redis-cli -h 127.0.0.1 -p 6379 -a 123456 -n 0 # 客户端命令: [p端口],[a密码],[n数据库]
-  # 开机自启动Redis
-  > [Win+R] > shell:startup \ autostart-redis.vbs # Windows "启动文件夹"
-  < Set Wsh = CreateObject("WScript.Shell")
-  < Wsh.Run "C:\Windows\System32\bash.exe -c redis-server",0
-  < Set Wsh = Nothing
+  # 开机自启动Redis(可选)
+  > [Win+R] > shell:startup \ autostart-redis.vbs # Windows\[开始]菜单\程序\启动
+    Set Wsh = CreateObject("WScript.Shell")
+    Wsh.Run "C:\Windows\System32\bash.exe -c redis-server"
+    Set Wsh = Nothing
   # 性能测试Redis
   > redis-benchmark -h 127.0.0.1 -p 6369 -n 10000 -q   # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q                       # 本机BuntDB < SET:230K,GET:5000K > requests per second
