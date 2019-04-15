@@ -55,6 +55,10 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 > info stats | grep reject
   rejected_connections(超出最大连接数限制而被拒绝的客户端连接次数)数字很大，意味着服务器的最大连接数设置过低，需要调整 maxclients 参数。
 
+# 客户端与Redis建立连接后会自动选择0号数据库，不过可以随时使用SELECT命令更换数据库
+> select 1 # 选择1号数据库
+> flushall # 清空一个Redis实例中所有数据库中的数据：Redis默认支持16个数据库（可以通过配置文件支持更多，无上限）
+
 > info stats | grep ops         # 每秒操作数:instantaneous_ops_per_sec:***
 > monitor                       # 如果 qps 过高，快速观察究竟是哪些 key 访问比较频繁，从而在业务上进行优化，减少 IO 次数(执行后立即ctrl+c中断)
 > debug object [key]            # 调试输出 key of object: { Value at: 指针地址, refcount: 引用计数, encoding: 数据类型, serializedlength..}
