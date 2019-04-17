@@ -1038,3 +1038,29 @@ sshd：OpenSSH守护进程
     > sudo service ssh restart    # 重启ssh
 
 ~~~
+
+#### 上传文件
+~~~bash
+#!/bin/bash
+# hmac_keys_in mark=Z2VoZWlt
+#
+UPLOADER="mark"
+SECRET="geheim"
+
+TIMESTAMP="$(date --utc +%s)"
+# length and contents are not important, "abcdef" would work as well
+NONCE="$(cat /dev/urandom | tr -d -c '[:alnum:]' | head -c $(( 32 - ${#TIMESTAMP} )))"
+
+SIGNATURE="$(printf "${TIMESTAMP}${NONCE}" \
+             | openssl dgst -sha256 -hmac "${SECRET}" -binary \
+             | openssl enc -base64)"
+
+# order does not matter; any skipped fields in Authorization will be set to defaults
+exec curl -T \
+  --header "Timestamp: ${TIMESTAMP}" \
+  --header "Token: ${NONCE}" \
+  --header "Authorization: Signature keyId='${UPLOADER}',signature='${SIGNATURE}'" \
+  "<filename>" "<url>"
+~~~
+
+
