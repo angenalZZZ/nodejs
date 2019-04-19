@@ -1,6 +1,6 @@
 
 # **[安装redis - Remote Dictionary Service](http://redis.io)**
-> [1.查询服务信息](#1查询服务信息)、[2.基础数据结构](#2基础数据结构)、[3.配置Redis](#3配置Redis)
+> [1.查询服务信息](#1查询服务信息)、[2.基础数据结构](#2基础数据结构)、[3.配置Redis](#3配置Redis)、[`教程`](http://www.runoob.com/redis/redis-tutorial.html)
 
 ~~~
 mac    > brew install redis
@@ -15,7 +15,7 @@ docker > docker pull redis;docker run --name redis-server -d -p6379:6379 redis;d
 > [try redis-cli](http://try.redis.io)
 
 ~~~
-redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
+redis-cli -h 127.0.0.1 -p 6379 -a 123456 -n 0 # redis连接参数 [p端口],[a密码],[n数据库*默认0]
 > info [all]                    # 获取所有信息
   # 1. Server 服务器运行的环境参数
   # 2. Clients 客户端相关信息
@@ -58,7 +58,8 @@ redis-cli -h 127.0.0.1 -p 6379  # redis连接参数
 # 客户端与Redis建立连接后会自动选择0号数据库，不过可以随时使用SELECT命令更换数据库
 > select 1 # 选择1号数据库
 > flushall # 清空一个Redis实例中所有数据库中的数据：Redis默认支持16个数据库（可以通过配置文件支持更多，无上限）
-
+# 性能测试
+> redis-benchmark -n 10000 -q
 > info stats | grep ops         # 每秒操作数:instantaneous_ops_per_sec:***
 > monitor                       # 如果 qps 过高，快速观察究竟是哪些 key 访问比较频繁，从而在业务上进行优化，减少 IO 次数(执行后立即ctrl+c中断)
 > debug object [key]            # 调试输出 key of object: { Value at: 指针地址, refcount: 引用计数, encoding: 数据类型, serializedlength..}
