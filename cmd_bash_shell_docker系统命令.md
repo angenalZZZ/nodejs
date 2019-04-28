@@ -324,8 +324,8 @@
   # 高性能的图形数据库(NoSQL)
   docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
     -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0
-  # 分布式位图索引+实时计算
-  docker run --name pilosa --network=workgroup --network-alias=pilosa -d -p 10101:10101 pilosa/pilosa
+  # 大数据+分布式位图索引+实时计算
+  docker run --name pilosa --network=workgroup --network-alias=pilosa -d -p 10101:10101 -v d:\docker\app\pilosa\data:/data pilosa/pilosa
   
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11 # PostgreSQL
   docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
