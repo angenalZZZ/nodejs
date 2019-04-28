@@ -324,19 +324,21 @@
   # 高性能的图形数据库(NoSQL)
   docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
     -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0
+  # 分布式位图索引+实时计算
+  docker run --name pilosa --network=workgroup --network-alias=pilosa -d -p 10101:10101 pilosa/pilosa
   
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11 # PostgreSQL
   docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
     -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
     # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
   docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
-    # 分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) # https://m3db.github.io/m3/how_to/single_node/ https://github.com/m3db/m3
+    # 分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) # m3db.github.io/m3/how_to/single_node/ github.com/m3db/m3
   
-  # 云存储解决方案minio  文档指南 https://docs.min.io/cn/
+  # 云存储解决方案minio  文档指南 https://docs.min.io/cn
   > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
   > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
   > nssm install MinIO minio.exe server d:\docker\app\minio\data # 安装/Windows服务/云存储MinIO
-  > mc config host add minio http://127.0.0.1:9000 <ACCESS-KEY> <SECRET-KEY> # 客户端:https://dl.minio.io/client/mc/release
+  > mc config host add minio http://127.0.0.1:9000 <ACCESS-KEY> <SECRET-KEY> # 客户端 dl.minio.io/client/mc/release
   > mc ls -r minio # 获取所有云存储对象列表
   > mc find minio/img --maxdepth 3 --name "*.png" --path "*" --larger 1KB --smaller 2MB --older-than 0d2h30m --json
   docker run --name minio-service -p 9000:9000 -v d:\docker\app\minio\data:/data -v d:\docker\app\minio\config:/root/.minio 
