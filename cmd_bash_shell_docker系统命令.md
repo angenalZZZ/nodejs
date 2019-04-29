@@ -601,6 +601,22 @@ obj\
 
     *特殊连接符：
       & (中间> 连接两条命令并按顺序执行; 结尾> 使命令程序脱离终端进程并在后台执行)
+    *更新软件源: https://www.cnblogs.com/xudalin/p/9071902.html
+~~~
+# /etc/apt/sources.list 阿里源
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+$ sudo apt-get update
+$ sudo apt-get upgrade
+~~~
 
 #### 一、Linux下常用命令：文件与目录操作
 ~~~
