@@ -148,7 +148,7 @@
   wmic printer where default='TRUE' get name                              # 获取默认打印机
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
-  # 安装数据库Redis
+  # 安装数据库Redis (Key-Value数据库) www.redis.cn
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源 https://www.cnblogs.com/xudalin/p/9071902.html
@@ -172,11 +172,17 @@
   > redis-benchmark -n 10000 -q   # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q  # 本机BuntDB < SET:230K,GET:5000K > requests per second
   
-  # 安装消息平台
-  > nsqlookupd                                                                 # 先启动nsqlookud /消息服务
-  > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动两个nsqd  /存储数据
+  # 安装数据库Pilosa (分布式位图索引) www.pilosa.com
+  $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
+  $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz
+  $ cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
+  $ pilosa
+  
+  # 安装消息平台 nsq.io
+  > nsqlookupd                                                                 # 先启动 nsqlookud 消息服务
+  > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
-  > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动nqsadmin/Web服务
+  > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web 服务
   
   # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve
