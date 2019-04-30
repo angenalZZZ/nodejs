@@ -176,7 +176,8 @@
   $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
   $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz
   $ cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
-  $ pilosa
+  $ mkdir -p /var/opt/pilosa/data
+  $ pilosa server --data-dir /var/opt/pilosa/data --bind http://0.0.0.0:10101
   
   # 安装消息平台 nsq.io
   > nsqlookupd                                                                 # 先启动 nsqlookud 消息服务
