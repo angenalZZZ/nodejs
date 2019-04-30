@@ -177,7 +177,8 @@
   $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz
   $ cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
   $ mkdir -p /var/opt/pilosa/data
-  $ pilosa server --data-dir /var/opt/pilosa/data --bind http://0.0.0.0:10101
+  $ pilosa server --data-dir /var/opt/pilosa/data --bind http://0.0.0.0:10101 --handler.allowed-origins http://localhost:10102
+  $ go get github.com/pilosa/console & cd $GOPATH/src/github.com/pilosa/console & make install & pilosa-console -bind http://localhost:10102
   
   # 安装消息平台 nsq.io
   > nsqlookupd                                                                 # 先启动 nsqlookud 消息服务
