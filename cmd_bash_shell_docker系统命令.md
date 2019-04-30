@@ -334,7 +334,7 @@
   # 大数据+分布式位图索引+实时计算
   docker run --name pilosa --network=workgroup --network-alias=pilosa -d -p 10101:10101 -v d:\docker\app\pilosa\data:/data 
     pilosa/pilosa server --data-dir /data --bind http://0.0.0.0:10101 --handler.allowed-origins http://localhost:10102
-    # 控制台 > go get github.com/pilosa/console & cd $GOPATH/src/github.com/pilosa/console & make install & pilosa-console -bind http://localhost:10102
+    # 控制台 $ go get github.com/pilosa/console & cd $GOPATH/src/github.com/pilosa/console & make install & pilosa-console -bind http://localhost:10102
   # 一个基于celery任务DAG管理工具 kuanshijiao.com/2017/03/07/airflow1
   docker run --name airflow --network=workgroup --network-alias=airflow -d -p 8480:8080 -e LOAD_EX=y puckel/docker-airflow
   
