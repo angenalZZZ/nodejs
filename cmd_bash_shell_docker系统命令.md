@@ -335,6 +335,8 @@
     pilosa/pilosa server --data-dir /data --bind :10101 --handler.allowed-origins http://localhost:10102
   # 一个基于celery任务DAG管理工具 kuanshijiao.com/2017/03/07/airflow1
   docker run --name airflow --network=workgroup --network-alias=airflow -d -p 8480:8080 -e LOAD_EX=y puckel/docker-airflow
+  # 一个安全的消息服务平台，自带后台管理
+  docker run --name mattermost-preview -d -p 8065:8065 --add-host dockerhost:127.0.0.1 mattermost/mattermost-preview
   
   docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11 # PostgreSQL
   docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
