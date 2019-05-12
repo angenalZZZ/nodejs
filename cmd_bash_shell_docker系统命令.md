@@ -36,7 +36,9 @@
   $ man
   
   # 用户登陆
-  > quser
+  > mkdir -p %USERPROFILE% # 用户目录
+  $ mkdir -p $HOME         # 用户目录 > cd ~ ; cd /home/$(whoami)
+  > quser            # 当前用户状态
   $ w & whoami && id # 当前用户
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
   $ id -u           # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名admin)
