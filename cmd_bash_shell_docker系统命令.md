@@ -307,12 +307,12 @@
     $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
     $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
   
-  docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=123456 
-    mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此db
-  docker run --name mssql -itd -p 1434:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
-    -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=Your_password123 -e ACCEPT_EULA=Y 
+  docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=HGJ766GR767FKJU0 
+    mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此容器
+  docker run --name mssql -itd -p 1433:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
+    -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=HGJ766GR767FKJU0 -e ACCEPT_EULA=Y 
     mcr.microsoft.com/mssql/server # 数据库mssql
-  # 外部访问控制：(--link)容器myweb连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
+  # 外部访问控制：(--link)其它容器连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
   
   docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
     -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
