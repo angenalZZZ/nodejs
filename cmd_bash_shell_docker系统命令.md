@@ -85,6 +85,8 @@
   > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a
   > robocopy /e source destination [file [file]...] # Windows的可靠文件复制/备份  帮助: robocopy /?
   $ cp -if /mnt/floppy/* ~/floppy                   # [~/floppy 指向 /root/floppy 或 /home/floppy]
+  $ cp -if /mnt/d/Docker/App/ubuntu/usr/local/bin/* /usr/local/bin
+  $ cp -if /usr/local/bin/* /mnt/d/Docker/App/ubuntu/usr/local/bin
   
   # 文件删除
   > del /f /s /q [目录|文件]
@@ -158,11 +160,11 @@
   $ sudo apt install gcc              # 安装gcc编译工具
   $ sudo apt install build-essential  # 安装gcc/g++编译工具(可选)
   $ sudo apt install make             # 安装构建工具make
-  $ wget http://download.redis.io/releases/redis-5.0.3.tar.gz  # 下载源码
-  $ tar xzf redis-5.0.3.tar.gz                                 # 解压源码
-  $ cd redis-5.0.3 && make install       # 安装Redis
+  $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码
+  $ tar xzf redis-stable.tar.gz                                # 解压源码
+  $ cd redis-stable && make install      # 安装Redis
   $ cd utils && sudo ./install_server.sh # 安装Redis服务
-  $ rm -f -r ~/redis-5.0.3 && rm -f ~/redis-5.0.3.tar.gz       # 删除源码
+  $ rm -f -r ~/redis-stable && rm -f ~/redis-stable.tar.gz     # 删除源码
   $ redis-server                         # 启动服务(独立模式), 可通过 ps aux 查看进程
   $ sudo service redis_6379 start        # (可选)启动服务(非独立模式) start|stop|restart
   $ sudo update-rc.d redis_6379 defaults # (可选)将 Redis init 脚本添加到所有默认运行级别(stop服务后)
@@ -178,7 +180,7 @@
   $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
   $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz & cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
   $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins http://localhost:10102
-  $ go get github.com/pilosa/console & cd $GOPATH/src/github.com/pilosa/console & make install & pilosa-console -bind :10102
+  $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
   
   # 安装消息平台 nsq.io
   > nsqlookupd                                                                 # 先启动 nsqlookud 消息服务
@@ -614,7 +616,7 @@ obj\
       & (中间> 连接两条命令并按顺序执行; 结尾> 使命令程序脱离终端进程并在后台执行)
     *更新软件源: https://www.cnblogs.com/xudalin/p/9071902.html
 ~~~
-# /etc/apt/sources.list 阿里源
+# /etc/apt/sources.list 阿里源 ubuntu-18.04
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
@@ -625,8 +627,7 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted univer
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-$ sudo apt-get update
-$ sudo apt-get upgrade
+$ sudo apt-get update && sudo apt-get upgrade
 ~~~
 
 #### 一、Linux下常用命令：文件与目录操作
@@ -1069,7 +1070,6 @@ sshd：OpenSSH守护进程
     # vim命令（:w 编辑模式, :i 插入模式, :x 回车保存, :qa! 退出不保存, gg dG 清空文件）
     > PermitRootLogin yes         # 启用root登录  #PermitRootLogin prohibit-password
     > sudo service ssh restart    # 重启ssh
-
 ~~~
 
 #### 上传文件
@@ -1095,5 +1095,4 @@ exec curl -T \
   --header "Authorization: Signature keyId='${UPLOADER}',signature='${SIGNATURE}'" \
   "<filename>" "<url>"
 ~~~
-
 
