@@ -37,7 +37,8 @@
   
   # 用户登陆
   > mkdir -p %USERPROFILE% # 用户目录
-  $ mkdir -p $HOME         # 用户目录 > cd ~ ; cd /home/$(whoami)
+  > mkdir.\to\path         # 创建目录 $ mkdir -p to/path
+  $ mkdir -p $HOME         # 用户目录 > cd ~ ; cd /home/$(whoami) # root用户为 / = cd ~
   > quser            # 当前用户状态
   $ w & whoami && id # 当前用户
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
