@@ -12,22 +12,20 @@
   $ clear
   
   # 系统
-  > ver
+  > ver              # 系统  修复 > sfc/scannow
   > net config workstation
   > shell:startup    # [开始]菜单/启动/添加*.vbs
-  $ uname -a
-  $ lsb_release -cs  # 当前系统的发行版名称
-  
-  # 系统修复
-  > sfc/scannow
+  $ uname -a         # 系统CPU架构x86_64
+  $ cat /etc/issue   # 系统'发行版名称'*** Linux | lsb_release -cs
+  $ cat /etc/redhat-release
   
   # 时间
   > wmic OS Get localdatetime /value # 当前本地时间
-  # 时间-工具 1.下载 http://sourceforge.net/projects/unxutils 2.解压,重命名usr/local/wbin/date.exe为unixdate.exe
+  # 工具 1.下载 http://sourceforge.net/projects/unxutils 2.解压,重命名usr/local/wbin/date.exe为unixdate.exe
   > unixdate --help         # 帮助
-  > unixdate +%s            # 当前时间戳 unix timestamp
-  > unixdate "+%Y/%m/%d %X" # 当前时间 yyyy/MM/dd HH:mm:ss
-  $ date -u & hwclock
+  > unixdate +%s            # 当前时间戳 (unix timestamp)
+  > unixdate "+%Y/%m/%d %X" # 当前本地时间 yyyy/MM/dd HH:mm:ss
+  $ date -u "+%Y/%m/%d %X"  # 当前UTC时间 yyyy/MM/dd HH:mm:ss | hwclock
   
   # 帮助
   > help cmd
@@ -55,7 +53,7 @@
   $ groupadd        # 添加用户组
   
   # 内存情况
-  $ free -h
+  $ free
   $ top
   
   # 进程详情
