@@ -189,6 +189,7 @@
   
   # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve
+  > nssm install Gotify %gopath%\bin\gotify\server\gotify.exe
   
   # 安装 SSH 建立安全的加密连接：一个密码对应一个SSH-key
   > ssh-keygen -t rsa -C "angenal.2008@yahoo.com.cn"
