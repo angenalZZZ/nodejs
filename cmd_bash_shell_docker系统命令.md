@@ -208,7 +208,7 @@
   > Gitea 文档 https://docs.gitea.io/zh-cn | 下载 https://dl.gitea.io/gitea/master | 源码 github.com/go-gitea/gitea
   > Gitea API 使用指南 https://docs.gitea.io/zh-cn/api-usage
   # 注册Windows服务
-  > sc create gitea start= auto binPath= "C:\gitea\gitea.exe web --config \"C:\gitea\custom\conf\app.ini\""
+  > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
   # 删除Windows服务
   > sc delete gitea
   
