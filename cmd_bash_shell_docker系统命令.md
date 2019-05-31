@@ -207,6 +207,10 @@
   $ mkdir -p /git & cd /git & sudo chmod 777 . # 创建git仓储根目录:可读写
   > Gitea 文档 https://docs.gitea.io/zh-cn | 下载 https://dl.gitea.io/gitea/master | 源码 github.com/go-gitea/gitea
   > Gitea API 使用指南 https://docs.gitea.io/zh-cn/api-usage
+  # 注册Windows服务
+  > sc create gitea start= auto binPath= "C:\gitea\gitea.exe web --config \"C:\gitea\custom\conf\app.ini\""
+  # 删除Windows服务
+  > sc delete gitea
   
   # 图片压缩
   $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
