@@ -199,10 +199,14 @@
   $ xclip -sel clip < ~/.ssh/id_rsa.pub   # GNU/Linux (requires xclip)
   $ pbcopy < ~/.ssh/id_rsa.pub            # Mac-OS
   
-  # 安装工具
-  $ apt install git   # 安装Git  < ubuntu >
+  # 安装 构建工具|代码仓库|版本管理 < make、curl、git、gitea >
+  > ftp://ftp.equation.com/make/64/make.exe # 下载构建工具make < Windows >
+  $ sudo apt install make  # 安装<Ubuntu/Debian> | <CentOS/Fedora/RHEL> sudo yum install make
+  $ sudo apt install curl  # 安装curl < ubuntu >
+  $ sudo apt install git   # 安装git  < ubuntu >
   $ mkdir -p /git & cd /git & sudo chmod 777 . # 创建git仓储根目录:可读写
-  $ apt install curl  # 安装Curl < ubuntu >
+  > Gitea 文档 https://docs.gitea.io/zh-cn | 下载 https://dl.gitea.io/gitea/master | 源码 github.com/go-gitea/gitea
+  > Gitea API 使用指南 https://docs.gitea.io/zh-cn/api-usage
   
   # 图片压缩
   $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
