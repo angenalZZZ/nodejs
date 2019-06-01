@@ -28,10 +28,11 @@ git config --global user.name "yangzhou"      # 修改全局git用户配置
 git config --global user.email "angenal@hotmail.com"
 git config --global http.postBuffer 524288000 # 上传文件大小限制500M=1024*1024*500(默认100M)
 git config --global http.sslVerify "false"    # 关闭ssl验证(网络异常)
-git init  # -目录-为当前工作区, .git/*[index指add的暂存区数据,objects指commit的本地仓库数据]
+$ rm -rf * && rm -rf .git/ # 初始化之前,清空当前目录 > del /f/s/q *
+git init  # 初始化目录=当前工作区, .git/*(index索引add的暂存区数据,objects存储commit的本地仓库数据)
 git config --local user.name "用户名"         # 当前项目git用户配置
 git config --local user.email "用户邮箱地址"  # 当前项目git用户邮箱地址>注册远程git账号
-git config --local -l                       # 当前目录所在仓库的用户配置
+git config --local -l                        # 当前目录所在仓库的用户配置
 ~~~
 
 ####  2.检查git状态(当前工作区：新增文件要add [或添到.gitignore], 变更文件要commit)
