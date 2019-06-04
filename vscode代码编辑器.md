@@ -24,14 +24,14 @@ network> https://code.visualstudio.com/docs/setup/network
 > 同步配置
   # 1. 安装扩展Settings Sync
      > Shift + Alt + U 上传配置
-       1) 获取你的帐户访问令牌token : New personal access token > code-settings-sync (填写Token描述后选gist) > Generate token
-       2) 按快捷键，它将询问您的GitHub帐户访问令牌
+       1) 获取你的GitHub帐户访问令牌 : New personal access token > code-settings-sync (填写Token描述后选gist)
+       2) 按快捷键，它将询问您的GitHub帐户访问令牌 (此访问令牌只能使用一次?)
        3) 自动上传您的设置，扩展程序会在系统消息中为您提供GistID (注意保存,用于下载配置和共享给其它电脑使用)
        4) 验证GistID | https://gist.github.com/{YourName}/{GistID}
      > Shift + Alt + D 下载配置
        1) 按快捷键，它将询问您的GistID
-       2) GitHub GistID: 92adc63f85a145ff03cc44b458d8ccad  | 52ABP框架/开发环境/设置同步工具 Settings Sync
-          GitHub GistID: 7e32bcc357be6d8149bd4947b119c9b3  | Angenal-PC
+       2) GitHub GistID: 92adc63f85a145ff03cc44b458d8ccad  | 52ABP框架/开发环境/设置同步扩展工具 | 52abp.com
+          GitHub GistID: 7e32bcc357be6d8149bd4947b119c9b3  | 我的电脑Angenal-PC
 
   # 2. 安装其他扩展 Syncing
        VSCode-Syncing: cbdec55387da9309fbc5a64f0a5503ae458ea158
