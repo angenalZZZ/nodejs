@@ -25,7 +25,7 @@ network> https://code.visualstudio.com/docs/setup/network
   # 1. 安装扩展Settings Sync
      > Shift + Alt + U 上传配置
        1) 获取你的GitHub帐户访问令牌 : New personal access token > code-settings-sync (填写Token描述后选gist)
-       2) 按快捷键，它将询问您的GitHub帐户访问令牌 (此访问令牌只能使用一次?)
+       2) 按快捷键，它将询问您的GitHub帐户访问令牌 | https://github.com/settings/tokens
        3) 自动上传您的设置，扩展程序会在系统消息中为您提供GistID (注意保存,用于下载配置和共享给其它电脑使用)
        4) 验证GistID | https://gist.github.com/{YourName}/{GistID}
      > Shift + Alt + D 下载配置
