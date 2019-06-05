@@ -10,8 +10,7 @@ network> https://code.visualstudio.com/docs/setup/network
 
 ##  安装.NET [Install .NET Core SDK](https://www.microsoft.com/net/learn/dotnet/hello-world-tutorial)
 
-####  插件扩展 [Extensions for the Visual Studio family of products](https://marketplace.visualstudio.com/vscode)
-[52ABP框架/文档](https://gitee.com/aiabpedu/dashboard/wikis/aiabpedu%2F52abp_framework_programming?doc_id=183193&sort_id=833878)
+####  1.插件扩展 [Extensions for the Visual Studio family of products](https://marketplace.visualstudio.com/vscode)
 
 ~~~
 > 环境Env
@@ -37,4 +36,7 @@ network> https://code.visualstudio.com/docs/setup/network
        VSCode-Syncing: cbdec55387da9309fbc5a64f0a5503ae458ea158
 
  ~~~
- 
+
+####  2.帮助文档
+  [52ABP框架/开发文档](https://gitee.com/aiabpedu/dashboard/wikis/aiabpedu%2F52abp_framework_programming?doc_id=183193&sort_id=833878)
+
