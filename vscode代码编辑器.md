@@ -30,7 +30,10 @@ network> https://code.visualstudio.com/docs/setup/network
        4) 验证GistID | https://gist.github.com/{YourName}/{GistID}
      > Shift + Alt + D 下载配置
        1) 按快捷键，它将询问您的GistID | 7e32bcc357be6d8149bd4947b119c9b3 | 我的电脑Angenal-PC
-       2) GitHub GistID: 92adc63f85a145ff03cc44b458d8ccad  | 52ABP框架/开发环境/设置同步扩展工具 | 52abp.com
+       2) 公共的GistID | 52ABP框架/开发环境/设置同步扩展工具 | 52abp.com
+          首先按 F1 进入命令行，然后输入sync ；选择重置设置，保证本地的配置为清空状态,
+          再选择高级选项，Sync:从公开的 Gist 下载设置；然后再选择下载设置(F1>sync>“下载设置”),
+          输入公共的gist：149022554137a8df48d795eb8b8298ec
 
   2. 安装其他扩展 Syncing
        VSCode-Syncing: cbdec55387da9309fbc5a64f0a5503ae458ea158
