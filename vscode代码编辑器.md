@@ -29,7 +29,7 @@ network> https://code.visualstudio.com/docs/setup/network
        3) 自动上传您的设置，扩展程序会在系统消息中为您提供私有的GistID (注意保存,用于下载配置和共享给其它电脑使用)
        4) 验证GistID | https://gist.github.com/{YourName}/{GistID}
      > Shift + Alt + D 下载配置
-       1) 按快捷键，它将询问您的GistID | 7e32bcc357be6d8149bd4947b119c9b3 | 我的电脑Angenal-PC
+       1) 按快捷键，它将询问您的GistID (个人私有的Gist)
        2) 公共的 Gist | 52ABP框架/开发环境/设置同步扩展工具 | 52abp.com
           首先按 F1 进入命令行，然后输入sync ；选择重置设置(保证本地的配置为清空状态)
           选择高级选项；Sync:从公开的 Gist 下载设置；再选择下载设置(F1>sync>“下载设置”)
