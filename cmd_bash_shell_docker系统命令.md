@@ -6,6 +6,8 @@
   [`《Linux基础课程》video`](https://www.linuxprobe.com/chapter-01.html)、
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)<br>
 
+ * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
+
 ~~~
   # 清屏
   > cls
@@ -220,6 +222,12 @@
   # 加密解密
   $ chmod +x toplip # 赋予可执行权限
   $ ./toplip        # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
+  
+  # 安装Docker客户端 (连接到 Docker for Windows10)
+  # < Windows Subsystem for Linux | WSL >---------------------------
+  $ sudo apt install docker.io              # 安装Docker客户端
+  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境, 使用 vi ~/.bashrc [~/.bash_profile](在文件结尾添加)
+  $ docker [COMMAND] --help                 # 执行Docker命令
   
   # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
   $ sysctl -w vm.max_map_count=262144      # 操作无效时, 使用 vi /etc/sysctl.conf 修改
