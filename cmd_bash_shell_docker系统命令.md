@@ -7,7 +7,7 @@
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)<br>
 
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
- * [Redis-nsq-Botpress-Gotify-SSH等常用安装](#安装Redis-nsq-Botpress-Gotify-SSH等)
+ * [Redis-nsq-Botpress-Gotify-SSH等常用安装](#Redis-nsq-Botpress-Gotify-SSH等常用安装)
  * [Linux常用命令](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [consul](#Consul)
 
