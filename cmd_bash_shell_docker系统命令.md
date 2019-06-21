@@ -158,7 +158,7 @@
   
   ~~~
   
-  #### 安装Redis-nsq-Botpress-Gotify-SSH等
+  ## Redis-nsq-Botpress-Gotify-SSH等常用安装
   
   ~~~
   # 安装数据库Redis (Key-Value数据库) www.redis.cn
