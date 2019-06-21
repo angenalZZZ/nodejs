@@ -232,6 +232,13 @@
   # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
   $ sysctl -w vm.max_map_count=262144      # 操作无效时, 使用 vi /etc/sysctl.conf 修改
   $ grep vm.max_map_count /etc/sysctl.conf # 检查设置
+  
+  # 安装 Ansible 配置管理和IT自动化工具-(系统运维)(Ubuntu)一个由Python编写的强大的配置管理解决方案
+  $ sudo apt update
+  $ sudo apt install software-properties-common
+  $ sudo apt-add-repository --yes --update ppa:ansible/ansible
+  $ sudo apt install ansible
+  
 ~~~
 
 ## Linux常用命令
