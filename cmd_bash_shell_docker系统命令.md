@@ -155,6 +155,7 @@
   
   # 安装数据库Redis (Key-Value数据库) www.redis.cn
   # < Windows Subsystem for Linux | WSL >---------------------------
+  $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源 https://www.cnblogs.com/xudalin/p/9071902.html
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级(可选)
