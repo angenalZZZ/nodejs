@@ -18,7 +18,7 @@
   > net config workstation
   > shell:startup    # [开始]菜单/启动/添加*.vbs
   $ uname -a         # 系统CPU架构x86_64
-  $ cat /etc/issue   # 系统'发行版名称'*** Linux | lsb_release -cs
+  $ cat /etc/issue   # 系统版本号'发行版本名称'*** Linux | lsb_release -cs
   $ cat /etc/redhat-release
   
   # 时间
