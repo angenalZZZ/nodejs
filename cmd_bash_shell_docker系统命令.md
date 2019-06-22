@@ -252,11 +252,11 @@
 
 ## Linux常用命令
 
-    *特殊连接符：
-      & (中间> 连接两条命令并按顺序执行; 结尾> 使命令程序脱离终端进程并在后台执行)
-    *更新软件源: https://www.cnblogs.com/xudalin/p/9071902.html
+    Shell连接符：
+      && <中间> 连接两条命令并按顺序执行;
+      &  <结尾> 使命令程序脱离终端进程在后台执行;
 ~~~
-# /etc/apt/sources.list 阿里源 ubuntu-18.04
+# *更新软件源* sudo vi /etc/apt/sources.list (复制[阿里源ubuntu`18.04`bionic`]到文件顶部)
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
@@ -274,14 +274,10 @@ $ sudo apt-get update && sudo apt-get upgrade
 ~~~bash
 # 安装 zsh
 $ sudo apt-get -y install zsh
-# 设置终端shell默认为zsh,输入以下命令(需要重启);加sudo修改root帐号的默认shell
-$ chsh -s `which zsh`
-
-# 配置修改 ~/.zshrc（如果切换帐号后无法使用 zsh 则把该用户的配置文件再配一遍）
-curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
-# 修改主题-如下, 参考：https://github.com/robbyrussell/oh-my-zsh/wiki/themes
-# antigen theme ys  # 如果要主题一直生效需要添加到 ~/.zshrc
-
+# 设置终端shell默认为zsh,输入以下命令(需要重启>选择`2);加sudo修改root帐号的默认shell
+$ chsh -s `which zsh` # 安装完毕
+# 主题修改/参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
+# antigen theme ys # 如果要主题一直生效需要添加到 ~/.zshrc
 ~~~
 
 #### 一、Linux下常用命令：文件与目录操作
