@@ -225,7 +225,7 @@
 
   # 安装Docker客户端 (连接到 Docker for Windows10)
   # < Windows Subsystem for Linux | WSL >---------------------------
-  $ sudo apt install docker.io              # 安装Docker客户端
+  $ sudo apt install docker.io              # 安装Docker客户端 | docker.io get client connection.
   $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境, 使用 vi ~/.bashrc [~/.bash_profile](在文件结尾添加)
   $ docker [COMMAND] --help                 # 执行Docker命令
 
