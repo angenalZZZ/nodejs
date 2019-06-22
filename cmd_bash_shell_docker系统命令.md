@@ -11,7 +11,7 @@
  * [Linux常用命令](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [consul](#Consul)
 
-~~~
+~~~shell
   # 清屏
   > cls
   $ clear
@@ -155,12 +155,12 @@
   wmic printer get DeviceID,PrinterPaperNames                             # 设备ID,打印纸张
   wmic printer where default='TRUE' get name                              # 获取默认打印机
   wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
-  
-  ~~~
-  
-  ## Redis-nsq-Botpress-Gotify-SSH等常用安装
-  
-  ~~~
+
+~~~
+
+## Redis-nsq-Botpress-Gotify-SSH等常用安装
+
+~~~shell
   # 安装数据库Redis (Key-Value数据库) www.redis.cn
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
@@ -185,23 +185,23 @@
   # 性能测试Redis
   > redis-benchmark -n 10000 -q   # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q  # 本机BuntDB < SET:230K,GET:5000K > requests per second
-  
+
   # 安装数据库Pilosa (分布式位图索引) www.pilosa.com
   $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
   $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz & cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
   $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins http://localhost:10102
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
-  
+
   # 安装消息平台 nsq.io
   > nsqlookupd                                                                 # 先启动 nsqlookud 消息服务
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
   > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web 服务
-  
+
   # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve
   > nssm install Gotify %gopath%\bin\gotify\server\gotify.exe
-  
+
   # 安装 SSH 建立安全的加密连接：一个密码对应一个SSH-key
   > ssh-keygen -t rsa -C "angenal.2008@yahoo.com.cn"
   > dir "C:\Users\Administrator/.ssh"     # 存储的本地公钥位置
@@ -209,7 +209,7 @@
   $ cat ~/.ssh/id_rsa.pub                 # https://code.aliyun.com/help/ssh/README
   $ xclip -sel clip < ~/.ssh/id_rsa.pub   # GNU/Linux (requires xclip)
   $ pbcopy < ~/.ssh/id_rsa.pub            # Mac-OS
-  
+
   # 安装 构建工具|代码仓库|版本管理 < make、curl、git、gitea >
   > ftp://ftp.equation.com/make/64/make.exe # 下载构建工具make < Windows >
   $ sudo apt install make  # 安装<Ubuntu/Debian> | <CentOS/Fedora/RHEL> sudo yum install make
@@ -222,7 +222,23 @@
   > sc create gitea start= auto binPath= "D:\Program\Git\Server\gitea\gitea.exe web --config \"D:\Program\Git\Server\gitea\custom\conf\app.ini\""
   # 删除Windows服务
   > sc delete gitea
-  
+
+  # 安装Docker客户端 (连接到 Docker for Windows10)
+  # < Windows Subsystem for Linux | WSL >---------------------------
+  $ sudo apt install docker.io              # 安装Docker客户端
+  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境, 使用 vi ~/.bashrc [~/.bash_profile](在文件结尾添加)
+  $ docker [COMMAND] --help                 # 执行Docker命令
+
+  # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
+  $ sysctl -w vm.max_map_count=262144      # 操作无效时, 使用 vi /etc/sysctl.conf 修改
+  $ grep vm.max_map_count /etc/sysctl.conf # 检查设置
+
+  # 安装 Ansible 配置管理和IT自动化工具-(系统运维)(Ubuntu)一个由Python编写的强大的配置管理解决方案
+  $ sudo apt update
+  $ sudo apt install software-properties-common
+  $ sudo apt-add-repository --yes --update ppa:ansible/ansible
+  $ sudo apt install ansible
+
   # 图片压缩
   $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
   $ sudo apt-get install optipng     # png 图片压缩: optipng *.png ; find -type f -name "*.png" -exec optipng {} \;
@@ -231,23 +247,6 @@
   # 加密解密
   $ chmod +x toplip # 赋予可执行权限
   $ ./toplip        # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
-  
-  # 安装Docker客户端 (连接到 Docker for Windows10)
-  # < Windows Subsystem for Linux | WSL >---------------------------
-  $ sudo apt install docker.io              # 安装Docker客户端
-  $ export DOCKER_HOST=tcp://127.0.0.1:2375 # 设置环境, 使用 vi ~/.bashrc [~/.bash_profile](在文件结尾添加)
-  $ docker [COMMAND] --help                 # 执行Docker命令
-  
-  # Docker正式环境: 修改Linux内核参数 https://blog.csdn.net/guanheng68/article/details/81710406
-  $ sysctl -w vm.max_map_count=262144      # 操作无效时, 使用 vi /etc/sysctl.conf 修改
-  $ grep vm.max_map_count /etc/sysctl.conf # 检查设置
-  
-  # 安装 Ansible 配置管理和IT自动化工具-(系统运维)(Ubuntu)一个由Python编写的强大的配置管理解决方案
-  $ sudo apt update
-  $ sudo apt install software-properties-common
-  $ sudo apt-add-repository --yes --update ppa:ansible/ansible
-  $ sudo apt install ansible
-  
 ~~~
 
 ## Linux常用命令
@@ -255,7 +254,7 @@
     Shell连接符：
       && <中间> 连接两条命令并按顺序执行;
       &  <结尾> 使命令程序脱离终端进程在后台执行;
-~~~
+~~~bash
 # *更新软件源* sudo vi /etc/apt/sources.list (复制[阿里源ubuntu`18.04`bionic`]到文件顶部)
 deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
 deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
@@ -267,15 +266,15 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted univer
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
 deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-$ sudo apt-get update && sudo apt-get upgrade
+$ sudo apt-get update && sudo apt-get upgrade # 更新软件源操作完毕.
 ~~~
 
  `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 管理配置
 ~~~bash
 # 安装 zsh
 $ sudo apt-get -y install zsh
-# 设置终端shell默认为zsh,输入以下命令(需要重启>选择`2);加sudo修改root帐号的默认shell
-$ chsh -s `which zsh` # 安装完毕
+# 设置终端shell默认为zsh,输入以下命令(需要重启>选择>2);加sudo修改root帐号的默认shell
+$ chsh -s `which zsh`  # 安装完毕
 # 主题修改/参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
 # antigen theme ys # 如果要主题一直生效需要添加到 ~/.zshrc
 ~~~
