@@ -199,6 +199,14 @@
   # 性能测试Redis
   > redis-benchmark -n 10000 -q   # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q  # 本机BuntDB < SET:230K,GET:5000K > requests per second
+  
+  # 安装 MySQL 的一个开源分支 MariaDB
+  $ sudo yum -y install mariadb mariadb-server # CentOS 7
+  $ sudo systemctl start mariadb               # 启动
+  $ sudo systemctl enable mariadb              # 开机启动
+  $ sudo mysqladmin -u root password root      # 设置密码
+  $ mysql -u root -p                           # 登录mysql
+  $ mysql> source db.sql                       # 执行sql
 
   # 安装数据库Pilosa (分布式位图索引) www.pilosa.com
   $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
