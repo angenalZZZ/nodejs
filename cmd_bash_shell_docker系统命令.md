@@ -50,7 +50,11 @@
   $ id -u           # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin & useradd -d /home/admin -G root,adm,users admin
   $ passwd admin    # 修改密码
-  $ su admin        # 切换用户 [切换至root: sudo bash || sudo sh] [退出: exit]
+  
+  $ sudo su -       # 切换用户至root (并切换到用户目录/root) [或执行: sudo bash || sh]
+  $ su admin        # 切换用户至admin
+  $ exit            # 退出
+  
   $ cat /etc/passwd # 查看密码
   $ login           # 用户登录
   $ cat /etc/shadow # 用户列表
