@@ -35,7 +35,8 @@
   # 帮助
   > help cmd
   $ help, --help
-  $ info
+  # 系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation.
+  $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.……
   $ man        # 在线帮助说明
   $ whatis id  # 查找命令id的帮助说明 print real and effective user and group IDs
   $ history   # 历史命令列表
