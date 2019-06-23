@@ -115,8 +115,8 @@
   $ ifconfig | grep addr
   
   # 网络端口
-  > netstat -aT # tcp端口
-  > netstat -ap tcp | findstr -i "listening" # tcp端口
+  > netstat -anT                         # tcp端口(本地地址,外部地址,状态)
+  > netstat -ap tcp | findstr -i "listening" # 查找本机tcp端口监听列表
   $ netstat -atW | grep -i "listen"      # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
   $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get install -y net-tools
   $ ss -t4 state time-wait               # tcp超时-ubuntu $ apt-get install -y iproute2 iproute2-doc
@@ -125,7 +125,7 @@
   $ ss -nt state connected dport = :80
   $ ss -nt dport lt :100  # 端口小于100
   $ ss -nt dport gt :1024 # 端口大于1024
-  $ ss -lntp  # tcp端口+users进程name-pid-fd  # 常用ss(iproute工具)比netstat(net-tools工具)更高效-强大
+  $ ss -lntp  # tcp端口+users进程name-pid-fd  # 常用ss(iproute工具)比netstat(net-tools工具)更强大
   $ ss -aup   # udp端口
   
   # 网络共享
