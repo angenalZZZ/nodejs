@@ -68,8 +68,8 @@
   $ ps aux
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除僵尸(Z开头的)进程
+  $ killall           # 杀死进程使用
   $ smem -k -s USS    # 进程的内存使用情况
-  $ killall           # 杀死进程
   # < ubuntu > apt update & apt install smem
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk
   
