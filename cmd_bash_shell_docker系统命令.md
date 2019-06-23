@@ -36,19 +36,21 @@
   > help cmd
   $ help, --help
   $ info
-  $ man
+  $ man        # 在线帮助说明
+  $ whatis id  # 查找命令id的帮助说明 print real and effective user and group IDs
+  $ history   # 历史命令列表
   
   # 用户登陆
   > mkdir -p %USERPROFILE% # 用户目录
   > mkdir.\to\path         # 创建目录 $ mkdir -p to/path
   $ mkdir -p $HOME         # 用户目录 > cd ~ ; cd /home/$(whoami) # root用户为 / = cd ~
-  > quser            # 当前用户状态
-  $ w & whoami && id # 当前用户
+  > quser             # 当前用户状态
+  $ whoami && w && id # 当前用户信息
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
   $ id -u           # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin & useradd -d /home/admin -G root,adm,users admin
   $ passwd admin    # 修改密码
-  $ su admin        # 切换用户
+  $ su admin        # 切换用户 [切换至root: sudo bash || sudo sh] [退出: exit]
   $ cat /etc/passwd # 查看密码
   $ login           # 用户登录
   $ cat /etc/shadow # 用户列表
@@ -66,24 +68,31 @@
   $ ps aux
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除僵尸(Z开头的)进程
-  $ smem -k -s USS # 进程的内存使用情况
+  $ smem -k -s USS    # 进程的内存使用情况
+  $ killall           # 杀死进程
   # < ubuntu > apt update & apt install smem
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk
   
-  # 文件列表
-  > dir [目录] # 默认当前目录
-  $ ls  [目录] # 默认当前目录
+  # 文件系统
+  > dir [目录]          # 默认当前目录(命令pwd)
+  $ ls -an [目录]       # 查看目录及文件读写权限[-al]
+  $ touch main.js       # 新建文件
+  $ mv main.js main.cs  # 重命名文件,移动文件位置
+  $ cat main.cs         # 输出文件内容
+  $ namo|vi main.cs     # 编辑文件内容
+  $ file main.js && ls -an main.js # 查看文件类型-信息 & 查看文件读写权限&更新时间
   $ for n in {1..10000}; do echo content > "__${n}.tmp"; done  # 创建 10000 个临时文件
-  
-  # 目录访问权限
-  $ ls -la [目录]    # 查看目录及文件读写权限
-  $ sudo chmod 777 . # 修改当前目录(.)权限为可读写
-  $ sudo chown -R 1000 [目录] # 把[目录]的"拥有者"赋值给uid:1000 = $(id -u)
   
   # 文件查找
   > for /r C:\windows\addins\ %i in (explorer.exe) do @echo %i # 在指定目录下查找匹配文件
-  $ find / -name [filename] # 在根目录下查找匹配文件
+  $ locate /bin/ps          # 遍历文件系统/路径包含/bin/ps所有匹配文件
+  $ find / -name [filename] # 查找在根目录下/所有匹配文件
   $ find /etc -type f -name passwd
+  
+  # 目录访问权限
+  > cd [目录]
+  $ sudo chmod 777 .         # 修改当前目录(.)权限为可读写
+  $ sudo chown -R 1000 [目录] # 把[目录]的"拥有者"赋值给uid:1000 = $(id -u)
   
   # 文件复制
   > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a
@@ -95,7 +104,7 @@
   # 文件删除
   > del /f /s /q [目录|文件]
   > rd /s /q %windir%\temp & md %windir%\temp [删除临时文件]
-  $ rm -f -r [r删除目录,否则删除文件] [f强制]
+  $ rm -f -r [r删除目录,否则删除文件] [f强制] [rmdir移除空目录]
   
   # 网络地址
   > ipconfig /?
