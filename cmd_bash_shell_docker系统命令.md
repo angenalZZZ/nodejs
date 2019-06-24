@@ -293,14 +293,16 @@ deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted unive
 $ sudo apt-get update && sudo apt-get upgrade # 更新软件源操作完毕.
 ~~~
 
- `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 管理配置
+ `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端
 ~~~bash
 # 安装 zsh
 $ sudo apt-get -y install zsh
-# 设置终端shell默认为zsh,输入以下命令(需要重启>选择>2);加sudo修改root帐号的默认shell
+# 设置终端shell默认为zsh, 输入以下命令后(重启终端>选择>2) [加sudo修改root的默认shell]
 $ chsh -s `which zsh`  # 安装完毕
-# 主题修改/参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
-# antigen theme ys # 如果要主题一直生效需要添加到 ~/.zshrc
+# 安装 antigen 设置主题
+$ curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
+# 修改配置文件 ~/.zshrc ; 添加 antigen theme ys [主题ys]参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
+# 修改完重新执行 zsh
 ~~~
 
 #### 一、Linux下常用命令：文件与目录操作
