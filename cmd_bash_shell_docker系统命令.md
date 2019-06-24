@@ -195,7 +195,9 @@
   # 开机启动Redis
   > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前,设置Windows服务登录账户为Administrator
   # 客户端命令Redis
-  > redis-cli -h 127.0.0.1 -p 6379 -a 123456 -n 0 # [p端口],[a密码],[n数据库]
+  $ redis-cli -h 127.0.0.1 -p 6379 -a "123456" -n 0 # [p端口],[a密码],[n数据库]
+  $ config set requirepass "123456"                 # 修改配置> sudo vi /etc/redis/6379.conf
+  $ auth 123456                                     # 密码认证;再执行其它命令.
   # 性能测试Redis
   > redis-benchmark -n 10000 -q   # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q  # 本机BuntDB < SET:230K,GET:5000K > requests per second
