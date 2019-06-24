@@ -301,8 +301,8 @@ $ sudo apt-get -y install zsh
 $ chsh -s `which zsh`  # 安装完毕
 # 安装 antigen 设置主题
 $ curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
-# 修改配置文件 ~/.zshrc ; 添加 antigen theme ys [主题ys]参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
-# 最后再执行 zsh ; 可能出现 zshzsh compinit 权限问题,如下解决:
+# 修改配置 ~/.zshrc ; 添加[主题ys] antigen theme ys 参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
+# 最后再执行 zsh ; 如果出现 compinit 权限问题,解决如下:
 $ sudo chmod -R 755 /usr/local/share/zsh/site-functions && source ~/.zshrc
 ~~~
 
