@@ -95,6 +95,7 @@ npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.
 npm i redis     # 高性能缓存数据库 Redis
 npm i level     # 高性能缓存数据库Google LevelDB https://github.com/Level/level
 npm i ssdb-node # SSDB 基于LevelDB https://github.com/reanote/ssdb-node
+npm i rxdb      # 实时数据库for JavaScript App https://github.com/pubkey/rxdb
 
 # algorithm 算法 https://github.com/jedisct1/siphash-js
 npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击)
