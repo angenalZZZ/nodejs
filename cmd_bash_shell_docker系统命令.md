@@ -30,13 +30,15 @@
   > unixdate --help         # 帮助
   > unixdate +%s            # 当前时间戳 (unix timestamp)
   > unixdate "+%Y/%m/%d %X" # 当前本地时间 yyyy/MM/dd HH:mm:ss
-  $ date -u "+%Y/%m/%d %X"  # 当前UTC时间 yyyy/MM/dd HH:mm:ss | hwclock
+  $ date -u "+%Y/%m/%d %X"  # 当前UTC时间 yyyy/MM/dd HH:mm:ss
+  $ export TZ="Asia/Shanghai" # *设置本地时区*
+  $ date "+%Y/%m/%d %X"     # 当前本地时间 | (本地日期) date +%Y%m%d | (Hardware-Clock) hwclock
+  $ date --date='TZ="Europe/Paris" 2004-10-31 06:30' # 指定时区时间
   
   # 帮助
-  > help cmd
-  $ help, --help
-  # 系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation.
-  $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.……
+  > help cmd  
+  $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.…… 菜单导航&帮助文档;
+    #系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation.
   $ man        # 在线帮助说明
   $ whatis id  # 查找命令id的帮助说明 print real and effective user and group IDs
   $ history   # 历史命令列表
