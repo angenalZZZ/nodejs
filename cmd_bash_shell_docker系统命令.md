@@ -31,12 +31,12 @@
   > unixdate +%s            # 当前时间戳 (unix timestamp)
   > unixdate "+%Y/%m/%d %X" # 当前本地时间 yyyy/MM/dd HH:mm:ss
   $ date -u "+%Y/%m/%d %X"  # 当前UTC时间 yyyy/MM/dd HH:mm:ss
-  $ export TZ="Asia/Shanghai" # *设置本地时区*
+  $ export TZ='Asia/Shanghai' # *设置本地时区* | (帮助选择时区) tzselect | vi ~/.profile < TZ='Asia/Shanghai'
   $ date "+%Y/%m/%d %X"     # 当前本地时间 | (本地日期) date +%Y%m%d | (Hardware-Clock) hwclock
   $ date --date='TZ="Europe/Paris" 2004-10-31 06:30' # 指定时区时间
   
   # 帮助
-  > help cmd  
+  > help cmd
   $ info       # 系统菜单信息: Basics,Compression,Editors,Screen.…… 菜单导航&帮助文档;
     #系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation.
   $ man        # 在线帮助说明
