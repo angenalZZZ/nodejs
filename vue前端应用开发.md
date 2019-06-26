@@ -262,5 +262,10 @@ watch: {
 
 ####  es6：[`Brownies`](https://github.com/franciscop/brownies)
 
+----
+
+# 推荐功能
+
+> [`实时数据库rxdb/vue`](https://github.com/pubkey/rxdb/tree/master/examples/vue)
 
 
