@@ -27,8 +27,6 @@
  npm i -g nrm	                                          [代理切换]
  # install yarn from https://yarn.bootcss.com/docs/install/
  npm i -g yarn > yarn | yarnpkg                           [包管理器]
- npm i -g node-gyp                                        [结合VS编译]
- cnpm i -g node-sass                                      [sass>css编译]
 ~~~
 
  # npm 如何安装 (npm|yarn)
@@ -44,6 +42,8 @@ npm i -D [--save-dev]                                     [添加项目工具依
   [TypeScript](https://github.com/Microsoft/TypeScriptSamples)、[机器人](https://github.com/Microsoft/BotBuilder-Samples)、[物连网](https://github.com/ms-iot/samples)
   
 ~~~
+npm i -g node-gyp                                        [结合VS编译]
+cnpm i -g node-sass                                      [编译sass>css]
 npm i -g typescript    >tsc >tsserver # ts-node | io-ts  非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node .
 npm i -g webpack webpack-cli webpack-dev-server # 配置例子 https://github.com/teabyii/webpack-examples
 npm i -g @angular/cli  >ng            # 跨平台构建工具Angular2，ng set --global warnings.packageDeprecation=false
@@ -94,8 +94,8 @@ npm i -S mongoose  # for Mongodb https://mongoosejs.com/docs/index.html
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
 npm i redis     # 高性能缓存数据库 Redis
 npm i level     # 高性能缓存数据库Google LevelDB https://github.com/Level/level
-npm i ssdb-node # SSDB 基于LevelDB https://github.com/reanote/ssdb-node
-npm i rxdb      # 实时数据库for JavaScript App https://github.com/pubkey/rxdb
+npm i ssdb-node # SSDB 基于 LevelDB https://github.com/reanote/ssdb-node
+npm i rxdb      # 实时数据库|实时应用(JavaScript.App) https://github.com/pubkey/rxdb
 
 # algorithm 算法 https://github.com/jedisct1/siphash-js
 npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击)
@@ -121,5 +121,5 @@ yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
 ~~~
 
 # 桌面应用
-  [node-webkit](https://github.com/nwjs/nw.js)、[Electron](https://www.cnblogs.com/cczw/archive/2016/10/21/5984012.html)
+ > [node-webkit](https://github.com/nwjs/nw.js)、[Electron](https://www.cnblogs.com/cczw/archive/2016/10/21/5984012.html)
 
