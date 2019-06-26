@@ -66,13 +66,14 @@
   $ groups          # 用户所在组
   $ groupadd        # 添加用户组
   
-  # 内存情况
-  $ free
-  $ top
-  
   # 进程详情
   > tasklist
-  $ ps aux
+  $ ps aux              # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
+  $ ps -eo pid,cmd | grep uuid # [o输出字段]
+  $ ps -ef | grep dotnet # 查看dotnet进程id
+  $ top -Hp [进程id]      # 进程列表: 内存&CPU占用
+  $ dotnet-dump collect -p [进程id] ; dotnet-dump analyze core_***  # 查找.NET Core 占用CPU 100% 的原因
+    > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除僵尸(Z开头的)进程
   $ killall           # 杀死进程使用
