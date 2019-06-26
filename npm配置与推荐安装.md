@@ -34,9 +34,9 @@
 ~~~
 # Unix风格: -S -单个字母, GNU风格: --save --英文字符，node-cli参考: commander.js,chalk.js,Lnquirer.js,Yargs.
 npm init -f                                               [初始化项目package.json]
-npm i -S [--save --no-save]                               [添加项目程序依赖包到dependencies]
-npm i -D [--save-dev]                                     [添加项目工具依赖包到devDependencies]
-npm install --loglevel verbose                            [还原项目程序依赖包,打印详细信息]
+npm i -S [--save --no-save]                               [添加项目运行时依赖包到dependencies]
+npm i -D [--save-dev]                                     [添加项目开发时依赖包到devDependencies]
+npm install --loglevel verbose                            [还原项目依赖,打印详细信息,检查异常!]
 ~~~
 
  # npm 全局安装包 npm install -g
