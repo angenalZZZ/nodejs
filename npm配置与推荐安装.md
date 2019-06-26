@@ -53,8 +53,16 @@ cnpm i -g @vue/cli     >vue           # 构建工具Vue3.x https://cli.vuejs.org
 cnpm i -g weex-toolkit >weex          # 跨平台构建工具 https://github.com/apache/incubator-weex
 npm i -g create-rx-app >npx           # 跨平台构建工具RN https://github.com/Microsoft/reactxp
 npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
-npm i -g supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
-npm i -g serve http-server            # 本地开发服务
+
+~~~
+
+ # npm 工具链 web 开发时 npm i -D [--save-dev]
+~~~
+npm i -D concurrently                 # 让"阻塞"的命令, 可以并发执行.
+    # -D less,less-loader,typescript
+npm i -D supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
+npm i -D serve http-server            # 本地开发web服务
+npm i -D local-web-server
 npm i -g json-server
   > json-server ./mock/data.json <<<{"key": "value", ...}
 npm i -g lite-server
@@ -112,7 +120,7 @@ npm i rxjs       # 响应式编程的库 https://cn.rx.js.org
 npm i chalk      # 命令行输出文字颜色  https://github.com/chalk/chalk
 npm i commander  # 命令行神器，能帮助我们简化很多操作  http://blog.fens.me/nodejs-commander
 npm i pidusage   # 检查进程(PID) / CPU & 内存的使用 https://github.com/soyuka/pidusage
-npm i proxyquire # https://github.com/thlorenz/proxyquire
+npm i proxyquire # 代理 https://github.com/thlorenz/proxyquire
 npm i monaco-editor # 在线代码编辑器 https://microsoft.github.io/monaco-editor/index.html
 
 #---------------------------------------------------------------------------------
