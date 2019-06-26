@@ -247,4 +247,10 @@
   delayWhen(x => Observable.timer(20 * x))
 ~~~
 
+----
+
+# 推荐功能
+
+> [`实时数据库rxdb/angular2`](https://github.com/pubkey/rxdb/tree/master/examples/angular2)
+
 
