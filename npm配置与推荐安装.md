@@ -24,7 +24,7 @@
  npm i --registry=https://registry.npm.taobao.org         [建议] [不建议 npm config set registry]
  # install cnpm
  npm i -g cnpm --registry=https://registry.npm.taobao.org [代理taobao]
- npm i -g nrm	                                          [代理切换]
+ npm i -g nrm	                                           [代理切换]
  # install yarn from https://yarn.bootcss.com/docs/install/
  npm i -g yarn > yarn | yarnpkg                           [包管理器]
 ~~~
@@ -36,14 +36,15 @@
 npm init -f                                               [初始化项目package.json]
 npm i -S [--save --no-save]                               [添加项目程序依赖包到dependencies]
 npm i -D [--save-dev]                                     [添加项目工具依赖包到devDependencies]
+npm install --loglevel verbose                            [还原项目程序依赖包,打印详细信息]
 ~~~
 
  # npm 全局安装包 npm install -g
   [TypeScript](https://github.com/Microsoft/TypeScriptSamples)、[机器人](https://github.com/Microsoft/BotBuilder-Samples)、[物连网](https://github.com/ms-iot/samples)
   
 ~~~
-npm i -g node-gyp                                        [结合VS编译]
-cnpm i -g node-sass                                      [编译sass>css]
+npm i -g node-gyp                     # 优先安装[结合VS编译]
+cnpm i -g node-sass                   # 优先安装[编译sass>css]
 npm i -g typescript    >tsc >tsserver # ts-node | io-ts  非tsconfig编译*.ts时，请在Git-Bash中执行 tsc *.ts && node .
 npm i -g webpack webpack-cli webpack-dev-server # 配置例子 https://github.com/teabyii/webpack-examples
 npm i -g @angular/cli  >ng            # 跨平台构建工具Angular2，ng set --global warnings.packageDeprecation=false
@@ -55,10 +56,9 @@ npm i -g react-native-cli             # 跨平台构建工具RN https://reactnat
 npm i -g supervisor                   # 监视代码的改动后自动重启 Node.js 服务: supervisor / nodemon / pm2
 npm i -g serve http-server            # 本地开发服务
 npm i -g json-server
-# > json-server ./mock/data.json <<<{"key": "value", ...}
+  > json-server ./mock/data.json <<<{"key": "value", ...}
 npm i -g lite-server
-# > lite-server -c ./lsconfig.js <<<{"port": 8080,"files":["./src/**/*.*"],"server":{"baseDir":"./src"}}
-npm i -g yo jspm sqlpad @compodoc/compodoc # 标准文档生成工具
+  > lite-server -c ./lsconfig.js <<<{"port": 8080,"files":["./src/**/*.*"],"server":{"baseDir":"./src"}}
 ~~~
 
  # npm 后端安装包 (npm|yarn) install
@@ -95,7 +95,7 @@ npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.
 npm i redis     # 高性能缓存数据库 Redis
 npm i level     # 高性能缓存数据库Google LevelDB https://github.com/Level/level
 npm i ssdb-node # SSDB 基于 LevelDB https://github.com/reanote/ssdb-node
-npm i rxdb      # 实时数据库|实时应用(JavaScript.App) https://github.com/pubkey/rxdb
+npm i rxdb      # 实时数据库|实时应用 https://github.com/pubkey/rxdb
 
 # algorithm 算法 https://github.com/jedisct1/siphash-js
 npm i siphash # 随机性好、输出均匀、性能突出(可用于字典的高效查找)、偏向性小(防hash攻击)
@@ -116,7 +116,8 @@ npm i proxyquire # https://github.com/thlorenz/proxyquire
 npm i monaco-editor # 在线代码编辑器 https://microsoft.github.io/monaco-editor/index.html
 
 #---------------------------------------------------------------------------------
-yarn global add thelounge  # web IRC 客户端(Internet Relay Chat)
+npm i -g yo jspm sqlpad @compodoc/compodoc # 标准文档生成工具
+yarn global add thelounge                  # Web IRC 客户端(在线聊天服务)
 
 ~~~
 
