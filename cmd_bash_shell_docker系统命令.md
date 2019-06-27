@@ -221,7 +221,7 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install gcc              # 安装gcc编译工具(可选)
   $ sudo apt install make             # 安装构建工具make(可选)
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make等工具链
-  $ sudo apt install gnome-core pkg-config libgtk2.0-dev # 安装桌面开发gtk,glib...
+  $ sudo apt install libgtk2.0-dev pkg-config gnome-core # 安装桌面开发gtk,glib,gnome.
   $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
   $ sudo apt install nodejs           # 安装Nodejs(推荐下面的wget安装方式:sudo管理配置profile或设置软链接)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-arm64.tar.xz
@@ -319,19 +319,20 @@ $ source ~/.zshrc # 使配置生效
   $ chmod +x toplip # 赋予可执行权限
   $ ./toplip        # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
   
-  # 测试工具
-  ## fio 测试存储性能
-  $ wget http://brick.kernel.dk/snaps/fio-2.1.10.tar.gz
-  $ tar -zxvf fio-2.1.10.tar.gz && cd fio-2.1.10
-  $ ./configure --enable-gfio # 配置: enable gfio
+  # 检测工具
+  # < fio 存储性能 >---------------------------
+  $ wget https://github.com/axboe/fio/archive/fio-3.14.tar.gz  #! http://brick.kernel.dk/snaps/fio-2.1.10.tar.gz
+  $ tar -zxf fio-3.14.tar.gz && cd fio-fio-3.14
+  $ ./configure --enable-gfio # 配置: enable gfio (参数可选)
   $ make                      # 编译: make fio && make gfio
-  $ sudo make install         # 安装: install fio gfio ... /usr/local/bin
-  $ fio -S& [--server]        # 后端← & →测试客户端↓↓↓
+  $ sudo make install         # 安装: install fio gfio genfio fio-* /usr/local/bin
+  $ cd .. && rm -rf fio-*     # 安装完毕后,删除源.
+  $ fio -S& [--server]        # 启动后端← + →客户端↓测试↓
   $ fio --client=host1.list fio1.job --client=host2.list fio2.job
   $ fio --ioengine=libaio --direct=1 --thread --norandommap \ # SATA接口硬盘
     --filename=/dev/sda --name=init_seq --output=init_seq1.log \
     --rw=write --bs=128k --numjobs=1 --iodepth=32 --loops=1 # blog.csdn.net/dinglisong/article/details/83111515
-  $ gfio # 桌面应用→分析(^1h)→ 顺序读、顺序写、随机读、随机写...
+  $ gfio # 桌面应用→分析(>1h)→ 顺序读、顺序写、随机读、随机写等存储性能
   
 ~~~
 
