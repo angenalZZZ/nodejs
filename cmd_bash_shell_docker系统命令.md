@@ -217,10 +217,11 @@ $ source ~/.zshrc # 使配置生效
   $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源 https://www.cnblogs.com/xudalin/p/9071902.html
-  $ sudo apt-get update && sudo apt-get upgrade # 更新升级(可选)
-  $ sudo apt install gcc              # 安装gcc编译工具
-  $ sudo apt install build-essential  # 安装gcc/g++编译工具(可选)
-  $ sudo apt install make             # 安装构建工具make
+  $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
+  $ sudo apt install gcc              # 安装gcc编译工具(可选)
+  $ sudo apt install make             # 安装构建工具make(可选)
+  $ sudo apt install build-essential  # 安装gcc/g++/gdb/make等工具链
+  $ sudo apt install gnome-core pkg-config libgtk2.0-dev # 安装桌面开发gtk,glib...
   $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
   $ sudo apt install nodejs           # 安装Nodejs(推荐下面的wget安装方式:sudo管理配置profile或设置软链接)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-arm64.tar.xz
@@ -317,6 +318,15 @@ $ source ~/.zshrc # 使配置生效
   # 加密解密
   $ chmod +x toplip # 赋予可执行权限
   $ ./toplip        # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
+  
+  # 测试工具
+  ## fio 测试存储性能
+  $ wget http://brick.kernel.dk/snaps/fio-2.1.10.tar.gz
+  $ tar -zxvf fio-2.1.10.tar.gz && cd fio-2.1.10
+  $ ./configure --enable-gfio
+  $ make fio && make gfio && make install
+  $ ./fio -S
+  $ gfio
 ~~~
 
 ## Linux常用命令
