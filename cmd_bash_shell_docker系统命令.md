@@ -222,9 +222,12 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install build-essential  # 安装gcc/g++编译工具(可选)
   $ sudo apt install make             # 安装构建工具make
   $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
-  $ sudo apt install nodejs           # 安装Nodejs
-  $ sudo apt install nodejs-legacy
-  $ sudo npm install -g npm
+  $ sudo apt install nodejs           # 安装Nodejs(推荐下面的wget安装方式:sudo管理配置profile或设置软链接)
+  $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-arm64.tar.xz
+  $ tar -zxvf node-v10.16.0-linux-arm64.tar.xz -C /root/
+  $ vi /etc/profile #配置 export PATH=$PATH:/root/node-v10.16.0/bin/ #生效 source /etc/profile
+   # (选项)设置软链接: ln -s /root/node-v10.16.0/bin/node /usr/local/bin/node ; ln -s /root/node-v10.16.0/bin/npm /usr/local/bin/npm
+  $ npm install -g npm  # https://github.com/angenalZZZ/nodejs/blob/master/npm配置与推荐安装.md
   
   # 安装数据库Redis (Key-Value数据库) www.redis.cn
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码
