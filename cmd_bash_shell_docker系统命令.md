@@ -7,7 +7,7 @@
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)<br>
 
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
- * [Linux常用安装Redis-mysql-nsq-Botpress-Gotify-SSH等](#Linux常用安装redis-mysql-nsq-botpress-gotify-ssh等)
+ * [Linux开发环境及常用安装Redis-mysql-nsq-Botpress-Gotify-SSH等](#Linux开发环境及常用安装redis-mysql-nsq-botpress-gotify-ssh等)
  * [Linux常用命令](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [consul](#Consul)
 
@@ -180,7 +180,36 @@ export ftp_proxy=http://127.0.0.1:5005
 
 ~~~
 
-## Linux常用安装Redis-mysql-nsq-Botpress-Gotify-SSH等
+## Linux开发环境及常用安装Redis-mysql-nsq-Botpress-Gotify-SSH等
+
+~~~bash
+# *更新软件源* sudo vi /etc/apt/sources.list (复制[阿里源ubuntu`18.04`bionic`]到文件顶部)
+deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
+deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
+$ sudo apt-get update && sudo apt-get upgrade # 更新软件源操作完毕.
+~~~
+
+ `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端
+~~~bash
+# 安装 zsh
+$ sudo apt-get -y install zsh
+# 设置终端shell默认为zsh, 输入以下命令后(重启终端>选择>2) [加sudo修改root的默认shell]
+$ chsh -s `which zsh`  # 安装完毕
+# 安装 antigen 设置主题
+$ curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
+# 修改配置 ~/.zshrc ; 添加[主题ys] antigen theme ys 参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
+# 最后再执行 zsh ; 如果出现 compinit 权限问题, 解决如下:
+$ sudo chmod -R 755 /usr/local/share/zsh/site-functions
+$ source ~/.zshrc # 使配置生效
+~~~
 
 ~~~shell
   # 环境搭建
@@ -292,34 +321,6 @@ export ftp_proxy=http://127.0.0.1:5005
     Shell连接符：
       && <中间> 连接两条命令并按顺序执行;
       &  <结尾> 使命令程序脱离终端进程在后台执行;
-~~~bash
-# *更新软件源* sudo vi /etc/apt/sources.list (复制[阿里源ubuntu`18.04`bionic`]到文件顶部)
-deb http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-deb http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-security main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-updates main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-proposed main restricted universe multiverse
-deb-src http://mirrors.aliyun.com/ubuntu/ bionic-backports main restricted universe multiverse
-$ sudo apt-get update && sudo apt-get upgrade # 更新软件源操作完毕.
-~~~
-
- `zsh`是一款强大的虚拟终端，推荐使用 [oh my zsh](https://github.com/robbyrussell/oh-my-zsh) 配置管理终端
-~~~bash
-# 安装 zsh
-$ sudo apt-get -y install zsh
-# 设置终端shell默认为zsh, 输入以下命令后(重启终端>选择>2) [加sudo修改root的默认shell]
-$ chsh -s `which zsh`  # 安装完毕
-# 安装 antigen 设置主题
-$ curl -L https://raw.githubusercontent.com/skywind3000/vim/30b702725847bac4708de34664bb68454b54e0c0/etc/zshrc.zsh > ~/.zshrc
-# 修改配置 ~/.zshrc ; 添加[主题ys] antigen theme ys 参考 github.com/robbyrussell/oh-my-zsh/wiki/themes
-# 最后再执行 zsh ; 如果出现 compinit 权限问题, 解决如下:
-$ sudo chmod -R 755 /usr/local/share/zsh/site-functions
-$ source ~/.zshrc # 使配置生效
-~~~
 
 #### 一、Linux下常用命令：文件与目录操作
 ~~~
