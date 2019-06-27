@@ -324,7 +324,8 @@ $ source ~/.zshrc # 使配置生效
   $ wget http://brick.kernel.dk/snaps/fio-2.1.10.tar.gz
   $ tar -zxvf fio-2.1.10.tar.gz && cd fio-2.1.10
   $ ./configure --enable-gfio
-  $ make fio && make gfio && make install
+  $ make fio && make gfio
+  $ sudo make install
   $ ./fio -S
   $ gfio
 ~~~
