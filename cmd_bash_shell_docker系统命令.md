@@ -323,11 +323,16 @@ $ source ~/.zshrc # 使配置生效
   ## fio 测试存储性能
   $ wget http://brick.kernel.dk/snaps/fio-2.1.10.tar.gz
   $ tar -zxvf fio-2.1.10.tar.gz && cd fio-2.1.10
-  $ ./configure --enable-gfio
-  $ make fio && make gfio
-  $ sudo make install
-  $ ./fio -S
-  $ gfio
+  $ ./configure --enable-gfio # 配置: enable gfio
+  $ make                      # 编译: make fio && make gfio
+  $ sudo make install         # 安装: install fio gfio ... /usr/local/bin
+  $ fio -S& [--server]        # 后端← & →测试客户端↓↓↓
+  $ fio --client=host1.list fio1.job --client=host2.list fio2.job
+  $ fio --ioengine=libaio --direct=1 --thread --norandommap \ # SATA接口硬盘
+    --filename=/dev/sda --name=init_seq --output=init_seq1.log \
+    --rw=write --bs=128k --numjobs=1 --iodepth=32 --loops=1 # blog.csdn.net/dinglisong/article/details/83111515
+  $ gfio # 桌面应用→分析(^1h)→ 顺序读、顺序写、随机读、随机写...
+  
 ~~~
 
 ## Linux常用命令
