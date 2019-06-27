@@ -117,6 +117,11 @@
   # 网络地址
   > ipconfig /?
   $ ifconfig | grep addr
+  # 科学上网 - 代理设置 (解决网络问题)
+  $ sudo vim /etc/profile [用户配置：~/.profile] # 将以下三行填入：
+export http_proxy=http://127.0.0.1:5005
+export https_proxy=http://127.0.0.1:5005
+export ftp_proxy=http://127.0.0.1:5005
   
   # 网络端口
   > netstat -anT                         # tcp端口(本地地址,外部地址,状态)
