@@ -7,7 +7,7 @@
 　[`免费的容器镜像服务`](#免费的容器镜像服务)、[`免费的开发服务器`](#免费的开发服务器)<br>
 
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
- * [Linux开发环境及常用安装Redis-mysql-nsq-Botpress-Gotify-SSH等](#Linux开发环境及常用安装redis-mysql-nsq-botpress-gotify-ssh等)
+ * [Linux开发环境及常用安装zsh-Redis-mysql-nsq-Botpress-Gotify-SSH-fio等](#Linux开发环境及常用安装zsh-redis-mysql-nsq-botpress-gotify-ssh-fio等)
  * [Linux常用命令](#Linux常用命令)
  * [docker](#docker) | [k8s](#Kubernetes) | [consul](#Consul) | [Nginx](#Nginx)
 
@@ -180,7 +180,7 @@ export ftp_proxy=http://127.0.0.1:5005
 
 ~~~
 
-## Linux开发环境及常用安装Redis-mysql-nsq-Botpress-Gotify-SSH等
+## Linux开发环境及常用安装zsh-Redis-mysql-nsq-Botpress-Gotify-SSH-fio等
 
 ~~~bash
 # *更新软件源* sudo vi /etc/apt/sources.list (复制[阿里源ubuntu`18.04`bionic`]到文件顶部)
