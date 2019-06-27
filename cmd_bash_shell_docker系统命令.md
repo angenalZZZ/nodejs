@@ -183,7 +183,7 @@ export ftp_proxy=http://127.0.0.1:5005
 ## Redis-mysql-nsq-Botpress-Gotify-SSH等常用安装
 
 ~~~shell
-  # 安装数据库Redis (Key-Value数据库) www.redis.cn
+  # 环境搭建
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
   $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
@@ -192,6 +192,12 @@ export ftp_proxy=http://127.0.0.1:5005
   $ sudo apt install gcc              # 安装gcc编译工具
   $ sudo apt install build-essential  # 安装gcc/g++编译工具(可选)
   $ sudo apt install make             # 安装构建工具make
+  $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
+  $ sudo apt install nodejs           # 安装Nodejs
+  $ sudo apt install nodejs-legacy
+  $ sudo npm install -g npm
+  
+  # 安装数据库Redis (Key-Value数据库) www.redis.cn
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码
   $ tar xzf redis-stable.tar.gz                                # 解压源码
   $ cd redis-stable && sudo make install # 编译Redis
