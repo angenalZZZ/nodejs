@@ -326,8 +326,8 @@ $ source ~/.zshrc # 使配置生效
   $ ./configure --enable-gfio # 配置: enable gfio (参数可选)
   $ make                      # 编译: make fio && make gfio
   $ sudo make install         # 安装: install fio gfio genfio fio-* /usr/local/bin
-  $ cd .. && rm -rf fio-*     # 安装完毕后,删除源.
-  $ fio -S& [--server]        # 启动后端← + →客户端↓测试↓
+  $ cd .. && rm -rf fio-*     # 安装完毕后删除源(可选)
+  $ fio -S& [--server]        # 启动后端← + →客户端↓测试↓ [参考:examples/*.fio]
   $ fio --client=host1.list fio1.job --client=host2.list fio2.job
   $ fio --ioengine=libaio --direct=1 --thread --norandommap \ # SATA接口硬盘
     --filename=/dev/sda --name=init_seq --output=init_seq1.log \
