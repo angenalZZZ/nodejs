@@ -34,6 +34,7 @@
   $ export TZ='Asia/Shanghai' # *设置本地时区* | (帮助选择时区) tzselect | vi ~/.profile < TZ='Asia/Shanghai'
   $ date "+%Y/%m/%d %X"     # 当前本地时间 | (本地日期) date +%Y%m%d | (Hardware-Clock) hwclock
   $ date --date='TZ="Europe/Paris" 2004-10-31 06:30' # 指定时区时间
+  $ echo $(date +%Y%m%d)
   
   # 帮助
   > help cmd
@@ -49,6 +50,7 @@
   $ mkdir -p $HOME         # 用户目录 > cd ~ ; cd /home/$(whoami) # root用户为 / = cd ~
   > quser             # 当前用户状态
   $ whoami && w && id # 当前用户信息
+  $ echo $USER
   $ id              # 返回 uid=0(root) gid=0(root) groups=0(root)
   $ id -u           # 返回 uid                     添加用户(-d=$home)      (G=选择用户组)(用户名admin)
   $ mkdir -p /home/admin & chmod 777 /home/admin & useradd -d /home/admin -G root,adm,users admin
@@ -69,7 +71,8 @@
   # 进程详情
   > tasklist
   $ ps aux              # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
-  $ ps -eo pid,cmd | grep uuid # [o输出字段]
+  $ ps -eo pid,cmd | grep uuid # [o输出字段,e依赖的系统环境]
+  $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
   $ ps -ef | grep dotnet # 查看dotnet进程id
   $ top -Hp [进程id]      # 进程列表: 内存&CPU占用
   $ dotnet-dump collect -p [进程id] ; dotnet-dump analyze core_***  # 查找.NET Core 占用CPU 100% 的原因
