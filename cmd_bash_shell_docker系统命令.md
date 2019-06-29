@@ -853,13 +853,13 @@ exec curl -T \
   docker ps -a  # 查看容器 | docker container ls -a
   docker search ubuntu # 搜索镜像
   docker pull ubuntu   # 下载镜像
-  docker load -i /opt/images/ubuntu_latest.tar # 镜像载入 (使用Xftp先将镜像tar上传至Docker虚拟机或共享盘)
-  docker commit web myweb # 创建新镜像myweb(容器web) > 保存镜像:
-  docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest       # 保存镜像 (save images)
+  docker load -i /opt/images/ubuntu_latest.tar # 加载镜像 (使用Xftp将镜像tar上传至Docker虚拟机或共享盘)
+  docker commit web myweb # 创建新镜像myweb(容器web) 另存为镜像 (save container to image)
+  docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest       # 保存镜像 (save image)
   docker export ubuntu > "d:\docker\snapshot\ubuntu_19_04.tar"           # 导出快照 (export snapshot)
   docker container export -o="d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出快照 (container export snapshot)
-  docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/publish        # 复制目录 (copy dir to container)
-  docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos.net\entrypoint.sh # 复制文件
+  docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/xxx/publish # 复制目录 (copy dir to container)
+  docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos\home\app\entrypoint.sh # 复制文件
 
   docker container start $(docker ps -aq)   # 启动所有容器
   docker container stop $(docker ps -aq)    # 停止所有容器
