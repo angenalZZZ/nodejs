@@ -183,7 +183,7 @@ export ftp_proxy=http://127.0.0.1:5005
   
   # 修改PowerShell脚本执行策略 windows 10
   > Get-ExecutionPolicy
-  > Set-ExecutionPolicy RemoteSigned [,AllSigned,Restricted]
+  > Set-ExecutionPolicy RemoteSigned [RemoteSigned,AllSigned,Bypass,Restricted...]
   # 创建PowerShell脚本数字签名认证 windows 10
   > cd "C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x64" # 签名工具makecert [eku指定为代码签名]
   > makecert -n "CN=Power Shell Local Certificate Root" -a sha1 -eku 1.3.6.1.5.5.7.3.3 -r -sv root.pvk root.cer -ss Root -sr LocalMachine
