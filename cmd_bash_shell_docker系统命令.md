@@ -159,28 +159,37 @@ export ftp_proxy=http://127.0.0.1:5005
   > at 11:00:00PM shutdown -r [r重启]
   
   # 系统硬件序列号
-  wmic memorychip get serialnumber
-  wmic diskdrive get serialnumber
-  wmic baseboard get serialnumber
-  wmic cdrom where drive='G:' get SerialNumber
+  > wmic memorychip get serialnumber
+  > wmic diskdrive get serialnumber
+  > wmic baseboard get serialnumber
+  > wmic cdrom where drive='G:' get SerialNumber
   # 系统自动登录
-  autologon  userName domainName password
+  > autologon  userName domainName password
   # 修改计算机名
-  wmic computersystem where caption='currentname' rename newname
+  > wmic computersystem where caption='currentname' rename newname
   # 网络WiFi关闭
-  netsh interface set interface name="Wireless Network Connection" admin=DISABLED
+  > netsh interface set interface name="Wireless Network Connection" admin=DISABLED
   # 防火墙开关
-  netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state on
-  netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state off
+  > netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state on
+  > netsh advfirewall set allprofiles[currentprofile publicprofile privateprofile] state off
   # 时区设置
-  tzutil /g [获取] /l [列表]
-  tzutil /s "China Standard Time" [设置]
+  > tzutil /g [获取] /l [列表]
+  > tzutil /s "China Standard Time" [设置]
   # 打印设置
-  wmic printer get Default,DeviceID,Name,Network                          # 获取打印机设备
-  wmic printer get DeviceID,PrinterPaperNames                             # 设备ID,打印纸张
-  wmic printer where default='TRUE' get name                              # 获取默认打印机
-  wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
-
+  > wmic printer get Default,DeviceID,Name,Network                          # 获取打印机设备
+  > wmic printer get DeviceID,PrinterPaperNames                             # 设备ID,打印纸张
+  > wmic printer where default='TRUE' get name                              # 获取默认打印机
+  > wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
+  
+  # 修改PowerShell脚本执行策略 windows 10
+  > Get-ExecutionPolicy
+  > Set-ExecutionPolicy RemoteSigned [,AllSigned,Restricted]
+  # 创建PowerShell脚本数字签名认证 windows 10
+  > cd "C:\Program Files (x86)\Windows Kits\10\bin\10.0.17763.0\x64" # 签名工具makecert [eku指定为代码签名]
+  > makecert -n "CN=Power Shell Local Certificate Root" -a sha1 -eku 1.3.6.1.5.5.7.3.3 -r -sv root.pvk root.cer -ss Root -sr LocalMachine
+  # 打开PowerShell查询数字签名证书
+  > ls Cert:\CurrentUser\Root | where {$_.Subject -eq "CN=Power Shell Local Certificate Root"}
+  
 ~~~
 
 ## Linux开发环境及常用安装zsh-Redis-mysql-nsq-Botpress-Gotify-SSH-fio等
