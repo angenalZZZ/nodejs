@@ -214,15 +214,16 @@ git remote rm [远程仓库名origin]/[分支clean_up]
 
 ~~~bash
 git tag -a v0.1.3 -m "Release Version 0.1.3" # -a 添加, -d 删除
-git push --tags origin                 # 推送本地仓库的标签到远程仓库origin
+git push origin v0.1.3                 # 推送本地仓库的指定标签到远程仓库origin
+git push --tags origin                 # 推送本地仓库的全部标签到远程仓库origin
 git push origin :refs/tags/[tag-name]  # 删除远程标签tag-name
 ~~~
 
 ####  26.最后发布
 
 ~~~bash
-git push --all         # 推送本地仓库的所有分支和标签
-git push origin master # 推送本地仓库的主分支master到远程仓库origin
+git push --all                         # 推送本地仓库的所有分支和标签
+git push origin master                 # 推送本地仓库的主分支master到远程仓库origin/master
 ~~~
 
 ####  27.[push.sh 参考文档](https://github.com/fengyuhetao/shell)
