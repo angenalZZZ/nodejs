@@ -181,6 +181,15 @@ export ftp_proxy=http://127.0.0.1:5005
   > wmic printer where default='TRUE' get name                              # 获取默认打印机
   > wmic printer where name='Microsoft Print to PDF' call setdefaultprinter # 设置默认打印机
   
+  # 证书：           CA根证书(服务器身份验证)
+    *使用者          Acme Co
+    *公钥            RSA (2048 Bits)
+    *公钥参数         05 00
+    *增强型密钥用法   服务器身份验证 (1.3.6.1.5.5.7.3.1)
+    *使用者可选名称   DNS Name=localhost  \  IP Address=0.0.0.0  \  IP Address=127.0.0.1
+    *密钥用法         Digital Signature, Key Encipherment, Certificate Signing (a4)
+    *基本约束         Subject Type=CA  \  Path Length Constraint=None
+    *指纹            a79be724538b668fa817e8578d6a8078337fd3ad
   # 修改PowerShell脚本执行策略 windows 10
   > Get-ExecutionPolicy
   > Set-ExecutionPolicy RemoteSigned [RemoteSigned,AllSigned,Bypass,Restricted...]
