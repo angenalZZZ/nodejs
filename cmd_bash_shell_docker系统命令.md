@@ -928,19 +928,21 @@ exec curl -T \
     mcr.microsoft.com/mssql/server # 数据库mssql
   # 外部访问控制：(--link)其它容器连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
   
+  # 消息平台 rabbitmq | github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
   docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
     -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
     -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
     rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
     # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
-    # https://github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
-  # 消息平台 nsq ...
-  # https://nsq.io/deployment/docker.html
+  # 消息平台 nsq | nsq.io/deployment/docker.html
   docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 
     nsqio/nsq /nsqlookupd  # First Run nsqlookupd for nsqd & nsqadmin 
   docker run --name nsqd --network=workgroup --network-alias=nsqd -p 4150:4150 -p 4151:4151 -v d:\docker\app\nsq\data:/data 
     nsqio/nsq /nsqd --data-path=/data --lookupd-tcp-address=nsqlookupd:4160 # --broadcast-address=<dockerIP>
   docker run --name nsqadmin -d --network=workgroup -p 4171:4171 nsqio/nsq /nsqadmin --lookupd-http-address=nsqlookupd:4161
+  # 消息平台 kafka | wurstmeister.github.io/kafka-docker
+  docker run --name kafka wurstmeister/kafka
+  
   # 事件|代理|自动化系统
   docker run --name beehive -d --network=workgroup -p 8181:8181 -v d:\docker\app\beehive\conf:/conf gabrielalacchi/beehive
   # 高性能的图形数据库(NoSQL)
