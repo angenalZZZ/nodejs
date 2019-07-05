@@ -70,6 +70,8 @@
   
   # 进程详情
   > tasklist
+  > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
+  > taskkill /f /pid 6016
   $ ps aux              # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
   $ ps -eo pid,cmd | grep uuid # [o输出字段,e依赖的系统环境]
   $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
@@ -79,7 +81,7 @@
     > clrthreads ; setthread [线程DBG] ; clrstack ; clrstack -a ; dumpobj 0x00*** # 分析线程/堆栈/内存数据
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除僵尸(Z开头的)进程
-  $ killall           # 杀死进程使用
+  $ killall           # 杀死进程使用, 杀死单个进程: kill -9 [ProcessId]
   $ smem -k -s USS    # 进程的内存使用情况
   # < ubuntu > apt update & apt install smem
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk
@@ -289,6 +291,17 @@ $ source ~/.zshrc # 使配置生效
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
   > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web 服务
+  # 安装消息平台 kafka.apache.org/quickstart
+  $ wget http://mirrors.tuna.tsinghua.edu.cn/apache/kafka/2.3.0/kafka_2.12-2.3.0.tgz
+  $ tar -xzf kafka_2.12-2.3.0.tgz && cd kafka_2.12-2.3.0
+  $ bin/zookeeper-server-start.sh config/zookeeper.properties     # start a ZooKeeper server
+  $ bin/kafka-server-start.sh config/server.properties            # start the Kafka server
+  $ bin/kafka-topics.sh --create --bootstrap-server localhost:9092 --replication-factor 1 --partitions 1 --topic test
+  $ bin/kafka-topics.sh --list --bootstrap-server localhost:9092  ## create a topic and list topic
+  $ bin/kafka-console-producer.sh --broker-list localhost:9092 --topic test ## send some messages
+  $ bin/kafka-console-consumer.sh --bootstrap-server localhost:9092 --topic test --from-beginning ## start a consumer
+  $ cp config/server.properties config/server-1.properties        # setting up a multi-broker cluster
+  $ cp config/server.properties config/server-2.properties        # setting up a multi-broker cluster
 
   # 安装 Chat Bots 聊天机器人 (Windows服务)
   > nssm install Botpress D:\Program\botpress\bp.exe serve
