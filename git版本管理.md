@@ -1,7 +1,7 @@
 
 # **[安装Git for Mac & Linux](https://gist.github.com/derhuerst/1b15ff4652a867391f03)**、[安装Git for Windows](https://github.com/git-for-windows/git/releases)
 
-#### create a new repository on the command line, push into github.com
+#### Create a new repository on the command line, push into github.com
 ~~~bash
 echo "# CSharpOpen" >> README.md
 git init
@@ -11,11 +11,21 @@ git remote add origin https://github.com/angenal/CSharpOpen.git
 git push -u origin master
 ~~~
 
-#### push an existing repository from the command line
+#### Push an existing repository from the command line.
 ~~~bash
 git remote add origin https://github.com/angenal/CSharpOpen.git
 git push -u origin master
 ~~~
+
+#### Contributing and PR for your new feature.
+1. Fork it
+2. Download your fork to your PC (`git clone https://github.com/your_username/feature && cd feature`)
+3. Create your feature branch (`git checkout -b my-new-feature`)
+4. Make changes and add them (`git add .`)
+5. Commit your changes (`git commit -m 'Add some feature'`)
+6. Push to the branch (`git push origin my-new-feature`)
+7. Create new pull request
+
 
 # [新建git项目与git发布`点击看其他教程`](http://wangchujiang.com/linux-command/c/git.html)
 
