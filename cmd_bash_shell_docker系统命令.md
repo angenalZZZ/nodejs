@@ -253,6 +253,33 @@ $ source ~/.zshrc # 使配置生效
    # (选项)设置软链接: ln -s /root/node-v10.16.0/bin/node /usr/local/bin/node ; ln -s /root/node-v10.16.0/bin/npm /usr/local/bin/npm
   $ npm install -g npm  # https://github.com/angenalZZZ/nodejs/blob/master/npm配置与推荐安装.md
   
+  # 安装Git
+  $ sudo add-apt-repository ppa:git-core/ppa
+  $ sudo apt-get update
+  $ sudo apt install git
+  $ git --version                                        # git config --local -l
+  $ git config --global user.name "yangzhou"             # git config --local user.name "用户名"
+  $ git config --global user.email "angenal@hotmail.com" # git config --local user.email "用户邮箱地址"
+  $ git config --global http.postBuffer 524288000        # set more buffer
+  $ git config --global http.sslVerify "false"           # set cancel ssl of https
+  $ git init [Git项目所在目录-默认当前目录]                # git init app && ls app/.git/
+  $ git status && git stash list
+  $ git diff
+  $ git add [filename]
+  $ git commit -m "添加文件"
+  $ git checkout -- [filename]  # 签出，放弃工作区最新的更改，适用于还未提交的情况
+  $ git stash && git stash drop # 加入了暂存区后再清除暂存区，适用于还未提交的情况
+  $ git reset HEAD [filename]   # 放弃最新提交[取消git.add]，不改变工作区和库区，只改变了暂存区
+  $ git reset --hard HEAD^      # 版本回退，工作区和库区都进行相应的回退
+  $ rm [filename] && git rm [filename] && git commit -m "删除文件"
+  $ git remote add origin https://github.com/dragonFly12345/ubuntuGitTest.git # 使用远程HTTPS
+  $ git remote remove origin                                              # 删除后用于重新绑定远程
+  $ git remote add origin git@github.com:dragonFly12345/ubuntuGitTest.git # 使用远程SSH
+  $ ssh-keygen -t rsa -C "angenal@hotmail.com" # 使用远程SSH，需要创建SSH认证
+  $ git push origin master -u                  # [u用在第一次推送时]
+  # 安装lazyGit，方便管理。
+  $ wget https://github.com/jesseduffield/lazygit/releases/download/v0.8.1/lazygit_0.8.1_Linux_x86_64.tar.gz
+  
   # 安装数据库Redis (Key-Value数据库) www.redis.cn
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码
   $ tar xzf redis-stable.tar.gz                                # 解压源码
