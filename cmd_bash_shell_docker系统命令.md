@@ -881,6 +881,25 @@ exec curl -T \
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
   `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
 
+> `安装`
+~~~shell
+# 安装Docker，先切换用户root ~ su
+$ curl -sSL https://get.daocloud.io/docker | sh  
+# 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
+$ apt-get remove docker docker-engine  
+# 安装 Docker Compose
+$ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose 
+$ chmod +x /usr/local/bin/docker-compose
+# 安装 Docker Machine
+$ base=https://github.com/docker/machine/releases/download/v0.16.0
+$ curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine
+$ install /tmp/docker-machine /usr/local/bin/docker-machine
+# 不使用sudo执行docker命令，先切换当前用户( root ~ exit )
+$ sudo gpasswd -a ${USER} docker  # 将当前用户加入docker组 
+$ sudo service docker restart              # 重启docker
+$ newgrp - docker                                    # 刷新docker组
+~~~
+
 > **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
 ~~~
   # 构建
