@@ -53,7 +53,7 @@ cnpm i -g @vue/cli     >vue           # 构建工具Vue3.x https://cli.vuejs.org
 cnpm i -g weex-toolkit >weex          # 跨平台构建工具 https://github.com/apache/incubator-weex
 npm i -g create-rx-app >npx           # 跨平台构建工具RN https://github.com/Microsoft/reactxp
 npm i -g react-native-cli             # 跨平台构建工具RN https://reactnative.cn/docs/getting-started.html
-
+npm i -g v8-profiler --profiler_binary_host_mirror=https://npm.taobao.org/mirrors/node-inspector/
 ~~~
 
  # npm 工具链 web 开发时 npm i -D [--save-dev]
