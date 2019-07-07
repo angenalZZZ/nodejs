@@ -911,7 +911,7 @@ $ apt-get remove docker docker-engine
 $ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose 
 $ chmod +x /usr/local/bin/docker-compose
 # 安装 Docker Machine
-$ sudo dpkg -i virtualbox-6.0_6.0.8-130520~Ubuntu~bionic_amd64.deb  # 基于virtualBox | www.virtualbox.org/wiki/Linux_Downloads
+$ sudo dpkg -i virtualbox-6.0_6.0.8-130520_Ubuntu_bionic_amd64.deb --fix-missing  # 基于virtualBox | www.virtualbox.org/wiki/Linux_Downloads
 $ base=https://github.com/docker/machine/releases/download/v0.16.0
 $ curl -L $base/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine     #  chmod +x /tmp/docker-machine
 $ install /tmp/docker-machine /usr/local/bin/docker-machine
