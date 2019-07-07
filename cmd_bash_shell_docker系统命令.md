@@ -300,7 +300,16 @@ $ source ~/.zshrc # 使配置生效
   > redis-benchmark -n 10000 -q   # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q  # 本机BuntDB < SET:230K,GET:5000K > requests per second
   
-  # 安装 MySQL 的一个开源分支 MariaDB
+  # 安装 MySQL
+  $ sudo apt-get update
+  $ sudo apt-get install mysql-server       # 安装
+  $ sudo mysql_secure_installation         # 配置
+  $ systemctl status mysql.service             # 检查服务状态
+  $ sudo mysql -uroot -p
+  $ 配置远程访问   (@localhost本机访问; @"%"所有主机都可连接)
+  $ GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "123456";
+  $ GRANT ALL PRIVILEGES ON dbname.* TO newusername@"%" IDENTIFIED BY "123456"; 
+  # 安装 MySQL 的一个开源分支 MariaDB 
   $ sudo yum -y install mariadb mariadb-server # CentOS 7
   $ sudo systemctl start mariadb               # 启动
   $ sudo systemctl enable mariadb              # 开机启动
