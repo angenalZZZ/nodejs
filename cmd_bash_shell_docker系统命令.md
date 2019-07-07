@@ -246,13 +246,13 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make等工具链
   $ sudo apt install libgtk2.0-dev pkg-config gnome-core # 安装桌面开发gtk,glib,gnome.
   $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
-  $ sudo apt install nodejs           # 安装Nodejs(此版本太低,推荐下面的wget安装方式:sudo管理配置profile或设置软链接)
+  $ sudo apt install nodejs           # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz
   $ sudo tar -zxf node-v10.16.0-linux-x64.tar.xz -C /usr/local/
   $ sudo mv /usr/local/node-v10.16.0-linux-x64 /usr/local/node
-  $ vi ~/.bashrc  # 配置 export PATH=/usr/local/node/bin:$PATH #生效 source ~/.bashrc
+  $ vi ~/.bashrc  # 配置 export PATH=/usr/local/node/bin:$PATH # bash生效 source ~/.bashrc ; zsh需修改~/.zshrc
    # (选项)设置软链接: ln -s /usr/local/node/bin/node /usr/local/bin/node ; ln -s /usr/local/node/bin/npm /usr/local/bin/npm
-  $ npm install -g npm  # https://github.com/angenalZZZ/nodejs/blob/master/npm配置与推荐安装.md
+  $ npm install -g npm
   
   # 安装Git
   $ sudo add-apt-repository ppa:git-core/ppa
