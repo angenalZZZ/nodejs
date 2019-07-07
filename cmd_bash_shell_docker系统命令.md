@@ -287,6 +287,7 @@ $ source ~/.zshrc # 使配置生效
   $ cd redis-stable && sudo make install # 编译Redis
   $ cd utils && sudo ./install_server.sh # 安装Redis
   $ rm -f -r ~/redis-stable && rm -f ~/redis-stable.tar.gz     # 删除源码
+  $ ps aux |grep redis              # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
   $ redis-server                         # 启动服务(独立模式), 可通过 ps aux 查看进程
   $ sudo service redis_6379 start        # (可选)启动服务(非独立模式) start|stop|restart
   $ sudo update-rc.d redis_6379 defaults # (可选)将 Redis init 脚本添加到所有默认运行级别(stop服务后)
@@ -305,6 +306,7 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt-get install mysql-server       # 安装
   $ sudo mysql_secure_installation         # 配置
   $ systemctl status mysql.service             # 检查服务状态
+  $ ps aux |grep mysqld　　　　　            # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ sudo mysql -uroot -p
   $ 配置远程访问   (@localhost本机访问; @"%"所有主机都可连接)
   $ GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "123456";
@@ -320,7 +322,7 @@ $ source ~/.zshrc # 使配置生效
   # 安装数据库Pilosa (分布式位图索引) www.pilosa.com
   $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
   $ tar xfz pilosa-v1.3.0-linux-amd64.tar.gz & cp -i pilosa-v1.3.0-linux-amd64/pilosa /usr/local/bin
-  $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins http://localhost:10102
+  $ pilosa server --data-dir ~/.pilosa --bind :10101 --handler.allowed-origins "*"&     # 或指定origins: http://localhost:10102
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
 
   # 安装消息平台 nsq.io
