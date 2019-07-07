@@ -310,14 +310,21 @@ $ source ~/.zshrc # 使配置生效
   $ ps aux |grep mysqld　　　　　            # 查看进程: /usr/sbin/mysqld --daemonize --pid-file=/run/mysqld/mysqld.pid
   $ sudo mysql -uroot -p
   $ 配置远程访问   (@localhost本机访问; @"%"所有主机都可连接)
-  $ GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "123456";
-  $ GRANT ALL PRIVILEGES ON dbname.* TO newusername@"%" IDENTIFIED BY "123456"; 
+  > CREATE USER 'newusername'@'host_name' IDENTIFIED BY 'password';
+  > select host,user,password from user;    # 当前用户: SELECT USER();
+  > grant select,insert,update,delete,create,drop,index,alter on dbname.* to newusername@192.168.1.10 identified by '123456';
+  > GRANT ALL PRIVILEGES ON dbname.* TO newusername@"%" IDENTIFIED BY "123456"; 
+  > GRANT ALL PRIVILEGES ON *.* TO root@localhost IDENTIFIED BY "123456";
+  > SET PASSWORD FOR 'root'@'host_name' = PASSWORD('password');
+  > mysqladmin -u root -h host_name password "password"   # 连接mysql
+  > mysqladmin -u root -p '123456' password 'newpassword'  # 修改密码
+  > mysqladmin -u root -p shutdown                                                    # 关闭mysql
   # 安装 MySQL 的一个开源分支 MariaDB 
   $ sudo yum -y install mariadb mariadb-server # CentOS 7
-  $ sudo systemctl start mariadb               # 启动
-  $ sudo systemctl enable mariadb              # 开机启动
+  $ sudo systemctl start mariadb                       # 启动
+  $ sudo systemctl enable mariadb                     # 开机启动
   $ sudo mysqladmin -u root password root      # 设置密码
-  $ mysql -u root -p                           # 登录mysql
+  $ mysql -u root -p                                  # 登录mysql
   $ mysql> source db.sql                       # 执行sql
 
   # 安装数据库Pilosa (分布式位图索引) www.pilosa.com
