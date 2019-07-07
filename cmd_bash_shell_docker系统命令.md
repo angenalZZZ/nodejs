@@ -121,7 +121,7 @@
   
   # 网络地址
   > ipconfig /?
-  $ ifconfig | grep addr
+  $ ifconfig | grep inet
   # 科学上网 - 代理设置 (解决网络问题)
   $ sudo vim /etc/profile [用户配置：~/.profile] # 将以下三行填入：
 export http_proxy=http://127.0.0.1:5005
@@ -149,7 +149,8 @@ export ftp_proxy=http://127.0.0.1:5005
   
   # 主机环境
   > notepad C:\Windows\System32\drivers\etc\hosts
-  > set              # 查看系统环境变量
+  > set              # 查看系统环境变量windows
+  $ export       # 查看系统环境变量linux
   $ cat /etc/hosts   # 一次显示整个文件
   $ cat > /etc/hosts # 从键盘创建一个文件
   
