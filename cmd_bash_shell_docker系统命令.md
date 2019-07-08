@@ -20,7 +20,7 @@
   > ver              # 系统  修复 > sfc/scannow
   > net config workstation
   > shell:startup    # [开始]菜单/启动/添加*.vbs
-  $ uname -a         # 系统CPU架构x86_64
+  $ uname -a         # 系统信息: $(uname -s)=系统'Linux'; $(uname -m)=CPU架构'x86_64';
   $ cat /etc/issue   # 系统版本号'发行版本名称'*** Linux | lsb_release -cs
   $ cat /etc/redhat-release
   
