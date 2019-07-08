@@ -35,6 +35,9 @@
   $ date "+%Y/%m/%d %X"     # 当前本地时间 | (本地日期) date +%Y%m%d | (Hardware-Clock) hwclock
   $ date --date='TZ="Europe/Paris" 2004-10-31 06:30' # 指定时区时间
   $ echo $(date +%Y%m%d)
+  # <Windows+Ubuntu>双系统时间同步问题  | www.jianshu.com/p/cf445a2c55e8
+  $ sudo timedatectl set-local-rtc 1   # Ubuntu先将RTC硬件时间由UTC改为CST(中国标准时间);然后,设置"日期和时间";
+  $ sudo hwclock --localtime --systohc # 最后,同步机器时间(将CST本地时间更新到RTC硬件时间;Windows使用RTC为CST)
   
   # 帮助
   > help cmd
