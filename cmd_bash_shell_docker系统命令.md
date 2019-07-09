@@ -132,13 +132,13 @@ export https_proxy=http://127.0.0.1:5005
 export ftp_proxy=http://127.0.0.1:5005
   
   # 网络端口
-  > netstat -anT                         # tcp端口(本地地址,外部地址,状态)
-  > netstat -ap tcp | findstr -i "listening" # 查找本机tcp端口监听列表
-  $ netstat -atW | grep -i "listen"      # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
+  > netstat -anT                                                  # tcp端口(本地地址,外部地址,状态)
+  > netstat -anp tcp | findstr -i "listening" # 查找本机tcp端口监听列表
+  $ netstat -atW | grep -i "listen"                 # tcp端口-centos $ yum install -y net-tools & yum install -y traceroute
   $ netstat -tulnp | grep -i "time_wait" # tcp超时-ubuntu $ apt-get update & apt-get install -y net-tools
-  $ ss -t4 state time-wait               # tcp超时-ubuntu $ apt-get install -y iproute2 iproute2-doc
+  $ ss -t4 state time-wait                                # tcp超时-ubuntu $ apt-get install -y iproute2 iproute2-doc
   $ ss -at '( dport = :ssh or sport = :ssh )' # 端口为 ssh 的套接字
-  $ ss -lntp '( dst :443 or dst :80 )'        # 目的端口为 80,443 的套接字
+  $ ss -lntp '( dst :443 or dst :80 )'               # 目的端口为 80,443 的套接字
   $ ss -nt state connected dport = :80
   $ ss -nt dport lt :100  # 端口小于100
   $ ss -nt dport gt :1024 # 端口大于1024
@@ -242,21 +242,21 @@ $ source ~/.zshrc # 使配置生效
   # 环境搭建
   # < Windows Subsystem for Linux | WSL >---------------------------
   $ sudo do-release-upgrade -d        # 升级至18.04LTS ( 如果是16.04? > cat /etc/issue )
-  $ lsb_release -c                    # 获取系统代号,更新软件源sources.list
+  $ lsb_release -c                            # 获取系统代号,更新软件源sources.list
   $ sudo vim /etc/apt/sources.list    # 更新软件源 https://www.cnblogs.com/xudalin/p/9071902.html
   $ sudo apt-get update && sudo apt-get upgrade # 更新升级apt
-  $ sudo apt install gcc              # 安装gcc编译工具(可选)
+  $ sudo apt install gcc                 # 安装gcc编译工具(可选)
   $ sudo apt install make             # 安装构建工具make(可选)
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make等工具链
   $ sudo apt install libgtk2.0-dev pkg-config gnome-core # 安装桌面开发gtk,glib,gnome.
   $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
   $ sudo apt install openssh-server
-  $ sudo apt install python3          # 安装Python3
-  $ sudo apt install python3-pip      # 安装pip3     将Python3设为默认?下面!
+  $ sudo apt install python3              # 安装Python3
+  $ sudo apt install python3-pip      # 安装pip3               将Python3设为默认?参考下面!
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
   $ sudo update-alternatives --config python # 手动配置/切换版本: python --version
-  $ sudo apt install nodejs           # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
+  $ sudo apt install nodejs                  # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz
   $ sudo tar -zxf node-v10.16.0-linux-x64.tar.xz -C /usr/local/
   $ sudo mv /usr/local/node-v10.16.0-linux-x64 /usr/local/node
@@ -281,34 +281,34 @@ $ source ~/.zshrc # 使配置生效
   $ git checkout -- [filename]  # 签出，放弃工作区最新的更改，适用于还未提交的情况
   $ git stash && git stash drop # 加入了暂存区后再清除暂存区，适用于还未提交的情况
   $ git reset HEAD [filename]   # 放弃最新提交[取消git.add]，不改变工作区和库区，只改变了暂存区
-  $ git reset --hard HEAD^      # 版本回退，工作区和库区都进行相应的回退
+  $ git reset --hard HEAD^         # 版本回退，工作区和库区都进行相应的回退
   $ rm [filename] && git rm [filename] && git commit -m "删除文件"
   $ git remote add origin https://github.com/dragonFly12345/ubuntuGitTest.git # 使用远程HTTPS
-  $ git remote remove origin                                              # 删除后用于重新绑定远程
+  $ git remote remove origin                                               # 删除后用于重新绑定远程
   $ git remote add origin git@github.com:dragonFly12345/ubuntuGitTest.git # 使用远程SSH
-  $ ssh-keygen -t rsa -C "angenal@hotmail.com" # 使用远程SSH，需要创建SSH认证
-  $ git push origin master -u                  # [u用在第一次推送时]
+  $ ssh-keygen -t rsa -C "angenal@hotmail.com"      # 使用远程SSH，需要创建SSH认证
+  $ git push origin master -u                                                # [u用在第一次推送时]
   # 安装lazyGit，方便管理。
   $ wget https://github.com/jesseduffield/lazygit/releases/download/v0.8.1/lazygit_0.8.1_Linux_x86_64.tar.gz
   
   # 安装数据库Redis (Key-Value数据库) www.redis.cn
   $ wget http://download.redis.io/releases/redis-stable.tar.gz # 下载源码
   $ tar xzf redis-stable.tar.gz                                # 解压源码
-  $ cd redis-stable && sudo make install # 编译Redis
-  $ cd utils && sudo ./install_server.sh # 安装Redis
+  $ cd redis-stable && sudo make install        # 编译Redis
+  $ cd utils && sudo ./install_server.sh            # 安装Redis
   $ rm -f -r ~/redis-stable && rm -f ~/redis-stable.tar.gz     # 删除源码
   $ ps aux |grep redis              # 查看进程: /usr/local/bin/redis-server 127.0.0.1:6379
   $ redis-server                         # 启动服务(独立模式), 可通过 ps aux 查看进程
-  $ sudo service redis_6379 start        # (可选)启动服务(非独立模式) start|stop|restart
+  $ sudo service redis_6379 start                  # (可选)启动服务(非独立模式) start|stop|restart
   $ sudo update-rc.d redis_6379 defaults # (可选)将 Redis init 脚本添加到所有默认运行级别(stop服务后)
   # 开机启动Redis
   > nssm install RedisWSLubuntu1804 bash.exe -c redis-server # 启动前,设置Windows服务登录账户为Administrator
   # 客户端命令Redis
   $ redis-cli -h 127.0.0.1 -p 6379 -a "123456" -n 0 # [p端口],[a密码],[n数据库]
-  $ config set requirepass "123456"                 # 修改配置> sudo vi /etc/redis/6379.conf
-  $ auth 123456                                     # 密码认证;再执行其它命令.
+  $ config set requirepass "123456" # 修改配置> sudo vi /etc/redis/6379.conf
+  $ auth 123456                                         # 密码认证;再执行其它命令.
   # 性能测试Redis
-  > redis-benchmark -n 10000 -q   # 本机Redis  < SET: 90K, GET: 90K > requests per second
+  > redis-benchmark -n 10000 -q       # 本机Redis  < SET: 90K, GET: 90K > requests per second
   > buntdb-benchmark -n 10000 -q  # 本机BuntDB < SET:230K,GET:5000K > requests per second
   
   # 安装 MySQL
@@ -330,11 +330,11 @@ $ source ~/.zshrc # 使配置生效
   > mysqladmin -u root -p shutdown                                                    # 关闭mysql
   # 安装 MySQL 的一个开源分支 MariaDB 
   $ sudo yum -y install mariadb mariadb-server # CentOS 7
-  $ sudo systemctl start mariadb                       # 启动
-  $ sudo systemctl enable mariadb                     # 开机启动
+  $ sudo systemctl start mariadb                           # 启动
+  $ sudo systemctl enable mariadb                       # 开机启动
   $ sudo mysqladmin -u root password root      # 设置密码
-  $ mysql -u root -p                                  # 登录mysql
-  $ mysql> source db.sql                       # 执行sql
+  $ mysql -u root -p                                                         # 登录mysql
+  $ mysql> source db.sql                                               # 执行sql
 
   # 安装数据库Pilosa (分布式位图索引) www.pilosa.com
   $ curl -L -O https://github.com/pilosa/pilosa/releases/download/v1.3.0/pilosa-v1.3.0-linux-amd64.tar.gz
@@ -343,7 +343,7 @@ $ source ~/.zshrc # 使配置生效
   $ go get github.com/pilosa/console && cd $GOPATH/src/github.com/pilosa/console && make install && pilosa-console -bind :10102
 
   # 安装消息平台 nsq.io
-  > nsqlookupd                                                                 # 先启动 nsqlookud 消息服务
+  > nsqlookupd                                                                                                                               # 先启动 nsqlookud 消息服务
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4150       # 再启动几个 nsqd 存储数据
   > nsqd --lookupd-tcp-address=127.0.0.1:4160 --tcp-address=0.0.0.0:4152 --http-address=0.0.0.0:4153
   > nsqadmin --lookupd-http-address=127.0.0.1:4161 #--tcp-address=0.0.0.0:4171 # 最后启动 nqsadmin Web 服务
@@ -399,20 +399,20 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install software-properties-common
   $ sudo apt-add-repository --yes --update ppa:ansible/ansible
   $ sudo apt install ansible
-  # 安装 Airflow 任务调度  https://www.jianshu.com/p/9bed1e3ab93b
+  # 安装 Airflow 任务调度  由Python编写  https://www.jianshu.com/p/9bed1e3ab93b
   $ sudo apt install libkrb5-dev libsasl2-dev libmysqlclient-dev  # 安装airflow[all]依赖包
   $ mkdir airflow && cd airflow
   $ pip install setuptools_git
   $ pip download pymssql
-  $ pip download apache-airflow[all]        # 1.离线下载: tar -zcf airflow.tar.gz *
-  $ cd airflow                                                         # 2.解压: tar -zxf airflow.tar
-  $ pip install apache-airflow[all] --no-index -f ./  # 3.安装airflow[all]
+  $ pip download apache-airflow[all]                                                     # 1.离线: tar -zcf airflow.tar.gz *
+  $ cd airflow                                                                                                      # 2.解压: tar -zxf airflow.tar.gz
+  $ pip install apache-airflow[all] --no-index -f ./                                # 3.安装airflow[all]
   $ echo "export AIRFLOW_HOME=~/app/airflow" >> ~/.bashrc  # 4.配置
-  $ source ~/.bashrc && airflow initdb        # 5.部署
+  $ source ~/.bashrc && airflow initdb                                                     # 5.部署
 
   # 图片压缩
   $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
-  $ sudo apt-get install optipng     # png 图片压缩: optipng *.png ; find -type f -name "*.png" -exec optipng {} \;
+  $ sudo apt-get install optipng        # png 图片压缩: optipng *.png ; find -type f -name "*.png" -exec optipng {} \;
   $ git clone git://github.com/xing/TinyPNG.git & ./TinyPNG/install.sh # TinyPNG 图片压缩?
   
   # 加密解密
@@ -424,7 +424,7 @@ $ source ~/.zshrc # 使配置生效
   $ wget https://github.com/axboe/fio/archive/fio-3.14.tar.gz  #! http://brick.kernel.dk/snaps/fio-2.1.10.tar.gz
   $ tar -zxf fio-3.14.tar.gz && cd fio-fio-3.14
   $ ./configure --enable-gfio # 配置: enable gfio (参数可选)
-  $ make                      # 编译: make fio && make gfio
+  $ make                                    # 编译: make fio && make gfio
   $ sudo make install         # 安装: install fio gfio genfio fio-* /usr/local/bin
   $ cd .. && rm -rf fio-*     # 安装完毕后删除源(可选)
   $ fio -S& [--server]        # 启动后端← + →客户端↓测试↓ [参考:examples/*.fio]
