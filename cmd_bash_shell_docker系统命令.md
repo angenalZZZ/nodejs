@@ -250,6 +250,12 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install build-essential  # 安装gcc/g++/gdb/make等工具链
   $ sudo apt install libgtk2.0-dev pkg-config gnome-core # 安装桌面开发gtk,glib,gnome.
   $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
+  $ sudo apt install openssh-server
+  $ sudo apt install python3          # 安装Python3
+  $ sudo apt install python3-pip      # 安装pip3  下面将Python3设为默认
+  $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
+  $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
+  $ sudo update-alternatives --config python # 手动配置/切换版本: python --version
   $ sudo apt install nodejs           # 安装Nodejs(此安装的版本太低; 推荐wget安装方式)
   $ wget https://npm.taobao.org/mirrors/node/v10.16.0/node-v10.16.0-linux-x64.tar.xz
   $ sudo tar -zxf node-v10.16.0-linux-x64.tar.xz -C /usr/local/
