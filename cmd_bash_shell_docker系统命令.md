@@ -413,14 +413,14 @@ $ source ~/.zshrc # 使配置生效
   # 图片压缩
   $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
   $ sudo apt-get install optipng        # png 图片压缩: optipng *.png ; find -type f -name "*.png" -exec optipng {} \;
-  $ git clone git://github.com/xing/TinyPNG.git & ./TinyPNG/install.sh # TinyPNG 图片压缩?
+  $ git clone git://github.com/xing/TinyPNG.git && ./TinyPNG/install.sh  # TinyPNG 图片压缩
   
   # 加密解密
   $ chmod +x toplip # 赋予可执行权限
-  $ ./toplip        # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
+  $ ./toplip   # 运行 http://os.51cto.com/art/201903/593569.htm https://2ton.com.au/standalone_binaries/toplip
   
   # 检测工具
-  # < fio 存储性能 >---------------------------
+  # < fio 检测存储性能 >---------------------------
   $ wget https://github.com/axboe/fio/archive/fio-3.14.tar.gz  #! http://brick.kernel.dk/snaps/fio-2.1.10.tar.gz
   $ tar -zxf fio-3.14.tar.gz && cd fio-fio-3.14
   $ ./configure --enable-gfio # 配置: enable gfio (参数可选)
@@ -432,7 +432,7 @@ $ source ~/.zshrc # 使配置生效
   $ fio --ioengine=libaio --direct=1 --thread --norandommap \ # SATA接口硬盘
     --filename=/dev/sda --name=init_seq --output=init_seq1.log \
     --rw=write --bs=128k --numjobs=1 --iodepth=32 --loops=1 # blog.csdn.net/dinglisong/article/details/83111515
-  $ gfio # 桌面应用→分析(>1h)→ 顺序读、顺序写、随机读、随机写等存储性能
+  $ gfio   # 桌面应用→分析(>1h)→ 顺序读、顺序写、随机读、随机写等存储性能
   
 ~~~
 
