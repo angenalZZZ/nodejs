@@ -252,7 +252,7 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install openjdk-8-jdk    # 安装JavaSDK:openjdk
   $ sudo apt install openssh-server
   $ sudo apt install python3          # 安装Python3
-  $ sudo apt install python3-pip      # 安装pip3  下面将Python3设为默认
+  $ sudo apt install python3-pip      # 安装pip3     将Python3设为默认?下面!
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python2 100
   $ sudo update-alternatives --install /usr/bin/python python /usr/bin/python3 150
   $ sudo update-alternatives --config python # 手动配置/切换版本: python --version
@@ -399,6 +399,13 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install software-properties-common
   $ sudo apt-add-repository --yes --update ppa:ansible/ansible
   $ sudo apt install ansible
+  # 安装 Airflow
+  $ mkdir airflow && cd airflow
+  $ sudo apt install libmysqlclient-dev
+  $ pip install setuptools_git
+  $ pip download pymssql
+  $ pip download apache-airflow[all]
+  $ pip install apache-airflow[all] --no-index -f ./
 
   # 图片压缩
   $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
