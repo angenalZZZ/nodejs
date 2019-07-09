@@ -399,16 +399,16 @@ $ source ~/.zshrc # 使配置生效
   $ sudo apt install software-properties-common
   $ sudo apt-add-repository --yes --update ppa:ansible/ansible
   $ sudo apt install ansible
-  # 安装 Airflow  https://www.jianshu.com/p/9bed1e3ab93b
+  # 安装 Airflow 任务调度  https://www.jianshu.com/p/9bed1e3ab93b
+  $ sudo apt install libkrb5-dev libsasl2-dev libmysqlclient-dev  # 安装airflow[all]依赖包
   $ mkdir airflow && cd airflow
   $ pip install setuptools_git
   $ pip download pymssql
-  $ pip download apache-airflow[all]        # 1.离线下载: tar -cf airflow.tar *
-  $ cd airflow                              # 2.解压安装: tar -zxf airflow.tar
-  $ sudo apt install libkrb5-dev libsasl2-dev libmysqlclient-dev # 安装可能缺失的包
-  $ pip install apache-airflow[all] --no-index -f ./
-  $ echo "export AIRFLOW_HOME=~/app/airflow" >> ~/.bashrc  # 3.部署与配置
-  $ source ~/.bashrc && airflow initdb
+  $ pip download apache-airflow[all]        # 1.离线下载: tar -zcf airflow.tar.gz *
+  $ cd airflow                                                         # 2.解压: tar -zxf airflow.tar
+  $ pip install apache-airflow[all] --no-index -f ./  # 3.安装airflow[all]
+  $ echo "export AIRFLOW_HOME=~/app/airflow" >> ~/.bashrc  # 4.配置
+  $ source ~/.bashrc && airflow initdb        # 5.部署
 
   # 图片压缩
   $ sudo apt-get install jpegoptim   # jpg 图片压缩: jpegoptim *.jpg ; find . -name '*.jpg' | xargs jpegoptim --strip-all;
