@@ -920,8 +920,11 @@ exec curl -T \
 
 >  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install)　[docker-desktop](https://www.docker.com/products/docker-desktop)：Build构建&Compose组织&Kubernetes集群<br>
   `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
-  `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore) [..](http://8fe1b42e.m.daocloud.io)
-
+  `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)   [..](http://8fe1b42e.m.daocloud.io)
+~~~
+curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io   # for Linux
+sudo systemctl daemon-reload && sudo systemctl restart docker.service
+~~~
 > `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
   `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
   `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
@@ -1091,7 +1094,8 @@ $ newgrp - docker                                    # 刷新docker组
   # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
 ~~~
 
-> **docker-search-tags.sh** 标签/版本列表
+> **docker-search-tags.sh** 搜索/标签/版本
+ - https://dashboard.daocloud.io/packages/explore
 ~~~
   # Usage: $ ./docker-search-tags.sh ubuntu
   for Repo in $* ; do
