@@ -9,7 +9,7 @@
  * [Windows10安装Linux子系统(WSL)](https://www.cnblogs.com/xiaoliangge/p/9124089.html)
  * [Linux开发环境及常用安装zsh-Redis-mysql-nsq-Botpress-Gotify-SSH-fio等](#Linux开发环境及常用安装zsh-redis-mysql-nsq-botpress-gotify-ssh-fio等)
  * [Linux常用命令](#Linux常用命令)
- * [docker](#docker) | [k8s](#Kubernetes) | [consul](#Consul) | [Nginx](#Nginx)
+ * [docker](#docker) | [k8s](#Kubernetes) | [consul](#Consul) | [etcd](#Etcd) | [Nginx](#Nginx)
 
 ~~~shell
   # 清屏
@@ -1279,15 +1279,18 @@ obj\
       # 如果Docker守护程序暴露给Consul代理并且DOCKER_HOST设置了环境变量，则可以使用Docker容器ID配置检查以执行。
 ~~~
 
+# [**Etcd**](https://github.com/etcd-io/etcd)
+
 > [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中最重要的数据。[`play...`](http://play.etcd.io/install) [`download`](https://github.com/etcd-io/etcd/releases)
 ~~~
-  docker run --name etcds1 --network=workgroup --network-alias=etcds1 -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
-    -v d:\docker\app\etcd\s1:/etcd-data -v d:\docker\app\etcd\certs:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
+sudo mkdir -p /etcd/data && sudo mkdir -p /etcd/ssl-certs-dir
+docker run --name etcd --network=bridge --network-alias=etcd --restart=always -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
+    -v /etcd/data:/etcd-data -v /etcd/ssl-certs-dir:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
     /usr/local/bin/etcd --name s1 --data-dir /etcd-data 
     --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
     --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 
     --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 # 安装http时取消,s2...s3
-    --initial-cluster-token tkn --initial-cluster-state new                                  # 安装http时取消-下面语句
+    --initial-cluster-token tkn --initial-cluster-state new                                                                      # 安装http时取消-下面语句
     --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
     --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
     --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
