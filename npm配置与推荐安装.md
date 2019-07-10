@@ -69,7 +69,7 @@ npm i -g lite-server
   > lite-server -c ./lsconfig.js <<<{"port": 8080,"files":["./src/**/*.*"],"server":{"baseDir":"./src"}}
 ~~~
 
- # npm 后端安装包 (npm|yarn) install
+ # node 后端开发框架推荐 (npm|yarn) install
   [TypeScript](https://github.com/Microsoft/TypeScript-Node-Starter)、[机器人](https://botpress.io/docs)、[开源库与应用工具](https://github.com/sindresorhus/awesome-nodejs)
   
 ~~~
@@ -96,16 +96,26 @@ npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hap
     # 2. yarn add hapi         (框架hapi > package.json > scripts:{"start":"nodemon app.js"} )
     # 3. yarn add knex mssql   (数据mssql)
     # 4. yarn run start        (启动app)
-    #---------------------------------------------------------------------------------
-    # 5. npm install fundebug-nodejs (监控Hapi)
-    # 5.1 配置
+
+~~~
+![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/15517231.png)
+~~~
+    # 1. npm install fundebug-nodejs (监控Hapi)
+    # 1.1 配置
     var fundebug = require("fundebug-nodejs");
     fundebug.apikey="fb4cbf60b1550cd9d1ba2cb3deb277010f6c77224a60d3a583faa4bd8a4352e2";
     server.on("request-error", fundebug.HapiErrorHandler);
     server.on("response", fundebug.HapiErrorHandler);
-    # 5.2 等待接收错误
+    # 1.2 等待接收错误
     fundebug.notify("Test", "Hello Fundebug!");
+    
+~~~
 
+----
+
+# node 后端开发包推荐 (npm|yarn) install
+
+~~~
 # orm 数据库访问
 npm i -S mongoose  # for Mongodb https://mongoosejs.com/docs/index.html
 npm i -S knex | npm i -S pg sqlite3 mysql mysql2 oracle mssql  # https://knexjs.org
@@ -138,6 +148,8 @@ yarn global add thelounge                  # Web IRC 客户端(在线聊天服�
 
 ~~~
 
-# 桌面应用
+----
+
+# node 桌面应用推荐
  > [node-webkit](https://github.com/nwjs/nw.js)、[Electron](https://www.cnblogs.com/cczw/archive/2016/10/21/5984012.html)
 
