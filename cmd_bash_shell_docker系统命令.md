@@ -109,7 +109,13 @@
   # 目录访问权限
   > cd [目录]
   $ sudo chmod 777 .         # 修改当前目录(.)权限为可读写
-  $ sudo chown -R 1000 [目录] # 把[目录]的"拥有者"赋值给uid:1000 = $(id -u)
+  $ sudo chown -R 1000 [目录] # 改变[目录](R所有子目录)的"拥有者"为uid:1000 = $(id -u)
+  $ sudo chgrp –R users [目录] # 改变[目录]的"所属用户组"为G:users = $(id -g)
+  $ sudo chmod -R 777 to/path # 每个人都有读和写以及执行的权限(约定的三个数字owner=7;group=7;others=7)
+  $ sudo chmod 666 to/path    # 每个人都有读和写的权限
+  $ sudo chmod 700 to/path    # 只有所有者有读和写以及执行的权限
+  $ sudo chmod 600 to/path    # 只有所有者有读和写的权限
+  $ sudo chmod 644 to/path    # 所有者有读和写的权限，组用户只有读的权限
   
   # 文件复制
   > xcopy /isy C:\...\bin\Release\netcoreapp2.1\* F:\app\dotnetcore\centos\a
