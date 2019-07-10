@@ -96,6 +96,15 @@ npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hap
     # 2. yarn add hapi         (框架hapi > package.json > scripts:{"start":"nodemon app.js"} )
     # 3. yarn add knex mssql   (数据mssql)
     # 4. yarn run start        (启动app)
+    #---------------------------------------------------------------------------------
+    # 5. npm install fundebug-nodejs (监控Hapi)
+    # 5.1 配置
+    var fundebug = require("fundebug-nodejs");
+    fundebug.apikey="fb4cbf60b1550cd9d1ba2cb3deb277010f6c77224a60d3a583faa4bd8a4352e2";
+    server.on("request-error", fundebug.HapiErrorHandler);
+    server.on("response", fundebug.HapiErrorHandler);
+    # 5.2 等待接收错误
+    fundebug.notify("Test", "Hello Fundebug!");
 
 # orm 数据库访问
 npm i -S mongoose  # for Mongodb https://mongoosejs.com/docs/index.html
