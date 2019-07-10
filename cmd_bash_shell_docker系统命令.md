@@ -988,18 +988,19 @@ $ newgrp - docker                                    # 刷新docker组
   docker container start $(docker ps -aq)   # 启动所有容器
   docker container stop $(docker ps -aq)    # 停止所有容器
   docker container restart $(docker ps -aq) # 重启所有容器
-  docker kill $(docker ps -a -q) # 杀死所有运行的容器
-  docker container prune         # 删除所有停止的容器
-  docker volume prune            # 删除未使用volumes
-  docker system prune            # 删除未使用数据
-  docker rm [container]          # 删除1个容器
+  docker kill $(docker ps -a -q)   # 杀死所有运行的容器
+  docker container prune             # 删除所有停止的容器
+  docker volume prune                 # 删除未使用volumes
+  docker system prune                  # 删除未使用数据
+  docker rm [container]                # 删除1个容器
   docker rm $(docker ps -a -q)   # 删除所有容器
-  docker rmi [image]             # 删除1个镜像
+  docker rmi [image]                      # 删除1个镜像
   docker rmi $(docker images -q) # 删除所有镜像
-  docker port [container]        # 查看端口映射
-  docker inspect [container]     # 查看容器详情
+  docker port [container]            # 查看端口映射
+  docker inspect [container]      # 查看容器详情
   docker rename web [container]  # 容器重命名 > 查看容器 docker ps -a
-  docker logs [container]        # 查看容器日志
+  docker logs [container]                   # 查看容器日志
+  docker update --restart=always [container] # 修改配置: 设置为开机启动 (可在 docker run 时添加此参数)
   
   docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 containerName]
   docker stop web & docker commit web myweb & docker run -p 8080:80 -td myweb # commit新容器myweb&端口映射
@@ -1008,7 +1009,7 @@ $ newgrp - docker                                    # 刷新docker组
   docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
   docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
   
-  docker run --name redis5 --network=workgroup --network-alias=redis5 -d -m 512m -p 6379:6379 
+  docker run --name redis5 --network=workgroup --network-alias=redis5 --restart=always -d -m 512m -p 6379:6379 
     -v d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf -v d:\docker\app\redis5\data:/data 
     redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
   docker run -p 6379:6379 -itd redislabs/redistimeseries  # 时序Db https://github.com/RedisLabsModules
