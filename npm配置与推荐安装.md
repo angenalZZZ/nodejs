@@ -98,7 +98,7 @@ npm i -S hapi            # hapi基于express构建 https://github.com/hapijs/hap
     # 4. yarn run start        (启动app)
 
 ~~~
-![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/15517231.png)
+![](https://github.com/angenalZZZ/nodejs/raw/master/screenshots/1154173649.png)
 ~~~
     # 1. npm install fundebug-nodejs (监控Hapi)
     # 1.1 配置
