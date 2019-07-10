@@ -45,7 +45,8 @@
     #系统菜单信息: GNU Utilities,Individual utilities,Libraries,Math,Network applications,Text manipulation.
   $ man        # 在线帮助说明
   $ whatis id  # 查找命令id的帮助说明 print real and effective user and group IDs
-  $ history   # 历史命令列表
+  $ history    # 历史命令列表
+  $ curl https://www.baidu.com/ |tee b.txt # 下载保存html
   
   # 用户登陆
   > mkdir -p %USERPROFILE% # 用户目录
