@@ -443,6 +443,616 @@ $ source ~/.zshrc # 使配置生效
   
 ~~~
 
+----
+
+# [**docker**](https://docs.docker.com)
+
+>  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install)　[docker-desktop](https://www.docker.com/products/docker-desktop)：Build构建&Compose组织&Kubernetes集群<br>
+  `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
+  `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)   [..](http://8fe1b42e.m.daocloud.io)
+~~~
+curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io   # for Linux
+sudo systemctl daemon-reload && sudo systemctl restart docker.service
+~~~
+> `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
+  `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
+  `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
+  `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
+
+> `安装`
+~~~shell
+# 安装Docker，先切换用户root ~ su
+$ curl -sSL https://get.daocloud.io/docker | sh  
+# 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
+$ apt-get remove docker docker-engine  
+# 安装 Docker Compose
+$ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose 
+$ chmod +x /usr/local/bin/docker-compose
+# 安装 Docker Machine   #  http://github.com/docker/machine/releases/download/v0.16.1/docker-machine-Linux-x86_64
+$ sudo dpkg -i virtualbox-6.0_6.0.8-130520_Ubuntu_bionic_amd64.deb --fix-missing  #基于virtualBox | www.virtualbox.org/wiki/Linux_Downloads
+$ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine
+$ chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine  # install /tmp/docker-machine /usr/local/bin/docker-machine
+$ docker-machine version                    # 安装完毕
+# 不使用sudo执行docker命令，先切换当前用户( root ~ exit )
+$ sudo gpasswd -a ${USER} docker  # 将当前用户加入docker组 
+$ sudo service docker restart              # 重启docker
+$ newgrp - docker                                    # 刷新docker组
+~~~
+
+> **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
+~~~
+  # 构建
+  docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
+  # 运行
+  docker-machine ip          # 获得当前Docker宿主机的IP地址
+  docker-machine ssh default # 登录到Boot2docker虚拟机之上(Linux-无需如此)
+  docker run --name test-image-docker -it -p 9999:8888 test-image # 已加载镜像 test-image 时, 用 docker images 查询
+  # 网络
+  docker network ls                                 # 查看网络列表
+  docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
+  docker network connect [network-name] [container] # 1.加入自定义网络(参数2,3,4可一起写)
+  docker network connect --alias db [network-name] [container-db] # 2.入网,提供别名访问
+  docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
+  docker network connect --ip 10.10.36.122 [network-name] [container] # 4.入网,其它容器连接指定ip
+  docker network disconnect [network-name] [container] # 退出网络
+  docker network create -d host host        # 创建自定义网络host(默认已添加); -d [host:与主机共享一个IP地址/内网地址]
+  docker network create -d bridge workgroup # 创建自定义网络workgroup; -d [bridge(默认):分配给容器一个IP地址]
+  docker network connect workgroup redis5 && docker network connect workgroup centos.netcore # 加入自定义网络workgroup
+  docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container] # 查询IP地址
+  docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
+  docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
+  docker run --name myweb -d -P --network=workgroup --link redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
+
+  # 基础
+  docker [COMMAND] --help
+  docker images # 查看镜像
+  docker ps -a  # 查看容器 | docker container ls -a
+  docker search ubuntu # 搜索镜像
+  docker pull ubuntu   # 下载镜像
+  docker load -i /opt/images/ubuntu_latest.tar # 加载镜像 (使用Xftp将镜像tar上传至Docker虚拟机或共享盘)
+  docker commit web myweb # 创建新镜像myweb(容器web) 另存为镜像 (save container to image)
+  docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest       # 保存镜像 (save image)
+  docker export ubuntu > "d:\docker\snapshot\ubuntu_19_04.tar"           # 导出快照 (export snapshot)
+  docker container export -o="d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出快照 (container export snapshot)
+  docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/xxx/publish # 复制目录 (copy dir to container)
+  docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos\home\app\entrypoint.sh # 复制文件
+
+  docker container start $(docker ps -aq)   # 启动所有容器
+  docker container stop $(docker ps -aq)    # 停止所有容器
+  docker container restart $(docker ps -aq) # 重启所有容器
+  docker kill $(docker ps -a -q)   # 杀死所有运行的容器
+  docker container prune             # 删除所有停止的容器
+  docker volume prune                 # 删除未使用volumes
+  docker system prune                  # 删除未使用数据
+  docker rm [container]                # 删除1个容器
+  docker rm $(docker ps -a -q)   # 删除所有容器
+  docker rmi [image]                      # 删除1个镜像
+  docker rmi $(docker images -q) # 删除所有镜像
+  docker port [container]            # 查看端口映射
+  docker inspect [container]      # 查看容器详情
+  docker rename web [container]  # 容器重命名 > 查看容器 docker ps -a
+  docker logs [container]                   # 查看容器日志
+  docker update --restart=always [container] # 修改配置: 设置为开机启动 (可在 docker run 时添加此参数)
+  
+  docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 containerName]
+  docker stop web & docker commit web myweb & docker run -p 8080:80 -td myweb # commit新容器myweb&端口映射
+  docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh"  # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
+
+  docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
+  docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
+  
+  docker run --name redis5 --network=workgroup --network-alias=redis5 --restart=always -d -m 512m -p 6379:6379 
+    -v d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf -v d:\docker\app\redis5\data:/data 
+    redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
+  docker run -p 6379:6379 -itd redislabs/redistimeseries  # 时序Db https://github.com/RedisLabsModules
+  docker run --name ssdb --network=workgroup --network-alias=ssdb -d -m 512m -p 8888:8888 
+    -v d:\docker\app\ssdb\ssdb.conf:/ssdb/ssdb.conf leobuskin/ssdb-docker # 替代Redis http://ssdb.io/zh_cn
+  
+  ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
+  # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
+  docker run --name dotnet --network=workgroup -it -m 512m -p 8080:80 -v "d:\docker\app\microsoft.net\app:/app" 
+    microsoft/dotnet # 最新版dotnet
+    microsoft/dotnet:sdk # 最新版dotnet-sdk
+    microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
+  
+  docker run --name centos -it --network=workgroup -m 512m -p 8000:80 -v "d:\docker\app\centos\home:/home" -w /home 
+    centos /bin/bash # 其它: --workdir /home/ConsoleApp2NewLife centos /bin/sh -c "/bin/bash ./entrypoint.sh"
+    $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
+    $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
+  
+  docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=HGJ766GR767FKJU0 
+    mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此容器
+  docker run --name mssql -itd -p 1433:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
+    -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=HGJ766GR767FKJU0 -e ACCEPT_EULA=Y 
+    mcr.microsoft.com/mssql/server # 数据库mssql
+  # 外部访问控制：(--link)其它容器连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
+  
+  # 消息平台 rabbitmq | github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
+  docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
+    -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
+    -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
+    rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
+    # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
+  # 消息平台 nsq | nsq.io/deployment/docker.html
+  docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 
+    nsqio/nsq /nsqlookupd  # First Run nsqlookupd for nsqd & nsqadmin 
+  docker run --name nsqd --network=workgroup --network-alias=nsqd -p 4150:4150 -p 4151:4151 -v d:\docker\app\nsq\data:/data 
+    nsqio/nsq /nsqd --data-path=/data --lookupd-tcp-address=nsqlookupd:4160 # --broadcast-address=<dockerIP>
+  docker run --name nsqadmin -d --network=workgroup -p 4171:4171 nsqio/nsq /nsqadmin --lookupd-http-address=nsqlookupd:4161
+  # 消息平台 kafka | wurstmeister.github.io/kafka-docker
+  docker run --name kafka wurstmeister/kafka
+  
+  # 事件|代理|自动化系统
+  docker run --name beehive -d --network=workgroup -p 8181:8181 -v d:\docker\app\beehive\conf:/conf gabrielalacchi/beehive
+  # 高性能的图形数据库(NoSQL)
+  docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
+    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0
+  # 大数据+分布式位图索引+实时计算
+  docker run --name pilosa --network=workgroup --network-alias=pilosa -d -p 10101:10101 -v d:\docker\app\pilosa\data:/data 
+    pilosa/pilosa server --data-dir /data --bind :10101 --handler.allowed-origins http://localhost:10102
+  # 一个基于celery任务DAG管理工具 kuanshijiao.com/2017/03/07/airflow1
+  docker run --name airflow --network=workgroup --network-alias=airflow -d -p 8480:8080 -e LOAD_EX=y puckel/docker-airflow
+  # 一个安全的消息服务平台，自带后台管理
+  docker run --name mattermost-preview -d -p 8065:8065 --add-host dockerhost:127.0.0.1 mattermost/mattermost-preview
+  
+  docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11 # PostgreSQL
+  docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
+    -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
+    # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
+  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
+    # 分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) # m3db.github.io/m3/how_to/single_node/ github.com/m3db/m3
+  
+  # 云存储解决方案minio  文档指南 https://docs.min.io/cn
+  > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
+  > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
+  > nssm install MinIO minio.exe server d:\docker\app\minio\data # 安装/Windows服务/云存储MinIO
+  > mc config host add minio http://127.0.0.1:9000 <ACCESS-KEY> <SECRET-KEY> # 客户端 dl.minio.io/client/mc/release
+  > mc ls -r minio # 获取所有云存储对象列表
+  > mc find minio/img --maxdepth 3 --name "*.png" --path "*" --larger 1KB --smaller 2MB --older-than 0d2h30m --json
+  docker run --name minio-service -p 9000:9000 -v d:\docker\app\minio\data:/data -v d:\docker\app\minio\config:/root/.minio 
+    -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" 
+    minio/minio server /data # 对象存储服务，例如图片、视频、日志文件、备份数据和容器/虚拟机镜像等 https://docs.min.io/cn
+    # 设置安全密钥: using Docker secrets
+    # echo "AKIAIOSFODNN7EXAMPLE" | docker secret create access_key -
+    # echo "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" | docker secret create secret_key -
+  
+  # 基于 Jenkins 快速搭建持续集成环境
+  git clone https://github.com/AliyunContainerService/docker-jenkins 
+    && cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
+  docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
+  # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
+~~~
+
+> **docker-search-tags.sh** 搜索/标签/版本
+ - https://dashboard.daocloud.io/packages/explore
+~~~
+  # Usage: $ ./docker-search-tags.sh ubuntu
+  for Repo in $* ; do
+    curl -s -S "https://registry.hub.docker.com/v2/repositories/library/$Repo/tags/" | \
+      sed -e 's/,/,\n/g' -e 's/\[/\[\n/g' | \
+      grep '"name"' | \
+      awk -F\" '{print $4;}' | \
+      sort -fu | \
+      sed -e "s/^/${Repo}:/"
+  done
+~~~
+
+> **Dockerfile** [文档](https://docs.docker.com/get-started)<br>
+　$ docker build -t <YOUR_USERNAME>/myapp . # 构建+标签[用户名/镜像名]
+~~~
+  # 基础镜像
+  FROM node:10.15.0
+  
+  # 备注镜像相关信息，通过 docker inspect 查看
+  LABEL maintainer="test <test@gmail.com>"
+  LABEL description="this is a test image"
+  LABEL version="1.0"
+  
+  # 设置工作目录，若不存在会自动创建，其他指令会以此为相对路径
+  WORKDIR /work/app
+  
+  # ADD <src> <dest>
+  # 添加资源到工作目录，若是压缩文件会自动解压，可指定远程地址下载url
+  ADD 'https://github.com/nodejscn/node-api-cn/blob/master/README.md' ./doc/
+  
+  # COPY <src> <dest>
+  # 复制资源到工作目录，不会解压，无法从远程地址下载
+  COPY ./ ./
+  
+  # RUN 构建镜像时执行的命令(安装运行时环境、软件等)
+  RUN npm install
+  
+  # ARG 构建镜像时可传递的参数，配合 ENV 使用 docker build --build-arg NODE_ENV=dev
+  ARG NODE_ENV
+  ARG TZ='Asia/Shanghai'
+  
+  # ENV 容器运行时环境变量，配合 ARG 使用 $NODE_ENV '${TZ}'
+  ENV NODE_ENV=$NODE_ENV
+  ENV TZ '${TZ}'
+  
+  # EXPOSE 容器端口(可指定多个)，启动时指定与宿主机端口的映射 docker run -p 9999:8888
+  EXPOSE 8080 8888
+  
+  # CMD 容器启动后执行的命令，会被 docker run 命令覆盖
+  CMD ["npm", "start"]  # other, web-proxy: CMD ["nginx", "-g", "daemon off;"]
+  
+  # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖；一般不会使用；
+  # 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
+  # ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+~~~
+
+> **.dockerignore** 配置文件/屏蔽读取
+~~~
+# 一般临时文件
+*/temp*
+*/*/temp*
+temp?
+*.md
+!README*.md
+# 编译临时文件
+bin\
+obj\
+~~~
+
+> **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>
+　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
+　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`、`unpause`、`start`、`stop`、`restart`
+~~~
+  version: '3' # docker compose 版本(版本不同,语法命令有所不同)
+  services:    # docker services 容器服务编排
+    web:       # docker container service
+      # build: # 构建镜像
+      #   context: . # 构建镜像的上下文(本地构建的工作目录)
+      #   dockerfile: Dockerfile # 指定构建文件(工作目录下)
+      #   args: # 构建镜像时传递的参数/用于运行时环境变量
+      #   - NODE_ENV=dev
+      container_name: web-container # 容器名称
+      image: docker-web-image       # 使用已有的镜像(用 docker images 查询)
+      ports: # 端口映射(宿主机端口:容器端口)
+      - "9999:8888"
+      networks: # 网络设置(加入自定义网络)
+      - front-tier
+      - back-tier
+      # links: # 外链容器(不安全)
+      # - redis
+      volumes: # 外挂数据(映射宿主机目录:容器工作目录)
+      - "./data/:/work/app/data/"
+      depends_on: # 启动时依赖的容器(容器启动顺序: 推荐第三方工具 wait-for-it dockerize 等)
+      - redis
+      restart: always # 重启设置
+      env_file: # 环境变量配置文件 key=value
+      - ./docker-web.env
+      environment: # 设置容器运行时环境变量，会覆盖env_file相同变量
+      - NODE_ENV: dev
+      command: npm run dev # 容器启动后执行的命令
+      
+    redis:
+      container_name: redis-container
+      image: redis:latest
+      networks:
+      - back-tier
+
+  networks: # 网络设置(自定义)
+    front-tier:
+      driver: bridge
+    back-tier:
+      driver: bridge
+~~~
+
+# [**Kubernetes**](https://www.kubernetes.org.cn)
+
+> [`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
+  　[docker-desktop](https://www.docker.com/products/docker-desktop)已添加Docker-Compose与Kubernetes进行完整的集成。<br>
+~~~
+  # 部署
+  > docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
+  > docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
+~~~
+> `k8s`扩展<br>
+  　[istio](https://istio.io/docs/setup/kubernetes/platform-setup/)：连接、安全、控制和观察服务
+
+# [**Consul**](https://hub.docker.com/_/consul)
+
+> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
+  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载。[`查看安装说明`](https://hub.docker.com/_/consul)、[`参数`/`开发模式`](https://www.consul.io/docs/agent/options.html#_dev)、[`代理API`](https://www.consul.io/docs/agent/http/agent.html)
+~~~
+  # /consul/data   容器暴露VOLUME
+    # 对于客户端代理，存储有关群集的一些信息以及客户端的运行状况检查，以防重新启动容器。
+    # 对于服务器代理，存储客户端信息以及与一致性算法相关的快照和数据以及Consul的键/值存储和目录等。
+  # /consul/config 配置目录
+    # Consul总是--net=host在Docker中运行，因此在配置Consul的IP地址时需要注意。Consul具有其集群地址的概念以及其客户端地址。
+    # Consul群集地址是其他Consul代理可以联系给定代理的地址。客户端地址是主机上的其他进程联系Consul以发出HTTP或DNS请求的地址。
+    # -bind=<external ip> 告诉Consul启动时其群集地址？
+  # Consul包括一个小实用程序，用于查找客户端或按接口名称绑定地址
+    # -e CONSUL_CLIENT_INTERFACE或CONSUL_BIND_INTERFACE 用于设置接口名称
+    # -bind=<interface ip> & -client=<interface ip> 用于查找客户端
+  
+  # 在开发模式下运行Consul 不带参数的Consul容器将为您提供处于开发模式的Consul服务器，使用开发服务器在桥接网络上运行，
+      对于在单个机器上测试Consul的多个实例非常有用。开发模式还在端口8500上启动Consul的Web UI版本。
+      通过-ui在命令行上向Consul 提供选项，可以将其添加到其他Consul配置中。
+  > docker run -d --name dev-consul-node0 -p 8500:8500 -e CONSUL_BIND_INTERFACE=eth0 consul # 不指定任何参数给consul
+      # 查找IP-join: docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" dev-consul-node0
+  > docker run -d --name dev-consul-node1 -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0. #可运行多个
+  > docker exec -t dev-consul-node0 consul info    # 查看Consul集群的基本信息 https://www.consul.io/docs/commands/info.html
+  > docker exec -t dev-consul-node0 consul members # 查询Consul集群中的所有成员
+  > curl http://localhost:8500/v1/health/service/consul?pretty # 查询Consul集群的健康状况
+  > docker exec -it dev-consul-node0 sh # 进入集群主机中执行shell
+  $ consul --help                               # 操作帮助
+  $ consul catalog nodes                        # 节点列表
+  $ consul kv put config/api/request_limit 2000 # 添加数据
+  $ consul kv get config/api/request_limit      # 查询数据
+  $ consul kv delete config/api/request_limit   # 删除数据
+  $ consul intention check api postgresql       # 检查微服务api
+  $ consul intention create api postgresql      # 创建微服务api
+  $ consul intention delete api postgresql      # 删除微服务api
+  
+  # 在服务器模式下运行Consul Agent
+  > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络（桥接网络）
+      -retry-join=<root agent ip> # 指定群集中用于在启动时加入的另一个代理的外部IP
+      -bootstrap-expect=<number of server agents> # 其他数据中心数目，或者只指定为当前数据中心-bootstrap
+  # 在客户端模式下运行Consul Agent
+  > docker run -d --net=host consul agent 
+      -client=<bridge ip> # 客户端(默认127.0.0.1)通过（桥接网络）将接口公开给其他容器，可用选项-client=0.0.0.0绑定所有接口
+      -bind=<external ip> # 当主机上其他容器也使用--net=host将代理暴露给容器外主机上运行的其他应用程序进程
+      -retry-join=<root agent ip> # 参考下：
+        # Using a DNS entry > consul agent -retry-join "consul.domain.internal"
+        # Using IPv4 > consul agent -retry-join "10.0.4.67"
+        # Using IPv6 > consul agent -retry-join "[::1]:8301"
+        # Using Cloud Auto-Joining > consul agent -retry-join "provider=aws tag_key=..."
+  
+  # 在端口53上公开Consul的DNS服务器 https://www.consul.io/docs/agent/services.html
+  > docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8 -bind=<bridge ip>
+  > docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get install -y dnsutils && dig consul.service.consul"
+  # 使用容器进行服务发现，有关详细信息，请参阅[代理API] https://www.consul.io/docs/agent/http/agent.html
+  # 在Docker容器中运行运行状况检查
+      # 如果Docker守护程序暴露给Consul代理并且DOCKER_HOST设置了环境变量，则可以使用Docker容器ID配置检查以执行。
+~~~
+
+# [**Etcd**](https://github.com/etcd-io/etcd)
+
+> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中共享配置和服务发现。 [`download`](https://github.com/etcd-io/etcd/releases) [`play...`](http://play.etcd.io/install)
+ * 简单: 良好定义的HTTP接口，面向用户的API (gRPC)，易理解；
+ * 安全: 支持SSL客户端安全认证；数据持久化(默认数据更新就进行持久化)；
+ * 快速: 每秒1w/qps；版本高速迭代和开发中，这既是一个优点，也是一个缺点；
+ * 可靠: 使用Raft一致性算法来管理高可用复制(分布式存储)；
+ 
+~~~
+# 版本: 默认API版本为2(修改参数ETCDCTL_API=3)；
+# 端口: 默认2379为客户端通讯，2380进行服务器间通讯；
+# 本地简单运行----------------------------------------------------
+# (客户端)CLI > etcdctl 
+# 搭建本地集群----------------------------------------------------
+$ go get github.com/mattn/goreman
+$ goreman -f Procfile start  # 用到gitub项目根目录下的Procfile文件(需要修改)
+# 搭建本地docker----------------------------------------------------
+$ sudo mkdir -p /etcd/data && sudo mkdir -p /etcd/ssl-certs-dir
+$ docker run --name etcd --network=bridge --network-alias=etcd --restart=always -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
+    -v /etcd/data:/etcd-data -v /etcd/ssl-certs-dir:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
+    /usr/local/bin/etcd --name s1 --data-dir /etcd-data 
+    --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
+    --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 
+    --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 # 安装http时取消,s2...s3
+    --initial-cluster-token tkn --initial-cluster-state new                                  # 安装http时取消-下面语句
+    --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
+    --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
+    --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
+    --peer-cert-file /etcd-ssl-certs-dir/s1.pem --peer-key-file /etcd-ssl-certs-dir/s1-key.pem 
+~~~
+
+#### Nginx
+
+ * 基本配置与参数说明
+~~~
+#运行用户
+user nobody;
+#启动进程,通常设置成和cpu的数量相等
+worker_processes  1;
+
+#全局错误日志及PID文件
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+#工作模式及连接数上限
+events {
+    #epoll是多路复用IO(I/O Multiplexing)中的一种方式,
+    #仅用于linux2.6以上内核,可以大大提高nginx的性能
+    use   epoll;
+
+    #单个后台worker process进程的最大并发链接数
+    worker_connections  1024;
+
+    # 并发总数是 worker_processes 和 worker_connections 的乘积
+    # 即 max_clients = worker_processes * worker_connections
+    # 在设置了反向代理的情况下，max_clients = worker_processes * worker_connections / 4  为什么
+    # 为什么上面反向代理要除以4，应该说是一个经验值
+    # 根据以上条件，正常情况下的Nginx Server可以应付的最大连接数为：4 * 8000 = 32000
+    # worker_connections 值的设置跟物理内存大小有关
+    # 因为并发受IO约束，max_clients的值须小于系统可以打开的最大文件数
+    # 而系统可以打开的最大文件数和内存大小成正比，一般1GB内存的机器上可以打开的文件数大约是10万左右
+    # 我们来看看360M内存的VPS可以打开的文件句柄数是多少：
+    # $ cat /proc/sys/fs/file-max
+    # 输出 34336
+    # 32000 < 34336，即并发连接总数小于系统可以打开的文件句柄总数，这样就在操作系统可以承受的范围之内
+    # 所以，worker_connections 的值需根据 worker_processes 进程数目和系统可以打开的最大文件总数进行适当地进行设置
+    # 使得并发总数小于操作系统可以打开的最大文件数目
+    # 其实质也就是根据主机的物理CPU和内存进行配置
+    # 当然，理论上的并发总数可能会和实际有所偏差，因为主机还有其他的工作进程需要消耗系统资源。
+    # ulimit -SHn 65535
+
+}
+
+http {
+    #设定mime类型,类型由mime.type文件定义
+    include    mime.types;
+    default_type  application/octet-stream;
+    #设定日志格式
+    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+                      '$status $body_bytes_sent "$http_referer" '
+                      '"$http_user_agent" "$http_x_forwarded_for"';
+
+    access_log  logs/access.log  main;
+
+    #sendfile 指令指定 nginx 是否调用 sendfile 函数（zero copy 方式）来输出文件，
+    #对于普通应用，必须设为 on,
+    #如果用来进行下载等应用磁盘IO重负载应用，可设置为 off，
+    #以平衡磁盘与网络I/O处理速度，降低系统的uptime.
+    sendfile     on;
+    #tcp_nopush     on;
+
+    #连接超时时间
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+    tcp_nodelay     on;
+
+    #开启gzip压缩
+    gzip  on;
+    gzip_disable "MSIE [1-6].";
+
+    #设定请求缓冲
+    client_header_buffer_size    128k;
+    large_client_header_buffers  4 128k;
+
+    #设定虚拟主机配置
+    server {
+        #侦听80端口
+        listen    80;
+        #定义使用 www.nginx.cn访问
+        server_name  www.nginx.cn;
+
+        #定义服务器的默认网站根目录位置
+        root html;
+
+        #设定本虚拟主机的访问日志
+        access_log  logs/nginx.access.log  main;
+
+        #默认请求
+        location / {
+
+            #定义首页索引文件的名称
+            index index.php index.html index.htm;
+
+        }
+
+        # 定义错误提示页面
+        error_page   500 502 503 504 /50x.html;
+        location = /50x.html {
+        }
+
+        #静态文件，nginx自己处理
+        location ~ ^/(images|javascript|js|css|flash|media|static)/ {
+
+            #过期30天，静态文件不怎么更新，过期可以设大一点，
+            #如果频繁更新，则可以设置得小一点。
+            expires 30d;
+        }
+
+        #PHP 脚本请求全部转发到 FastCGI处理. 使用FastCGI默认配置.
+        location ~ .php$ {
+            fastcgi_pass 127.0.0.1:9000;
+            fastcgi_index index.php;
+            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+            include fastcgi_params;
+        }
+
+        #禁止访问 .htxxx 文件
+            location ~ /.ht {
+            deny all;
+        }
+
+    }
+}
+~~~
+
+ * 例子 https & ws
+~~~
+ #代理https
+ upstream web {
+    server 0.0.0.0:3000;      
+ }
+ #代理websocket
+ upstream websocket {
+    server 0.0.0.0:3000;   
+ }
+ server { 
+    listen       443; 
+    server_name  localhost;
+    ssl          on;
+    ssl_certificate     /cert/cert.crt;#配置证书
+    ssl_certificate_key  /cert/cert.key;#配置密钥
+    ssl_session_cache    shared:SSL:1m;
+    ssl_session_timeout  50m;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 SSLv2 SSLv3;
+    ssl_ciphers  HIGH:!aNULL:!MD5;
+    ssl_prefer_server_ciphers  on;
+
+    #charset koi8-r;
+    #access_log  logs/host.access.log  main;
+
+  #wss 反向代理  
+  location /wss {
+     proxy_pass http://websocket/; # 代理到上面的地址去
+     proxy_read_timeout 60s;
+     proxy_set_header Host $host;
+     proxy_set_header X-Real_IP $remote_addr;
+     proxy_set_header X-Forwarded-for $remote_addr;
+     proxy_set_header Upgrade $http_upgrade;
+     proxy_set_header Connection 'Upgrade';	
+  }
+  #https 反向代理
+  location / {
+     proxy_pass         http://web/;
+     proxy_set_header   Host             $host;
+     proxy_set_header   X-Real-IP        $remote_addr;
+     proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+  }
+}
+~~~
+
+####  免费的容器镜像服务
+
+> [阿里云`/fp-api/front`](https://cr.console.aliyun.com/repository/cn-hangzhou/fp-api/front/detail)
+
+  1. 登录阿里云Docker Registry
+~~~
+  $ sudo docker login --username=angenal@hotmail.com registry.cn-hangzhou.aliyuncs.com
+~~~
+  2. 从Registry中拉取镜像
+~~~
+  $ sudo docker pull registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
+~~~
+  3. 将镜像推送到Registry
+~~~
+  # [ImageId]和[镜像版本号]参数(用 docker images 查询)
+  # 　公网地址：registry.cn　经典内网：registry-internal.cn　专有网络：registry-vpc.cn
+  $ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
+  $ sudo docker push registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
+~~~
+
+#### 免费的开发服务器
+
+> [转发服务`ngrok`](https://dashboard.ngrok.com/get-started)
+
+~~~
+  # 保存路径 C:/Windows/System32/ngrok.exe
+  # 查看帮助
+  > ngrok help
+  # 配置认证账号 add your account's authtoken to your ngrok.yml file
+  > ngrok authtoken 7pWLVhS1gxiMAQdaFeYJy_31krnw9drNLLJftaNSFnm
+  # 开启转发服务
+  > ngrok http 80                    # secure public URL for port 80 web server
+    ngrok http -subdomain=baz 8080   # port 8080 available at baz.ngrok.io
+    ngrok http foo.dev:80            # tunnel to host:port instead of localhost
+    ngrok tcp 22                     # tunnel arbitrary TCP traffic to port 22
+    ngrok tls -hostname=foo.com 443  # TLS traffic for foo.com to port 443
+    ngrok start foo bar baz          # start tunnels from the configuration file
+~~~
+
+----
+
+
 ## Linux常用命令
 
     Shell连接符：
@@ -914,601 +1524,4 @@ exec curl -T \
   --header "Authorization: Signature keyId='${UPLOADER}',signature='${SIGNATURE}'" \
   "<filename>" "<url>"
 ~~~
-
-
-# [**docker**](https://docs.docker.com)
-
->  [下载](https://download.docker.com)、[安装](https://docs.docker.com/install)　[docker-desktop](https://www.docker.com/products/docker-desktop)：Build构建&Compose组织&Kubernetes集群<br>
-  `环境 & 版本` : `Linux x64, Kernel^3.10 cgroups & namespaces.`, `docker-ce`社区版 + `docker-ee`企业版 <br>
-  `加速器`      : [`阿里云`](https://cr.console.aliyun.com/#/accelerator)、[`DaoCloud道客`](https://dashboard.daocloud.io/packages/explore)   [..](http://8fe1b42e.m.daocloud.io)
-~~~
-curl -sSL https://get.daocloud.io/daotools/set_mirror.sh | sh -s http://f1361db2.m.daocloud.io   # for Linux
-sudo systemctl daemon-reload && sudo systemctl restart docker.service
-~~~
-> `Dockerfile` : `docker build Image(tag=name+version)` > `push Registry` <br>
-  `Registry & Disk` : `Repository` > `Image-Url` | `Image save .tar to-Disk`, `Container export .tar(snapshot)` <br>
-  `Docker`     : `pull Image from-Registry` | `load Image .tar from-Disk` <br>
-  `Data`       : `docker container run Image` - `--volumes-from Data-Container` - `-v from-Disk:Data-Dir`
-
-> `安装`
-~~~shell
-# 安装Docker，先切换用户root ~ su
-$ curl -sSL https://get.daocloud.io/docker | sh  
-# 卸载Docker，最后清理 ~ rm -fr /var/lib/docker/
-$ apt-get remove docker docker-engine  
-# 安装 Docker Compose
-$ curl -L https://get.daocloud.io/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose 
-$ chmod +x /usr/local/bin/docker-compose
-# 安装 Docker Machine   #  http://github.com/docker/machine/releases/download/v0.16.1/docker-machine-Linux-x86_64
-$ sudo dpkg -i virtualbox-6.0_6.0.8-130520_Ubuntu_bionic_amd64.deb --fix-missing  #基于virtualBox | www.virtualbox.org/wiki/Linux_Downloads
-$ curl -L https://github.com/docker/machine/releases/download/v0.16.1/docker-machine-$(uname -s)-$(uname -m) >/tmp/docker-machine
-$ chmod +x /tmp/docker-machine && sudo cp /tmp/docker-machine /usr/local/bin/docker-machine  # install /tmp/docker-machine /usr/local/bin/docker-machine
-$ docker-machine version                    # 安装完毕
-# 不使用sudo执行docker命令，先切换当前用户( root ~ exit )
-$ sudo gpasswd -a ${USER} docker  # 将当前用户加入docker组 
-$ sudo service docker restart              # 重启docker
-$ newgrp - docker                                    # 刷新docker组
-~~~
-
-> **Shell** [samples](https://docs.docker.com/samples)、[labs/tutorials](https://github.com/angenal/labs)、[小结](https://github.com/AlexWoo/doc/blob/master/devops/docker小结.md)
-~~~
-  # 构建
-  docker build --build-arg NODE_ENV=dev -t test-image # 当前目录下有Dockerfile
-  # 运行
-  docker-machine ip          # 获得当前Docker宿主机的IP地址
-  docker-machine ssh default # 登录到Boot2docker虚拟机之上(Linux-无需如此)
-  docker run --name test-image-docker -it -p 9999:8888 test-image # 已加载镜像 test-image 时, 用 docker images 查询
-  # 网络
-  docker network ls                                 # 查看网络列表
-  docker network create -d bridge [network-name]    # 创建自定义网络[-d bridge 网络驱动=桥接模式]
-  docker network connect [network-name] [container] # 1.加入自定义网络(参数2,3,4可一起写)
-  docker network connect --alias db [network-name] [container-db] # 2.入网,提供别名访问
-  docker network connect --link other_container:alias_name [network-name] [container] # 3.入网,其它容器连接别名
-  docker network connect --ip 10.10.36.122 [network-name] [container] # 4.入网,其它容器连接指定ip
-  docker network disconnect [network-name] [container] # 退出网络
-  docker network create -d host host        # 创建自定义网络host(默认已添加); -d [host:与主机共享一个IP地址/内网地址]
-  docker network create -d bridge workgroup # 创建自定义网络workgroup; -d [bridge(默认):分配给容器一个IP地址]
-  docker network connect workgroup redis5 && docker network connect workgroup centos.netcore # 加入自定义网络workgroup
-  docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container] # 查询IP地址
-  docker inspect -f "Name:{{.Name}}, Hostname:{{.Config.Hostname}}, IP:{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" [container]
-  docker inspect -f "{{.Config.Hostname}} {{.Name}} {{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" $(docker ps -aq) #Shell
-  docker run --name myweb -d -P --network=workgroup --link redis5:redis5 nginx # 容器之间安全互联 myweb连接redis5:redis5别名
-
-  # 基础
-  docker [COMMAND] --help
-  docker images # 查看镜像
-  docker ps -a  # 查看容器 | docker container ls -a
-  docker search ubuntu # 搜索镜像
-  docker pull ubuntu   # 下载镜像
-  docker load -i /opt/images/ubuntu_latest.tar # 加载镜像 (使用Xftp将镜像tar上传至Docker虚拟机或共享盘)
-  docker commit web myweb # 创建新镜像myweb(容器web) 另存为镜像 (save container to image)
-  docker save -o d:\docker\images\ubuntu_latest.tar ubuntu:latest       # 保存镜像 (save image)
-  docker export ubuntu > "d:\docker\snapshot\ubuntu_19_04.tar"           # 导出快照 (export snapshot)
-  docker container export -o="d:\docker\snapshot\ubuntu_19_04.tar" ubuntu # 导出快照 (container export snapshot)
-  docker cp d:\docker\app\xxx\publish centos.netcore:/home/app/xxx/publish # 复制目录 (copy dir to container)
-  docker cp centos.netcore:/home/app/entrypoint.sh d:\docker\app\centos\home\app\entrypoint.sh # 复制文件
-
-  docker container start $(docker ps -aq)   # 启动所有容器
-  docker container stop $(docker ps -aq)    # 停止所有容器
-  docker container restart $(docker ps -aq) # 重启所有容器
-  docker kill $(docker ps -a -q)   # 杀死所有运行的容器
-  docker container prune             # 删除所有停止的容器
-  docker volume prune                 # 删除未使用volumes
-  docker system prune                  # 删除未使用数据
-  docker rm [container]                # 删除1个容器
-  docker rm $(docker ps -a -q)   # 删除所有容器
-  docker rmi [image]                      # 删除1个镜像
-  docker rmi $(docker images -q) # 删除所有镜像
-  docker port [container]            # 查看端口映射
-  docker inspect [container]      # 查看容器详情
-  docker rename web [container]  # 容器重命名 > 查看容器 docker ps -a
-  docker logs [container]                   # 查看容器日志
-  docker update --restart=always [container] # 修改配置: 设置为开机启动 (可在 docker run 时添加此参数)
-  
-  docker stop 8b49 & docker rm -f mysite    # 停止+删除 :容器[ID前缀3-4位 或 containerName]
-  docker stop web & docker commit web myweb & docker run -p 8080:80 -td myweb # commit新容器myweb&端口映射
-  docker exec -it redis5 /bin/sh -c "ps aux & /bin/sh"  # 在容器中执行命令: 查看进程详情后,进入工作目录执行sh
-
-  docker run -it --rm -e AUTHOR="Test" alpine /bin/sh #查找镜像alpine+运行容器alpine+终端交互it+停止自动删除+执行命令
-  docker run --name mysite -d -p 8080:80 -p 8081:443 dockersamples/static-site #查找镜像&运行容器mysite&服务&端口映射
-  
-  docker run --name redis5 --network=workgroup --network-alias=redis5 --restart=always -d -m 512m -p 6379:6379 
-    -v d:\docker\app\redis5\redis.conf:/etc/redis/redis.conf -v d:\docker\app\redis5\data:/data 
-    redis:5.0.3-alpine redis-server /etc/redis/redis.conf # 执行Sh /usr/local/bin/docker-entrypoint.sh
-  docker run -p 6379:6379 -itd redislabs/redistimeseries  # 时序Db https://github.com/RedisLabsModules
-  docker run --name ssdb --network=workgroup --network-alias=ssdb -d -m 512m -p 8888:8888 
-    -v d:\docker\app\ssdb\ssdb.conf:/ssdb/ssdb.conf leobuskin/ssdb-docker # 替代Redis http://ssdb.io/zh_cn
-  
-  ## https://docs.docker.com/compose/aspnet-mssql-compose/  ${PWD} = d:\docker\app\microsoft.net\mvc
-  # Startup.sh1: docker run -v ${PWD}:/app --workdir /app microsoft/aspnetcore-build:lts dotnet new mvc --auth Individual
-  docker run --name dotnet --network=workgroup -it -m 512m -p 8080:80 -v "d:\docker\app\microsoft.net\app:/app" 
-    microsoft/dotnet # 最新版dotnet
-    microsoft/dotnet:sdk # 最新版dotnet-sdk
-    microsoft/dotnet:aspnetcore-runtime #最新版dotnet-runtime
-  
-  docker run --name centos -it --network=workgroup -m 512m -p 8000:80 -v "d:\docker\app\centos\home:/home" -w /home 
-    centos /bin/bash # 其它: --workdir /home/ConsoleApp2NewLife centos /bin/sh -c "/bin/bash ./entrypoint.sh"
-    $ rpm -Uvh https://packages.microsoft.com/config/rhel/7/packages-microsoft-prod.rpm & yum install -y dotnet-runtime-2.1
-    $ dotnet /home/ConsoleApp2NewLife/ConsoleApp2NewLife.dll # 访问tcp://127.0.0.1:8000
-  
-  docker run --name mysql -itd -p 3306:3306 --network=workgroup --network-alias=mysql --env MYSQL_ROOT_PASSWORD=HGJ766GR767FKJU0 
-    mysql:5.7 # mariadb、mongo、mysql/mysql-server、microsoft/mssql-server-linux, (--network-alias)其它容器连此容器
-  docker run --name mssql -itd -p 1433:1433 --network=workgroup --network-alias=mssql -v "d:\docker\app\mssql\data:/var/opt/mssql/data" 
-    -v "d:\docker\app\mssql\log:/var/opt/mssql/log" -e SA_PASSWORD=HGJ766GR767FKJU0 -e ACCEPT_EULA=Y 
-    mcr.microsoft.com/mssql/server # 数据库mssql
-  # 外部访问控制：(--link)其它容器连db, (--net=host -bind=192.168.1.2)不安全连接(与主机共享一个IP)+内网私有访问bind-ip
-  
-  # 消息平台 rabbitmq | github.com/judasn/Linux-Tutorial/blob/master/markdown-file/RabbitMQ-Install-And-Settings.md
-  docker run --name rabbitmq3 -d --network=workgroup --network-alias=rabbitmq 
-    -p 5671:5671 -p 5672:5672 -p 4369:4369 -p 25672:25672 -p 15671:15671 -p 15672:15672 -p 61613:61613 
-    -e RABBITMQ_DEFAULT_USER=admin -e RABBITMQ_DEFAULT_PASS=HGJ766GR767FKJU0 
-    rabbitmq:3-management # 消息库rabbitmq http://localhost:15672 访问控制台
-    # 消息服务rabbitmq插件: docker exec -it rabbitmq3 bash ; cd plugins ; rabbitmq-plugins enable rabbitmq_web_stomp
-  # 消息平台 nsq | nsq.io/deployment/docker.html
-  docker run --name nsqlookupd --network=workgroup --network-alias=nsqlookupd -p 4160:4160 -p 4161:4161 
-    nsqio/nsq /nsqlookupd  # First Run nsqlookupd for nsqd & nsqadmin 
-  docker run --name nsqd --network=workgroup --network-alias=nsqd -p 4150:4150 -p 4151:4151 -v d:\docker\app\nsq\data:/data 
-    nsqio/nsq /nsqd --data-path=/data --lookupd-tcp-address=nsqlookupd:4160 # --broadcast-address=<dockerIP>
-  docker run --name nsqadmin -d --network=workgroup -p 4171:4171 nsqio/nsq /nsqadmin --lookupd-http-address=nsqlookupd:4161
-  # 消息平台 kafka | wurstmeister.github.io/kafka-docker
-  docker run --name kafka wurstmeister/kafka
-  
-  # 事件|代理|自动化系统
-  docker run --name beehive -d --network=workgroup -p 8181:8181 -v d:\docker\app\beehive\conf:/conf gabrielalacchi/beehive
-  # 高性能的图形数据库(NoSQL)
-  docker run --name neo4j --network=workgroup --network-alias=neo4j -m 512m -p 7474:7474 -p 7687:7687 
-    -v "d:\docker\app\neo4j\data:/data" -v "d:\docker\app\neo4j\logs:/logs" neo4j:3.0
-  # 大数据+分布式位图索引+实时计算
-  docker run --name pilosa --network=workgroup --network-alias=pilosa -d -p 10101:10101 -v d:\docker\app\pilosa\data:/data 
-    pilosa/pilosa server --data-dir /data --bind :10101 --handler.allowed-origins http://localhost:10102
-  # 一个基于celery任务DAG管理工具 kuanshijiao.com/2017/03/07/airflow1
-  docker run --name airflow --network=workgroup --network-alias=airflow -d -p 8480:8080 -e LOAD_EX=y puckel/docker-airflow
-  # 一个安全的消息服务平台，自带后台管理
-  docker run --name mattermost-preview -d -p 8065:8065 --add-host dockerhost:127.0.0.1 mattermost/mattermost-preview
-  
-  docker run --name timescaledb -d -p 5432:5432 -e POSTGRES_PASSWORD=123456 timescale/timescaledb:latest-pg11 # PostgreSQL
-  docker run --name opentsdb -d -p 4242:4242 -v d:\docker\app\opentsdb\tmp:/tmp -v d:\docker\app\opentsdb\data\hbase:/data/hbase 
-    -v d:\docker\app\opentsdb\opentsdb-plugins:/opentsdb-plugins petergrace/opentsdb-docker
-    # 时序数据库opentsdb http://opentsdb.net/docs/build/html/resources.html
-  docker run --name m3db -d -p 7201:7201 -p 7203:7203 -p 9003:9003 quay.io/m3/m3dbnode 
-    # 分布式时序数据库M3DB(单节点时?可能吃掉整个磁盘资源!) # m3db.github.io/m3/how_to/single_node/ github.com/m3db/m3
-  
-  # 云存储解决方案minio  文档指南 https://docs.min.io/cn
-  > minio.exe server d:\docker\app\minio\data  # 本地网盘svr：http://127.0.0.1:9000/ : Access-Key & Secret-Key
-  > hidec /w minio.exe server d:\docker\app\minio\data # 隐藏控制台 & 后台运行 & 配置↑ data\.minio.sys\config\config.json
-  > nssm install MinIO minio.exe server d:\docker\app\minio\data # 安装/Windows服务/云存储MinIO
-  > mc config host add minio http://127.0.0.1:9000 <ACCESS-KEY> <SECRET-KEY> # 客户端 dl.minio.io/client/mc/release
-  > mc ls -r minio # 获取所有云存储对象列表
-  > mc find minio/img --maxdepth 3 --name "*.png" --path "*" --larger 1KB --smaller 2MB --older-than 0d2h30m --json
-  docker run --name minio-service -p 9000:9000 -v d:\docker\app\minio\data:/data -v d:\docker\app\minio\config:/root/.minio 
-    -e "MINIO_ACCESS_KEY=AKIAIOSFODNN7EXAMPLE" -e "MINIO_SECRET_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" 
-    minio/minio server /data # 对象存储服务，例如图片、视频、日志文件、备份数据和容器/虚拟机镜像等 https://docs.min.io/cn
-    # 设置安全密钥: using Docker secrets
-    # echo "AKIAIOSFODNN7EXAMPLE" | docker secret create access_key -
-    # echo "wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY" | docker secret create secret_key -
-  
-  # 基于 Jenkins 快速搭建持续集成环境
-  git clone https://github.com/AliyunContainerService/docker-jenkins 
-    && cd docker-jenkins/jenkins && docker build -t denverdino/jenkins .
-  docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home denverdino/jenkins
-  # docker run --name jenkins -d -p 8080:8080 -p 50000:50000 -v d:\docker\app\jenkins_home:/var/jenkins_home jenkins
-~~~
-
-> **docker-search-tags.sh** 搜索/标签/版本
- - https://dashboard.daocloud.io/packages/explore
-~~~
-  # Usage: $ ./docker-search-tags.sh ubuntu
-  for Repo in $* ; do
-    curl -s -S "https://registry.hub.docker.com/v2/repositories/library/$Repo/tags/" | \
-      sed -e 's/,/,\n/g' -e 's/\[/\[\n/g' | \
-      grep '"name"' | \
-      awk -F\" '{print $4;}' | \
-      sort -fu | \
-      sed -e "s/^/${Repo}:/"
-  done
-~~~
-
-> **Dockerfile** [文档](https://docs.docker.com/get-started)<br>
-　$ docker build -t <YOUR_USERNAME>/myapp . # 构建+标签[用户名/镜像名]
-~~~
-  # 基础镜像
-  FROM node:10.15.0
-  
-  # 备注镜像相关信息，通过 docker inspect 查看
-  LABEL maintainer="test <test@gmail.com>"
-  LABEL description="this is a test image"
-  LABEL version="1.0"
-  
-  # 设置工作目录，若不存在会自动创建，其他指令会以此为相对路径
-  WORKDIR /work/app
-  
-  # ADD <src> <dest>
-  # 添加资源到工作目录，若是压缩文件会自动解压，可指定远程地址下载url
-  ADD 'https://github.com/nodejscn/node-api-cn/blob/master/README.md' ./doc/
-  
-  # COPY <src> <dest>
-  # 复制资源到工作目录，不会解压，无法从远程地址下载
-  COPY ./ ./
-  
-  # RUN 构建镜像时执行的命令(安装运行时环境、软件等)
-  RUN npm install
-  
-  # ARG 构建镜像时可传递的参数，配合 ENV 使用 docker build --build-arg NODE_ENV=dev
-  ARG NODE_ENV
-  ARG TZ='Asia/Shanghai'
-  
-  # ENV 容器运行时环境变量，配合 ARG 使用 $NODE_ENV '${TZ}'
-  ENV NODE_ENV=$NODE_ENV
-  ENV TZ '${TZ}'
-  
-  # EXPOSE 容器端口(可指定多个)，启动时指定与宿主机端口的映射 docker run -p 9999:8888
-  EXPOSE 8080 8888
-  
-  # CMD 容器启动后执行的命令，会被 docker run 命令覆盖
-  CMD ["npm", "start"]  # other, web-proxy: CMD ["nginx", "-g", "daemon off;"]
-  
-  # ENTRYPOINT 容器启动后执行的命令，不会被 docker run 命令覆盖；一般不会使用；
-  # 任何 docker run 命令设置的指令参数 或 CMD 指令，都将作为参数追加至 ENTRYPOINT 命令之后
-  # ENTRYPOINT ["dotnet", "aspnetapp.dll"]
-~~~
-
-> **.dockerignore** 配置文件/屏蔽读取
-~~~
-# 一般临时文件
-*/temp*
-*/*/temp*
-temp?
-*.md
-!README*.md
-# 编译临时文件
-bin\
-obj\
-~~~
-
-> **docker-compose.yml** [安装Compose](https://docs.docker.com/compose/install/) [文档v3](https://docs.docker.com/compose/overview) | [老版本v2](https://www.jianshu.com/p/2217cfed29d7) | [votingapp例子](https://github.com/angenal/labs/blob/master/beginner/chapters/votingapp.md)<br>
-　管理容器的生命周期，从应用创建、部署、扩容、更新、调度均可在一个平台上完成。<br>
-　[`启动`](https://docs.docker-cn.com/compose/reference/up/)：`docker-compose up -d` | [`停止`](https://docs.docker-cn.com/compose/reference/down/)：`docker-compose down` | [`更多`](https://docs.docker-cn.com/compose/reference)：`pause`、`unpause`、`start`、`stop`、`restart`
-~~~
-  version: '3' # docker compose 版本(版本不同,语法命令有所不同)
-  services:    # docker services 容器服务编排
-    web:       # docker container service
-      # build: # 构建镜像
-      #   context: . # 构建镜像的上下文(本地构建的工作目录)
-      #   dockerfile: Dockerfile # 指定构建文件(工作目录下)
-      #   args: # 构建镜像时传递的参数/用于运行时环境变量
-      #   - NODE_ENV=dev
-      container_name: web-container # 容器名称
-      image: docker-web-image       # 使用已有的镜像(用 docker images 查询)
-      ports: # 端口映射(宿主机端口:容器端口)
-      - "9999:8888"
-      networks: # 网络设置(加入自定义网络)
-      - front-tier
-      - back-tier
-      # links: # 外链容器(不安全)
-      # - redis
-      volumes: # 外挂数据(映射宿主机目录:容器工作目录)
-      - "./data/:/work/app/data/"
-      depends_on: # 启动时依赖的容器(容器启动顺序: 推荐第三方工具 wait-for-it dockerize 等)
-      - redis
-      restart: always # 重启设置
-      env_file: # 环境变量配置文件 key=value
-      - ./docker-web.env
-      environment: # 设置容器运行时环境变量，会覆盖env_file相同变量
-      - NODE_ENV: dev
-      command: npm run dev # 容器启动后执行的命令
-      
-    redis:
-      container_name: redis-container
-      image: redis:latest
-      networks:
-      - back-tier
-
-  networks: # 网络设置(自定义)
-    front-tier:
-      driver: bridge
-    back-tier:
-      driver: bridge
-~~~
-
-# [**Kubernetes**](https://www.kubernetes.org.cn)
-
-> [`k8s`](https://www.kubernetes.org.cn) 是一个流行的容器管理编排平台，集中式管理数个服务的容器集群；<br>
-  　[docker-desktop](https://www.docker.com/products/docker-desktop)已添加Docker-Compose与Kubernetes进行完整的集成。<br>
-~~~
-  # 部署
-  > docker-compose build && kubectl apply -f /path/to/kube-deployment.yml  # 1 deploy of apply config
-  > docker stack deploy -c /path/to/docker-compose.yml mystack             # 2 deploy stack with compose
-~~~
-> `k8s`扩展<br>
-  　[istio](https://istio.io/docs/setup/kubernetes/platform-setup/)：连接、安全、控制和观察服务
-
-# [**Consul**](https://hub.docker.com/_/consul)
-
-> [`Consul`](https://www.consul.io) 是google开源的一个使用go语言开发的服务发现、配置管理中心服务。<br>
-  　[`Docker`+`Consul`+`Nginx`](https://www.jianshu.com/p/9976e874c099)基于nginx和consul构建高可用及自动发现的docker服务架构。Consul集群中的每个主机都运行Consul代理，与Docker守护程序一起运行。每个群集在服务器模式下至少有一个代理，通常为3到5个以实现高可用性。在给定主机上运行的应用程序仅使用其HTTP-API或DNS-API与其本地Consul代理进行通信。主机上的服务也要向本地Consul代理进行注册，该代理将信息与Consul服务器同步。多个HTTP应用程序与Consul的服务发现功能深入集成，并允许应用程序在没有任何中间代理的情况下定位服务并平衡负载。[`查看安装说明`](https://hub.docker.com/_/consul)、[`参数`/`开发模式`](https://www.consul.io/docs/agent/options.html#_dev)、[`代理API`](https://www.consul.io/docs/agent/http/agent.html)
-~~~
-  # /consul/data   容器暴露VOLUME
-    # 对于客户端代理，存储有关群集的一些信息以及客户端的运行状况检查，以防重新启动容器。
-    # 对于服务器代理，存储客户端信息以及与一致性算法相关的快照和数据以及Consul的键/值存储和目录等。
-  # /consul/config 配置目录
-    # Consul总是--net=host在Docker中运行，因此在配置Consul的IP地址时需要注意。Consul具有其集群地址的概念以及其客户端地址。
-    # Consul群集地址是其他Consul代理可以联系给定代理的地址。客户端地址是主机上的其他进程联系Consul以发出HTTP或DNS请求的地址。
-    # -bind=<external ip> 告诉Consul启动时其群集地址？
-  # Consul包括一个小实用程序，用于查找客户端或按接口名称绑定地址
-    # -e CONSUL_CLIENT_INTERFACE或CONSUL_BIND_INTERFACE 用于设置接口名称
-    # -bind=<interface ip> & -client=<interface ip> 用于查找客户端
-  
-  # 在开发模式下运行Consul 不带参数的Consul容器将为您提供处于开发模式的Consul服务器，使用开发服务器在桥接网络上运行，
-      对于在单个机器上测试Consul的多个实例非常有用。开发模式还在端口8500上启动Consul的Web UI版本。
-      通过-ui在命令行上向Consul 提供选项，可以将其添加到其他Consul配置中。
-  > docker run -d --name dev-consul-node0 -p 8500:8500 -e CONSUL_BIND_INTERFACE=eth0 consul # 不指定任何参数给consul
-      # 查找IP-join: docker inspect -f "{{range .NetworkSettings.Networks}}{{.IPAddress}} {{end}}" dev-consul-node0
-  > docker run -d --name dev-consul-node1 -e CONSUL_BIND_INTERFACE=eth0 consul agent -dev -join=172.17.0. #可运行多个
-  > docker exec -t dev-consul-node0 consul info    # 查看Consul集群的基本信息 https://www.consul.io/docs/commands/info.html
-  > docker exec -t dev-consul-node0 consul members # 查询Consul集群中的所有成员
-  > curl http://localhost:8500/v1/health/service/consul?pretty # 查询Consul集群的健康状况
-  > docker exec -it dev-consul-node0 sh # 进入集群主机中执行shell
-  $ consul --help                               # 操作帮助
-  $ consul catalog nodes                        # 节点列表
-  $ consul kv put config/api/request_limit 2000 # 添加数据
-  $ consul kv get config/api/request_limit      # 查询数据
-  $ consul kv delete config/api/request_limit   # 删除数据
-  $ consul intention check api postgresql       # 检查微服务api
-  $ consul intention create api postgresql      # 创建微服务api
-  $ consul intention delete api postgresql      # 删除微服务api
-  
-  # 在服务器模式下运行Consul Agent
-  > docker run -d --net=host consul agent -server -bind=172.17.0.1 # 将代理暴露给容器的网络（桥接网络）
-      -retry-join=<root agent ip> # 指定群集中用于在启动时加入的另一个代理的外部IP
-      -bootstrap-expect=<number of server agents> # 其他数据中心数目，或者只指定为当前数据中心-bootstrap
-  # 在客户端模式下运行Consul Agent
-  > docker run -d --net=host consul agent 
-      -client=<bridge ip> # 客户端(默认127.0.0.1)通过（桥接网络）将接口公开给其他容器，可用选项-client=0.0.0.0绑定所有接口
-      -bind=<external ip> # 当主机上其他容器也使用--net=host将代理暴露给容器外主机上运行的其他应用程序进程
-      -retry-join=<root agent ip> # 参考下：
-        # Using a DNS entry > consul agent -retry-join "consul.domain.internal"
-        # Using IPv4 > consul agent -retry-join "10.0.4.67"
-        # Using IPv6 > consul agent -retry-join "[::1]:8301"
-        # Using Cloud Auto-Joining > consul agent -retry-join "provider=aws tag_key=..."
-  
-  # 在端口53上公开Consul的DNS服务器 https://www.consul.io/docs/agent/services.html
-  > docker run -d --net=host -e 'CONSUL_ALLOW_PRIVILEGED_PORTS=' consul -dns-port=53 -recursor=8.8.8.8 -bind=<bridge ip>
-  > docker run -i --dns=<bridge ip> -t ubuntu sh -c "apt-get update && apt-get install -y dnsutils && dig consul.service.consul"
-  # 使用容器进行服务发现，有关详细信息，请参阅[代理API] https://www.consul.io/docs/agent/http/agent.html
-  # 在Docker容器中运行运行状况检查
-      # 如果Docker守护程序暴露给Consul代理并且DOCKER_HOST设置了环境变量，则可以使用Docker容器ID配置检查以执行。
-~~~
-
-# [**Etcd**](https://github.com/etcd-io/etcd)
-
-> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中共享配置和服务发现等。 [`play...`](http://play.etcd.io/install) [`download`](https://github.com/etcd-io/etcd/releases)
- * 简单: 良好定义的，面向用户的API (gRPC)
- 
-~~~
-sudo mkdir -p /etcd/data && sudo mkdir -p /etcd/ssl-certs-dir
-docker run --name etcd --network=bridge --network-alias=etcd --restart=always -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
-    -v /etcd/data:/etcd-data -v /etcd/ssl-certs-dir:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
-    /usr/local/bin/etcd --name s1 --data-dir /etcd-data 
-    --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
-    --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 
-    --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 # 安装http时取消,s2...s3
-    --initial-cluster-token tkn --initial-cluster-state new                                  # 安装http时取消-下面语句
-    --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
-    --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
-    --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
-    --peer-cert-file /etcd-ssl-certs-dir/s1.pem --peer-key-file /etcd-ssl-certs-dir/s1-key.pem 
-~~~
-
-#### Nginx
-
- * 基本配置与参数说明
-~~~
-#运行用户
-user nobody;
-#启动进程,通常设置成和cpu的数量相等
-worker_processes  1;
-
-#全局错误日志及PID文件
-#error_log  logs/error.log;
-#error_log  logs/error.log  notice;
-#error_log  logs/error.log  info;
-
-#pid        logs/nginx.pid;
-
-#工作模式及连接数上限
-events {
-    #epoll是多路复用IO(I/O Multiplexing)中的一种方式,
-    #仅用于linux2.6以上内核,可以大大提高nginx的性能
-    use   epoll;
-
-    #单个后台worker process进程的最大并发链接数
-    worker_connections  1024;
-
-    # 并发总数是 worker_processes 和 worker_connections 的乘积
-    # 即 max_clients = worker_processes * worker_connections
-    # 在设置了反向代理的情况下，max_clients = worker_processes * worker_connections / 4  为什么
-    # 为什么上面反向代理要除以4，应该说是一个经验值
-    # 根据以上条件，正常情况下的Nginx Server可以应付的最大连接数为：4 * 8000 = 32000
-    # worker_connections 值的设置跟物理内存大小有关
-    # 因为并发受IO约束，max_clients的值须小于系统可以打开的最大文件数
-    # 而系统可以打开的最大文件数和内存大小成正比，一般1GB内存的机器上可以打开的文件数大约是10万左右
-    # 我们来看看360M内存的VPS可以打开的文件句柄数是多少：
-    # $ cat /proc/sys/fs/file-max
-    # 输出 34336
-    # 32000 < 34336，即并发连接总数小于系统可以打开的文件句柄总数，这样就在操作系统可以承受的范围之内
-    # 所以，worker_connections 的值需根据 worker_processes 进程数目和系统可以打开的最大文件总数进行适当地进行设置
-    # 使得并发总数小于操作系统可以打开的最大文件数目
-    # 其实质也就是根据主机的物理CPU和内存进行配置
-    # 当然，理论上的并发总数可能会和实际有所偏差，因为主机还有其他的工作进程需要消耗系统资源。
-    # ulimit -SHn 65535
-
-}
-
-http {
-    #设定mime类型,类型由mime.type文件定义
-    include    mime.types;
-    default_type  application/octet-stream;
-    #设定日志格式
-    log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
-                      '$status $body_bytes_sent "$http_referer" '
-                      '"$http_user_agent" "$http_x_forwarded_for"';
-
-    access_log  logs/access.log  main;
-
-    #sendfile 指令指定 nginx 是否调用 sendfile 函数（zero copy 方式）来输出文件，
-    #对于普通应用，必须设为 on,
-    #如果用来进行下载等应用磁盘IO重负载应用，可设置为 off，
-    #以平衡磁盘与网络I/O处理速度，降低系统的uptime.
-    sendfile     on;
-    #tcp_nopush     on;
-
-    #连接超时时间
-    #keepalive_timeout  0;
-    keepalive_timeout  65;
-    tcp_nodelay     on;
-
-    #开启gzip压缩
-    gzip  on;
-    gzip_disable "MSIE [1-6].";
-
-    #设定请求缓冲
-    client_header_buffer_size    128k;
-    large_client_header_buffers  4 128k;
-
-    #设定虚拟主机配置
-    server {
-        #侦听80端口
-        listen    80;
-        #定义使用 www.nginx.cn访问
-        server_name  www.nginx.cn;
-
-        #定义服务器的默认网站根目录位置
-        root html;
-
-        #设定本虚拟主机的访问日志
-        access_log  logs/nginx.access.log  main;
-
-        #默认请求
-        location / {
-
-            #定义首页索引文件的名称
-            index index.php index.html index.htm;
-
-        }
-
-        # 定义错误提示页面
-        error_page   500 502 503 504 /50x.html;
-        location = /50x.html {
-        }
-
-        #静态文件，nginx自己处理
-        location ~ ^/(images|javascript|js|css|flash|media|static)/ {
-
-            #过期30天，静态文件不怎么更新，过期可以设大一点，
-            #如果频繁更新，则可以设置得小一点。
-            expires 30d;
-        }
-
-        #PHP 脚本请求全部转发到 FastCGI处理. 使用FastCGI默认配置.
-        location ~ .php$ {
-            fastcgi_pass 127.0.0.1:9000;
-            fastcgi_index index.php;
-            fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
-            include fastcgi_params;
-        }
-
-        #禁止访问 .htxxx 文件
-            location ~ /.ht {
-            deny all;
-        }
-
-    }
-}
-~~~
-
- * 例子 https & ws
-~~~
- #代理https
- upstream web {
-    server 0.0.0.0:3000;      
- }
- #代理websocket
- upstream websocket {
-    server 0.0.0.0:3000;   
- }
- server { 
-    listen       443; 
-    server_name  localhost;
-    ssl          on;
-    ssl_certificate     /cert/cert.crt;#配置证书
-    ssl_certificate_key  /cert/cert.key;#配置密钥
-    ssl_session_cache    shared:SSL:1m;
-    ssl_session_timeout  50m;
-    ssl_protocols TLSv1 TLSv1.1 TLSv1.2 SSLv2 SSLv3;
-    ssl_ciphers  HIGH:!aNULL:!MD5;
-    ssl_prefer_server_ciphers  on;
-
-    #charset koi8-r;
-    #access_log  logs/host.access.log  main;
-
-  #wss 反向代理  
-  location /wss {
-     proxy_pass http://websocket/; # 代理到上面的地址去
-     proxy_read_timeout 60s;
-     proxy_set_header Host $host;
-     proxy_set_header X-Real_IP $remote_addr;
-     proxy_set_header X-Forwarded-for $remote_addr;
-     proxy_set_header Upgrade $http_upgrade;
-     proxy_set_header Connection 'Upgrade';	
-  }
-  #https 反向代理
-  location / {
-     proxy_pass         http://web/;
-     proxy_set_header   Host             $host;
-     proxy_set_header   X-Real-IP        $remote_addr;
-     proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
-  }
-}
-~~~
-
-####  免费的容器镜像服务
-
-> [阿里云`/fp-api/front`](https://cr.console.aliyun.com/repository/cn-hangzhou/fp-api/front/detail)
-
-  1. 登录阿里云Docker Registry
-~~~
-  $ sudo docker login --username=angenal@hotmail.com registry.cn-hangzhou.aliyuncs.com
-~~~
-  2. 从Registry中拉取镜像
-~~~
-  $ sudo docker pull registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
-~~~
-  3. 将镜像推送到Registry
-~~~
-  # [ImageId]和[镜像版本号]参数(用 docker images 查询)
-  # 　公网地址：registry.cn　经典内网：registry-internal.cn　专有网络：registry-vpc.cn
-  $ sudo docker tag [ImageId] registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
-  $ sudo docker push registry.cn-hangzhou.aliyuncs.com/fp-api/front:[镜像版本号]
-~~~
-
-#### 免费的开发服务器
-
-> [转发服务`ngrok`](https://dashboard.ngrok.com/get-started)
-
-~~~
-  # 保存路径 C:/Windows/System32/ngrok.exe
-  # 查看帮助
-  > ngrok help
-  # 配置认证账号 add your account's authtoken to your ngrok.yml file
-  > ngrok authtoken 7pWLVhS1gxiMAQdaFeYJy_31krnw9drNLLJftaNSFnm
-  # 开启转发服务
-  > ngrok http 80                    # secure public URL for port 80 web server
-    ngrok http -subdomain=baz 8080   # port 8080 available at baz.ngrok.io
-    ngrok http foo.dev:80            # tunnel to host:port instead of localhost
-    ngrok tcp 22                     # tunnel arbitrary TCP traffic to port 22
-    ngrok tls -hostname=foo.com 443  # TLS traffic for foo.com to port 443
-    ngrok start foo bar baz          # start tunnels from the configuration file
-~~~
-
-----
 
