@@ -1281,7 +1281,9 @@ obj\
 
 # [**Etcd**](https://github.com/etcd-io/etcd)
 
-> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中最重要的数据。[`play...`](http://play.etcd.io/install) [`download`](https://github.com/etcd-io/etcd/releases)
+> [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中共享配置和服务发现等。 [`play...`](http://play.etcd.io/install) [`download`](https://github.com/etcd-io/etcd/releases)
+ * 简单: 良好定义的，面向用户的API (gRPC)
+ 
 ~~~
 sudo mkdir -p /etcd/data && sudo mkdir -p /etcd/ssl-certs-dir
 docker run --name etcd --network=bridge --network-alias=etcd --restart=always -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
@@ -1290,7 +1292,7 @@ docker run --name etcd --network=bridge --network-alias=etcd --restart=always -p
     --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
     --listen-peer-urls http://0.0.0.0:2380 --initial-advertise-peer-urls http://0.0.0.0:2380 
     --initial-cluster s1=http://0.0.0.0:2380,s2=https://0.0.0.0:2381,s3=https://0.0.0.0:2382 # 安装http时取消,s2...s3
-    --initial-cluster-token tkn --initial-cluster-state new                                                                      # 安装http时取消-下面语句
+    --initial-cluster-token tkn --initial-cluster-state new                                  # 安装http时取消-下面语句
     --client-cert-auth --trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
     --cert-file /etcd-ssl-certs-dir/s1.pem --key-file /etcd-ssl-certs-dir/s1-key.pem 
     --peer-client-cert-auth --peer-trusted-ca-file /etcd-ssl-certs-dir/etcd-root-ca.pem 
