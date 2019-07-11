@@ -811,22 +811,26 @@ obj\
 # [**Etcd**](https://github.com/etcd-io/etcd)
 
 > [`etcd`](https://coreos.com/etcd/docs/latest/demo.html) 分布式、可靠的键值存储，用于分布式系统中共享配置和服务发现。 [`download`](https://github.com/etcd-io/etcd/releases) [`play...`](http://play.etcd.io/install)
- * 简单: 良好定义的HTTP接口，面向用户的API (gRPC)，易理解；
+ * 简单: 良好定义的HTTP接口，面向用户的API(gRPC)，易理解；支持消息发布与订阅；
  * 安全: 支持SSL客户端安全认证；数据持久化(默认数据更新就进行持久化)；
  * 快速: 每秒1w/qps；版本高速迭代和开发中，这既是一个优点，也是一个缺点；
- * 可靠: 使用Raft一致性算法来管理高可用复制(分布式存储)；
- 
+ * 可靠: 使用Raft一致性算法来管理高可用复制(分布式存储)👍
 ~~~
 # 版本: 默认API版本为2(修改参数ETCDCTL_API=3)；
 # 端口: 默认2379为客户端通讯，2380进行服务器间通讯；
-# 本地简单运行----------------------------------------------------
-# (客户端)CLI > etcdctl 
-# 搭建本地集群----------------------------------------------------
-$ go get github.com/mattn/goreman
-$ goreman -f Procfile start  # 用到gitub项目根目录下的Procfile文件(需要修改)
-# 搭建本地docker----------------------------------------------------
-$ sudo mkdir -p /etcd/data && sudo mkdir -p /etcd/ssl-certs-dir
-$ docker run --name etcd --network=bridge --network-alias=etcd --restart=always -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
+# <本地简单运行>----------------------------------------------------
+# 运行(客户端) > etcdctl [command] # etcdctl和etcd交互,命令如下:
+ # put[输入], get[输出--rev=1'取版本号1'], del[删除], watch[观察历史修订], compact[压缩修订版本]
+ # lease grant 10 (1.授予租约>'TTL为10秒';返回[id]); put --lease=[id] [key] [value] (指定key授予租约)
+ # lease revoke [id] (2.撤销租约>指定[id]>因租约撤销导致foo被删除)
+ # lease keep-alive [id] (3.维持租约)
+# <搭建本地集群>----------------------------------------------------
+ $ go get github.com/mattn/goreman # 提前安装Go,或下载可执行文件goreman
+ $ goreman -f Procfile start       # 用到gitub项目根目录下的Procfile文件(需要修改)
+ $ etcdctl-w="table" --endpoints=localhost:12379 member list  # 查询集群信息
+# <搭建docker运行>--------------------------------------------------
+ $ sudo mkdir -p /etcd/data && sudo mkdir -p /etcd/ssl-certs-dir
+ $ docker run --name etcd --network=bridge --network-alias=etcd --restart=always -p 2379:2379 -p 2380:2380 -e ETCDCTL_API=3 
     -v /etcd/data:/etcd-data -v /etcd/ssl-certs-dir:/etcd-ssl-certs-dir quay.io/coreos/etcd:v3.3.12 
     /usr/local/bin/etcd --name s1 --data-dir /etcd-data 
     --listen-client-urls http://0.0.0.0:2379 --advertise-client-urls http://0.0.0.0:2379 
