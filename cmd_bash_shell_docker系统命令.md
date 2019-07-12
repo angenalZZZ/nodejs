@@ -171,6 +171,9 @@ export ftp_proxy=http://127.0.0.1:5005
   > at 11:00:00PM /every:M,T,W,TH,F,SA,SU shutdown -s
   > at 11:00:00PM shutdown -r [r重启]
   
+  # 系统硬件驱动
+  > devmgmt.msc
+  
   # 系统硬件序列号
   > wmic memorychip get serialnumber
   > wmic diskdrive get serialnumber
@@ -819,14 +822,15 @@ obj\
 # 版本: 默认API版本为2(修改参数ETCDCTL_API=3)；
 # 端口: 默认2379为客户端通讯，2380进行服务器间通讯；
 # <本地简单运行>----------------------------------------------------
-# 运行(客户端) > etcdctl [command] # etcdctl和etcd交互,命令如下:
+ > nssm install EtcdServer etcd.exe # 以管理员运行服务
+ # 运行(客户端) > etcdctl [command]  # etcdctl和etcd交互,命令如下:
  # put[输入], get[输出--rev=1'取版本号1'], del[删除], watch[观察历史修订], compact[压缩修订版本]
  # lease grant 10 (1.授予租约>'TTL为10秒';返回[id]); put --lease=[id] [key] [value] (指定key授予租约)
  # lease revoke [id] (2.撤销租约>指定[id]>因租约撤销导致foo被删除)
  # lease keep-alive [id] (3.维持租约)
 # <搭建本地集群>----------------------------------------------------
- $ go get github.com/mattn/goreman # 提前安装Go,或下载可执行文件goreman
- $ goreman -f Procfile start       # 用到gitub项目根目录下的Procfile文件(需要修改)
+ $ go get github.com/mattn/goreman  # 提前安装Go,或下载可执行文件goreman
+ $ goreman -f Procfile start        # 用到gitub项目根目录下的Procfile文件(需要修改)
  $ etcdctl-w="table" --endpoints=localhost:12379 member list  # 查询集群信息
 # <搭建docker运行>--------------------------------------------------
  $ sudo mkdir -p /etcd/data && sudo mkdir -p /etcd/ssl-certs-dir
