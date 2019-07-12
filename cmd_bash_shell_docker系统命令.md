@@ -75,7 +75,8 @@
   # 进程详情
   > tasklist
   > wmic process where "caption = 'java.exe' and commandline like '%server-1.properties%'" get processid
-  > taskkill /f /pid 6016
+  > netstat -ano | findstr :3000 # 杀死进程使用, 指定占用的端口号
+  > taskkill /F /PID <<PID>>     # PowerShell
   $ ps aux              # 进程列表: USER PID %CPU %MEM VSZ RSS TTY STAT START TIME COMMAND
   $ ps -eo pid,cmd | grep uuid # [o输出字段,e依赖的系统环境]
   $ ps -u $USER -o pid,%cpu,tty,cputime,cmd
@@ -86,6 +87,7 @@
   $ ps aux | head -1; ps aux | sort -rn -k3 | head -10 # 占用CPU最高的前10个进程
   $ ps -e -o stat,ppid,pid,cmd | grep -e '^[Zz]' | awk '{print $2}' | xargs kill -9 # 批量删除僵尸(Z开头的)进程
   $ killall           # 杀死进程使用, 杀死单个进程: kill -9 [ProcessId]
+  $ lsof -i @localhost:3000 && kill -9 <<PID>> # 杀死进程使用, 指定占用的端口号
   $ smem -k -s USS    # 进程的内存使用情况
   # < ubuntu > apt update & apt install smem
   # < centos > yum install epel-release & yum install smem python-matplotlib python-tk
