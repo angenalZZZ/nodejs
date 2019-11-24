@@ -1093,7 +1093,8 @@ new HttpServ_UseStaticFiles().start();
 
 #### 安全加密
 
-`常用md5,sha...; 对称加密[一个密钥(加密解密)]aes,des,IDEA...; 非对称加密[公钥(加密)+私钥(解密)]rsa,dsa,DH...`
+	`常用md5,sha...; 对称加密[一个密钥(加密解密)]aes,des..IDEA...;`<br>
+	`非对称加密[公钥(加密)私钥(解密);私钥(加密)公钥(解密)]rsa,dsa..DH...;`
 
 ````javascript
 const crypto = require('crypto');
