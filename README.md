@@ -1093,16 +1093,19 @@ new HttpServ_UseStaticFiles().start();
 
 #### 安全加密
 
-	`常用md5,sha...; 对称加密[一个密钥(加密解密)]aes,des..IDEA...;`<br>
-	`非对称加密[公钥(加密)私钥(解密);私钥(加密)公钥(解密)]rsa,dsa..DH...;`
+	哈希算法将任意长度的二进制值映射为较短的固定长度的二进制值，这个小的二进制值称为哈希值。
+	常用的md5,sha...等函数; 哈希算法也称为哈希函数。
+	对称加密[一个密钥(加密解密)]aes,des..IDEA...
+	非对称加密[公钥(加密)私钥(解密);私钥(加密)公钥(解密)]rsa,dsa..DH...
 
 ````javascript
 const crypto = require('crypto');
-/* 1.哈希算法 > md5、sha1、sha256、sha512 */
+/* 1.哈希算法 > md5、安全哈希算法sha1、sha256、sha512 */
 const md5 = crypto.createHash("md5");
 const sha1 = crypto.createHash("sha1");
-/* 2.随机哈希算法 > Hmac算法也是一种哈希算法，它可以利用MD5或SHA1等哈希算法。不同的是，Hmac还需要一个密钥
-   只要密钥发生了变化，那么同样的输入数据也会得到不同的签名，因此，可以把Hmac理解为用随机数“增强”的哈希算法*/
+/* 2.随机哈希算法 > Hmac算法也是一种哈希算法,常用于哈希的消息验证模式；
+   它可以利用MD5或SHA1等哈希算法。不同的是，Hmac还需要一个密钥，只要密钥发生了变化，
+   同样的输入数据也会得到不同的签名，因此，可以把Hmac理解为用随机数“增强”的哈希算法。*/
 const sha256 = crypto.createHmac("sha256", "1234567890");
 const sha512 = crypto.createHmac("sha512", "1234567890");
 /* 3.对称加密算法 > AES是一种常用的对称加密算法，加解密都用同一个密钥
