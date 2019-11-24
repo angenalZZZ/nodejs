@@ -91,7 +91,28 @@
 1.引用类型是保存在**堆内存**(Heap)中,而**栈内存**(Stack)中会有一个**堆内存地址**(Pointer),地址变量指向堆内存中`Object`真正的值.
 
 2.数组`Array`不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.
-
+````javascript
+console.log({
+	someBool: true,
+	someString: "abc\u1234",
+	someInt: 42,
+	someFloat: 42.123,
+	someArray: [41, 42, 43],
+	someDate: new Date(),
+	add: function(a, b) {
+		return a + b;
+	},
+	zero: 0,
+	stringZero: "0",
+	NaN: NaN,
+	emptyObj: {},
+	emptyArray: [],
+	Infinity: Infinity,
+	NegInfinity: -Infinity,
+	objNumber0: new Number(0),
+	objBooleanFalse: new Boolean(false),
+})
+````
 3.在ES6中可用`Object.assign(target,...sources)` 或者Object spread`...` 对引用类型进行浅复制`一层` (后者性能更优)<br>　　`...解构赋值: 如数组、对象等` (需配置`ESLint`)　[前端`js`](https://yuchengkai.cn/docs/frontend)、[难点`js`](https://github.com/yygmind/blog)
 ````javascript
 /* 配置ESLint > .eslintrc.yml
@@ -370,9 +391,9 @@ animal.flags &= ~AnimalFlags.HasClaws;
 printAnimalAbilities(animal); // nothing
 animal.flags |= AnimalFlags.HasClaws | AnimalFlags.CanFly;
 printAnimalAbilities(animal); // animal has claws, animal can fly
-// ## 代码中 |= 用来添加一个标志，&= 和 ~ 用来删除标志，| 用来合并标志。
+// # 位运算公式: |= 用来添加一个标志，&= 和 ~ 用来删除标志，| 用来合并标志。
 
-// # any 不同于 Object; any 不要作为function的返回类型
+// # any 不同于 Object; any 一般不要作为function的返回类型(ts^es6); 它包含了值类型Value和引用类型Object
 let obj1: any = 1; obj1.toFixed();
 // # as-syntax 语法
 let n1: number = obj1 as number;
