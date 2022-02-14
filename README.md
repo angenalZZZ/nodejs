@@ -1100,6 +1100,8 @@ new HttpServ_UseStaticFiles().start();
 
 ````javascript
 const crypto = require('crypto');
+/* 生成20个随机字符串 */
+const randomString = require("crypto").randomBytes(10).toString("hex");
 /* 1.哈希算法 > md5、安全哈希算法sha1、sha256、sha512 */
 const md5 = crypto.createHash("md5");
 const sha1 = crypto.createHash("sha1");
