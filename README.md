@@ -317,6 +317,16 @@ function doClick(e){
 
 ````
 
+9.格式化数据
+~~~javascript
+var usr = {"name":"小智","age":30,"isAdmin":true,"friends":["隔壁老王"],"address":{"city":"天上人间"}};
+// JSON格式化并排除指定属性
+console.log(JSON.stringify(usr,(k,v)=>['isAdmin'].includes(k)?undefined:v,2));
+// JSON格式化并包含指定属性
+console.log(JSON.stringify(usr,['name','age','friends'],2));
+
+~~~
+
 ---
 
 
