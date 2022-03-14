@@ -324,6 +324,8 @@ var usr = {"name":"小智","age":30,"isAdmin":true,"friends":["隔壁老王"],"a
 console.log(JSON.stringify(usr,(k,v)=>['isAdmin'].includes(k)?undefined:v,2));
 // JSON格式化并包含指定属性
 console.log(JSON.stringify(usr,['name','age','friends'],2));
+var usrs = [Object.assign({},usr)];
+console.log(JSON.stringify(usrs,['name','age'],2));
 
 ~~~
 
